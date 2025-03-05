@@ -2,6 +2,7 @@
 *.aux
 *.jpg
 *.png
+*.synctex.gz
 *.synctex
 *.sty
 .vscode/
