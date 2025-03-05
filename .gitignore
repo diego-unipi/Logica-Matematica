@@ -1,0 +1,7 @@
+*.pre
+*.aux
+*.jpg
+*.png
+*.synctex
+*.sty
+.vscode/

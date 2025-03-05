@@ -1,0 +1,159 @@
+\section{Formule, Strutture e Teorie}
+\subsection{Formule}
+La logica, lo dice il nome si occupa di linguaggi. Un \vocab{linguaggio} è un insieme di \vocab{stringhe},
+ossia sequenze finite di simboli, di un certo \vocab{alfabeto}\footnote{Tecnicamente $L = A^{<\NN}$, con $A$ alfabeto.}.
+Da un punto di vista tecnico, se vogliamo formalizzare il nostro discorso,
+per esempio, nella teoria degli insiemi, potremmo dire che l'alfabeto può essere un insieme qualunque.
+Se, per esempio, vogliamo usare come alfabeto $A = \{a,b,c,\ldots,z\}$, dove $a,b,c$, etc. possono essere qualunque, purché distinti fra loro,
+allora le stringhe sono sequenze \textcolor{purple}{finite} come, per esempio:
+\[ () \qquad (a,x,a,x,a,x,a,x,a,x) \qquad (m,l,\ddot{o})
+\]
+che conviene scrivere più compattamente come:
+\[ \varepsilon\footnote{È la \vocab{stringa vuota}.} \qquad axaxaxaxax \qquad ml\ddot{o}
+\]
+L'ambiente in cui formalizziamo le nostre definizioni, in questo caso la teoria degli insiemi, si dice \vocab{metateoria}.
+Non vogliamo forzare una particolare scelta per la metateoria. Sarà elementare formalizzare il materiale di questo corso, per chi,
+per esempio, ha seguito il corso di \href{https://ciovil.li/eti22/}{\textcolor{purple}{Elementi di Teoria degli Insiemi}}, prendendo come 
+metateoria la teoria degli insiemi di Zermelo-Fraenkel ($\mathsf{ZFC}$). La nostra esposizione sarà basata su $\mathsf{ZFC}$, mantenendo, però,
+un tono informale, con due promesse: di non fare leva sui dettagli incidentali della formalizzazione di $\mathsf{ZFC}$, e di evidenziare i casi in cui
+si sfruttano principi insiemistici non costitutivi - in pratica, forme dell'assioma di scelta. \\
+In conclusione, parleremo di stringhe che sono sequenze finite di elementi dell'alfabeto, ma mantenendo l'illusione che siano semplicemente tracce di inchiostro sulla carta,
+che è, poi, l'intuizione che intendiamo formalizzare. Illusione doppiamente, perché, nella fattispecie, non c'è inchiostro, ma configurazioni di elettricità statica.
+
+\subsection{Formule}
+Informalmente, vorremmo generalizzare il meccanismo per mezzo del quale si dice che un \textbf{gruppo} è un insieme dotato di un elemento invertibile \textbf{\textit{e}}, un'operazione $\ldots \cdot \ldots$, etc.
+tale che $(x \cdot y) \cdot z = x \cdot (y \cdot z)$, $x \cdot e = e \cdot x = x$, etc. Vorremmo dire che un gruppo è semplicemente un \vocab{modello} della teoria dei gruppi, la quale è costituita dalle condizioni -
+l'associatività, l'esistenza dell'identità e degli inversi - che vede soddisfare un \vocab{struttura} per essere un gruppo. Per esplorare matematicamente la relazione che lega una teoria ai suoi modelli, occorre specificare 
+precisamente di che tipo siano le condizioni che possono costituire una teoria - per noi saranno le \vocab{formule al primo ordine} - e come una struttura la soddisfa.
+L'idea è che una formula si ottenga combinando \vocab{formule atomiche} - per esempio equazioni - per mezzo di connettivi logici: $\land,\lor,\neg,\to$ e i quantificatori $\forall$, $\exists$.
+
+\begin{example}
+    [Teoria dei gruppi - v.1]
+    \emph{}\vspace{-0.7cm}
+    \begin{itemize}
+        \item \textbf{simboli di base}: $e,\ldots\cdot\ldots,\ldots^{-1}$
+        \item \textbf{assiomi}:
+        \begin{align*}
+            &\forall x\; \forall y\; \forall z \; (x \cdot y) \cdot z = x \cdot (y \cdot z) \\
+            &\forall x\; e \cdot x = x \\
+            &\forall x\; x \cdot e = x \\
+            &\forall x\; x \cdot (x^{-1}) = e \\
+            &\forall x\; (x^{-1}) \cdot x = e
+        \end{align*}
+    \end{itemize}
+    Notare che il dominio dei quantificatori è costituito da tutti gli elementi del gruppo: $\forall x$ significa ``per ogni elemento del gruppo''.
+\end{example}
+
+Spesso non c'è un unico modo di formalizzare un concetto.
+
+\begin{example}
+    [Teoria dei gruppi - v.2]
+    \emph{}\vspace{-0.7cm}
+    \begin{itemize}
+        \item \textbf{simboli di base}: $e,\ldots\cdot\ldots$
+        \item \textbf{assiomi}:
+        \begin{align*}
+            &\forall x\; \forall y\; \forall z \; (x \cdot y) \cdot z = x \cdot (y \cdot z) \\
+            &\forall x\; e \cdot x = x \\
+            &\forall x\; x \cdot e = x \\
+            &\forall x\; x \cdot (x^{-1}) = e \\
+            &\forall x\; \exists y\; x \cdot y = e \land y \cdot x = e
+        \end{align*}
+    \end{itemize}
+\end{example}
+
+\textcolor{purple}{Crucialmente} è ammesso quantificare solo su elementi della struttura, non, per esempio, sui sottoinsiemi. Questo è il motivo per cui si parla di \textbf{logica al primo ordine}.
+della struttura, sui numeri naturali o sulle formule stesse. È per questa ragione che la logica che studiamo si dice \vocab{del primo ordine}: se, per esempio, potessimo quantificare anche sui sottoinsiemi
+della struttura, allora lavoreremmo al \vocab{secondo ordine}. $\mathsf{ZFC}$, la teoria degli insiemi, ricorderete, è formalizzata al primo ordine - c'è un solo tipo di oggetti, gli insiemi, e si può dire ``per ogni insieme $x$''
+o ``esiste un insieme $x$''. Quando, in $\mathsf{ZFC}$, si quantifica sui sottoinsiemi, lo si fa per mezzo di una perifrasi, $\forall x \subseteq y \ldots$ significa $\forall x \; x \subseteq y \to \ldots$, e questo è sottilmente diverso
+da dire ``per ogni sottoinsieme $x$ di $y$'', infatti, dire ``per ogni elemento elemento $x$ dell'universo degli insiemi che sia un sottoinsieme di $y$'. Vedremo una conseguenza sorprendente, il \vocab{paradosso di Skolem}, di questo fatto. 
+Formalmente, definiremo le formule dando  una grammatica - in particolare una \vocab{grammatica libera dal contesto}.
+
+\medskip
+
+Una grammatica identifica le stringhe di un linguaggio descrivendo un processo ricorsivo che permette di scrivere una stringa più lunga combinando stringhe più brevi.
+Lo studio, in generale, delle grammatiche non fa parte degli obiettivi di questo corso, vediamo invece il caso particolare che ci interessa.
+
+\begin{definition}
+    [Linguaggio del primo ordine]
+    Un \vocab{linguaggio del primo ordine} - brevemente linguaggio - $L = (R,F,\ar)$ è dato da due insiemi disgiunti $R$ e $F$, rispettivamente i \vocab{simboli di relazione} e i \vocab{simboli di funzione}, e una funzione
+    $\ar : R \sqcup F \to \NN$ che associa ad ogni simbolo un numero naturale, detto \vocab{arietà}.\footnote{Tecnicamente staremmo anche fissando un alfabeto da cui prendere i simboli.}
+\end{definition}
+
+\begin{example}
+    [Linguaggio degli anelli ordinati]
+    Il linguaggio degli anelli ordinati è:
+    \[ L_{or} = (\{<\},\{0,1,+,\cdot\},\ar_{or})
+    \]
+    dove:
+    \begin{align*}
+        &\ar_{or}(<) = 2 &&\text{\textcolor{orange}{$<$} è un \underline{simbolo di relazione binaria}} \\
+        &\ar_{or}(+) = \ar_{or}(\cdot) = 2 &&\text{\textcolor{orange}{+} e \textcolor{orange}{$\cdot$} sono \underline{simboli di funzione binaria}} \\
+        &\ar_{or}(0) = \ar_{or}(1) = 0 &&\text{\textcolor{orange}{0} e \textcolor{orange}{1} sono \underline{simboli di costante}}
+    \end{align*}
+    Si osservi che i simboli di constante li vediamo come funzioni di arietà 0.
+\end{example}
+
+\textcolor{MidnightBlue}{\underline{Nota}: qui c'è un piccolo conflitto nella terminologia, perché, secondo la definizione precedente, un ``linguaggio'' è, in pratica, la collezione dei simboli di base
+di una teoria, mentre abbiamo già chiamato ``linguaggio'' l'insieme delle stringhe. È così non è colpa mia.}
+
+\begin{remark}
+    Nella definizione di linguaggio ammettiamo simboli di funzione 0-ari, che chiameremo \vocab{simboli di costante}, e simboli di relazione 0-ari, che chiameremo \vocab{simboli di costante proposizionale}.
+    Le costanti proposizionali ammetteranno due sole interpretazioni: \emph{vero} e \emph{falso}.
+\end{remark}
+
+Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F,\ar)$.
+
+\begin{definition}
+    [$L$-termine]
+    Gli \vocab{$L$-termini} sono stringhe dell'alfabeto dato da:
+    \[ F \sqcup \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}
+    \]
+    Chiamiamo l'insieme numerabile:
+    \[ \Var \Mydef \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} = \{\textcolor{purple}{x_i}\}_{i \in \NN}
+    \]
+    insieme dei \vocab{simboli di variabile}. Un \vocab{$L$-termine} è quindi una stringa in $F \sqcup \Var \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}$, e può essere [definito induttivamente come segue]:
+    \begin{itemize}
+        \item un simbolo di variabile $\textcolor{purple}{x_i} \in \Var$
+        \item la stringa $\textcolor{purple}{f(}t_1\textcolor{purple}{,}t_2\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, dove $\textcolor{purple}{f} \in F$ è un simbolo di funzione, $t_1,\ldots,t_k$ sono $L$-termini, e $\ar(f) = k$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Se $\textcolor{purple}{c}$ è un simbolo di costante - funzione 0-aria - allora $\textcolor{purple}{c}()$ è un $L$-termine. In pratica, ometteremo le parentesi, scrivendo semplicemente $\textcolor{purple}{c}$.
+    Similmente useremo, per i simboli che denotano le operazioni aritmetiche, la comune \emph{notazione infissa}, per esempio $x_0 + (x_1 \cdot x_2)$ in luogo di $+(x_0, \cdot(x_1,x_2))$.
+    Infine ci prenderemo la libertà di usare scritture diverse da $x_0,x_1,x_2$ etc. per i simboli di variabile, es. $x+y\cdot z$, dove non può esserci confusione.
+    Non bisogna confondere le scritture di questo tipo $x+y\cdot z$, che sono abbreviazioni, un stereografia che impieghiamo fra di noi per parlare dei termini, con i termini stessi, che sono gli oggetti definiti formalmente.
+\end{remark}
+
+\begin{example}
+    Ecco alcuni esempi di $L_{or}$ termini:
+    \[ \cdot(+(x_0,1()),x_1) \qquad +(+(1(),1()),1())
+    \]
+    vulgo:
+    \[ (x_0 + 1) \cdot x_1 \qquad (1 + 1) + 1
+    \]
+\end{example}
+
+\begin{definition}
+    [$L$-formula]
+    Le \vocab{$L$-formule} sono stringhe dell'alfabeto dato da:
+    \[ F \sqcup R \sqcup \Var \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}, \textcolor{purple}{\top}, \textcolor{purple}{\bot}, \textcolor{purple}{\neg}, \textcolor{purple}{\land}, \textcolor{purple}{\lor}, \textcolor{purple}{\to}, \textcolor{purple}{\forall}, \textcolor{purple}{\exists}\}\,\footnote{Pertanto
+    la differenza sostanziale tra $L$-termini ed $L$-formule sta nel fatto che, nelle seconde, le stringe possono essere costruite ricorsivamente anche usando connettivi logici e quantificatori (ed usando come base anche relazioni di $L$-termini (e non funzioni)).}
+    \]
+    Una $L$-formula può essere una \vocab{formula atomica}, ossia:
+    \begin{itemize}
+        \item $\textcolor{red}{\top}$ o $\textcolor{purple}{\bot}$,
+        \item $\textcolor{red}{r(} t_1\textcolor{purple}{,} t_2\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$ con $\textcolor{purple}{r} \in R$ simbolo di relazione e $t_1,\ldots,t_k$ $L$-termini, e $\ar(r) = k$,
+        \item $t_1\, \textcolor{red}{=}\, t_2$ con $t_1,t_2$ $L$-termini. 
+    \end{itemize}
+    oppure è ottenuta combinando formule atomiche per mezzo di \vocab{connettivi logici} e \vocab{quantificatori}:
+    \begin{itemize}
+        \item $\textcolor{red}{(\neg\,} \varphi\textcolor{red}{)}$ con $\varphi$ $L$-formula,
+        \item $\textcolor{red}{(} \varphi \,\textcolor{red}{\land}\, \psi\textcolor{red}{)}$ con $\varphi,\psi$ $L$-formule,
+        \item $\textcolor{red}{(} \varphi \,\textcolor{red}{\lor}\, \psi\textcolor{red}{)}$ con $\varphi,\psi$ $L$-formule,
+        \item $\textcolor{red}{(} \varphi \,\textcolor{red}{\to}\, \psi\textcolor{red}{)}$ con $\varphi,\psi$ $L$-formule,
+        \item $\textcolor{red}{(\forall x_k} \;\varphi\textcolor{red}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile,
+        \item $\textcolor{red}{(\exists x_k} \;\varphi\textcolor{red}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile.
+    \end{itemize}
+\end{definition}
