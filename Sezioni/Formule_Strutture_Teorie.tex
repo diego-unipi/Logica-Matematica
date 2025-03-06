@@ -4,7 +4,7 @@ ossia sequenze finite di simboli, di un certo \vocab{alfabeto}\footnote{Tecnicam
 Da un punto di vista tecnico, se vogliamo formalizzare il nostro discorso,
 per esempio, nella teoria degli insiemi, potremmo dire che l'alfabeto può essere un insieme qualunque.
 Se, per esempio, vogliamo usare come alfabeto $A = \{a,b,c,\ldots,z\}$, dove $a,b,c$, etc. possono essere qualunque, purché distinti fra loro,
-allora le stringhe sono sequenze \textcolor{red}{finite} come, per esempio:
+allora le stringhe sono sequenze \textcolor{purple}{finite} come, per esempio:
 \[ () \qquad (a,x,a,x,a,x,a,x,a,x) \qquad (m,l,\ddot{o})
 \]
 che conviene scrivere più compattamente come:
@@ -12,7 +12,7 @@ che conviene scrivere più compattamente come:
 \]
 L'ambiente in cui formalizziamo le nostre definizioni, in questo caso la teoria degli insiemi, si dice \vocab{metateoria}.
 Non vogliamo forzare una particolare scelta per la metateoria. Sarà elementare formalizzare il materiale di questo corso, per chi,
-per esempio, ha seguito il corso di \href{https://ciovil.li/eti22/}{\textcolor{red}{Elementi di Teoria degli Insiemi}}, prendendo come 
+per esempio, ha seguito il corso di \href{https://ciovil.li/eti22/}{\textcolor{purple}{Elementi di Teoria degli Insiemi}}, prendendo come 
 metateoria la teoria degli insiemi di Zermelo-Fraenkel ($\mathsf{ZFC}$). La nostra esposizione sarà basata su $\mathsf{ZFC}$, mantenendo, però,
 un tono informale, con due promesse: di non fare leva sui dettagli incidentali della formalizzazione di $\mathsf{ZFC}$, e di evidenziare i casi in cui
 si sfruttano principi insiemistici non costitutivi - in pratica, forme dell'assioma di scelta. \\
@@ -61,7 +61,7 @@ Spesso non c'è un unico modo di formalizzare un concetto.
     \end{itemize}
 \end{example}
 
-\textcolor{red}{Crucialmente} è ammesso quantificare solo su elementi della struttura, non, per esempio, sui sottoinsiemi. Questo è il motivo per cui si parla di \textbf{logica al primo ordine}.
+\textcolor{purple}{Crucialmente} è ammesso quantificare solo su elementi della struttura, non, per esempio, sui sottoinsiemi. Questo è il motivo per cui si parla di \textbf{logica al primo ordine}.
 della struttura, sui numeri naturali o sulle formule stesse. È per questa ragione che la logica che studiamo si dice \vocab{del primo ordine}: se, per esempio, potessimo quantificare anche sui sottoinsiemi
 della struttura, allora lavoreremmo al \vocab{secondo ordine}. $\mathsf{ZFC}$, la teoria degli insiemi, ricorderete, è formalizzata al primo ordine - c'è un solo tipo di oggetti, gli insiemi, e si può dire ``per ogni insieme $x$''
 o ``esiste un insieme $x$''. Quando, in $\mathsf{ZFC}$, si quantifica sui sottoinsiemi, lo si fa per mezzo di una perifrasi, $\forall x \subseteq y \ldots$ significa $\forall x \; x \subseteq y \to \ldots$, e questo è sottilmente diverso
@@ -106,21 +106,21 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
 \begin{definition}
     [$L$-termine]
     Gli \vocab{$L$-termini} sono stringhe dell'alfabeto dato da:
-    \[ F \sqcup \{\textcolor{red}{x_0},\textcolor{red}{x_1},\textcolor{red}{x_2}, \ldots\} \sqcup \{\textcolor{red}{(}, \textcolor{red}{)}, \textcolor{red}{,}\}
+    \[ F \sqcup \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}
     \]
     Chiamiamo l'insieme numerabile:
-    \[ \Var \Mydef \{\textcolor{red}{x_0},\textcolor{red}{x_1},\textcolor{red}{x_2}, \ldots\} = \{\textcolor{red}{x_i}\}_{i \in \NN}
+    \[ \Var \Mydef \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} = \{\textcolor{purple}{x_i}\}_{i \in \NN}
     \]
-    insieme dei \vocab{simboli di variabile}. Un \vocab{$L$-termine} è quindi una stringa in $F \sqcup \Var \sqcup \{\textcolor{red}{(}, \textcolor{red}{)}, \textcolor{red}{,}\}$, e può essere [definito induttivamente come segue]:
+    insieme dei \vocab{simboli di variabile}. Un \vocab{$L$-termine} è quindi una stringa in $F \sqcup \Var \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}$, e può essere [definito induttivamente come segue]:
     \begin{itemize}
-        \item un simbolo di variabile $\textcolor{red}{x_i} \in \Var$
-        \item la stringa $\textcolor{red}{f(}t_1\textcolor{red}{,}t_2\textcolor{red}{,} \ldots\textcolor{red}{,} t_k\textcolor{red}{)}$, dove $\textcolor{red}{f} \in F$ è un simbolo di funzione, $t_1,\ldots,t_k$ sono $L$-termini, e $\ar(f) = k$.
+        \item un simbolo di variabile $\textcolor{purple}{x_i} \in \Var$
+        \item la stringa $\textcolor{purple}{f(}t_1\textcolor{purple}{,}t_2\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, dove $\textcolor{purple}{f} \in F$ è un simbolo di funzione, $t_1,\ldots,t_k$ sono $L$-termini, e $\ar(f) = k$.
     \end{itemize}
 \end{definition}
 
 \begin{remark}
-    Se $\textcolor{red}{c}$ è un simbolo di costante - funzione 0-aria - allora $\textcolor{red}{c()}$ è un $L$-termine (abbiamo detto che le funzioni $k$-arie valutate in $L$-termini sono a loro volta $L$-termini, dunque $c()$ lo è in automatico).
-    In pratica, ometteremo le parentesi, scrivendo semplicemente $\textcolor{red}{c}$.
+    Se $\textcolor{purple}{c}$ è un simbolo di costante - funzione 0-aria - allora $\textcolor{purple}{c()}$ è un $L$-termine (abbiamo detto che le funzioni $k$-arie valutate in $L$-termini sono a loro volta $L$-termini, dunque $c()$ lo è in automatico).
+    In pratica, ometteremo le parentesi, scrivendo semplicemente $\textcolor{purple}{c}$.
     Similmente useremo, per i simboli che denotano le operazioni aritmetiche, la comune \emph{notazione infissa}, per esempio $x_0 + (x_1 \cdot x_2)$ in luogo di $+(x_0, \cdot(x_1,x_2))$.
     Infine ci prenderemo la libertà di usare scritture diverse da $x_0,x_1,x_2$ etc. per i simboli di variabile, es. $x+y\cdot z$, dove non può esserci confusione.
     Non bisogna confondere le scritture di questo tipo $x+y\cdot z$, che sono abbreviazioni, un stereografia che impieghiamo fra di noi per parlare dei termini, con i termini stessi, che sono gli oggetti definiti formalmente.
@@ -138,23 +138,23 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
 \begin{definition}
     [$L$-formula]
     Le \vocab{$L$-formule} sono stringhe dell'alfabeto dato da:
-    \[ F \sqcup R \sqcup \Var \sqcup \{\textcolor{red}{(}, \textcolor{red}{)}, \textcolor{red}{,}, \textcolor{red}{\top}, \textcolor{red}{\bot}, \textcolor{red}{\neg}, \textcolor{red}{\land}, \textcolor{red}{\lor}, \textcolor{red}{\to}, \textcolor{red}{\forall}, \textcolor{red}{\exists}\}\,\footnote{Pertanto
+    \[ F \sqcup R \sqcup \Var \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}, \textcolor{purple}{\top}, \textcolor{purple}{\bot}, \textcolor{purple}{\neg}, \textcolor{purple}{\land}, \textcolor{purple}{\lor}, \textcolor{purple}{\to}, \textcolor{purple}{\forall}, \textcolor{purple}{\exists}\}\,\footnote{Pertanto
     la differenza sostanziale tra $L$-termini ed $L$-formule sta nel fatto che, nelle seconde, le stringe possono essere costruite ricorsivamente anche usando connettivi logici e quantificatori (ed usando come base anche relazioni di $L$-termini (e non funzioni)).}
     \]
     Una $L$-formula può essere una \vocab{formula atomica}, ossia:
     \begin{itemize}
-        \item $\textcolor{red}{\top}$ o $\textcolor{red}{\bot}$,
-        \item $\textcolor{red}{r(} t_1\textcolor{red}{,} t_2\textcolor{red}{,} \ldots\textcolor{red}{,} t_k\textcolor{red}{)}$ con $\textcolor{red}{r} \in R$ simbolo di relazione e $t_1,\ldots,t_k$ $L$-termini, e $\ar(r) = k$,
-        \item $t_1\, \textcolor{red}{=}\, t_2$ con $t_1,t_2$ $L$-termini. 
+        \item $\textcolor{purple}{\top}$ o $\textcolor{purple}{\bot}$,
+        \item $\textcolor{purple}{r(} t_1\textcolor{purple}{,} t_2\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$ con $\textcolor{purple}{r} \in R$ simbolo di relazione e $t_1,\ldots,t_k$ $L$-termini, e $\ar(r) = k$,
+        \item $t_1\, \textcolor{purple}{=}\, t_2$ con $t_1,t_2$ $L$-termini. 
     \end{itemize}
     oppure è ottenuta combinando formule atomiche per mezzo di \vocab{connettivi logici} e \vocab{quantificatori}:
     \begin{itemize}
-        \item $\textcolor{red}{(\neg\,} \varphi\textcolor{red}{)}$ con $\varphi$ $L$-formula,
-        \item $\textcolor{red}{(} \varphi \,\textcolor{red}{\land}\, \psi\textcolor{red}{)}$ con $\varphi,\psi$ $L$-formule,
-        \item $\textcolor{red}{(} \varphi \,\textcolor{red}{\lor}\, \psi\textcolor{red}{)}$ con $\varphi,\psi$ $L$-formule,
-        \item $\textcolor{red}{(} \varphi \,\textcolor{red}{\to}\, \psi\textcolor{red}{)}$ con $\varphi,\psi$ $L$-formule,
-        \item $\textcolor{red}{(\forall x_k} \;\varphi\textcolor{red}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile,
-        \item $\textcolor{red}{(\exists x_k} \;\varphi\textcolor{red}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile.
+        \item $\textcolor{purple}{(\neg\,} \varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula,
+        \item $\textcolor{purple}{(} \varphi \,\textcolor{purple}{\land}\, \psi\textcolor{purple}{)}$ con $\varphi,\psi$ $L$-formule,
+        \item $\textcolor{purple}{(} \varphi \,\textcolor{purple}{\lor}\, \psi\textcolor{purple}{)}$ con $\varphi,\psi$ $L$-formule,
+        \item $\textcolor{purple}{(} \varphi \,\textcolor{purple}{\to}\, \psi\textcolor{purple}{)}$ con $\varphi,\psi$ $L$-formule,
+        \item $\textcolor{purple}{(\forall x_k} \;\varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile,
+        \item $\textcolor{purple}{(\exists x_k} \;\varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile.
     \end{itemize}
 \end{definition}
 
@@ -177,10 +177,10 @@ dipende solo da $f$ e dalle sue componenti. Vediamo qualche esempio.
     \end{itemize}
     inoltre:
     \begin{itemize}
-        \item se $\varphi = \textcolor{red}{(\neg}\, \psi \textcolor{red}{)}$, allora tra le sottoformule di $\varphi$ ci sono anche le sottoformule di $\psi$,
-        \item se $\varphi = \textcolor{red}{(} \psi_1 \,\textcolor{red}{\land} \,\psi_2 \textcolor{red}{)}$ o $\varphi = \textcolor{red}{(} \psi_1\, \textcolor{red}{\lor}\, \psi_2 \textcolor{red}{)}$ o
-        $\varphi = \textcolor{red}{(} \psi_1\, \textcolor{red}{\to} \,\psi_2 \textcolor{red}{)}$, allora tra le sottoformule di $\varphi$ ci sono anche le sottoformule di $\psi_1$ e $\psi_2$,
-        \item se $\varphi = \textcolor{red}{(\forall x_k} \,\psi \textcolor{red}{)}$ o $\varphi = \textcolor{red}{(\exists x_k}\, \psi \textcolor{red}{)}$, allora tra le sottoformule di $\varphi$ ci sono anche le sottoformule di $\psi$.
+        \item se $\varphi = \textcolor{purple}{(\neg}\, \psi \textcolor{purple}{)}$, allora tra le sottoformule di $\varphi$ ci sono anche le sottoformule di $\psi$,
+        \item se $\varphi = \textcolor{purple}{(} \psi_1 \,\textcolor{purple}{\land} \,\psi_2 \textcolor{purple}{)}$ o $\varphi = \textcolor{purple}{(} \psi_1\, \textcolor{purple}{\lor}\, \psi_2 \textcolor{purple}{)}$ o
+        $\varphi = \textcolor{purple}{(} \psi_1\, \textcolor{purple}{\to} \,\psi_2 \textcolor{purple}{)}$, allora tra le sottoformule di $\varphi$ ci sono anche le sottoformule di $\psi_1$ e $\psi_2$,
+        \item se $\varphi = \textcolor{purple}{(\forall x_k} \,\psi \textcolor{purple}{)}$ o $\varphi = \textcolor{purple}{(\exists x_k}\, \psi \textcolor{purple}{)}$, allora tra le sottoformule di $\varphi$ ci sono anche le sottoformule di $\psi$.
     \end{itemize}
 \end{definition}
 
@@ -188,29 +188,29 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
 
 \begin{definition}
     [Variabili libere di una formula]
-    Definiamo prima le \vocab{variabili libere di un termine}. Dato un $L$-termine $t$ definiamo $\textcolor{red}{\var(} t \textcolor{red}{)}$ dicendo che:
+    Definiamo prima le \vocab{variabili libere di un termine}. Dato un $L$-termine $t$ definiamo $\textcolor{purple}{\var(} t \textcolor{purple}{)}$ dicendo che:
     \begin{itemize}
-        \item se $t = \textcolor{red}{x_i} \in \Var$, allora $\var(t) = \{\textcolor{red}{x_i}\}$,
-        \item se $t = \textcolor{red}{f(}t_1\textcolor{red}{,} \ldots\textcolor{red}{,} t_k\textcolor{red}{)}$, allora $\var(t) = \bigcup_{i = 1}^k \var(t_k)$.
+        \item se $t = \textcolor{purple}{x_i} \in \Var$, allora $\var(t) = \{\textcolor{purple}{x_i}\}$,
+        \item se $t = \textcolor{purple}{f(}t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, allora $\var(t) = \bigcup_{i = 1}^k \var(t_k)$.
     \end{itemize}
-    Adesso che abbiamo definito ricorsivamente le variabili libere di un $L$-termine $t$, possiamo definire le \vocab{variabili libere di una $L$-formula} $\varphi$, $\textcolor{red}{\vl(} \varphi \textcolor{red}{)}$ come segue per le formule atomiche:
+    Adesso che abbiamo definito ricorsivamente le variabili libere di un $L$-termine $t$, possiamo definire le \vocab{variabili libere di una $L$-formula} $\varphi$, $\textcolor{purple}{\vl(} \varphi \textcolor{purple}{)}$ come segue per le formule atomiche:
     \begin{itemize}
-        \item se $\varphi = \textcolor{red}{\top}$ o $\varphi = \textcolor{red}{\bot}$, allora $\vl(\varphi) = \emptyset$,
-        \item se $\varphi = \textcolor{red}{r(} t_1\textcolor{red}{,} \ldots\textcolor{red}{,} t_k\textcolor{red}{)}$, allora $\vl(\varphi) = \bigcup_{i = 1}^k \var(t_k)$,
-        \item se $\varphi = t_1\, \textcolor{red}{=}\, t_2$, allora $\vl(\varphi) = \var(t_1) \cup \var(t_2)$.
+        \item se $\varphi = \textcolor{purple}{\top}$ o $\varphi = \textcolor{purple}{\bot}$, allora $\vl(\varphi) = \emptyset$,
+        \item se $\varphi = \textcolor{purple}{r(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, allora $\vl(\varphi) = \bigcup_{i = 1}^k \var(t_k)$,
+        \item se $\varphi = t_1\, \textcolor{purple}{=}\, t_2$, allora $\vl(\varphi) = \var(t_1) \cup \var(t_2)$.
     \end{itemize}
     e per le formule composte:
     \begin{itemize}
-        \item se $\varphi = \textcolor{red}{(\neg}\, \psi \textcolor{red}{)}$, allora $\vl(\varphi) = \vl(\psi)$,
-        \item se $\varphi = \textcolor{red}{(} \psi_1 \,\textcolor{red}{\land} \,\psi_2 \textcolor{red}{)}$ o $\varphi = \textcolor{red}{(} \psi_1\, \textcolor{red}{\lor}\, \psi_2 \textcolor{red}{)}$ o $\varphi = \textcolor{red}{(} \psi_1\, \textcolor{red}{\to} \,\psi_2 \textcolor{red}{)}$, allora $\vl(\varphi) = \vl(\psi_1) \cup \vl(\psi_2)$,
-        \item se $\varphi = \textcolor{red}{(\forall x_k} \,\psi \textcolor{red}{)}$ o $\varphi = \textcolor{red}{(\exists x_k}\, \psi \textcolor{red}{)}$, allora $\vl(\varphi) = \vl(\psi) \setminus \{\textcolor{red}{x_k}\}$.
+        \item se $\varphi = \textcolor{purple}{(\neg}\, \psi \textcolor{purple}{)}$, allora $\vl(\varphi) = \vl(\psi)$,
+        \item se $\varphi = \textcolor{purple}{(} \psi_1 \,\textcolor{purple}{\land} \,\psi_2 \textcolor{purple}{)}$ o $\varphi = \textcolor{purple}{(} \psi_1\, \textcolor{purple}{\lor}\, \psi_2 \textcolor{purple}{)}$ o $\varphi = \textcolor{purple}{(} \psi_1\, \textcolor{purple}{\to} \,\psi_2 \textcolor{purple}{)}$, allora $\vl(\varphi) = \vl(\psi_1) \cup \vl(\psi_2)$,
+        \item se $\varphi = \textcolor{purple}{(\forall x_k} \,\psi \textcolor{purple}{)}$ o $\varphi = \textcolor{purple}{(\exists x_k}\, \psi \textcolor{purple}{)}$, allora $\vl(\varphi) = \vl(\psi) \setminus \{\textcolor{purple}{x_k}\}$.
     \end{itemize}
 \end{definition}
 
 \begin{remark}
     [Variabili legate]
-    L'ultimo caso è cruciale: nelle formule $\textcolor{red}{\forall x_k} \, \psi$ e $\textcolor{red}{\exists x_k} \, \psi$ la variabile $\textcolor{red}{x_k}$ non è libera, è \vocab{legata} dal quantificatore.
-    Si noti che non è richiesto che $\textcolor{red}{x_k}$ compaia fra le variabili libere di $\phi$ [Possibile typo di Mamino $\psi$?].
+    L'ultimo caso è cruciale: nelle formule $\textcolor{purple}{\forall x_k} \, \psi$ e $\textcolor{purple}{\exists x_k} \, \psi$ la variabile $\textcolor{purple}{x_k}$ non è libera, è \vocab{legata} dal quantificatore.
+    Si noti che non è richiesto che $\textcolor{purple}{x_k}$ compaia fra le variabili libere di $\phi$ [Possibile typo di Mamino $\psi$?].
 \end{remark}
 
 \begin{example}
@@ -229,7 +229,7 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
 
 \begin{note}
     Le definizioni date in questa sezione hanno lo scopo di trasformare gli enunciati matematici in oggetti matematici essi stessi: le formule.
-    Questa sezione serve per descrivere formalmente i nostri oggetti di studio e \textcolor{red}{non ha un intento normativo}\footnote{Non stiamo dicendo come 
+    Questa sezione serve per descrivere formalmente i nostri oggetti di studio e \textcolor{purple}{non ha un intento normativo}\footnote{Non stiamo dicendo come 
     la matematica dovrebbe essere fatta/scritta, stiamo constatando che viene fatta/scritta in certi modi, e stiamo formalizzando precisamente cosa sono questi modi.}.
     In particolare, a patto di non causare ambiguità, scriviamo le formule in modo abbreviato in ogni situazione pratica. Così ad esempio:
     \begin{align*}
@@ -239,3 +239,85 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
 \end{note}
 
 \subsection{Cosa significano le formule}
+Definiamo in questa sezione un concetto di \vocab{struttura} che generalizza le familiari strutture algebriche - gruppi, anelli, ordini, etc.
+Diremo quindi cosa significa che una struttura soddisfa una formula. Questo ci permetterà di precisare la nozione di \vocab{conseguenza logica}:
+$\psi$ è conseguenza logica di $\varphi$ se ogni struttura che soddisfa $\varphi$ soddisfa anche $\psi$. Grazie alla nozione di conseguenza logica, potremo parlare 
+di \vocab{teorie} e dei loro \vocab{modelli} - per esempio i gruppi saranno i modelli della teoria dei gruppi.
+Insomma, daremo una \vocab{semantica} per la logica del primo ordine, ossia una risposta lla domanda ``cosa significano le formule?''.
+
+\begin{definition}
+    [$L$-struttura]
+    Fissato un linguaggio al primo ordine $L = (R,F,\ar)$, diciamo che una \vocab{$L$-struttura} $M = (D;i)$ è il dato di un insieme $D$ non vuoto, detto 
+    \vocab{dominio} della struttura, e di una funzione $i$, che chiameremo \vocab{interpretazione dei simboli}, avente come dominio $F \sqcup R$ (il nostro alfabeto) e tale che:
+    \begin{align*}
+        &\forall r \in  R \quad i(r) \subseteq D^{\ar(r)} \\
+        &\forall f \in F \quad i(f) : D^{\ar(f)} \to D
+    \end{align*}
+    ossia un simbolo di relazione $n$-aria è interpretato come un sottoinsieme di $D^n$, e un simbolo di funzione $n$-aria come una funzione da $D^n$ a $D$.
+\end{definition}
+
+\begin{note}
+    In molti casi, è chiaro dal contesto quali siano le arietà e le interpretazioni dei simboli di un certo linguaggio. Per esempio, se parliamo della struttura
+    $(\ZZ, \textcolor{purple}{0}, \textcolor{purple}+,\textcolor{purple}-, \textcolor{purple}\cdot, \textcolor{purple}<)$ è chiaro che ci riferiamo alla struttura che ha per dominio $\ZZ$,
+    nel linguaggio $L = (R,F)$ con $R = \{\textcolor{purple}{<}\}$ e $F = \{\textcolor{purple}0, \textcolor{purple}+,\textcolor{purple}-, \textcolor{purple}\cdot\}$, con:
+    \[ \ar(\textcolor{purple}<) = 2 \qquad \ar(\textcolor{purple}+) = \ar(\textcolor{purple}\cdot) = 2 \qquad \ar(\textcolor{purple}-) = 1 \qquad \ar(\textcolor{purple}0) = 0
+    \]
+    con:
+    \begin{align*}
+        &i(\textcolor{purple}<) = \{ (x,y) \in \ZZ^2 \mid x < y \} \subseteq \ZZ^2 = D^{\ar(\textcolor{purple}<)} \\
+        &i(\textcolor{purple}0) : D^{\ar(\textcolor{purple}0)} = \{\bullet\} \in \ZZ = D \qquad i(\textcolor{purple}0)(\bullet) = 0\\
+        &i(\textcolor{purple}-) : D^{\ar(\textcolor{purple}-)} = \ZZ \to \ZZ \qquad i(\textcolor{purple}-)(n) = -n \\
+        &i(\textcolor{purple}+) : D^{\ar(\textcolor{purple}+)} = \ZZ^2 \to \ZZ \qquad i(\textcolor{purple}+)(n,m) = n+m \\
+        &i(\textcolor{purple}\cdot) : D^{\ar(\textcolor{purple}\cdot)} = \ZZ^2 \to \ZZ \qquad i(\textcolor{purple}\cdot)(n,m) = n \cdot m
+    \end{align*}
+    Non c'è dubbio che conviene scrivere $(\ZZ; \textcolor{purple}0, \textcolor{purple}+,\textcolor{purple}-, \textcolor{purple}\cdot, \textcolor{purple}<)$, e non ci si confonde.
+    Detta $M$ questa struttura, in luogo, per esempio, di $i(\textcolor{purple}+)$, scriveremo semplicemente $+_M$ o anche solo $+$, così $i(\textcolor{purple}+)(2,3) = 2 +_M 3 = 2+3$.
+\end{note}
+
+Per il resto di questa sezione fissiamo una $L$-struttura $M = (D;i)$. Vogliamo dire quando una formula $\varphi$ è \vocab{valida} nella struttura $M$, o, equivalentemente, $M$ \vocab{soddisfa} $\varphi$,
+in simboli $M \models \varphi$. Per poter formulare la definizione per ricorsione strutturale, occorre generalizzare il concetto introducendo un \vocab{ambiente} o \vocab{valutazione delle variabili} $v$.
+Così, per esempio, $M \models \{v\} \; \textcolor{purple}{x = y}$ se e solo se l'ambiente $v$ dà a $\textcolor{purple}{x}$ e $\textcolor{purple}{y}$ il medesimo valore.
+
+\begin{definition}
+    [Valutazione delle variabili]
+    \vocab{Valutazione delle variabili} è un modo poetico per dire funzione da $\Var$ a $D$.
+\end{definition}
+
+\begin{notation}
+    Data una valutazione delle variabili $v$ e un $a \in D$, indichiamo con $v[a/x_n]$ la valutazione:
+    \[ v[a/x_n](x_i)\begin{cases}
+        v(x_i) &\text{se $i \neq n$} \\
+        a &\text{se $i = n$}
+    \end{cases}
+    \]
+    Con $v[a_1/x_{n_1},\ldots,a_k/x_{n_k}]$ indichiamo $v[a_1/x_{n_1}]\ldots[a_k/x_{n_k}]$.
+\end{notation}
+
+\begin{definition}
+    [Semantica di Tarski]
+    Ricordiamo che è fissato un linguaggio al primo ordine $L$ ed una $L$-struttura $M$. Fissiamo anche un ambiente $v$.
+    In questo contesto possiamo definire per ricorsione strutturale l'\vocab{interpretazione} di una $L$-formula, partendo dagli $L$-termini come segue:
+    \[ \begin{aligned}
+        \{v\}_M \, \textcolor{purple}{x_k} &\Mydef v(\textcolor{purple}{x_k}) \\
+        \{v\}_M \, \textcolor{purple}{f}\textcolor{purple}{(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k \textcolor{purple}{)} &\Mydef i(\textcolor{purple}{f})\left(\{v\}_M \, t_1, \ldots, \{v\}_M \, t_k\right) \qquad \text{con $\textcolor{purple}{f} \in F$}
+    \end{aligned} \]
+    La relazione di \vocab{soddisfacibilità} $M \models \{v\}\varphi$ (ometteremo $M$ al pedice d'ora in poi) per una formula $\varphi$ nella struttura $M$ e nell'ambiente $v$ è definita ricorsivamente per le formule atomiche da:
+    \begin{align*}
+        &M \models \{v\} \textcolor{purple}{\,\top} \qquad \neg M \models \{v\} \textcolor{purple}{\,\bot} \\
+        &M \models \{v\} \textcolor{purple}{\,r(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k \textcolor{purple}{)} \overset{\text{def}}{\iff} \left(\{v\}_M \, t_1, \ldots, \{v\}_M \, t_k\right) \in i(\textcolor{purple}{r}) =: r_M \\
+        &M \models \{v\} \textcolor{purple}{\,t_1 = t_2} \overset{\text{def}}{\iff} \{v\}_M \, t_1 = \{v\}_M \, t_2
+    \end{align*}
+    ed infine la soddisfacibilità per le $L$-formule composte è definita come segue:
+    \begin{align*}
+        &M \models \{v\} \textcolor{purple}{(\neg}\, \psi \textcolor{purple}{)} &&\overset{\text{def}}{\iff} \neg M \models \{v\} \psi \\
+        &M \models \{v\} \textcolor{purple}{(} \psi_1 \,\textcolor{purple}{\land} \,\psi_2 \textcolor{purple}{)} &&\overset{\text{def}}{\iff} M \models \{v\} \psi_1 \land M \models \{v\} \psi_2 \\
+        &M \models \{v\} \textcolor{purple}{(} \psi_1\, \textcolor{purple}{\lor}\, \psi_2 \textcolor{purple}{)} &&\overset{\text{def}}{\iff} M \models \{v\} \psi_1 \lor M \models \{v\} \psi_2 \\
+        &M \models \{v\} \textcolor{purple}{(} \psi_1\, \textcolor{purple}{\to} \,\psi_2 \textcolor{purple}{)} &&\overset{\text{def}}{\iff} M \models \{v\} \psi_1 \to M \models \{v\} \psi_2 \\
+        &M \models \{v\} \textcolor{purple}{(\forall x_k} \,\psi \textcolor{purple}{)} &&\overset{\text{def}}{\iff} \forall a \in D \quad M \models \{v[a/\textcolor{purple}{x_k}]\} \psi \\
+        &M \models \{v\} \textcolor{purple}{(\exists x_k}\, \psi \textcolor{purple}{)} &&\overset{\text{def}}{\iff} \exists a \in D \quad M \models \{v[a/\textcolor{purple}{x_k}]\} \psi
+    \end{align*}
+\end{definition}
+
+\begin{example}
+    Sia $(M;\textcolor{purple}p)$, dove $\textcolor{purple}p$ è un simbolo di relazione unaria. Cosa significa, secondo la semantica di Tarski, che $M \models \{v\}\,\textcolor{purple}{\exists x(p(x) \to \forall y \; p(y))}$?
+\end{example}
