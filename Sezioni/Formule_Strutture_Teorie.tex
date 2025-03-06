@@ -321,3 +321,16 @@ Così, per esempio, $M \models \{v\} \; \textcolor{purple}{x = y}$ se e solo se 
 \begin{example}
     Sia $(M;\textcolor{purple}p)$, dove $\textcolor{purple}p$ è un simbolo di relazione unaria. Cosa significa, secondo la semantica di Tarski, che $M \models \{v\}\,\textcolor{purple}{\exists x(p(x) \to \forall y \; p(y))}$?
 \end{example}
+
+\begin{soln}
+    Intuitivamente, ci aspettiamo che asserire che $M$ soddisfa quella formula equivalga, nella metateoria, alla proposizione $\exists a \in D(a \in p_M \to \forall b \in D \; b \in p_M)$.
+    Vediamo come questo segue formalmente dalla semantica di Tarski.
+    \begin{align*}
+        & M \models \{v\} \textcolor{purple}{(\exists x(p(x) \to \forall y \; p(y))} \\
+        & \exists a \in D \; M \models \{v[a/\textcolor{purple}{x}]\} \textcolor{purple}{(p(x) \to \forall y \; p(y))} \\
+        & \exists a \in D \; M \models \{v[a/\textcolor{purple}{x}]\} \textcolor{purple}{p(x)} \to M \models \{v[a/\textcolor{purple}{x}]\} \textcolor{purple}{\forall y \; p(y)} \\
+        & \exists a \in D \; \{v[a/\textcolor{purple}{x}]\}_M \textcolor{purple}{p(x)} \to \forall b \in D \; M \models \{v[a/\textcolor{purple}{x},b/\textcolor{purple}{y}]\} \textcolor{purple}{p(y)} \\
+        & \exists a \in D \; \{v[a/\textcolor{purple}{x}]\}_M \textcolor{purple}{p(x)} \to \forall b \in D \; \{v[a/\textcolor{purple}{x},b/\textcolor{purple}{y}]\}_M \textcolor{purple}{p(y)} \\
+        & \exists a \in D \; a \in p_M \to \forall b \in D \; b \in p_M
+    \end{align*}
+\end{soln}
