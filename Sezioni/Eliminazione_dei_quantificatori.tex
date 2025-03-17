@@ -1,0 +1,168 @@
+\section{Eliminazione dei quantificatori}
+
+\begin{definition}[Formule equivalenti per una teoria]
+    Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalenti} per $T$,
+    denotato con $T \models \varphi \,\textcolor{red}{\leftrightarrow}\, \psi$ se $T \models \textcolor{red}{(} \varphi \rightarrow \psi \textcolor{red}{)} \land \textcolor{red}{(} \psi \rightarrow \varphi \textcolor{red}{)}$,
+    ossia $T,\varphi \models \psi$ e $T,\psi \models \varphi$.
+\end{definition}
+
+\begin{definition}
+    [Eliminazione dei quantificatori]
+    La $L$-teoria $T$ ha l'\vocab{eliminazione dei quantificatori} se ogni $L$-formula è equivalente, per $T$,
+    ad una formula senza quantificatori.
+\end{definition}
+
+Se una teoria coerente $T$ ha l'eliminazione dei quantificatori, e, per ogni formula chiusa \textcolor{red}{e senza quantificatori} $\varphi$, 
+vale $T \models \varphi$ o $T \models \textcolor{red}{\neg} \,\varphi$, allora $T$ è completa.
+
+Dimostreremo la seguente proposizione.
+
+\begin{proposition}
+    La teoria degli ordini lineari densi senza estremi $T_{oldse}$ ha l'eliminazione dei quantificatori.
+\end{proposition}
+
+\begin{corollary}
+    $T_{oldse}$ è completa.
+\end{corollary}
+
+Vediamo la dimostrazione del corollario.
+
+\begin{proof}
+    $T_{oldse}$ è coerente perché $\QQ \models T_{oldse}$. Inoltre, nel linguaggio di $T_{oldse}$,
+    non ci sono simboli di costante, quindi le uniche formule chiuse senza quantificatori sono 
+    combinazioni booleane di $\textcolor{red}{\top}$ e $\textcolor{red}{\bot}$. È immediato che queste formule
+    hanno un valore di verità definito.
+\end{proof}
+
+Altre teorie con l'eliminazione dei quantificatori sono, per esempio, $\Th(\CC,\textcolor{red}{0},\textcolor{red}{1},+,\cdot)$ e $\Th(\RR,\textcolor{red}{0},\textcolor{red}{1},+,\cdot,<)$:
+rispettivamente, la teoria dei campi algebricamente chiusi e la teoria dei campi reali chiusi.
+
+\begin{remark}
+    Se $\varphi_1$ è una sottoformula di $\psi_1$, e rimpiazziamo una occorrenza di $\varphi_1$ in $\psi_1$ con una $\varphi_2$, che soddisfa $T \models \varphi_1 \leftrightarrow \varphi_2$,
+    allora la formula $\psi_2$ ottenuta da questa sostituzione soddisfa $T \models \psi_1 \leftrightarrow \psi_2$.
+\end{remark}
+
+\begin{proof}
+    [Dell'osservazione]
+    Induzione strutturale.
+\end{proof}
+
+Introduciamo due nozioni di logica proposizionali che sono elementari ma spesso utili.
+
+\begin{definition}
+    [CNF e DNF]
+    Una formula senza quantificatori $\varphi$ è in \vocab{forma normale congiuntiva (CNF)} se:
+    \[ \varphi = \textcolor{red}{(}\, \alpha_{11} \, \textcolor{red}{\lor} \, \alpha_{12} \, \textcolor{red}{\lor} \, \dots \, \textcolor{red}{\lor} \, \alpha_{1n_1} \, \textcolor{red}{)} \, \textcolor{red}{\land} \, \dots \, \textcolor{red}{\land} \, \textcolor{red}{(}\, \alpha_{m1} \, \textcolor{red}{\lor} \, \alpha_{m2} \, \textcolor{red}{\lor} \, \dots \, \textcolor{red}{\lor} \, \alpha_{mn_m} \, \textcolor{red}{)}
+    \]
+    ovvero $\varphi$ una congiunzione di disgiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche. Simmetricamente,
+    $\varphi$ è in \vocab{forma normale disgiuntiva (DNF)} se:
+    \[ \varphi = \textcolor{red}{(}\, \alpha_{11} \, \textcolor{red}{\land} \, \alpha_{12} \, \textcolor{red}{\land} \, \dots \, \textcolor{red}{\land} \, \alpha_{1n_1} \, \textcolor{red}{)} \, \textcolor{red}{\lor} \, \dots \, \textcolor{red}{\lor} \, \textcolor{red}{(}\, \alpha_{m1} \, \textcolor{red}{\land} \, \alpha_{m2} \, \textcolor{red}{\land} \, \dots \, \textcolor{red}{\land} \, \alpha_{mn_m} \, \textcolor{red}{)}
+    \]
+    ovvero $\varphi$ una disgiunzione di congiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche.
+\end{definition}
+
+\begin{lemma}
+    Data una formula $\varphi$ senza quantificatori, esistono $\psi_1$ in CNF e $\psi_2$ in DNF equivalenti a $\varphi$ per la teoria vuota (e quindi per ogni teoria).
+\end{lemma}
+
+\begin{proof}
+    [Esercizio]
+\end{proof}
+
+\begin{proof}
+    [$T_{oldse}$ ha l'eliminazione dei quantificatori]
+    Per induzione strutturale, e sfruttando il fatto che $\models \textcolor{red}{(\forall\,x_k}\, \varphi\textcolor{red}{)} \to \textcolor{red}{(\neg\exists\,x_k\,\neg}\,\varphi\textcolor{red}{)}$,
+    vediamo che ci bastano, data una formula $\varphi$ senza quantificatori, trovare $\psi$ senza quantificatori tale che $T_{oldse} \models \textcolor{red}{(\exists\,x_k}\, \varphi\textcolor{red}{)} \,\textcolor{red}{\leftrightarrow}\, \psi$.
+\end{proof}
+
+\begin{exercise}
+ Da mettere.
+\end{exercise}
+
+\subsection{Ultraprodotti}
+Introduciamo una prima tecnica per costruire modelli. Usando gli ultraprodotti dimostreremo il seguente.
+
+\begin{theorem}
+    [Compattezza - versione semantica]
+    Data una $L$-teoria $T$ e una $L$-formula $\varphi$, se $T \models \varphi$ allora esiste un sottoinsieme finito $T' \subseteq T$,
+    tale che $T' \models \varphi$.
+\end{theorem}
+
+Ovvero se $\varphi$ è conseguenza logica di un insieme di premesse $T$, allora basta, in realtà, una quantità finita di queste premesse per implicare $\varphi$.
+Poco da stupirsi se si pensa alla conseguenza logica come dimostrabilità: infatti una dimostrazione \textcolor{purple}{- non abbiamo ancora formalizzato questo concetto -} è 
+un argomento di lunghezza finita, non ha quindi spazio per riferirsi a più di una quantità finita di premesse. D'altro canto, sia l'enunciato sia la dimostrazione che vedremo sono puramente semantici:
+la nozione di conseguenza logica che stiamo considerando è \textcolor{purple}{verità in tutte le strutture che soddisfano le premesse}.
+
+Per mostrare un'applicazione squisitamente matematica degli ultraprodotti, dimostreremo altresì il seguente.
+
+\begin{theorem}
+    [Ax-Grothendieck]
+    Sia $f : \CC^n \to \CC^n$ una funzione polinomiale iniettiva, allora $f$ è surgettiva.
+\end{theorem}
+
+Bando alle ciance.
+
+\begin{definition}
+    [Filtri ed ultrafiltri]
+    Sia $I$ un insieme fissato, un \vocab{filtro su $\ps(I)$} è un sottoinsieme $F \subseteq \ps(I)$ tale che:
+    \begin{enumerate}[(i)]
+        \item $\emptyset \notin F$ e $I \in F$;
+        \item $A \in F \land A \subseteq B \implies B \in F$;
+        \item se $A,B \in F$ allora $A \cap B \in F$.
+    \end{enumerate}
+    Un filtro $U$ su $\ps(I)$ è un \vocab{ultrafiltro} se:
+    \[ A \in U \lor I \setminus A \in U
+    \]
+\end{definition}
+
+\begin{example}
+    Fissato $I \ne \emptyset$ e $x \in I$, l'insieme:
+    \[ U_x = \{ A \subseteq I \mid x \in A \}
+    \]
+    è un ultrafiltro, detto \vocab{ultrafiltro principale generato da x}. Nonostante il nome altisonante, questi ultrafiltri qui servono a poco.
+    Noi abbiamo bisogno di ultrafiltri non principali.
+\end{example}
+
+\begin{example}
+    Sia $I$ un insieme infinito. L'insieme:
+    \[ F = \{ A \subseteq I : |I \setminus A| < \aleph_0 \}
+    \]
+    dei sottoinsiemi \vocab{cofiniti} di $I$ è un filtro su $\ps(I)$.
+\end{example}
+
+\begin{proposition}[Esistenza degli ultrafiltri]
+    Se $F$ è un filtro su $\ps(I)$ allora esiste un ultrafiltro $U$ su $\ps(I)$ tale che $F \subseteq U$.
+\end{proposition}
+
+\begin{proof}
+    Zorn.
+\end{proof}
+
+\begin{example}
+    Sia $I$ un insieme infinito, allora esiste un ultrafiltro \textcolor{purple}{non principale} su $\ps(I)$. Basta infatti considerare 
+    un ultrafiltro $U$ che estende il filtro dei cofiniti. Se $U$ fosse principale, allora esisterebbe un $x \in I$ avremmo $\{x\} \in U$,
+    ma anche $I \setminus \{x\} \in U$ perché cofinito, da cui $\emptyset = \{x\} \cap (I \setminus \{x\}) \in U \; \lightning$.
+\end{example}
+
+\begin{definition}
+    [Ultraprodotto]
+    Fissiamo un linguaggio $L = (R,F)$ e una famiglia di $L$-strutture $\{M_i\}_{i \in I}$. Sia $U$ un ultrafiltro su $I$ e definiamo l'\vocab{ultraprodotto} $\prod_{i \in I} \faktor{M_i}{U}$, la $L$-struttura 
+    che ha come dominio $\prod_{i \in I}D_i$ modulo la relazione di equivalenza:
+    \[ \forall a,b \in \prod_{i \in I}D_i \quad a \sim b \iff \{ i \in I \mid a_i = b_i \} \in U
+    \]
+    L'interpretazione di $r \in R$ in questo dominio è:
+    \[ \textcolor{purple}{([a_1],\ldots,[a_k]) \in \faktor{r}{U}} \overset{\text{def}}{\iff} \{ i \in I \mid (a_{1i},\ldots,a_{ki}) \in r^{M_i} \} \in U
+    \]
+    L'interpretazione di $f \in F$ è:
+    \[ \textcolor{purple}{\faktor{f}{U}([a_1],\ldots,[a_k])} \overset{\text{def}}{=} [\{f_{M_i}(a_{1i},\ldots,a_{ki})\}_{i \in I}]
+    \]
+\end{definition}
+
+\begin{remark}
+    Occorre verificare che la definizione è ben posta, ossia che se $a_1 \sim_U a_1',\ldots a_k \sim_U a_k'$ allora:
+    \[ ([a_1],\ldots,[a_k]) \in \faktor{r}{U} \iff ([a_1'],\ldots,[a_k']) \in \faktor{r}{U}
+    \]
+    ovvero:
+    \[ \faktor{f}{U}([a_1],\ldots,[a_k]) \sim_U \faktor{f}{U}([a_1'],\ldots,[a_k'])
+    \]
+\end{remark}

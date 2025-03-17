@@ -1,7 +1,7 @@
 \section{Introduzione}
 La \vocab{logica matematica} nasce dalle ricerche, a cavallo fra il XIX e il XX secolo, sui fondamenti della matematica. Sebbene diverse importanti intuizioni siano considerevolmente più antiche - per esempio il 
 metodo assiomatico degli Elementi di Euclide, l'analisi delle leggi del pensiero nella Logica di Aristotele, l'idea del ragionamento simbolico di Leibniz - si può sostenere che la logica nasca, come branca della matematica, nel momento 
-in cui i concetti quali la \vocab{dimostrazione} o la \vocab{relazione di conseguenza logica} vengono concepiti come \textcolor{orange}{oggetti matematici}. In altre parole, la logica diventa matematica nel momento in cui si rende conto che 
+in cui i concetti quali la \vocab{dimostrazione} o la \vocab{relazione di conseguenza logica} vengono concepiti come \textcolor{purple}{oggetti matematici}. In altre parole, la logica diventa matematica nel momento in cui si rende conto che 
 le proposizioni matematiche - scrivibili e scritte in un opportuno linguaggio simbolico - sono passibili di studio alla stessa maniera, per dire, dei polinomi o dei numeri interi. Per cui, per esempio,
 distinguere quali numeri siano composti, quali polinomi abbiano uno zero, quali proposizioni siano dimostrabili, sono problemi diversi, ma fondamentalmente analoghi.\\
 La logica matematica prende le mosse da un problema spropositato: trasformare l'intera matematica in un gioco di scacchi, e stabilirne - decretarne - le regole. Non è per tracotanza che alcuni pensatori concepirono questo obiettivo, ma per necessità, o quasi per spavento.
@@ -10,16 +10,59 @@ Quando matematici di spicco riconoscono la rilevanza dei metodi insiemistici per
 Di fronte alla controversia, la matematica reagisce nel solo modo che conosce: occorre capire cosa sia precisamente una dimostrazione, studiare le proprietà di questi oggetti, e dimostrare che non è possibile dimostrare una contraddizione, e, forse, avendo fortuna, 
 dimostrare addirittura che una proposizione può essere dimostrata precisamente quando questo è impossibile per la sua negazione. Ecco, sintetizzato in maniera un po' puerile - ma avete la mia parola che non so fare meglio - il \vocab{programma di Hilbert}. Chiaramente, mancano mille
 dettagli - il più importante: quali metodi sono consentiti nell'esecuzione del piano? Qual è la \vocab{metateoria} su cui si deve basare la dimostrazione della solidità delle fondamenta di ogni altra dimostrazione? Possiamo concederci di accantonare questa domanda.
-Se il programma di Hilbert si potesse portare a termine in una metateoria - una qualunque, che non sia contraddittoria - questa costituirebbe un insieme di principi, e si lavorerò poi per scremarli. È chiaro, però, che non si deve barare - se si vuole dimostrare che un sistema assiomatico
+Se il programma di Hilbert si potesse portare a termine in una metateoria - una qualunque, che non sia contraddittoria - questa costituirebbe un insieme sufficiente di principi, e si lavorerà poi per scremarli. È chiaro, però, che non si deve barare - se si vuole dimostrare che un sistema assiomatico
 $T$ è solido, non vale partire da una metateoria $MT$ che ha, fra i suoi assiomi, l'enunciato ``$T$ è solido''. Intuitivamente, perché l'intera operazione abbia un senso, è meglio che $MT$ sia - a prima vista, almeno - non meno affidabile di $T$ stessa.
 Tecnicamente, il minimo che si possa pretendere è che $MT$ sia un sottoinsieme di $T$. In conclusione, il programma di Hilbert richiede, come minimo, di trovare un sistema formale abbastanza vasto da servire come ragionevole fondamento della matematica, e di identificare un segmento di questo sistema che 
 sia intuitivamente valido, e capace di dimostrare la coerenza del sistema nel suo complesso.\\
 Tutti sanno che il programma di Hilbert è deragliato a causa dei \vocab{teoremi di incompletezza di Gödel}, del 1931. È andata così: in pratica, un'operazione di hacking. Gödel ha considerato un arbitrario sistema assiomatico $T$,
-sotto la condizione che abbia una presentazione effettiva e che sia capace di esprimere una modica quantità di aritmetica - ragionevolmente, qualunque teoremi si voglia prendere a fondamento della matematica deve avere queste caratteristiche. Questo sistema $T$, dimostra Gödel, è in grado di esprimere 
+sotto la condizione che abbia una presentazione effettiva e che sia capace di esprimere una modica quantità di aritmetica - ragionevolmente, qualunque teoria si voglia prendere a fondamento della matematica deve avere queste caratteristiche. Questo sistema $T$, dimostra Gödel, è in grado di esprimere 
 proposizioni a proposito di un calcolatore universale, e, in questo calcolatore universale, si può implementare un sistema formale qualunque, per esempio $T$ stesso. Pare, ora, di essere sulla giusta via per il programma di Hilbert: abbiamo $T$, e dentro $T$
 c'è un pezzo di $T$ che è in grado di esprimere proposizioni a proposito delle dimostrazioni di $T$, questo pezzo vorrà essere $MT$.
 Se si vuole seguire il programma di Hilbert, anzi, si deve passare di qua. Qui, però, cominciano i guai. Grazie a un trucco geniale, è possibile sfruttare questa situazione per costruire una proposizione aritmetica che non 
 può né essere dimostrata né confutata in $T$: una \vocab{proposizione indecidibile}. Sfuma quindi la possibilità che $T$ permetta di dirimere ogni possibile questione matematica. Ma c'è di peggio: un'analisi accurata dell'argomento precedente rivela che la proposizione ``$T$ non è contraddittoria''
 è indecidibile in $T$. A fortiori, quindi, nessuna metateoria che sia un sottoinsieme di $T$ - neppure, appunto, $T$ stessa - può dimostrare la non contraddittorietà di $T$.
 Per l'arbitrarietà di $T$, il programma di Hilbert è rovinato.\\
-Cosa abbiamo imparato da questo disastro?
+Cosa abbiamo imparato da questo disastro? Intanto abbiamo dato una definizione precisa di enunciato o \vocab{formula} e una definizione di \vocab{deduzione} basata su regole formale, ossia algebriche, simboliche - ``abbiamo dato'' come comunità matematica, ossia \textcolor{purple}{daremo} durante il corso.
+Questa definizione è \textcolor{purple}{quella giusta} nel senso che, ha dimostrato Gödel nel 1929, c'è una nozione associata di \vocab{struttura} - per esempio i gruppi sono precisamente le strutture che soddisfano le formule che esprimono gli assiomi dei gruppi: $\forall x,y,z \; (x \cdot y) \cdot z = x \cdot (y \cdot z)$, $\forall x \; x \cdot e = x$,
+$\forall x \; e \cdot x = x$, etc. Una formula è una \vocab{conseguenza logica} di un certo insieme di formule quando tutte le strutture che soddisfano le formule dell'insieme soddisfano anche la formula. Il \vocab{teorema di completezza} di Gödel, del 1929, appunto, garantisce che le nozioni di conseguenza logica e deducibilità coincidono.
+Fissato il sistema di regole deduttive appena descritto, che chiamiamo \vocab{logica del primo ordine} - con riferimento al fatto che è ammesso quantificare \textcolor{purple}{$\forall x$}, \textcolor{purple}{$\exists x$} su elementi della struttura, ma non si può quantificare su suoi sottoinsiemi - i teoremi di incompletezza di Gödel constatano 
+che certe cose non si possono fare. Per esempio non si può dare un'assiomatizzazione effettiva e completa dell'aritmetica. Ce ne faremo una ragione, come ci siamo fatti una ragione del fatto che l'equazione di quinto grado non si può risolvere per radicali o che una primitiva di $\frac{\sin x}{x}$ non si può scrivere come una composizione di funzioni elementari.
+Resta il fatto che, per arrivare ai risultati di incompletezza di Gödel, è stato necessario costruire, all'interno dell'aritmetica, un calcolatore universale, operazione che certamente involve rendersi conto dell'esistenza di una nozione generale di \vocab{funzione calcolabile}, e la costruzione di una \vocab{funzione computabile universale} - passi che preludono 
+alla materializzazione elettronica di questi concetti. Va da se che, nel corso, studieremo le basi della \vocab{teoria della computabilità}.\\
+Questi argomenti costituiscono quindi l'ossatura tradizione del corso di logica matematica: \textcolor{purple}{il calcolo dei predicati del primo ordine, i teoremi di correttezza e completezza del medesimo, alcuni rudimenti di teoria dei modelli, le bassi della teoria della computabilità, e i famosi teoremi di incompletezza di Gödel}.\\
+Prima di intraprendere il viaggio, però, è naturale porsi una domanda: non può essere che le limitazioni evidenziate dal fenomeno dell'incompletezza siano, in qualche modo, legate unicamente al particolare sistema di formule e regole deduttive che ci accingiamo a studiare? O forse al metodo assiomatico? Non può darsi che un paio di millenni di abitudine al metodo assiomatico ci abbiano 
+assuefatto all'angustia di questo particolare vicolo cieco, mentre potrebbe esistere un calcolo logico di concezione completamente diversa e immune all'anatema di Gödel, se solo lo cercassimo con mente aperta? \textcolor{purple}{No, non c'è via di fuga}, 
+ma si può studiare della matematica interessante per capire perché. Intanto, questo è un corollario dell'incompletezza: che l'insieme delle proposizioni aritmetiche vere, espresse nel linguaggio dell'aritmetica del primo ordine, non è computabile. Ossia, non c'è una funzione computabile che, data in input una proposizione 
+aritmetica, stabilisce se questa sia vera oppure no. Se accettiamo la \vocab{tesi di Church}, la quale asserisce che le funzioni computabili in teoria sono praticamente quelle implementabili in pratica, potremmo dire che non è concepibile un programma per computer che distingua le proposizioni aritmetiche vere da quelle false.
+Questo toglie di mezzo gli assiomi, ma resta il fatto che stiamo parlando di proposizioni scritte nel linguaggio dell'aritmetica del primo ordine. Magari, in questo linguaggio si possono scrivere proposizioni esoteriche e incomprensibili alla matematica ordinaria, proposizioni della cui verità non importa a nessuno. È tutto qui il guaio?
+\textcolor{purple}{Non anche se voi vi credete assolti, a patto che vi importi delle equazioni diofantee, siete coinvolti.} È infatti, possibile rafforzare il corollario precedente.
+
+\begin{theorem}
+    [\href{https://en.wikipedia.org/wiki/Martin_Davis_(mathematician)}{\textcolor{purple}{Davis}} - \href{https://en.wikipedia.org/wiki/Hilary_Putnam}{\textcolor{purple}{Putnam}} - \href{https://en.wikipedia.org/wiki/Julia_Robinson}{\textcolor{purple}{Robinson}} (1960) + \href{https://en.wikipedia.org/wiki/Yuri_Matiyasevich}{\textcolor{purple}{Matijasevic}} (1970)]
+    L'insieme dei polinomi $p(x_1,\dots,x_n)$ a coefficienti interi tali che $p(x_1,\dots,x_n) = 0$ abbia soluzione intera, non è calcolabile.
+\end{theorem}
+
+In altri termini, è inconcepibile una procedure - sia essa un sistema assiomatico o qualunque altro tipo di algoritmo - che, ricevendo in input il polinomio $p$, determina infallibilmente se l'equazione diofantea $p(x_1,\dots,x_n) = 0$ ha soluzione intera.
+Il decimo problema di Hilbert
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{Immagini/H10_testo.png}
+\end{figure}
+
+non ha soluzione. La dimostrazione di questo risultato è forse l'apoteosi del metodo che ci ha dato Gödel nel suo lavoro del 1931.
+Se lì, per dimostrare l'incompletezza dell'aritmetica, si trattava di descrivere un compilatore capace di tradurre ogni funzione computabile in una 
+formula aritmetica, per dimostrare questo teorema occorre compilare ogni funzione computabile in un \textcolor{purple}{polinomio}.\\
+Non c'è quindi scampo per il programma di Hilbert? Il cardine era l'idea di dimostrare la fondatezza di costruzioni concettuali complesse basandosi su teorie più semplici,
+e, da ultimo, poggiare tutto sull'aritmetica. Questo cardine è saltato, ma cosa ne è degli obiettivi del programma? Ecco, la situazione ricorda (in qualche senso) quel prigioniero del mercoledì\footnote{In una prigione di qualche remoto
+paese (Egitto? Texas? Cina?) è domenica e un condannato riceve questa sentenza un po' originale: ``Sarai giustiziato prima di domenica prossima, e in nessun modo potrai conoscere il giorno dell'esecuzione fino al giorno stesso ''. ``Sono salvo!'' ragiona
+il condannato. Le esecuzioni, lo sanno tutti, si fanno solo al mattino. Intanto - lemma 1 - l'esecuzione non può avvenire di sabato, altrimenti, venerdì pomeriggio, il condannato potrebbe conoscere il giorno con cortezza. Quindi venerdì è l'ultimo giorno utile.
+Per cui - lemma 2 - l'esecuzione non può avvenire venerdì, altrimenti, giovedì pomeriggio etc. Si vede bene che ogni giorno può essere escluso, quindi la sentenza è contraddittoria, e non potrà essere eseguita. Mercoledì mattina, però, il boia (sasin) taglia la testa - o lo avvelena,
+o fate voi - del condannato, il quale, martedì, non aveva idea del fatto che questa sarebbe stata la sua sorte.}.
+Dopo che abbiamo dimostrato oltre ogni ragionevole dubbio la fine del programma di Hilbert, ci guardiamo attorno, e vediamo che esiste una teoria formale su cui i matematici si trovano d'accordo
+a fondare la matematica: la teoria degli insiemi di Zermelo-Fraenkel espressa nel contesto del calcolo dei predicati al primo ordine. C'è un vasto consenso sulla coerenza di questa teoria. Il livello 
+di precisione formale delle pubblicazioni matematiche è generalmente aumentato nel corso del XX secolo. E chi ha seguito il corso di \texttt{Lean 4} sa che ci sono persino diversi matematici di spicco che prendono 
+in seria considerazione la possibilità di formalizzare non solo in teoria, \textcolor{purple}{ma in pratica}, la matematica per mezzo di opportuni sistemi informatici.
+Insomma, il cardine è caduto, però il resto del programma non pare che abbia accusato il colpo. Inoltre, fruttuose aree di studio sono nate dalle diramazioni del programma originale: la teoria della dimostrazione,
+la teoria dei modelli, la teoria degli insiemi, la teoria della computabilità, e forse anche l'informatica teorica. Si può anzi sostenere che il computer, che è nato da molte idee e ha cambiato la faccia dell'umanità,
+sia, anche, figlio della logica matematica.
