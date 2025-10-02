@@ -1,8 +1,8 @@
-\section{Eliminazione dei quantificatori}
-
+\section{Eliminazione dei quantificatori, forme normali ed ultrafiltri}
+\subsection{Eliminazione dei quantificatori}
 \begin{definition}[Formule equivalenti per una teoria]
     Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalenti} per $T$,
-    denotato con $T \models \varphi \,\textcolor{red}{\leftrightarrow}\, \psi$ se $T \models \textcolor{red}{(} \varphi \rightarrow \psi \textcolor{red}{)} \land \textcolor{red}{(} \psi \rightarrow \varphi \textcolor{red}{)}$,
+    denotato con $T \models (\varphi \,\textcolor{purple}{\leftrightarrow}\, \psi)$ se $T \models \textcolor{purple}{(} \varphi \rightarrow \psi \textcolor{purple}{)} \land \textcolor{purple}{(} \psi \rightarrow \varphi \textcolor{purple}{)}$,
     ossia $T,\varphi \models \psi$ e $T,\psi \models \varphi$.
 \end{definition}
 
@@ -12,75 +12,91 @@
     ad una formula senza quantificatori.
 \end{definition}
 
-Se una teoria coerente $T$ ha l'eliminazione dei quantificatori, e, per ogni formula chiusa \textcolor{red}{e senza quantificatori} $\varphi$, 
-vale $T \models \varphi$ o $T \models \textcolor{red}{\neg} \,\varphi$, allora $T$ è completa.
+Se una teoria coerente $T$ ha l'eliminazione dei quantificatori, e, per ogni formula chiusa \textcolor{purple}{e senza quantificatori} $\varphi$, 
+vale $T \models \varphi$ o $T \models \textcolor{purple}{\neg} \,\varphi$, allora $T$ è completa.
 
 Dimostreremo la seguente proposizione.
 
-\begin{proposition}
-    La teoria degli ordini lineari densi senza estremi $T_{oldse}$ ha l'eliminazione dei quantificatori.
+\begin{proposition}[$T_{\text{oldse}}$ ha l'eliminazione dei quantificatori]
+    La teoria degli ordini lineari densi senza estremi $T_{\text{oldse}}$ ha la proprietà dell'eliminazione dei quantificatori.
 \end{proposition}
 
-\begin{corollary}
-    $T_{oldse}$ è completa.
+\begin{corollary}[Completezza di $T_{\text{oldse}}$]
+    La teoria $T_{\text{oldse}}$ è completa.
 \end{corollary}
 
 Vediamo la dimostrazione del corollario.
 
 \begin{proof}
-    $T_{oldse}$ è coerente perché $\QQ \models T_{oldse}$. Inoltre, nel linguaggio di $T_{oldse}$,
-    non ci sono simboli di costante, quindi le uniche formule chiuse senza quantificatori sono 
-    combinazioni booleane di $\textcolor{red}{\top}$ e $\textcolor{red}{\bot}$. È immediato che queste formule
-    hanno un valore di verità definito.
+    $T_{\text{oldse}}$ è coerente perché $\QQ \models T_{\text{oldse}}$. Inoltre, nel linguaggio di $T_{\text{oldse}}$,
+    non ci sono simboli di costante (c'è solo un simbolo di relazione), quindi le uniche formule chiuse senza quantificatori sono 
+    combinazioni booleane di $\textcolor{purple}{\top}$ e $\textcolor{purple}{\bot}$. È immediato che queste formule
+    hanno un valore di verità definito. Pertanto come osservato sopra, $T_{\text{oldse}}$ è completa rispetto alle formule chiuse e senza quantificatori, e per la proposizione precedente questo è sufficiente a dire che $T_{\text{oldse}}$ è completa.
 \end{proof}
 
-Altre teorie con l'eliminazione dei quantificatori sono, per esempio, $\Th(\CC,\textcolor{red}{0},\textcolor{red}{1},+,\cdot)$ e $\Th(\RR,\textcolor{red}{0},\textcolor{red}{1},+,\cdot,<)$:
+Altre teorie con l'eliminazione dei quantificatori sono, per esempio, $\Th(\CC;\textcolor{purple}{0},\textcolor{purple}{1},+,\cdot)$ e $\Th(\RR;\textcolor{purple}{0},\textcolor{purple}{1},+,\cdot,<)$:
 rispettivamente, la teoria dei campi algebricamente chiusi e la teoria dei campi reali chiusi.
 
-\begin{remark}
+\begin{note}[L'eliminazione dei quantificatori dipende dal linguaggio]
+    La scelta del linguaggio è cruciale per l'eliminazione dei quantificatori. Per esempio la teoria $\Th(\RR;\textcolor{purple}{0},\textcolor{purple}{1},\textcolor{purple}{+},\textcolor{purple}{\cdot})$ può
+    esprimere le medesime proprietà di $\Th(\RR;\textcolor{purple}{0},\textcolor{purple}{1},\textcolor{purple}{+},\textcolor{purple}{\cdot},<)$, perché $x < y$ equivale a $x \ne y \land \exists z \; x + z\cdot z = y$.
+    Tuttavia, senza il simbolo $<$, non c'è modo di eliminare il quantificatore esistenziale in $\exists y \; x = y \cdot y$ (esercizio: perché?). \textcolor{MidnightBlue}{In un linguaggio opportuno}, ogni teoria ha
+    l'eliminazione dei quantificatori: basta infatti aggiungere un simbolo di relazione $\mathcal R_\varphi$ per ogni formula $\varphi(x_1,\ldots,x_k)$ con l'assioma $\varphi(x_1,\ldots,x_k) \leftrightarrow \mathcal R_\varphi(x_1,\ldots,x_k)$.\\
+    Questa nuova teoria ha ovviamente l'eliminazione dei quantificatori, che però è inutile, perché decidere le formule atomiche nel linguaggio espanso è tanto complesso quanto decidere le formule della teoria di partenza.
+\end{note}
+
+\begin{remark}[Sostituzione di formule equivalenti]
     Se $\varphi_1$ è una sottoformula di $\psi_1$, e rimpiazziamo una occorrenza di $\varphi_1$ in $\psi_1$ con una $\varphi_2$, che soddisfa $T \models \varphi_1 \leftrightarrow \varphi_2$,
     allora la formula $\psi_2$ ottenuta da questa sostituzione soddisfa $T \models \psi_1 \leftrightarrow \psi_2$.
 \end{remark}
 
 \begin{proof}
-    [Dell'osservazione]
     Induzione strutturale.
 \end{proof}
+
+\subsection{CNF e DNF}
 
 Introduciamo due nozioni di logica proposizionali che sono elementari ma spesso utili.
 
 \begin{definition}
     [CNF e DNF]
-    Una formula senza quantificatori $\varphi$ è in \vocab{forma normale congiuntiva (CNF)} se:
-    \[ \varphi = \textcolor{red}{(}\, \alpha_{11} \, \textcolor{red}{\lor} \, \alpha_{12} \, \textcolor{red}{\lor} \, \dots \, \textcolor{red}{\lor} \, \alpha_{1n_1} \, \textcolor{red}{)} \, \textcolor{red}{\land} \, \dots \, \textcolor{red}{\land} \, \textcolor{red}{(}\, \alpha_{m1} \, \textcolor{red}{\lor} \, \alpha_{m2} \, \textcolor{red}{\lor} \, \dots \, \textcolor{red}{\lor} \, \alpha_{mn_m} \, \textcolor{red}{)}
+    Una formula senza quantificatori $\varphi$ è in \vocab{forma normale congiuntiva} (\vocab{CNF}) se:
+    \[ \varphi = \textcolor{purple}{(}\, \alpha_{11} \, \textcolor{purple}{\lor} \, \alpha_{12} \, \textcolor{purple}{\lor} \, \dots \, \textcolor{purple}{\lor} \, \alpha_{1n_1} \, \textcolor{purple}{)} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \textcolor{purple}{(}\, \alpha_{m1} \, \textcolor{purple}{\lor} \, \alpha_{m2} \, \textcolor{purple}{\lor} \, \dots \, \textcolor{purple}{\lor} \, \alpha_{mn_m} \, \textcolor{purple}{)}
     \]
     ovvero $\varphi$ una congiunzione di disgiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche. Simmetricamente,
-    $\varphi$ è in \vocab{forma normale disgiuntiva (DNF)} se:
-    \[ \varphi = \textcolor{red}{(}\, \alpha_{11} \, \textcolor{red}{\land} \, \alpha_{12} \, \textcolor{red}{\land} \, \dots \, \textcolor{red}{\land} \, \alpha_{1n_1} \, \textcolor{red}{)} \, \textcolor{red}{\lor} \, \dots \, \textcolor{red}{\lor} \, \textcolor{red}{(}\, \alpha_{m1} \, \textcolor{red}{\land} \, \alpha_{m2} \, \textcolor{red}{\land} \, \dots \, \textcolor{red}{\land} \, \alpha_{mn_m} \, \textcolor{red}{)}
+    $\varphi$ è in \vocab{forma normale disgiuntiva} (\vocab{DNF}) se:
+    \[ \varphi = \textcolor{purple}{(}\, \alpha_{11} \, \textcolor{purple}{\land} \, \alpha_{12} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \alpha_{1n_1} \, \textcolor{purple}{)} \, \textcolor{purple}{\lor} \, \dots \, \textcolor{purple}{\lor} \, \textcolor{purple}{(}\, \alpha_{m1} \, \textcolor{purple}{\land} \, \alpha_{m2} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \alpha_{mn_m} \, \textcolor{purple}{)}
     \]
     ovvero $\varphi$ una disgiunzione di congiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche.
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[Ogni formula senza quantificatori è equivalente ad una in CNF e DNF]
     Data una formula $\varphi$ senza quantificatori, esistono $\psi_1$ in CNF e $\psi_2$ in DNF equivalenti a $\varphi$ per la teoria vuota (e quindi per ogni teoria).
 \end{lemma}
 
 \begin{proof}
-    [Esercizio]
+    Ci sono almeno due vie possibili:
+    \begin{enumerate}
+        \item Considerare ogni possibile assegnazione dei valori di verità alle formule atomiche che compaiono in $\varphi$. Le asserzioni che rendono $\varphi$ vera danno i disgiunti
+        (\vocab{implicanti primi}) della DNF, quelle che rendono $\varphi$ falsa danno i congiunti (\vocab{clausole}) della CNF.
+        \item Per induzione strutturale dimostra che se $\varphi_1$ e $\varphi_2$ possono essere espresse in CNF e DNF, allora anche $\textcolor{purple}{\neg}\,\varphi_1$, $\varphi_1 \,\textcolor{purple}{\land}\, \varphi_2$ possono essere espresse in CNF e DNF.
+        Osservare inoltre che i connettivi $\textcolor{purple}{\neg}$ e $\textcolor{purple}{\land}$ possono essere usati per esprimere tutti gli altri connettivi.
+    \end{enumerate}
 \end{proof}
 
+Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantificatori.
+
 \begin{proof}
-    [$T_{oldse}$ ha l'eliminazione dei quantificatori]
-    Per induzione strutturale, e sfruttando il fatto che $\models \textcolor{red}{(\forall\,x_k}\, \varphi\textcolor{red}{)} \to \textcolor{red}{(\neg\exists\,x_k\,\neg}\,\varphi\textcolor{red}{)}$,
-    vediamo che ci bastano, data una formula $\varphi$ senza quantificatori, trovare $\psi$ senza quantificatori tale che $T_{oldse} \models \textcolor{red}{(\exists\,x_k}\, \varphi\textcolor{red}{)} \,\textcolor{red}{\leftrightarrow}\, \psi$.
+    Per induzione strutturale. [FINIRE]
 \end{proof}
 
 \begin{exercise}
- Da mettere.
+    La struttura $(D;<)$ è un ordine totale discreto se $<$ è una relazione d'ordine totale su $D$ tale che ogni elemento di $D$ ha un predecessore ed un successore.
+    $\Th(D;<)$ non elimina i quantificatori, mentre $\Th(D;<,s)$ sì.
 \end{exercise}
 
 \subsection{Ultraprodotti}
-Introduciamo una prima tecnica per costruire modelli. Usando gli ultraprodotti dimostreremo il seguente.
+Introduciamo una prima tecnica per costruire modelli: gli ultraprodotti. Usando gli ultraprodotti dimostreremo il seguente teorema.
 
 \begin{theorem}
     [Compattezza - versione semantica]
@@ -91,8 +107,7 @@ Introduciamo una prima tecnica per costruire modelli. Usando gli ultraprodotti d
 Ovvero se $\varphi$ è conseguenza logica di un insieme di premesse $T$, allora basta, in realtà, una quantità finita di queste premesse per implicare $\varphi$.
 Poco da stupirsi se si pensa alla conseguenza logica come dimostrabilità: infatti una dimostrazione \textcolor{purple}{- non abbiamo ancora formalizzato questo concetto -} è 
 un argomento di lunghezza finita, non ha quindi spazio per riferirsi a più di una quantità finita di premesse. D'altro canto, sia l'enunciato sia la dimostrazione che vedremo sono puramente semantici:
-la nozione di conseguenza logica che stiamo considerando è \textcolor{purple}{verità in tutte le strutture che soddisfano le premesse}.
-
+la nozione di conseguenza logica che stiamo considerando è \textcolor{purple}{verità in tutte le strutture che soddisfano le premesse}.\\
 Per mostrare un'applicazione squisitamente matematica degli ultraprodotti, dimostreremo altresì il seguente.
 
 \begin{theorem}
@@ -111,19 +126,19 @@ Bando alle ciance.
         \item se $A,B \in F$ allora $A \cap B \in F$.
     \end{enumerate}
     Un filtro $U$ su $\ps(I)$ è un \vocab{ultrafiltro} se:
-    \[ A \in U \lor I \setminus A \in U
+    \[ \forall A,B \in \ps(I) \quad A \cup B = I \to A \in U \lor B \in U
     \]
 \end{definition}
 
-\begin{example}
+\begin{example}[Ultrafiltro principale]
     Fissato $I \ne \emptyset$ e $x \in I$, l'insieme:
     \[ U_x = \{ A \subseteq I \mid x \in A \}
     \]
-    è un ultrafiltro, detto \vocab{ultrafiltro principale generato da x}. Nonostante il nome altisonante, questi ultrafiltri qui servono a poco.
+    è un ultrafiltro, detto \vocab{ultrafiltro principale} generato da $x$. Nonostante il nome altisonante, questi ultrafiltri qui servono a poco.
     Noi abbiamo bisogno di ultrafiltri non principali.
 \end{example}
 
-\begin{example}
+\begin{example}[Filtro dei cofiniti]
     Sia $I$ un insieme infinito. L'insieme:
     \[ F = \{ A \subseteq I : |I \setminus A| < \aleph_0 \}
     \]
@@ -135,34 +150,532 @@ Bando alle ciance.
 \end{proposition}
 
 \begin{proof}
-    Zorn.
+    Si verifica usando Zorn, e passando per il fatto che l'unione di filtri in catena è un filtro, che ogni filtro $F$ è contenuto in un filtro massimale $U$.
+    Se questo filtro $U$ non fosse un ultrafiltro, esisterebbero $A,B \subseteq I$ tali che $A \cup B = I$ ma $A, B \notin U$. Consideriamo:
+    \[ G := \{ X \subseteq I | X \cup B \in U\}
+    \]
+    è facile verificare che $G$ è un filtro. Inoltre $F \subsetneq G$ perché $A \in G$, ma $A \notin U$. Questo contraddice la massimalità di $U$, dato che $F \subseteq U \subsetneq G$.
 \end{proof}
 
-\begin{example}
+\begin{example}[Esistenza di un ultrafiltro non principale]
     Sia $I$ un insieme infinito, allora esiste un ultrafiltro \textcolor{purple}{non principale} su $\ps(I)$. Basta infatti considerare 
-    un ultrafiltro $U$ che estende il filtro dei cofiniti. Se $U$ fosse principale, allora esisterebbe un $x \in I$ avremmo $\{x\} \in U$,
-    ma anche $I \setminus \{x\} \in U$ perché cofinito, da cui $\emptyset = \{x\} \cap (I \setminus \{x\}) \in U \; \lightning$.
+    un ultrafiltro $U$ che estende il filtro dei cofiniti. Se $U$ fosse principale generato da $x \in I$, allora avremmo per definizione di filtro principale che $\{x\} \in U$,
+    allo stesso tempo $I \setminus \{x\}$ appartiene al filtro dei cofiniti (avendo complemento finito), e quindi anche a $U$. Segue quindi che $\emptyset = \{x\} \cap (I \setminus \{x\}) \in U \,\lightning$.
 \end{example}
 
 \begin{definition}
     [Ultraprodotto]
-    Fissiamo un linguaggio $L = (R,F)$ e una famiglia di $L$-strutture $\{M_i\}_{i \in I}$. Sia $U$ un ultrafiltro su $I$ e definiamo l'\vocab{ultraprodotto} $\prod_{i \in I} \faktor{M_i}{U}$, la $L$-struttura 
-    che ha come dominio $\prod_{i \in I}D_i$ modulo la relazione di equivalenza:
-    \[ \forall a,b \in \prod_{i \in I}D_i \quad a \sim b \iff \{ i \in I \mid a_i = b_i \} \in U
+    Fissiamo un linguaggio $L = (R,F)$ e una famiglia di $L$-strutture $M_i = (D_i;\ldots)$ indicizzata da $i \in I$. Sia $U$ un ultrafiltro su $\ps(I)$, definiamo l'\vocab{ultraprodotto} $\prod_{i \in I} \faktor{M_i}{U}$
+    come la $L$-struttura avente per dominio $\prod_{i \in I}D_i$ modulo la relazione di equivalenza $\sim_U$ definita come:
+    \[ a,b \in \prod_{i \in I} D_i \quad a \sim_U b \overset{\text{def}}{\iff} \{ i \in I : a_i = b_i \} \in U
     \]
     L'interpretazione di $r \in R$ in questo dominio è:
-    \[ \textcolor{purple}{([a_1],\ldots,[a_k]) \in \faktor{r}{U}} \overset{\text{def}}{\iff} \{ i \in I \mid (a_{1i},\ldots,a_{ki}) \in r^{M_i} \} \in U
+    \[ \textcolor{purple}{([a_1],\ldots,[a_k]) \in \faktor{r}{U}} \overset{\text{def}}{\iff} \{i \in I | (a_{1i},\ldots,a_{ki}) \in r_{M_i}\} \in U\footnote{Cioè la maggioranza degli indici $i$ (indici corrispondenti alle componenti delle varie classi di $I$-uple, $[a_j]$), secondo l'ultrafiltro, soddisfa la relazione $r \in R$.}
     \]
-    L'interpretazione di $f \in F$ è:
-    \[ \textcolor{purple}{\faktor{f}{U}([a_1],\ldots,[a_k])} \overset{\text{def}}{=} [\{f_{M_i}(a_{1i},\ldots,a_{ki})\}_{i \in I}]
+    L'interpretazione di $f \in F$ in questo dominio è:
+    \[ \textcolor{purple}{\faktor{f}{U}([a_1],\ldots,[a_k])} \overset{\text{def}}{=} [(f_{M_i}(a_{1i},\ldots,a_{ki}))_{i \in I}]\footnote{Cioè la funzione $f$ applicata alle componenti delle varie classi di $I$-uple, $[a_j]$, calcolata indice per indice.}
     \]
 \end{definition}
 
-\begin{remark}
-    Occorre verificare che la definizione è ben posta, ossia che se $a_1 \sim_U a_1',\ldots a_k \sim_U a_k'$ allora:
-    \[ ([a_1],\ldots,[a_k]) \in \faktor{r}{U} \iff ([a_1'],\ldots,[a_k']) \in \faktor{r}{U}
+\begin{remark}[Buona definizione dell'ultraprodotto]
+    Occorre verificare che la definizione è ben posta\footnote{Per rendere più leggera la trattazione ho deciso di usare la notazione vettoriale per le sequenze di elementi.},
+    ossia che se $\underline a_1 \sim_U \underline a_1',\ldots \underline a_k \sim_U \underline a_k'$ allora:
+    \[ ([\underline a_1],\ldots,[\underline a_k]) \in \faktor{r}{U} \iff ([\underline a_1'],\ldots,[\underline a_k']) \in \faktor{r}{U}
     \]
-    ovvero:
-    \[ \faktor{f}{U}([a_1],\ldots,[a_k]) \sim_U \faktor{f}{U}([a_1'],\ldots,[a_k'])
+    infatti: per ipotesi $([\underline a_1],\ldots,[\underline a_k]) \in \faktor{r}{U}$ significa che $A = \{ i \in I | (a_{1i},\ldots,a_{ki}) \in r_{M_i}\} \in U$. Ora, sempre per ipotesi, sia $B_\iota := \{ i \in I | a_{\iota i} = a_{\iota i}'\} \in U$, $\forall \iota = 1,\ldots,k$. Posso quindi considerare:
+    \[ C := A \cap B_1 \cap \ldots \cap B_k \in U
     \]
+    e, se, $i \in C$, vale che $(a_{1i},\ldots,a_{ki}) = (a_{1i}',\ldots,a_{ki}') \in r_{M_i}$, di conseguenza, detto $D := \{ i \in I | (a_{1i}',\ldots,a_{ki}') \in r_{M_i}\}$, si ha che $C \subseteq D$, e quindi $D \in U$. Ovviamente la direzione opposta è simmetrica.\\
+    Si procede similmente per la buona definizione dell'interpretazione delle funzioni: similmente a prima, sia $B_\iota := \{ i \in I | a_{\iota i} = a_{\iota i}'\} \in U$, $\forall \iota = 1,\ldots,k$, e sia $B := B_1 \cap \ldots \cap B_k \in U$, allora, se $i \in B$, vale che $(a_{1i},\ldots,a_{ki}) = (a_{1i}',\ldots,a_{ki}')$, e quindi $f_{M_i}(a_{1i},\ldots,a_{ki}) = f_{M_i}(a_{1i}',\ldots,a_{ki}')$.
+    Di conseguenza, $\{i \in I | f_{M_i}(a_{1i},\ldots,a_{ki}) = f_{M_i}(a_{1i}',\ldots,a_{ki}')\} \supseteq B$ per cui appartiene all'ultrafiltro.
 \end{remark}
+
+\begin{theorem}[Teorema di Łoś]
+    \[ \faktor{\prod_{i \in I} M_i}{U} \models \varphi([a_1],\ldots,[a_k]) \iff \{i \in I | M_i \models \varphi(a_{1i},\ldots,a_{ki})\} \in U
+    \]
+\end{theorem}
+
+\begin{notation}[Notazione abbreviata per valutazione di formule]
+    Se $\vl(\varphi) \subseteq \{v_1,\ldots,v_k\}$ allora sappiamo che la validità di $\varphi$ in $M$ dipende solo dai valori assegnati dalla valutazione delle variabili $v_1,\ldots,v_k$.
+    Possiamo indicare questa situazione denotando $\varphi$ con $\varphi(v_1,\ldots,v_k)$ e scrivendo $M \models \varphi(a_1,\ldots,a_k)$, con $a_1,\ldots,a_k$ nel dominio, per dire 
+    che vale $M \models\{v\} \varphi$ a patto che $v(v_1) = a_1,\ldots,v(v_k) = a_k$.
+\end{notation}
+
+\begin{corollary}[Un ultraprodotto di modelli è un modello della stessa teoria]
+    Se per ogni $i \in I$, vale $M_i \models \varphi$, allora $\prod_{i \in I} \faktor{M_i}{U} \models \varphi$.
+    Quindi un ultraprodotto di modelli di una teoria $T$ è anch'esso un modello di $T$. Inoltre, per \textcolor{purple}{$U$ non principale},
+    se per ogni $i \in I$, \textcolor{purple}{eccetto al più un numero finito di indici}, vale $M_i \models \varphi$, allora $\prod_{i \in I} \faktor{M_i}{U} \models \varphi$.
+\end{corollary}
+
+Prima di dare la dimostrazione (un po' noiosa) del teorema di Łoś, vediamo qualche applicazione.
+
+\begin{example}[Modelli non standard di $\NN$]
+    Esistono modelli non isomorfi a $\NN$ della teoria $\Th(\NN; 0,+,\cdot,s)$, quindi, a fortiori, anche di $\mathsf{PA}$.
+\end{example}
+
+\begin{proof}
+    Sia $U$ un ultrafiltro non principale su $\ps(\NN)$. Consideriamo ${}^*\NN = \faktor{\prod_{i \in \NN}\NN}{U}$ ossia l'ultraprodotto (\vocab{ultrapotenza}) di una quantità numerabile di copie della medesima struttura $(\NN;0,+,\cdot,s)$.
+    Gli elementi di ${}^*\NN$ sono classi di equivalenza di elementi di $\prod_{i \in \NN}\NN$, cioè di sequenze di numeri naturali. Per il corollario precedente ${}^*\NN \models \Th(\NN;0,+,\cdot,s)$. Supponiamo, per assurdo, che $f : \NN \to {}^*\NN$ si un isomorfismo di strutture.
+    Allora $f(0_\NN) = 0_{{}^*\NN} = [c_0]$, dove con $c_x$ indichiamo la successione costante associata ad $x \in \NN$. Applicando la funzione successore accade che:
+    \[ f(1) = f(s_\NN(0_\NN)) \overset{(a)}{=} s_{{}^*\NN}(f(0_\NN)) = s_{{}^*\NN}([c_0]) \overset{(b)}{=} [c_1]
+    \] 
+    dove in $(a)$ abbiamo usato che $f$ è un isomorfismo di strutture, per cui commuta con l'interpretazione delle funzioni nei due modelli, mentre in $(b)$ abbiamo usato la definizione di interpretazione della funzione $s$ nell'ultraprodotto,
+    ovvero il simbolo di funzione viene applicato componente per componente alla sequenza che rappresenta l'elemento. Questo fa da caso base per un'induzione che ci mostra che $f(n) = [c_n]$ per ogni $n \in \NN$.\\
+    Possiamo quindi violare la surgettività di $f$ mostrando che esiste un elemento di ${}^*\NN$ che non è della forma $[c_n]$ per nessun $n \in \NN$; consideriamo la classe della successione rappresentata da $\sigma(i) = i$, tale classe non è uguale ad alcuna classe di successione costante, infatti:
+    \[ \{i \in \NN | \sigma(i) = c_n(i)\} = \{i \in \NN | i = n\} = \{n\} \notin U \iff [(\sigma_i)_i] \not \sim _U [(c_n)_i] \quad \forall n \in \NN
+    \]
+\end{proof}
+
+\begin{exercise}[Campi reali chiusi non archimedei]
+    Esistono altri modelli, oltre ad $\RR$, di $\Th(\RR;0,1,+,\cdot,<)$ che non soddisfano l'assioma di Archimede:\footnote{\underline{Hint}: Considera un ultrafiltro non principale su $\ps(\NN)$ e l'ultraprodotto di una quantità numerabile di copie di $\RR$, ${}^*\RR = \faktor{\prod_{i \in \NN}\RR}{U}$.}
+    \[ \forall a,b \in M \; (0_M <_M a \land 0_M <_M b) \implies \exists n \in \NN \; a < \underbrace{b + \ldots + b}_{\text{$n$-volte}}
+    \]
+\end{exercise}
+
+\subsection{Teorema di Ax-Grothendieck}
+
+Per dimostrare il teorema di Ax-Grothendieck, ci serviranno i seguenti fatti.
+
+\begin{fact}[Classificazione dei campi algebricamente chiusi]
+    Due campi algebricamente chiusi della medesima caratteristica sono isomorfi se e solo se hanno basi di trascendenza equipotenti. \textcolor{purple}{Di conseguenza} ogni
+    campo algebricamente chiuso di caratteristica 0, avente cardinalità $2^{\aleph_0}$ è isomorfo a $\CC$.
+\end{fact}
+
+\begin{fact}[Chiusura algebrica di un campo finito]
+    La chiusura algebrica $\overline{\FF_p}$ di $\FF_p$ è $\bigcup_{k\in \NN}\FF_{p^{k!}}$.
+\end{fact}
+
+\begin{lemma}[$\CC$ come ultraprodotto di chiusure algebriche di campi finiti] 
+    Sia $U$ un ultrafiltro non principale su $\ps(\NN)$, e sia $p_i$ il $i$-esimo numero primo. Allora $(\CC;0,1,+,\cdot)$ è isomorfo a $F = \faktor{\prod_{i \in \NN}\overline{\FF_{p_i}}}{U}$.
+\end{lemma}
+
+\begin{proof}
+    Il fatto che $F$ sia un campo algebricamente chiuso è esprimibile con una formula nel linguaggio dei campi. Infatti gli assiomi dei campi sono ben noti,
+    inoltre la caratteristica di essere algebricamente chiuso si esprime mediante lo schema di assiomi:
+    \[ \varphi_n = \textcolor{purple}{\forall y_0,\ldots,y_{n-1} \; \exists x \; x^n + y_{n-1}x^{n-1} + \ldots + y_1 x + y_0 = 0} \quad n \in \NN
+    \]
+    Dove \textcolor{purple}{$x^n$} è un'abbreviazione per \textcolor{purple}{$x \cdot x \ldots x$} $n$ volte. Quindi, siccome i fattori dell'ultraprodotto sono campi algebricamente chiusi, anche $F$ lo è.
+    Inoltre $F$ ha caratteristica 0 , infatti, fissato un primo $p_k$:
+    \[ \{i \in \NN : \overline{\FF_{p_i}} \models \underbrace{\textcolor{purple}{1 + \ldots + 1 = 0}}_{\text{$p_k$ volte}}\} = \{i \in \NN : i = k\} = \{k\} \notin U\footnote{Osservare che se un singoletto appartenesse a un ultrafiltro, allora l'ultrafiltro sarebbe principale.}
+    \]
+    per cui $F$ è un campo tale che $F \not\models \overbrace{\textcolor{purple}{1 + \ldots + 1 = 0}}^{\text{$p_k$ volte}}$, per ogni $k \in \NN$; quindi $F$ ha necessariamente caratteristica 0.\\
+    Resta da dimostrare che $|F| = 2^{\aleph_0}$. Intanto è banale notare che $|F| \leq \left|\prod_{i \in \NN}\overline{\FF_{p_i}}\right| = 2^{\aleph_0}$; per la disuguaglianza opposta immergiamo i numeri $0,1,2,\ldots,i$ in $\overline{\FF_{p_i}}$ nel modo
+    naturale $i \mapsto 1 + \ldots + 1$ $i$ volte, questa mappa è iniettiva perché $i < p_i$. Definiamo ora la funzione:
+    \[ f : [0,1] \to F : x \mapsto [(\floor{x \cdot i})_{i \in \NN}]
+    \]
+    e verifico che è iniettiva per concludere. Osserviamo infatti che, per $x < y$, se $\frac{1}{y-x} \leq i$, allora $x \cdot i + 1 \leq y \cdot i$, da cui $\floor{x \cdot i} + 1 \leq \floor{y \cdot i}$, ossia $\floor{x \cdot i} < \floor{y \cdot i}$; ne segue che:
+    \[ \{i \in \NN : \floor{x \cdot i} \ne \floor{y \cdot i}\} \supseteq \left\{i \in \NN : \frac{1}{y-x} \leq i\right\} \in U
+    \]
+    dove l'appartenenza all'ultrafiltro vale perché l'insieme a destra è cofinito (banalmente la quantità a sinistra verrà superata), ne segue che $f$ iniettiva.
+\end{proof}
+
+Passiamo ora alla dimostrazione del teorema di Ax-Grothendieck.
+
+\begin{proof}
+    \textcolor{MidnightBlue}{L'idea è che, se $\CC$ fosse un insieme finito, l'enunciato sarebbe semplicemente il principio dei cassetti applicato alla funzione $f$. Ora, $\CC$ non è finito, ma dimostreremo che,
+    poiché l'enunciato vale per tutti i campi finiti, allora vale anche per $\CC$.}\\
+    Sia $F$ il campo costruito dal lemma precedente. Fissiamo un grado $d$ arbitrario. Ci basta dimostrare che se $f : F^n \to F^n$ è una funzione polinomiale iniettiva, allora è surgettiva.
+    Questo enunciato è esprimibile mediante la formula nel linguaggio dei campi: $\varphi_d = \forall z_1,\ldots,z_N \; \text{In}(z_1,\ldots,z_N) \to \text{Su}(z_1,\ldots,z_N)$, con $N = n \cdot \binom{d+n}{n}$,
+    dove $\text{In}$ e $\text{Su}$ sono formule che esprimono il fatto che la funzione polinomiale avente coefficienti $z_1,\ldots,z_N$ sia rispettivamente iniettiva e surgettiva. In particolare
+    $\text{Su}(z_1,\ldots,z_N)$ avrà la forma: 
+    \begin{multline*}
+            \forall y_1,\ldots,y_n \; \exists x_1,\ldots,x_n \\
+            y_1 = p_1(z_1,\ldots,z_N,x_1,\ldots,x_n) \land \ldots \land y_n = p_n(z_1,\ldots,z_N,x_1,\ldots,x_n)
+    \end{multline*}
+    o in notazione vettoriale, con $\underline{z} = z_1,\ldots,z_N$ (coefficienti), $\underline{y} = y_1,\ldots,y_n$ e $\underline{x} = x_1,\ldots,x_n$ (indeterminate), come $\forall \underline{y} \; \exists \underline{x} \; \underline{y} = \underline{p}(\underline{z},\underline{x})$.
+    Per la costruzione di $F$, per il teorema di Łoś, è sufficiente dimostrare che $\overline{\FF_{p_i}} \models \varphi_d$. Fissiamo un $p_i$ primo, $c_1,\ldots,c_N \in \overline{\FF_{p_i}}$ e supponiamo che $\overline{\FF_{p_i}} \models \text{In}(c_1,\ldots,c_N)$.
+    Voglio dimostrare che $\overline{\FF_{p_i}} \models \textcolor{purple}{\forall \underline{y} \; \exists \underline{x} \; \underline{y} = \underline{p}(\underline{c},\underline{x})}$. Fissiamo $y_1,\ldots,y_n \in \overline{\FF_{p_i}}$ e cerchiamo $x_1,\ldots,x_n \in \overline{\FF_{p_i}}$ tali che
+    risolvano l'equazione $\underline{y} = \underline{p}(\underline c, \underline x)$. Ora sfruttiamo il fatto che $\overline{\FF_{i}} = \bigcup_{j \in \NN} \FF_{p_i^{j!}}$ per dire che esiste $j_0 \in \NN$ tale che $c_1,\ldots,c_N,y_1,\ldots,y_n \in \FF_{p_i^{j!}}$.
+    La funzione $\underline{x} \mapsto \underline{p}(\underline{c},\underline{x})$, definita da $\overline{\FF_{p_i}}^n \to \overline{\FF_{p_i}}^n$ si restringe a una funzione in iniettiva $g : \FF_{p_i^{j_0}}^n \to \FF_{p_i^{j_0}}^n$. Sostengo che l'$\overline{x}$ cercato è in $\FF_{p_i^{j_0}}^n$, infatti
+    siccome $\FF_{p_i^{j_0}}^n$ è finito, allora $g$ è anche surgettiva per il principio dei cassetti.
+\end{proof}
+
+\begin{exercise}[Controesempio alla freccia inversa di Ax-Grothendieck]
+    L'implicazione contraria (surgettiva $\to$ iniettiva) è ovviamente falsa. Perché la dimostrazione, in questo verso, non funziona?
+\end{exercise}
+
+\subsection{Compattezza semantica e teorema di Łoś}
+
+Procediamo ora alla dimostrazione di compattezza semantica e del teorema di Łoś. Ricordiamo gli enunciati in ambo i casi.
+
+\begin{theorem}[Compattezza - versione semantica]
+    Data una $L$-teoria $T$ e una $L$-formula $\varphi$, se $T \models \varphi$ allora esiste un sottoinsieme finito $T' \subseteq T$,
+    tale che $T' \models \varphi$.
+\end{theorem}
+
+Vediamo prima il caso particolare in cui $|T| = \aleph_0$. \textcolor{MidnightBlue}{Questo caso particolare NON necessità di una dimostrazione separata.
+Tuttavia questa dimostrazione è più semplice di quella generale, servirà per illustrare meglio l'idea.}
+
+\begin{proof}
+    Sia $T = \{\psi_1,\psi_2,\ldots\}$, definiamo $T_i := \{\psi_1,\ldots,\psi_i\}$. Ci basta verificare che $\exists i \in \NN$ tale che $T_i \models \varphi$, procediamo per assurdo supponendo che $T_i \not\models \varphi$ per ogni $i \in \NN$.
+    Abbiamo allora che $\forall i \in \NN$ esiste un modello $M_i$ tale che $M_i \models T_i$ ma $M_i \not\models \varphi$, ovvero $M_i \models \neg \varphi$ (questo segue dal fatto che $M_i$ è un controesempio per $T_i \models \varphi$, cioè $M_i \models \neg \varphi$). Sia $U$ un ultrafiltro non principale su $\ps(\NN)$, consideriamo l'ultraprodotto $M = \faktor{\prod_{i \in \NN} M_i}{U}$,
+    dal corollario al teorema di Łoś, si deduce immediatamente che $M \models \neg \varphi$; se riuscissimo a dimostrare che $M \models T$, avremmo un assurdo, perché per ipotesi $T \models \varphi$.\\
+    Per dimostrare che $M \models T$ basta dimostrare che $\forall j \in \NN$ vale $M \models \psi_j$, e per il teorema di Łoś questo equivale a dimostrare che $\{i \in \NN : M_i \models \psi_j\} \in U$.
+    Segue dall'ipotesi che $M_k \models \psi_j$ per ogni $k \geq j$, quindi:
+    \[ \{i \in \NN | M_i \models \psi_j\} \supseteq \{i \in \NN | i \geq j\} \in U
+    \]
+    dove l'ultima appartenenza segue dal fatto che l'insieme è cofinito e $U$ è un ultrafiltro non principale, quindi non può appartenerci un insieme finito, altrimenti ci apparterebbe un singoletto e l'ultrafiltro sarebbe principale.
+\end{proof}
+
+Vediamo ora il \textcolor{MidnightBlue}{caso generale} del teorema di compattezza semantica.
+
+\begin{proof}
+    Sia $F$ il sottoinsieme di $\ps(\psf(T))$ definito da:
+    \[ X \in F \iff \exists A \in \psf(T) \; \{B \in \psf(T) | A \subseteq B\} \subseteq X
+    \]
+    verifichiamo che $F$ è un filtro su $\ps(\psf(T))$. Infatti:
+    \begin{itemize}
+        \item $\emptyset \notin F$ perché il vuoto ha come sottoinsieme solo se stesso, mentre c'è almeno un sottoinsieme non banale finito di $T$ che contiene il vuoto, per cui si ha un assurdo; invece $\psf(T) \in F$ per un qualsiasi $A \in \psf(T)$;
+        \item se $X,Y \in F$ allora esistono $A,B \in \psf(T)$ tali che $\{C \in \psf(T) | A \subseteq C\} \subseteq X$ e $\{D \in \psf(T) | B \subseteq D\} \subseteq Y$; quindi, se $E = A \cup B$, si ha che $\{G \in \psf(T) | E \subseteq G\} \subseteq X \cap Y$, per cui $X \cap Y \in F$;
+        \item se $X \in F$ e $X \subseteq Y \subseteq \psf(T)$, allora esiste $A \in \psf(T)$ tale che $\{B \in \psf(T) | A \subseteq B\} \subseteq X$, per cui $\{B \in \psf(T) | A \subseteq B\} \subseteq Y$, e quindi $Y \in F$.
+    \end{itemize}
+    Sia ora $U$ un ultrafiltro che estende $F$, supponiamo per assurdo che $\forall T' \in \psf(T)$ si abbia $T' \not \models \varphi$, per cui $\forall T' \in \psf(T)$ esiste $M_{T'}$ tale che $M_{T'} \models T'$ e $M_{T'} \not \models \varphi$, e consideriamo $M := \faktor{\prod_{T' \in \psf(T)} M_{T'}}{U}$.
+    Per il corollario al teorema di Łoś, si ha che $M \models \neg \varphi$. Se verifichiamo che $M \models T$ otteniamo un assurdo; ora $M \models T \iff \forall \psi \in T \; M \models \psi$, inoltre per il teorema di Łoś ciò equivale a $\{T' \in \psf(T) | M_{T'} \models \psi\} \in U$. Usando la definizione sopra
+    con $A = \{\psi\}$ si ottiene che $\{B \in \psf(T) | \{\psi\} \subseteq B\} \subseteq \{T' \in \psf(T) | M_{T'} \models \psi\}$, per cui $\{T' \in \psf(T) | M_{T'} \models \psi\} \in F \subseteq U$ e si conclude.
+\end{proof}
+
+Concludiamo infine questa sezione con la dimostrazione del teorema di Łoś di cui ricordiamo l'enunciato.
+
+\begin{theorem}[Teorema di Łoś]
+    \[ \faktor{\prod_{i \in I} M_i}{U} \models \varphi([a_1],\ldots,[a_k]) \iff \{i \in I | M_i \models \varphi(a_{1i},\ldots,a_{ki})\} \in U
+    \]
+\end{theorem}
+
+\begin{proof}
+    Siccome, a meno di equivalenza logica, ogni formula può essere scritta usando solamente \textcolor{purple}{$\exists,\neg,\land$}, possiamo supporre che $\varphi$ non contenga il quantificatore \textcolor{purple}{$\forall$} né altri connettivi salvo \textcolor{purple}{$\neg$} e \textcolor{purple}{$\land$}. Procediamo dunque 
+    per induzione strutturale.\\
+    Se $\varphi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) = \textcolor{purple}{\neg} \,\psi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k})$, allora:
+        \begin{align*}
+            \faktor{\prod_{i \in I} M_i}{U} \models \neg\, \psi([\underline a_1],\ldots,[\underline a_k]) &\iff \neg \left(\faktor{\prod_{i \in I} M_i}{U} \models \psi([\underline a_1],\ldots,[\underline a_k])\right) && \text{(Tarski)} \\
+            & \iff \{i \in I | M_i \models \psi(a_{1i},\ldots,a_{ki})\} \not\in U && \text{(hp. ind.)} \\
+            & \iff \{i \in I | \neg (M_i \models \psi(a_{1i},\ldots,a_{ki}))\} \in U && \text{(def. ultraf.)} \\
+            & \iff \{i \in I | M_i \models \neg\,\psi(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
+        \end{align*}
+    Se $\varphi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) = \psi_1(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) \, \textcolor{purple}{\land} \, \psi_2(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k})$, allora:
+        \begin{align*}
+            &\faktor{\prod_{i \in I} M_i}{U} \models (\psi_1([\underline a_1],\ldots,[\underline a_k]) \land \psi_2([\underline a_1],\ldots,[\underline a_k])) \\
+            \iff& \faktor{\prod_{i \in I} M_i}{U} \models \psi_1([\underline a_1],\ldots,[\underline a_k]) \land \faktor{\prod_{i \in I} M_i}{U} \models \psi_2([\underline a_1],\ldots,[\underline a_k]) && \text{(Tarski)} \\
+            \iff& \{i \in I | M_i \models \psi_1(a_{1i},\ldots,a_{ki})\} \in U \land \{i \in I | M_i \models \psi_2(a_{1i},\ldots,a_{ki})\} \in U && \text{(hp. ind.)} \\
+            \iff& \{i \in I | M_i \models \psi_1(a_{1i},\ldots,a_{ki})\} \cap \{i \in I | M_i \models \psi_2(a_{1i},\ldots,a_{ki})\} \in U && (\star)\\
+            \iff& \{i \in I | M_i \models \psi_1(a_{1i},\ldots,a_{ki}) \land M_i \models \psi_2(a_{1i},\ldots,a_{ki})\} \in U && \text{(insiemi)}\\
+            \iff& \{i \in I | M_i \models (\psi_1(a_{1i},\ldots,a_{ki}) \land \psi_2(a_{1i},\ldots,a_{ki}))\} \in U && \text{(Tarski)}
+        \end{align*}
+    dove in $(\star)$ l'implicazione dal basso verso l'alto è la proprietà 2. della definizione di filtro (chiusura per sovrainsieme), mentre l'implicazione dall'alto verso il basso è la proprietà 3. della definizione di filtro (chiusura per intersezione finita).\\
+    Se $\varphi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) = \exists \textcolor{purple}{y} \; \psi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k},\textcolor{purple}{y})$, allora:
+        \begin{align*}
+            &\faktor{\prod_{i \in I} M_i}{U} \models \exists y \; \psi([\underline a_1],\ldots,[\underline a_k],y) \\
+            \iff& \exists [\underline b] \in \faktor{\prod_{i \in I} M_i}{U} \; \faktor{\prod_{i \in I} M_i}{U} \models \psi([\underline a_1],\ldots,[\underline a_k],[\underline b]) && \text{(Tarski)}\\
+            \iff& \exists [\underline b] \; \{i \in I | M_i \models \psi(a_{1i},\ldots,a_{ki},b_i)\} \in U && \text{(hp. ind.)}\\
+            \iff& \{i \in I | \exists b_i : M_i \models \psi(a_{1i},\ldots,a_{ki},b_i)\} \in U && (\star\star)\\
+            \iff& \{i \in I | M_i \models \exists  \textcolor{purple}{y} : \psi(a_{1i},\ldots,a_{ki},\textcolor{purple}{y})\} \in U && \text{(Tarski)}
+        \end{align*}
+        dove in $(\star\star)$ l'implicazione dal basso verso l'alto è l'assioma di scelta ($\mathsf{AC}$, per ogni $i \in I$ scelgo un $b_i$ tale che funziona e così costruisco la sequenza $\underline b$), mentre l'implicazione dall'alto verso il basso è la proprietà 2. della definizione di filtro (chiusura per sovrainsieme).\\
+        Per completezza vediamo anche i casi in cui $\varphi$ è una $L$-formula atomica.\\
+        Se $\varphi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) = \top, \bot$, allora è banale, infatti $\{i \in I | M_i \models \top\} = I \in U$, e per definizione di ultrafiltro $\{i \in I | M_i \models \bot\} = \emptyset \notin U$.\\
+        Se $\varphi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) = r(\textcolor{purple}{t_1},\ldots,\textcolor{purple}{t_m})(x_1,\ldots,x_k)$, con $r$ simbolo di relazione, e $t_1,\ldots,t_m$ termini con variabili in $\{x_1,\ldots,x_k\}$, allora:
+        \begin{align*}
+            &\faktor{\prod_{i \in I} M_i}{U} \models r(t_1,\ldots,t_m)([\underline a_1],\ldots,[\underline a_k]) \\
+            \iff& (t_1,\ldots,t_m)([\underline a_1],\ldots,[\underline a_k]) \in r/U && \text{(Tarski)}\\
+            \iff& \{i \in I | (a_{1i},\ldots,a_{ki}) \in r_{M_i}\} \in U && \text{(def. rel. in ultraprod.)}\\
+            \iff& \{i \in I | M_i \models r(t_1,\ldots,t_m)(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
+        \end{align*}
+        Se $\varphi(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k}) = (t_1 = t_2)(\textcolor{purple}{x_1},\ldots,\textcolor{purple}{x_k})$, con $t_1,t_2$ termini con variabili in $\{x_1,\ldots,x_k\}$, allora:
+        \begin{align*}
+            &\faktor{\prod_{i \in I} M_i}{U} \models (t_1 = t_2)([\underline a_1],\ldots,[\underline a_k]) \\
+            \iff& t_1([\underline a_1],\ldots,[\underline a_k]) = t_2([\underline a_1],\ldots,[\underline a_k]) && \text{(Tarski)}\\
+            \iff& \{i \in I | t_1(a_{1i},\ldots,a_{ki}) = t_2(a_{1i},\ldots,a_{ki})\} \in U && \text{(def. uguaglianza in ultraprod.)}\\
+            \iff& \{i \in I | M_i \models (t_1 = t_2)(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
+        \end{align*}
+\end{proof}
+
+\subsection{Applicazioni del teorema di compattezza}
+In questa sezione mostriamo alcuni esempi ed applicazioni del teorema di compattezza. Le tecniche che useremo costituiscono gli elementi della \vocab{teoria dei modelli}, che
+studia le proprietà e della relazione di conseguenza logica. I risultati principali che dimostreremo sono: i teoremi di Löwenheim-Skolem - ce ne sono due, uno per salire e uno per scendere in cardinalità,
+però, rozzamente, possiamo scrivere come segue.
+
+\begin{theorem}[Löwenheim-Skolem - alla buona]
+    O i modelli di una $L$-teoria $T$ hanno tutti cardinalità $\leq n$ per qualche $n \in \NN$. Oppure, per ogni cardinalità $\kappa \geq |L| + \aleph_0$, la teoria $T$ ha un modello di cardinalità $\kappa$. 
+\end{theorem}
+
+Da questo risultato segue un criterio che, per esempio, ci permetterà di dare una dimostrazione rapida del fatto che $T_{\text{oldse}}$ è completa, oppure di dimostrare che la 
+teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Cominciamo innanzitutto con qualche esempio.
+
+\begin{proposition}[Finitamente coerente $\implies$ coerente]
+    Se ogni sottoteoria finita di una teoria $T$  è coerente - ossia se $T$ è \vocab{finitamente coerente} - allora $T$ è coerente.
+\end{proposition}
+
+\begin{proof}
+    Per la caratterizzazione vista $T$ è coerente se e solo se $T\not\models \bot$, pertanto, se per assurdo $T \models \bot$, per la compattezza semantica esisterebbe un sottoinsieme finito $T' \subseteq T$ tale che $T' \models \bot$, ma
+    per ipotesi $T'$ è coerente, per cui si ha un assurdo. Segue quindi che $T\not\models \bot$, che equivale a dire che $T$ è coerente.
+\end{proof}
+
+\begin{example}[Modelli non standard di $\Th(\NN;0,1,+,\cdot,s)$]
+    Abbiamo già visto che ci sono modelli non standard di $\Th(\NN;\textcolor{purple}{0},\textcolor{purple}{1},\textcolor{purple}{+},\textcolor{purple}{\cdot},\textcolor{purple}{s})$. Dimostriamo questo fatto per compattezza semantica.
+\end{example}
+
+\begin{proof}
+    Sia $L_{\text{c}} = \{\textcolor{purple}{0}, \textcolor{purple}{1}, \textcolor{purple}{+}, \textcolor{purple}{\cdot}, \textcolor{purple}{s}\} \cup \{c_n | n \in \NN\} = L_{\text{ar}} \cup \{\textcolor{purple}{c}\}$, il linguaggio dell'aritmetica \vocab{espanso}
+    con un nuovo simbolo di costante $\textcolor{purple}{c}$. Consideriamo la $L_{\text{c}}$-teoria:
+    \[ T = \underbrace{\Th(\NN;0,1,+,\cdot,s)}_{L_\text{ar}} \,\cup\, \underbrace{\{\textcolor{purple}{\exists x \; c = s(x)}, \textcolor{purple}{\exists x \; c = s(s(x))}, \ldots\}}_{\text{nuovi assiomi}}
+    \]
+    Questa teoria è finitamente coerente perché, data $T' \subseteq T$ finita, $T'$ non può che contenere un numero finito di nuovi assiomi, quindi $\NN$, interpretando $\textcolor{purple}{c}$ come un numero abbastanza grande, è un modello di $T'$. Per la proposizione precedente, $T$ è coerente, quindi ha un modello $M$.\\
+    Ora $M$ è una $L_{\text{c}}$-struttura e $M \models \Th(\NN;0,1,+,\cdot,s)$. Consideriamo il \vocab{ridotto} $M|_{L_{\text{ar}}}$ di $M$ a $L_{\text{ar}}$ - ossia, se $M = (D;i)$, la $L_{\text{ar}}$-struttura $M|_{L_{\text{ar}}} = (D;i|_{L_{\text{ar}}})$. È chiaro che $M|_{L_{\text{ar}}} \models \Th(\NN;L_{\text{ar}})$,
+    inoltre $M|_{L_{\text{ar}}}$ non è isomorfa a $\NN$ perché l'elemento $c_M$, che appartiene al suo dominio, ha una catena infinita di predecessori, per cui un eventuale isomorfismo di $L_{\text{ar}}$-struttura con $\NN$ genererebbe un'infinita catena di predecessori in $\NN \; \lightning$.
+\end{proof}
+
+\begin{exercise}[Modelli non standard di $\Th(\RR;0,1,+,\cdot,<)$]
+    Allo stesso modo si può dimostrare anche che esistono modelli non standard di $\Th(\RR; 0,1,+,\cdot,<)$.\footnote{\underline{Hint}: Basata aggiungere una costante $\textcolor{purple}{c}$ e gli assiomi $\{\textcolor{purple}{1 < c}, \textcolor{purple}{1 + 1 < c}, \textcolor{purple}{1 + 1 + 1 < c}, \ldots\}$.}
+\end{exercise}
+
+\begin{definition}[Assiomatizzabilità e finita assiomatizzabilità]
+    Diciamo che una classe $C$ di $L$-strutture è \vocab{assiomatizzabile} se c'è una $L$-teoria $T$ tale che
+    una $L$-struttura appartiene a $C$ se e solo se è un modello di $T$. Se c'è una $T$ finita siffatta, allora $C$ è \vocab{finitamente assiomatizzabile}.
+\end{definition}
+
+\begin{example}[Assiomatizzabilità della classe dei buoni ordini]
+    La classe dei buoni ordini, nel linguaggio $L = \{\textcolor{purple}{<}\}$ non è assiomatizzabile.
+\end{example}
+
+\begin{proof}
+    Supponiamo, per assurdo, che $M \models T$ se e solo se $M$ è un buon ordine. Allora:
+    \[ T' = T \cup \{\textcolor{purple}{c_2 < c_1}, \textcolor{purple}{c_3 < c_2}, \textcolor{purple}{c_4 < c_3}, \ldots\}
+    \]
+    è una teoria coerente nel linguaggio:
+    \[ L' = L \cup \{\textcolor{purple}{c_1}, \textcolor{purple}{c_2}, \textcolor{purple}{c_3}, \ldots\}
+    \]
+    infatti, data $T'' \subseteq T'$ finita, avremo:
+    \[ T'' \subseteq T \cup \{\textcolor{purple}{c_2 < c_1}, \ldots, \textcolor{purple}{c_n < c_{n-1}}\}
+    \]
+    con $n \in \NN$, per cui $\omega$ con $\textcolor{purple}{c_i} = n - i$ è un modello di $T''$, quindi per la proposizione precedente $T'$ è coerente.
+    Tuttavia, detto $M$ un modello di $T'$, dovremmo avere che $M|_{L}\models T$, ma questo contraddice il fatto che le interpretazioni delle costanti $\textcolor{purple}{c_1}, \textcolor{purple}{c_2}, \ldots$ in $M$
+    formano una catena discendente infinita.
+\end{proof}
+
+\begin{exercise}[Classi di strutture non assiomatizzabili]
+    Le seguenti classi di strutture NON sono assiomatizzabili:
+    \begin{enumerate}
+        \item insiemi finiti nel linguaggio $\emptyset$;
+        \item grafi connessi - con il linguaggio $L = \{\textcolor{purple}{e(\cdot,\cdot)}\}$ (simbolo di relazione binaria);
+        \item gruppi abeliani divisibili \textcolor{MidnightBlue}{$\forall n \in \NN \;\forall x \in G \;\exists y \in G \; x = \underbrace{y + \ldots + y}_{\text{$n$ volte}}$};
+        \item campi di caratteristica finita;
+        \item $\textcolor{purple}{{}^*}$gruppi liberi;
+        \item $\textcolor{purple}{{}^*}$gruppi semplici $\textcolor{MidnightBlue}{\text{- ossia senza sottogruppi normali non banali}}$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{example}[Assiomatizzabilità della classe degli insiemi infiniti]
+    La classe degli insiemi infiniti nel linguaggio vuoto, è assiomatizzabile ma non finitamente assiomatizzabile.
+\end{example}
+
+\begin{proof}
+    Sia:
+    \[ \varphi_n = \textcolor{purple}{\exists x_1 \; \exists x_2 \; \ldots \; \exists x_n \; \underbrace{\neg \, x_1 = x_2 \land \neg \, x_1 = x_3 \land \ldots}_{\textcolor{MidnightBlue}{= \displaystyle\bigwedge_{i < j \leq n} \neg\, x_i = x_j}}}
+    \]
+    e sia $T = \{\varphi_1, \varphi_2, \ldots\}$, è chiaro che tale teoria assiomatizza la classe degli insiemi infiniti (ogni insieme infinito rispetta tutte quelle formule, ed al contempo il soddisfare tutte quelle formule garantisce poter scegliere infiniti elementi distinti).\\
+    Così abbiamo dimostrato che la teoria degli insiemi infiniti nel linguaggio vuoto è assiomatizzabile. Supponiamo ora che sia finitamente assiomatizzabile, ossia che esista $T'$ una assiomatizzazione finita. Segue, dalle definizioni di 
+    assiomatizzazione e di conseguenza logica che $T$ e $T'$ sono logicamente equivalenti, in particolare $T \models T'$, e per compattezza semantica $\exists n \in \NN$ tale che $T'' := \{\varphi_1, \ldots, \varphi_n\} \models T'$, per cui anche $T''$ assiomatizza la classe degli insiemi infiniti nel linguaggio vuoto.
+    Ora siamo arrivati a dire che $T''$ è logicamente equivalente a $T'$, cioè assiomatizza la classe degli insiemi infiniti, ma questo è assurdo perché, nel linguaggio vuoto, $T''$ ha come modelli tutti gli insiemi di cardinalità $n$ (ad esempio $\{1, 2, \ldots, n\}$, che è una $L$-struttura nel linguaggio vuoto se poniamo $i = \emptyset$) quindi assurdo.
+\end{proof}
+
+\begin{exercise}[Classi di strutture assiomatizzabili ma non finitamente assiomatizzabili]
+    Le seguenti classi di strutture sono assiomatizzabili ma non finitamente assiomatizzabili:
+    \begin{enumerate}
+        \item gruppi/anelli/campi infiniti;
+        \item campi di caratteristica 0;
+        \item campi algebricamente chiusi;
+        \item \textcolor{purple}{${}^*$}grafi 3-colorabili \textcolor{MidnightBlue}{- esiste una partizione dei vertici in tre sottoinsiemi, nessuno dei quali contiene due vertici adiacenti}.
+    \end{enumerate}
+\end{exercise}
+
+Vediamo ora due esempi di applicazione al di fuori della logica matematica.
+
+\begin{definition}[Partizione litigiosa]
+    Diciamo che una partizione $V = A \sqcup B$ dei vertici di un grafo $G = (V,E)$ è \vocab{litigiosa} se, per ogni vertice $v \in V$,
+    il numero di adiacenti a $v$ che appartiene alla medesima parte di $v$ è $\leq$ del numero di adiacenti a $v$ che appartiene all'altra parte.
+\end{definition}
+
+\begin{proposition}
+    Sia $G$ un grafo \vocab{localmente finito} - ossia ogni vertice di $G$ ha un numero finito di vertici adiacenti - allora $G$ ammette una partizione litigiosa.
+\end{proposition}
+
+\begin{proof}
+    [DA INSERIRE]
+\end{proof}
+
+La seconda applicazione ci dà il pretesto per introdurre le seguenti definizioni, che, in realtà, sono nozioni di base della teoria dei modelli.
+
+\begin{definition}[Linguaggio espanso]
+    Sia $M = (D;\ldots)$ una $L$-struttura, $L(M)$ è il linguaggio $L$-\vocab{espanso} con l'aggiunta di una costante $c_i$ per ogni $i \in D$. 
+    Possiamo vedere $M$ come una $L(M)$-struttura, denotata $M_M$, interpretando ogni $\textcolor{purple}{c_i}$ con $i$ (come funzione costante o direttamente come elemento stesso $i$ di $D$).
+\end{definition}
+
+\begin{definition}[Diagramma elementare]
+    Il \vocab{diagramma elementare} di una $L$-struttura $M$, denotato con $\ED(M)$ è la $L(M)$-teoria $\Th(M_M)$ - ossia l'insieme di tutte le $L(M)$-formule valide in $M_M$.
+\end{definition}
+
+\begin{definition}[Diagramma atomico]
+    Il \vocab{diagramma atomico} di una $L$-struttura $M$, denotato con $\diag(M)$, è l'insieme delle $L(M)$-formule atomiche o negazioni di atomiche valide in $M_M$.
+\end{definition}
+
+\begin{remark}
+    È chiaro che $\diag(M) \subseteq \ED(M)$.
+\end{remark}
+
+\begin{definition}[Sottostruttura]
+    Sia $N = (D;i)$ una $L$-struttura e $C \subseteq D$. Per ogni simbolo di funzione $\textcolor{purple}{f}$ di $L$ abbiamo che $f_N[C^{\ar(f)}] \subseteq C$ - ossia $C$ è chiuso per l'operazione $\textcolor{purple}{f}$ - allora $M = (C;i|_C)$ 
+    si dice \vocab{sottostruttura} di $N$, $M \subseteq N$, dove la restrizione $i|_C$ è ottenuta restringendo il dominio di relazioni e funzioni.  
+\end{definition}
+
+\begin{definition}[Sottostruttura elementare]
+    Se $M = (C;i|_C)$ è una sottostruttura di $N = (D;i)$ e per ogni $L$-formula $\varphi(x_1,\ldots,x_k)$:
+    \[ \forall a_1,\ldots,a_k \in C \; M \models \varphi(a_1,\ldots,a_k) \iff N \models \varphi(a_1,\ldots,a_k)
+    \]
+    allora $M$ si dice \vocab{sottostruttura elementare} di $N$, e si denota \vocab{$M \preceq N$}.
+\end{definition}
+
+\begin{definition}[Estensione]
+    Infine se $M$ è una sottostruttura (elementare) di $N$, allora $N$ è un'\vocab{estensione} (elementare) di $M$.
+\end{definition}
+
+\begin{remark}
+    Siano $M = (C;\ldots)$ e $N = (D;\ldots)$ con $C \subseteq D$. La $L$-struttura $N$ può essere vista come una $L(M)$-struttura $N_M$, interpretando ogni $\textcolor{purple}{c_i}$ con $i$ (come funzione costante o direttamente come elemento stesso $i$ di $D$). Allora:
+    \begin{itemize}
+        \item $M \subseteq N$ (cioè è una sottostruttura) se e solo se $N_M \models \diag(M)$;
+        \item $M \preceq N$ (cioè è una sottostruttura elementare) se e solo se $N_M \models \ED(M)$.
+    \end{itemize}
+\end{remark}
+
+Basta burocrazia, questa è l'applicazione promessa.
+
+\begin{theorem}[Levi]
+    Ogni gruppo abeliano senza torsione è ordinabile \textcolor{MidnightBlue}{- ossia esiste una relazione di ordine totale $<$ tale che $\forall a,b,c \in G \; a < b \implies ac < bc$}.
+\end{theorem}
+
+Sfrutteremo la seguente osservazione.
+
+\begin{remark}[Sottostrutture di modelli di teorie universali]
+    Se $T$ è una \vocab{teoria universale} - ossia tutte le $\varphi \in T$ sono della forma $\textcolor{purple}{\forall x_1 \ldots \forall x_k} \; \psi$,
+    con $\psi$ senza quantificatori - e $M$ è una sottostruttura di un modello di $T$, allora $M$ è un modello di $T$.
+\end{remark}
+
+Vediamo la dimostrazione dell'osservazione in primis.
+
+\begin{exercise}[Formule assolute ed universali]
+    Dimostra che le formule senza quantificatori sono \vocab{assolute} - valgono nella sottostruttura se e solo se valgono nell'estensione. Le formule \vocab{universali} si preservano
+    per sottostrutture. Mentre le formule \vocab{esistenziali} si preservano per estensioni.
+\end{exercise}
+
+Veniamo ora alla dimostrazione del teorema di Levi.
+
+\begin{proof}
+    [DA INSERIRE]
+\end{proof}
+
+\subsection{Teoremi di Löwenheim-Skolem}
+
+\begin{theorem}[Löwenheim-Skolem verso l'alto - forma debole]
+    Il teorema di Löwenheim-Skolem verso l'alto dice due cose.
+    \begin{enumerate}
+        \item Sia $T$ una $L$-teoria. Supponiamo che, per ogni $n \in \NN$, ci sia un modello di $T$ di cardinalità $\geq n$. Allora, per ogni cardinalità $\kappa$, c'è un modello di $T$ di cardinalità $\geq \kappa$.
+        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità $\kappa$, c'è una estensione elementare $N$ di $M$ avente cardinalità $\geq \kappa$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Per il punto 1. è sufficiente espandere $L$ aggiungendo $\kappa$ costanti $\textcolor{purple}{c_i}$, con $i \in \kappa$. Allora la teoria:
+    \[ T' = T \cup \{\neg \, \textcolor{purple}{c_i = c_j} | i,j \in \kappa, i \neq j\}
+    \]
+    è finitamente coerente, infatti, data $T'' \subseteq T'$ finita, $T''$ contiene un numero finito di nuovi assiomi, per cui esiste un modello di $T$ di cardinalità abbastanza grande che interpreta le costanti $\textcolor{purple}{c_i}$ in modo distinto (semplicemente per ipotesi).
+    Segue quindi che $T'$ è coerente, per cui ha un modello $M$, che necessariamente ha cardinalità $\geq \kappa$, perché interpreta le costanti $\textcolor{purple}{c_i}$ in modo distinto. \\
+    Per il punto 2. basta applicare il punto 1. alla teoria $\ED(M)$, che ha un modello, $M_M$, di cardinalità $\geq |M|$ (perché deve interpretare tutte le costanti distinte).
+\end{proof}
+
+Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma seguente, che è spesso utile per costruire sottostrutture elementari.
+
+\begin{lemma}[Criterio di Tarski-Vaught]
+    Sia $M \subseteq \textcolor{MidnightBlue}{N}$ due $L$-strutture. Allora $M \preceq N$ se e solo se, per ogni $L$-formula $\varphi(\textcolor{purple}{x},\textcolor{purple}{y_1},\ldots,\textcolor{purple}{y_k})$ vale:
+    \[ \forall b_1,\ldots,b_k \in M \; \textcolor{MidnightBlue}{N} \models \textcolor{purple}{\exists x} \; \varphi(\textcolor{purple}{x},b_1,\ldots,b_k) \implies \textcolor{purple}{\exists a} \in M \; \textcolor{MidnightBlue}{N} \models \varphi(\textcolor{purple}{a},b_1,\ldots,b_k)
+    \]
+    ovvero se una formula con parametri in $M$ è soddisfatta in $N$, allora è soddisfatta in $M$ da un elemento di $M$.
+\end{lemma}
+
+\begin{note}[Utilità del criterio di Tarski-Vaught]
+    La condizione del criterio di Tarski-Vaught non menziona $M \models$. Ottimo se stiamo cercando di costruire $M$, per cui non lo abbiamo ancora fissato.
+\end{note}
+
+\begin{proof}
+    [DA INSERIRE]
+\end{proof}
+
+\begin{theorem}[Löwenheim-Skolem verso il basso]
+    Sia $N$ una $L$-struttura infinita, Sia $A$ un sottoinsieme del dominio di $N$.
+    Sia infine $\kappa$ un cardinalità infinita con $|L| + |A| \leq \kappa \leq |N|$. Allora esiste $M \preceq N$ con $|M| = \kappa$ il cui dominio contiene $A$.   
+\end{theorem}
+
+\begin{proof}
+    [DA INSERIRE]
+\end{proof}
+
+\begin{theorem}[Löwenheim-Skolem - verso l'alto - forma forte]
+    Come prima, ma con cardinalità esatta.
+    \begin{enumerate}
+        \item Sia $T$ una $L$-teoria. Supponiamo che, per ogni $n \in \NN$, ci sia un modello di $T$ di cardinalità $\geq n$. Allora, per ogni cardinalità $\kappa \geq |L| + \aleph_0$, c'è un modello di $T$ di cardinalità $= \kappa$.
+        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità infinita $\kappa \geq |L| + |M|$, c'è una estensione elementare $N$ di $M$ avente cardinalità $= \kappa$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    È facile usare la forma debole per salire sopra $\kappa$, e poi riscendere col teorema di Löwenheim-Skolem verso il basso.
+\end{proof}
+
+\begin{exercise}[Paradosso di Skolem]
+    Se la teoria degli insiemi $\mathsf{ZFC}$ è coerente, allora ha un modello numerabile.
+\end{exercise}
+
+\begin{exercise}[Modelli numerabili di $\Th(\NN;0,1,+,\cdot,s)$]
+    Dimostra che $\Th(\NN; 0, + , \cdot, s)$ ha $2^{\aleph_0}$ modelli numerabili (non isomorfi).
+\end{exercise}
+
+\subsection{Categoricità e completezza}
+
+\begin{definition}[Categoricità]
+    Sia $\kappa $ una cardinalità. Una $L$-teoria $T$ si dice \vocab{$\kappa$-categorica} se esiste un unico modello di $T$ di cardinalità $\kappa$, a meno di isomorfismi.
+\end{definition}
+
+\begin{proposition}[Categorica infinita $\implies$ completa]
+    Se una $L$-teoria $T$ è $\kappa$-categorica con $|L| + \aleph_0 \leq \kappa$, allora $T$ è completa.
+\end{proposition}
+
+\begin{proof}
+    Supponiamo il viceversa. Allora esistono $\varphi$ e due modelli $M_1, M_2$ di $T$ tali che $M_1 \models \varphi$ e $M_2 \models \neg \, \varphi$.
+    Applicando i teoremi di Löwenheim-Skolem troviamo due $L$-strutture $M_1', M_2'$ di cardinalità $\kappa$ elementarmente equivalenti a $M_1$ e $M_2$ rispettivamente.
+    Queste dovrebbero quindi essere due modelli di $T$ che non possono essere isomorfi in quanto $M_1 \models \varphi$ e $M_2 \models \neg \, \varphi \; \lightning$.
+\end{proof}
+
+\begin{exercise}
+    La teoria $T_{\text{oldse}}$ è completa.
+\end{exercise}
+
+\begin{note}
+    Abbiamo già dimostrato questo risultato per eliminazione dei quantificatori. Quello che segue è un argomento diretto.
+\end{note}
+
+\begin{soln}
+    Siccome c'è un solo ordine lineare denso e senza estremi numerabile (Teorema di isomorfismo di Cantor [INSERIRE RIFERIMENTO]),
+    la teoria $T_{\text{oldse}}$ è pertanto $\aleph_0$-categorica, quindi, per la proposizione precedente, è completa.
+\end{soln}
+
+\begin{exercise}
+    Dai una assiomatizzazione esplicita delle seguenti teorie:
+    \begin{enumerate}
+        \item $\Th(\CC;0,1,+,\cdot)$;
+        \item $\Th(\ZZ;s)$;
+        \item $\Th(\NN;s)$;
+        \item $\Th(\RR;0,+)$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+    Sia $T$ la teoria nel linguaggio $L = \{\textcolor{purple}{\sim}\}$ che dice che $\textcolor{purple}{\sim}$ è una relazione di equivalenza.
+    Classifica le $L$-teorie complete che estendono $T$.
+\end{exercise}

@@ -8,7 +8,7 @@ allora le stringhe sono sequenze \textcolor{purple}{finite} come, per esempio:
 \[ () \qquad (a,x,a,x,a,x,a,x,a,x) \qquad (m,l,\ddot{o})
 \]
 che conviene scrivere più compattamente come:
-\[ \varepsilon\footnote{È la \vocab{stringa vuota}.} \qquad axaxaxaxax \qquad ml\ddot{o}
+\[ \varepsilon\footnote{È la \vocab{stringa vuota}.} \qquad \text{axaxaxaxax} \qquad ml\ddot{o}
 \]
 L'ambiente in cui formalizziamo le nostre definizioni, in questo caso la teoria degli insiemi, si dice \vocab{metateoria}.
 Non vogliamo forzare una particolare scelta per la metateoria. Sarà elementare formalizzare il materiale di questo corso, per chi,
@@ -65,12 +65,12 @@ Spesso non c'è un unico modo di formalizzare un concetto.
 della struttura, sui numeri naturali o sulle formule stesse. È per questa ragione che la logica che studiamo si dice \vocab{del primo ordine}: se, per esempio, potessimo quantificare anche sui sottoinsiemi
 della struttura, allora lavoreremmo al \vocab{secondo ordine}. $\mathsf{ZFC}$, la teoria degli insiemi, ricorderete, è formalizzata al primo ordine - c'è un solo tipo di oggetti, gli insiemi, e si può dire ``per ogni insieme $x$''
 o ``esiste un insieme $x$''. Quando, in $\mathsf{ZFC}$, si quantifica sui sottoinsiemi, lo si fa per mezzo di una perifrasi, $\forall x \subseteq y \ldots$ significa $\forall x \; x \subseteq y \to \ldots$, e questo è sottilmente diverso
-da dire ``per ogni sottoinsieme $x$ di $y$'', infatti, dire ``per ogni elemento elemento $x$ dell'universo degli insiemi che sia un sottoinsieme di $y$'. Vedremo una conseguenza sorprendente, il \vocab{paradosso di Skolem}, di questo fatto. 
-Formalmente, definiremo le formule dando  una grammatica - in particolare una \vocab{grammatica libera dal contesto}.
+da dire ``per ogni sottoinsieme $x$ di $y$'', infatti, dire ``per ogni elemento elemento $x$ dell'universo degli insiemi che sia un sottoinsieme di $y$''. Vedremo una conseguenza sorprendente, il \vocab{paradosso di Skolem}, di questo fatto. 
+Formalmente, definiremo le formule dando  una grammatica - in particolare una \vocab{grammatica libera dal contesto} (\vocab{CFG}).
 
 \medskip
 
-Una grammatica identifica le stringhe di un linguaggio descrivendo un processo ricorsivo che permette di scrivere una stringa più lunga combinando stringhe più brevi.
+Una grammatica identifica le stringhe di un linguaggio \textbf{descrivendo un processo ricorsivo che permette di scrivere una stringa più lunga combinando stringhe più brevi}.
 Lo studio, in generale, delle grammatiche non fa parte degli obiettivi di questo corso, vediamo invece il caso particolare che ci interessa.
 
 \begin{definition}
@@ -94,7 +94,7 @@ Lo studio, in generale, delle grammatiche non fa parte degli obiettivi di questo
 \end{example}
 
 \textcolor{MidnightBlue}{\underline{Nota}: qui c'è un piccolo conflitto nella terminologia, perché, secondo la definizione precedente, un ``linguaggio'' è, in pratica, la collezione dei simboli di base
-di una teoria, mentre abbiamo già chiamato ``linguaggio'' l'insieme delle stringhe. È così non è colpa mia.}
+di una teoria, mentre abbiamo già chiamato ``linguaggio'' l'insieme delle stringhe. È così, non è colpa mia.}
 
 \begin{remark}
     Nella definizione di linguaggio ammettiamo simboli di funzione 0-ari, che chiameremo \vocab{simboli di costante}, e simboli di relazione 0-ari, che chiameremo \vocab{simboli di costante proposizionale}.
@@ -105,20 +105,22 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
 
 \begin{definition}
     [$L$-termine]
-    Gli \vocab{$L$-termini} sono stringhe dell'alfabeto dato da:
+    Gli \vocab{$L$-termini} sono stringhe costruite con l'alfabeto dato da:
     \[ F \sqcup \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}
     \]
     Chiamiamo l'insieme numerabile:
-    \[ \Var \Mydef \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} = \{\textcolor{purple}{x_i}\}_{i \in \NN}
+    \[ \Var\Mydef \{\textcolor{purple}{x_0},\textcolor{purple}{x_1},\textcolor{purple}{x_2}, \ldots\} = \{\textcolor{purple}{x_i}\}_{i \in \NN}
     \]
-    insieme dei \vocab{simboli di variabile}. Un \vocab{$L$-termine} è quindi una stringa in $F \sqcup \Var \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}$, e può essere [definito induttivamente come segue]:
+    insieme dei \vocab{simboli di variabile}. Un \vocab{$L$-termine} è quindi una stringa in $F \sqcup \Var\sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}\}$, e può essere definito ricorsivamente come segue:
     \begin{itemize}
         \item un simbolo di variabile $\textcolor{purple}{x_i} \in \Var$
         \item la stringa $\textcolor{purple}{f(}t_1\textcolor{purple}{,}t_2\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, dove $\textcolor{purple}{f} \in F$ è un simbolo di funzione, $t_1,\ldots,t_k$ sono $L$-termini, e $\ar(f) = k$.
     \end{itemize}
 \end{definition}
 
-\begin{remark}
+\textcolor{MidnightBlue}{Moralmente: si parte dai simboli di variabile e si applicano simboli di funzione ricorsivamente per costruire termini più complessi.}
+
+\begin{remark}[I simboli di costante sono in automatico $L$-termini]
     Se $\textcolor{purple}{c}$ è un simbolo di costante - funzione 0-aria - allora $\textcolor{purple}{c()}$ è un $L$-termine (abbiamo detto che le funzioni $k$-arie valutate in $L$-termini sono a loro volta $L$-termini, dunque $c()$ lo è in automatico).
     In pratica, ometteremo le parentesi, scrivendo semplicemente $\textcolor{purple}{c}$.
     Similmente useremo, per i simboli che denotano le operazioni aritmetiche, la comune \emph{notazione infissa}, per esempio $x_0 + (x_1 \cdot x_2)$ in luogo di $+(x_0, \cdot(x_1,x_2))$.
@@ -126,7 +128,7 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
     Non bisogna confondere le scritture di questo tipo $x+y\cdot z$, che sono abbreviazioni, un stereografia che impieghiamo fra di noi per parlare dei termini, con i termini stessi, che sono gli oggetti definiti formalmente.
 \end{remark}
 
-\begin{example}
+\begin{example}[$L$-termini]
     Ecco alcuni esempi di $L_{or}$ termini:
     \[ \cdot(+(x_0,1()),x_1) \qquad +(+(1(),1()),1())
     \]
@@ -138,10 +140,10 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
 \begin{definition}
     [$L$-formula]
     Le \vocab{$L$-formule} sono stringhe dell'alfabeto dato da:
-    \[ F \sqcup R \sqcup \Var \sqcup \{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}, \textcolor{purple}{\top}, \textcolor{purple}{\bot}, \textcolor{purple}{\neg}, \textcolor{purple}{\land}, \textcolor{purple}{\lor}, \textcolor{purple}{\to}, \textcolor{purple}{\forall}, \textcolor{purple}{\exists}\}\,\footnote{Pertanto
+    \[ F \sqcup R \sqcup \Var\sqcup \,\{\textcolor{purple}{(}, \textcolor{purple}{)}, \textcolor{purple}{,}, \textcolor{purple}{\top}, \textcolor{purple}{\bot}, \textcolor{purple}{\neg}, \textcolor{purple}{\land}, \textcolor{purple}{\lor}, \textcolor{purple}{\to}, \textcolor{purple}{\forall}, \textcolor{purple}{\exists}\}\footnote{Pertanto
     la differenza sostanziale tra $L$-termini ed $L$-formule sta nel fatto che, nelle seconde, le stringe possono essere costruite ricorsivamente anche usando connettivi logici e quantificatori (ed usando come base anche relazioni di $L$-termini (e non funzioni)).}
     \]
-    Una $L$-formula può essere una \vocab{formula atomica}, ossia:
+    una $L$-formula può essere una \vocab{formula atomica}, ossia:
     \begin{itemize}
         \item $\textcolor{purple}{\top}$ o $\textcolor{purple}{\bot}$,
         \item $\textcolor{purple}{r(} t_1\textcolor{purple}{,} t_2\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$ con $\textcolor{purple}{r} \in R$ simbolo di relazione e $t_1,\ldots,t_k$ $L$-termini, e $\ar(r) = k$,
@@ -153,8 +155,8 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
         \item $\textcolor{purple}{(} \varphi \,\textcolor{purple}{\land}\, \psi\textcolor{purple}{)}$ con $\varphi,\psi$ $L$-formule,
         \item $\textcolor{purple}{(} \varphi \,\textcolor{purple}{\lor}\, \psi\textcolor{purple}{)}$ con $\varphi,\psi$ $L$-formule,
         \item $\textcolor{purple}{(} \varphi \,\textcolor{purple}{\to}\, \psi\textcolor{purple}{)}$ con $\varphi,\psi$ $L$-formule,
-        \item $\textcolor{purple}{(\forall x_k} \;\varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile,
-        \item $\textcolor{purple}{(\exists x_k} \;\varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile.
+        \item $\textcolor{purple}{(\forall x_k} \;\varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula e $x_k \in \var$ simbolo di variabile,
+        \item $\textcolor{purple}{(\exists x_k} \;\varphi\textcolor{purple}{)}$ con $\varphi$ $L$-formula e $x_k \in \var$ simbolo di variabile.
     \end{itemize}
 \end{definition}
 
@@ -190,14 +192,14 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
     [Variabili libere di una formula]
     Definiamo prima le \vocab{variabili libere di un termine}. Dato un $L$-termine $t$ definiamo $\textcolor{purple}{\var(} t \textcolor{purple}{)}$ dicendo che:
     \begin{itemize}
-        \item se $t = \textcolor{purple}{x_i} \in \Var$, allora $\var(t) = \{\textcolor{purple}{x_i}\}$,
+        \item se $t = \textcolor{purple}{x_i} \in \var$, allora $\var(t) = \{\textcolor{purple}{x_i}\}$,
         \item se $t = \textcolor{purple}{f(}t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, allora $\var(t) = \bigcup_{i = 1}^k \var(t_k)$.
     \end{itemize}
     Adesso che abbiamo definito ricorsivamente le variabili libere di un $L$-termine $t$, possiamo definire le \vocab{variabili libere di una $L$-formula} $\varphi$, $\textcolor{purple}{\vl(} \varphi \textcolor{purple}{)}$ come segue per le formule atomiche:
     \begin{itemize}
         \item se $\varphi = \textcolor{purple}{\top}$ o $\varphi = \textcolor{purple}{\bot}$, allora $\vl(\varphi) = \emptyset$,
         \item se $\varphi = \textcolor{purple}{r(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k\textcolor{purple}{)}$, allora $\vl(\varphi) = \bigcup_{i = 1}^k \var(t_k)$,
-        \item se $\varphi = t_1\, \textcolor{purple}{=}\, t_2$, allora $\vl(\varphi) = \var(t_1) \cup \var(t_2)$.
+        \item se $\varphi = (t_1\, \textcolor{purple}{=}\, t_2)$, allora $\vl(\varphi) = \var(t_1) \cup \var(t_2)$.
     \end{itemize}
     e per le formule composte:
     \begin{itemize}
@@ -210,7 +212,7 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
 \begin{remark}
     [Variabili legate]
     L'ultimo caso è cruciale: nelle formule $\textcolor{purple}{\forall x_k} \, \psi$ e $\textcolor{purple}{\exists x_k} \, \psi$ la variabile $\textcolor{purple}{x_k}$ non è libera, è \vocab{legata} dal quantificatore.
-    Si noti che non è richiesto che $\textcolor{purple}{x_k}$ compaia fra le variabili libere di $\phi$ [Possibile typo di Mamino $\psi$?].
+    Si noti che non è richiesto che $\textcolor{purple}{x_k}$ compaia fra le variabili libere di $\psi$\footnote{Possibile typo di Mamino(?).}.
 \end{remark}
 
 \begin{example}
@@ -284,8 +286,8 @@ Così, per esempio, $M \models \{v\} \; \textcolor{purple}{x = y}$ se e solo se 
 \end{definition}
 
 \begin{notation}
-    Data una valutazione delle variabili $v$ e un $a \in D$, indichiamo con $v[a/x_n]$ la valutazione:
-    \[ v[a/x_n](x_i)\begin{cases}
+    Data una valutazione delle variabili $v$ e un $a \in D$, indichiamo con $v[a/x_n] : \Var \to D$ la valutazione:
+    \[ v[a/x_n](x_i) = \begin{cases}
         v(x_i) &\text{se $i \neq n$} \\
         a &\text{se $i = n$}
     \end{cases}
@@ -296,12 +298,12 @@ Così, per esempio, $M \models \{v\} \; \textcolor{purple}{x = y}$ se e solo se 
 \begin{definition}
     [Semantica di Tarski]
     Ricordiamo che è fissato un linguaggio al primo ordine $L$ ed una $L$-struttura $M$. Fissiamo anche un ambiente $v$.
-    In questo contesto possiamo definire per ricorsione strutturale l'\vocab{interpretazione} di una $L$-formula, partendo dagli $L$-termini come segue:
+    In questo contesto possiamo definire per ricorsione strutturale l'\vocab{interpretazione} degli $L$-termini come segue:
     \[ \begin{aligned}
         \{v\}_M \, \textcolor{purple}{x_k} &\Mydef v(\textcolor{purple}{x_k}) \\
         \{v\}_M \, \textcolor{purple}{f}\textcolor{purple}{(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k \textcolor{purple}{)} &\Mydef i(\textcolor{purple}{f})\left(\{v\}_M \, t_1, \ldots, \{v\}_M \, t_k\right) \qquad \text{con $\textcolor{purple}{f} \in F$}
     \end{aligned} \]
-    La relazione di \vocab{soddisfacibilità} $M \models \{v\}\varphi$ (ometteremo $M$ al pedice d'ora in poi) per una formula $\varphi$ nella struttura $M$ e nell'ambiente $v$ è definita ricorsivamente per le formule atomiche da:
+    Invece la relazione di \vocab{soddisfacibilità} $M \models \{v\}\varphi$ (ometteremo $M$ al pedice d'ora in poi) per una $L$-formula $\varphi$ nella struttura $M$ e nell'ambiente $v$ è definita ricorsivamente, a partire dalle formule atomiche, come segue:
     \begin{align*}
         &M \models \{v\} \textcolor{purple}{\,\top} \qquad \neg M \models \{v\} \textcolor{purple}{\,\bot} \\
         &M \models \{v\} \textcolor{purple}{\,r(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k \textcolor{purple}{)} \overset{\text{def}}{\iff} \left(\{v\}_M \, t_1, \ldots, \{v\}_M \, t_k\right) \in i(\textcolor{purple}{r}) =: r_M \\
@@ -334,3 +336,391 @@ Così, per esempio, $M \models \{v\} \; \textcolor{purple}{x = y}$ se e solo se 
         & \exists a \in D \; a \in p_M \to \forall b \in D \; b \in p_M
     \end{align*}
 \end{soln}
+
+Incidentalmente, possiamo notare che abbiamo ottenuto una proposizione che non dipende dall'ambiente $v$. Questo accade perché la formula data è \vocab{chiusa}, ossia non ha variabili libere. Inoltre, grazie al fatto che $D$ è non vuoto,
+la proposizione $\exists a \in D(a \in p_M \to \forall b \in D \; b \in p_M)$ è necessariamente vera indipendentemente da $M$. Infatti si danno due casi, o la conseguente è sempre vera, per cui l'implicazione è sempre vera indipendentemente dall'$a \in D$ che usiamo (qui serve $D \ne \emptyset$),
+o esiste un $b \in D$ tale che $b \notin p_M$, ma scegliendo $a$ come quel $b$ otteniamo una implicazione con antecedente falsa, che è sempre vera. Pertanto la formula data è sempre vera ed è chiusa; formule come questa si diranno \vocab{logicamente valide}.\footnote{In generale assumeremo sempre che $D \ne \emptyset$ perché vogliamo che la formula $\forall x \; \varphi$ non sia sempre vera, e la formula $\exists x \; \varphi$ non sia sempre falsa.}
+
+\begin{definition}
+    [Formula chiusa]
+    Una $L$-formula $\varphi$ si dice \vocab{chiusa} se $\vl(\varphi) = \emptyset$.
+\end{definition}
+
+\begin{definition}
+    [Formula logica valida]
+    Una $L$-formula $\varphi$ si dice \vocab{logicamente valida} se per ogni $L$-struttura $M = (D;i)$ e per ogni valutazione delle variabili $v : \Var \to D$ vale $M \models \{v\}\varphi$.
+\end{definition}
+
+\begin{remark}[Indipendenza dalle variabili non libere]
+    Sia $M = (D;i)$ un modello e $\varphi$ una $L$-formula, siano inoltre $v_1,v_2 : \Var \to D$ tali che:
+    \[ v_1|_{\vl(\varphi)} = v_2|_{\vl(\varphi)}
+    \]
+    allora:
+    \[ M \models \{v_1\} \varphi \iff M \models \{v_2\} \varphi
+    \] 
+\end{remark}
+
+\begin{proof}
+    Procediamo per induzione strutturale.
+    \begin{itemize}
+        \item [$\boxed{\text{$L$-termini}}$] Sia $t = x_k$, allora $\var(t) = \{x_k\}$, segue che $\{v_1\}_M x_k = v_1(x_k) \overset{\text{hp.}}{=} v_2(x_k) = \{v_2\}_M x_k$. Sia ora $t = f(t_1,\ldots,t_k)$, con $f \in F$ simbolo di funzione, $\ar(f) = k$ e $t_i$ $L$-termini;
+        dato che $\var(t) = \bigcup_{i = 1}^k \var(t_i)$ segue dall'ipotesi che $v_1|_{\var(t_i)} = v_2|_{\var(t_i)}$ per ogni $i = 1,\ldots,k$, a questo punto per ipotesi induttiva $\{v_1\}_M t_i = \{v_2\}_M t_i$, allora usando la definizione di interpretazione dei termini nella semantica di Tarski:
+        \begin{align*}
+            \{v_1\}_M f(t_1,\ldots,t_k) &= i(f)(\{v_1\}_M t_1,\ldots,\{v_1\}_M t_k) &&\text{(hp. induttiva)}\\
+            &= i(f)(\{v_2\}_M t_1,\ldots,\{v_2\}_M t_k) \\
+            &= \{v_2\}_M f(t_1,\ldots,t_k)
+        \end{align*}
+        \item [$\boxed{\text{$L$-formule atomiche}}$] Sia $\varphi = \top$ o $\varphi = \bot$, allora $M \models \{v_1\} \varphi$ e $M \models \{v_2\} \varphi$ sono sempre soddisfatti o mai soddisfatti, quindi la tesi è banale.
+        Se $\varphi = r(t_1,\ldots,t_k)$, con $r \in R$ simbolo di relazione, $\ar(r) = k$ e $t_i$ $L$-termini, allora $\vl(\varphi) = \bigcup_{i = 1}^k \var(t_i)$, segue che $v_1|_{\var(t_i)} = v_2|_{\var(t_i)}$ per ogni $i = 1,\ldots,k$, quindi per ipotesi induttiva $\{v_1\}_M t_i = \{v_2\}_M t_i$,
+        allora usando la definizione di soddisfacibilità delle formule atomiche nella semantica di Tarski:
+        \begin{align*}
+            M \models \{v_1\} r(t_1,\ldots,t_k) &\iff (\{v_1\}_M t_1,\ldots,\{v_1\}_M t_k) \in i(r) &&\text{(hp. induttiva)} \\
+            &\iff (\{v_2\}_M t_1,\ldots,\{v_2\}_M t_k) \in i(r) \\
+            &\iff M \models \{v_2\} r(t_1,\ldots,t_k)
+        \end{align*}
+        Infine se $\varphi = (t_1 = t_2)$, allora $\vl(\varphi) = \var(t_1) \,\cup\, \var(t_2)$, segue che $v_1|_{\var(t_i)} = v_2|_{\var(t_i)}$, per cui per ipotesi induttiva $\{v_1\}_M t_i = \{v_2\}_M t_i$, ed usando ancora la definizione di soddisfacibilità della semantica di Tarski in questo caso si ottiene:
+        \begin{align*}
+            M \models \{v_1\} (t_1 = t_2) &\iff \{v_1\}_M t_1 = \{v_1\}_M t_2 &&\text{(hp. induttiva)} \\
+            &\iff \{v_2\}_M t_1 = \{v_2\}_M t_2 \\
+            &\iff M \models \{v_2\} (t_1 = t_2)
+        \end{align*}
+        \item [$\boxed{\text{$L$-formule}}$] Sia ora $\varphi = \psi_1 \land \psi_2$ (o $\varphi = \psi_1 \lor \psi_2$ o $\varphi = \psi_1 \to \psi_2$), allora $\vl(\varphi) = \vl(\psi_1) \cup \vl(\psi_2)$, segue che $v_1|_{\vl(\psi_i)} = v_2|_{\vl(\psi_i)}$, per cui per ipotesi induttiva $M \models \{v_1\} \psi_i \iff M \models \{v_2\} \psi_i$, allora per definizione di soddisfacibilità nella semantica di Tarski:
+        \begin{align*}
+            M \models \{v_1\} (\psi_1 \land \psi_2) &\iff M \models \{v_1\} \psi_1 \land M \models \{v_1\} \psi_2 &&\text{(hp. induttiva)} \\
+            &\iff M \models \{v_2\} \psi_1 \land M \models \{v_2\} \psi_2 \\
+            &\iff M \models \{v_2\} (\psi_1 \land \psi_2)
+        \end{align*}
+        e analogamente per $\lor$ e $\to$. Sia ora $\varphi = \forall x_k \; \psi$, allora $\vl(\varphi) = \vl(\psi) \setminus \{x_k\}$, assumiamo che $M \models \{v_1\} \forall x_k \; \psi$, che equivale per definizione a $\forall a \in D \; M \models \{v_1[a/x_k]\} \psi$ e dimostriamo che $M \models \{v_2\} \forall x_k \; \psi$.
+        Fissiamo $a \in D$, allora per ipotesi induttiva si ha che $M \models \{v_1[a/x_k]\} \psi \iff M \models \{v_2[a/x_k]\} \psi$, infatti $v_1[a/x_k]|_{\vl(\psi)} = v_2[a/x_k]|_{\vl(\psi)}$ (ovvio in $x_k$ perché vengono entrambi $a$, e per tutte le altre variabili vale l'ipotesi) e l'uguaglianza segue dall'ipotesi induttiva; a questo punto abbiamo che $\forall a \in D \; M \models \{v_1[a/x_k]\} \psi \iff M \models \{v_1[a/x_k]\} \psi$,
+        e per definizione di semantica di Tarski abbiamo: $M\models \{v_1\} \forall x_k \; \psi \iff M \models \{v_2\} \forall x_k \; \psi$.\\
+        Analogamente se $\varphi = \exists x_k \; \psi$, allora $\vl(\varphi) = \vl(\psi) \setminus \{x_k\}$, assumiamo che $M \models \{v_1\} \exists x_k \; \psi$, che equivale per definizione a $\exists a \in D \; M \models \{v_1[a/x_k]\} \psi$, fissato un $a \in D$ per cui $M$ soddisfa $\{v_1[a/x_k]\} \psi$,
+        si ha che per ipotesi induttiva $M \models \{v_1[a/x_k]\} \psi \iff M \models \{v_2[a/x_k]\} \psi$, infatti $v_1[a/x_k]|_{\vl(\psi)} = v_2[a/x_k]|_{\vl(\psi)}$ (come prima), a questo punto, ancora come prima abbiamo che $\exists a \in D \; M \models \{v_1[a/x_k]\} \psi \iff M \models \{v_1[a/x_k]\} \psi$, cioè $M \models \{v_1\} \exists x_k \; \psi \iff M \models \{v_2\} \exists x_k \; \psi$.
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}[Soddisfacibilità delle formule chiuse]
+    Se $\varphi$ è una formula \textcolor{purple}{chiusa}, allora $\varphi$ vale in qualche contesto (interpretazione) se e solo se vale in ogni contesto. Ossia, data una qualunque valutazione delle variabili $v$:
+    \[ M \models \{v\} \varphi \iff \forall v : \Var \to D \; M \models\{v\}\varphi
+    \]
+\end{corollary}
+
+Segue che per verificare che una formula chiusa sia logicamente valida è sufficiente trovare, per ogni modello, un'interpretazione in cui sia valida.
+
+\begin{notation}
+    Scriviamo che \textcolor{purple}{$M \models \varphi$}, senza specificare il contesto, per dire che $M$ soddisfa $\varphi$ in ogni contesto, i.e.:
+    \[ M \models \varphi \overset{\text{def}}{\iff} \forall v : \Var \to D \; M \models \{v\} \varphi
+    \]
+\end{notation}
+
+\begin{remark}[Soddisfacibilità per ogni interpretazione]
+    La scrittura $M \models \varphi$ ha senso anche se $\varphi$ non è una formula chiusa. In questo caso, se $\vl(\varphi) = \{\alpha_1,\ldots,\alpha_n\}$ vale che:
+    \[ M \models \varphi \overset{\text{def}}{\iff} M \models \textcolor{purple}{\forall}\alpha_1, \ldots, \textcolor{purple}{\forall} \alpha_n \; \varphi
+    \]
+    e quest'ultima è una formula chiusa. Infatti, più in generale si ha che:
+    \[ M \models \psi \overset{\text{def}}{\iff} M \models \textcolor{purple}{\forall x_k} \; \psi
+    \]
+\end{remark}
+
+\begin{exercise}
+    Verificare l'osservazione precedente.
+\end{exercise}
+
+\subsection{Sostituzioni}
+Questa breve sezione esiste per accomodare una scomodità legata alla nostra ostinazione di usare, come formule, delle liste di simboli. Finché ci limitiamo, per esempio, alle identità algebriche,
+è chiaro che possiamo sostituire un termine qualunque, al posto di una variabile qualunque, in un'identità [logicamente] valida, ottenendo ancora un'identità valida. Per esempio da $(x+y)(x-y) = x^2 - y^2$, scrivendo al posto di 
+$x$, il termine $1+y$ ottengo $(1+y+y)(1+y-y) = (1+y)^2 - y^2$, che è ancora un'identità valida. Il fatto che $y$ compaia sia nella identità di partenza sia nel termine sostitutivo non compromette la validità di questo procedimento.
+Se tento lo stesso procedimento ad esempio con la formula \textcolor{purple}{$\exists y \; x < y$}, valida nella struttura $(\QQ,1,+,<)$, e sostituisco $1+y$ al posto di $x$, ottengo \textcolor{purple}{$\exists y \; 1+y < y$}, che non è più logicamente valida (non vale più in qualsiasi $L$-struttura).
+La radice del guaio è fin troppo ovvia: la formula \textcolor{purple}{$\exists y \; x < y$} dice che c'è un $y$, che può dipendere da $x$, che si trova rispetto a $x$ in una certa situazione. Scrivendo $1+y$ al posto di $x$, impongo anche una dipendenza di $x$ da $y$, creando così un ciclo di dipendenze.
+È vero che dato un $x$ posso trovare un $y$, ma non necessariamente questo $y$ soddisfa il vincolo ulteriore di chiudere i ciclo. Se scrivessi la formula così (cromaticamente):
+\[ \textcolor{purple}{\exists}\textcolor{green}{y} \; \textcolor{purple}{1+y <}\, \textcolor{green}{y}
+\]
+oppure così (biscromaticamente):
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.17\textwidth]{Immagini/nota.png}
+\end{figure}
+non ci sarebbero problemi, perché il $y$ (o simbolo) che compare nella formula non è lo stesso $y$ che compare nel termine $1+y$. Volendo tuttavia utilizzare gli stessi simboli per le variabili legate per le variabili libere - convenzione che ha i suoi vantaggi - si cade occasionalmente, ma inevitabilmente nel
+\textcolor{purple}{problema delle catture delle variabili}.\\
+Come ne usciamo? Intanto rallegriamoci! Per gli informatici è peggio: il $\lambda$-calcolo \textbf{vive} di sostituzioni, ed è lì che il male ha messo radici. Noi, ce la caveremo semplicemente vietando le sostituzioni insalubri, cosa che, nel nostro contesto, non ha controindicazioni.
+
+\begin{definition}[Sostituibilità]
+    Sia $\varphi$ una $L$-formula e sia $t$ un $L$-termine. Diciamo che $t$ è \vocab{sostituibile} per \textcolor{purple}{$x_k$} in $\varphi$ se \textcolor{MidnightBlue}{nessuna occorrenza libera di \textcolor{purple}{$x_k$} in $\varphi$ si trova in una sottoformula del tipo $\forall \alpha \; \psi$ o $\exists \alpha \; \psi$ con $\alpha \in \var(t)$}.
+    Più formalmente, usando la ricorsione strutturale diciamo che $t$ è \vocab{sostituibile} per \textcolor{purple}{$x_k$} in $\varphi$ se:
+    \begin{itemize}
+        \item $\varphi$ è atomica;
+        \item $\varphi = \neg \psi$ e $t$ è sostituibile per \textcolor{purple}{$x_k$} in $\psi$;
+        \item $\varphi = \psi_1 \land \psi_2$ (o $\varphi = \psi_1 \lor \psi_2$ o $\varphi = \psi_1 \to \psi_2$) e $t$ è sostituibile per \textcolor{purple}{$x_k$} in $\psi_1$ e in $\psi_2$;
+        \item $\varphi = \forall x_i \; \psi$ (o $\varphi = \exists x_i \; \psi$) e si verifica uno dei casi seguenti: o $x_k \in \vl(\varphi)$, $x_i \not \in \var(t)$ \textcolor{MidnightBlue}{(cioè la variabile quantifica in $\varphi$ non appare tra le variabili libere di $t$, se fosse diversamente, tale variabile verrebbe quantificata - catturata - a sua volta)} e $t$ è sostituibile per \textcolor{purple}{$x_k$} in $\psi$; oppure $x_k \not \in \vl(\varphi)$.
+    \end{itemize}
+\end{definition}
+
+Capiamo prima la \textcolor{MidnightBlue}{definizione informale}. Una occorrenza di un simbolo $\alpha$ in una stringa $s$ è un indice $i$ tale che $s_i = \alpha$. Fra le occorrenze del simbolo \textcolor{purple}{$x_k$} in $\varphi$ ce ne sono alcune 
+\vocab{legate}, quelle che fanno parte di una sottoformula del tipo \textcolor{purple}{$\forall x_k \; \ldots$} o \textcolor{purple}{$\exists x_k \; \ldots$}, e le altre sono \vocab{libere}. Pedantemente, $i$ è un'occorrenza legata se ci sono $j_1$ e $j_2$ con $j_1 \leq i \leq j_2$ tali che 
+la sottostringa di $\varphi$ costituita dai caratteri che vanno dal $j_1$-esimo al $j_2$-esimo è una sottoformula che inizia per \textcolor{purple}{$\forall x_k$} o \textcolor{purple}{$\exists x_k$}.\\
+Per esempio:
+\[ \forall y \; \forall z (y\cdot z = x \to \exists x \; \exists t \; t = x + x + x \land y\cdot s(t) = y \cdot y + t)
+\]
+ha una occorrenza libera di $x$ (la prima), mentre le altre sono legate. È chiaro che le variabili libere di una formula sono quelle che hanno almeno una occorrenza libera (in questo caso c'è solo la prima $x$).
+In questa formula $s(y)$ e $z \cdot z$ NON sono sostituibili per $x$, mentre $t + t$ lo è.
+
+\begin{exercise}
+    Nella struttura $(\NN, s,+,\cdot)$, dove $s$ denota il successore, cosa significa quel delirio sopra?
+\end{exercise}
+
+\begin{exercise}
+    [Difficile]
+    Riesci a rimpiazzare 3 con 10 nella formula sopra?\footnote{A fine corso sarà facile, ma per ora è difficile.}
+\end{exercise}
+
+\begin{exercise}
+    Convinciti della definizione formale.
+\end{exercise}
+
+\begin{remark}[Le variabili non libere sono sempre sostituibili]
+    Se $\textcolor{purple}{x_k} \not \in \vl(\varphi)$, allora qualunque $L$-termine $t$ è sostituibile per \textcolor{purple}{$x_k$}.
+\end{remark}
+
+\begin{remark}[Le costanti possono essere sempre sostituite]
+    Se $c$ è un simbolo di funzione di arietà 0 (costante), allora è sostituibile per \textcolor{purple}{$x_k$} in qualunque $L$-formula $\varphi$.\footnote{La ragione è che $\var(c) = \emptyset$, quindi non può capitare che $x_i \in \var(c)$.}
+\end{remark}
+
+\begin{remark}[Gli $L$-termini semplici possono essere sempre sostituiti]
+    \textcolor{purple}{$f(x_k)$} è sostituibile per \textcolor{purple}{$x_k$} in qualunque $L$-formula $\varphi$.\footnote{Infatti $\var(f(x_k)$ $= \{x_k\}$, quindi non può capitare che $x_i \in \var(f(x_k))$ (e se $x_i = x_k$ allora $x_k$ non sarebbe un'occorrenza libera, per cui saremmo nel caso $x_k \not \in \vl(\varphi)$).}
+\end{remark}
+
+Bene, sappiamo cosa significa che un termine è sostituibile, ma come si fanno le sostituzioni?
+
+\begin{definition}[Sostituzione di una variabile libera con un $L$-termine]
+    Sia $\varphi$ una $L$-formula e $t$ un $L$-termine \textcolor{purple}{sostituibile} per \textcolor{purple}{$x_k$} in $\varphi$. Denotiamo con $\varphi[t/\textcolor{purple}{x_k}]$ la formula ottenuta rimpiazzando tutte le
+    occorrenze libere di \textcolor{purple}{$x_k$} in $\varphi$ con $t$. Più formalmente, per ricorsione strutturale:
+    \begin{itemize}
+        \item [$\boxed{\text{$L$-termini}}$] Se $t = x_i$, allora:
+        \[ x_i[t/x_k] = \begin{cases}
+            t &\text{se $i = k$} \\
+            x_i &\text{se $i \neq k$}
+        \end{cases}
+        \]
+        Se $t = f(t_1,\ldots,t_n)$, con $f \in F$ simbolo di funzione, allora:
+        \[ f(t_1,\ldots,t_n)[t/x_k] = f(t_1[t/x_k],\ldots,t_n[t/x_k])
+        \]
+        \item[$\boxed{\text{$L$-formule atomiche}}$] Se $\varphi = \top$ o $\varphi = \bot$, allora $\varphi[t/x_k] = \varphi$. Se $\varphi = r(t_1,\ldots,t_n)$, con $r \in R$ simbolo di relazione, allora:
+        \[ r(t_1,\ldots,t_n)[t/x_k] = r(t_1[t/x_k],\ldots,t_n[t/x_k])
+        \]
+        Se $\varphi = (t_1 = t_2)$, allora $(t_1 = t_2)[t/x_k] = (t_1[t/x_k] = t_2[t/x_k])$.
+        \item [$\boxed{\text{$L$-formule}}$] Se $\varphi = \neg \psi$, allora $\varphi[t/x_k] = \neg (\psi[t/x_k])$. Se $\varphi = \psi_1 \land \psi_2$ (o $\varphi = \psi_1 \lor \psi_2$ o $\varphi = \psi_1 \to \psi_2$), allora:
+        \[ (\psi_1 \land \psi_2)[t/x_k] = \psi_1[t/x_k] \land \psi_2[t/x_k]
+        \]
+        e Similmente negli altri casi. Se $\varphi = \forall x_i \; \psi$ (o $\varphi = \exists x_i \; \psi$), allora:
+        \[ (\forall x_i \; \psi)[t/x_k] = \begin{cases}
+            \forall x_i \; (\psi[t/x_k]) &\text{se $x_k \ne x_i$} \\
+            \forall x_i \; \psi &\text{se $x_k = x_i$}
+        \end{cases}
+        \]
+        e similmente nel caso esistenziale.
+    \end{itemize}
+\end{definition}
+
+\begin{note}
+    Quando scriviamo $\varphi[t/x_k]$ assumiamo che $t$ è sostituibile per \textcolor{purple}{$x_k$} in $\varphi$. La scrittura non ha senso altrimenti.
+    Per esempio, detta $\varphi$ la formula di prima:
+    \[ \forall y \; \forall z (y\cdot z = \underbrace{x}_{\text{libera}} \to \textcolor{purple}{\exists\, x} \; \exists t \; t = \underbrace{x + x + x}_{\text{legate}}\, \land \,y\cdot s(t) = y \cdot y + t)
+    \]
+    La formula $\varphi[t+t/x]$ è:
+    \[ \forall y \; \forall z (y\cdot z = t+t \to \exists x \; \exists t \; t = x + x + x \land y\cdot s(t) = y \cdot y + t)
+    \]
+    \textcolor{MidnightBlue}{che ragionevolmente equivale a:}
+    \[ \forall y \; \forall z (y\cdot z = t+t \to \exists x \; \exists n \; n = x + x + x \land y\cdot s(n) = y \cdot y + n)
+    \]
+    \textcolor{MidnightBlue}{tuttavia quest'ultima non si ottiene come sostituzione secondo la definizione precedente in quanto $n$ non è sostituibile per $t$ in $\varphi$.}
+\end{note}
+
+\begin{exercise}[Sostituzione e valutazione delle variabili commutano]
+    Vale il seguente fatto: $M \models\{v\} \varphi[t/x_k] \iff M \models\{v[t/x_k]\} \varphi$.
+\end{exercise}
+
+\textcolor{MidnightBlue}{Ossia sostituire $t$ al posto di $x_k$  ha il medesimo effetto che valutare $t$ e assegnare, nell'ambiente, il valore di $t$ alla variabile $x_k$.}\\
+Questo asserto si dimostra precisamente come l'osservazione che $M \models\{v_1\} \varphi \iff M \models\{v_2\} \varphi$ se $v_1$ e $v_2$ coincidono sulle variabili libere di $\varphi$, ma 
+con più pasticcio di notazioni. Ci servirà per giustificare una delle regole di deduzione.
+
+\subsection{Teorie}
+
+\begin{definition}[$L$-teoria]
+    Una \vocab{$L$-teoria} è un insieme di $L$-formule.
+\end{definition}
+
+\begin{definition}[Modello]
+    Una $L$-struttura $M$ si dice \vocab{modello} di una $L$-teoria $T$ se $\forall \varphi \in T$ si ha $M \models \varphi$.\footnote{Come già osservato con la seconda cosa si intende che, detto $\vl(\varphi) = \{\alpha_1,\ldots,\alpha_n\}$, si ha $M \models \forall \alpha_1 \ldots \forall \alpha_n \; \varphi$.}
+\end{definition}
+
+\begin{definition}[Conseguenza logica]
+    La $L$-formula $\varphi$ è \vocab{conseguenza logica} della $L$-teoria $T$, e si scrive $T \models \varphi$, se per ogni modello $M$ di $T$ vale $M \models \varphi$.
+\end{definition}
+
+\begin{note}[Conseguenza logica del vuoto]
+    Il simbolo $\models$ si può usare anche con la teoria vuota a sinistra. Si scrive $\models \varphi$, e ciò equivale a dire che $\varphi$ è logicamente valida.
+\end{note}
+
+\begin{definition}[Coerenza]
+    Una $L$-teoria $T$ è \vocab{coerente} se ha un modello.
+\end{definition}
+
+\begin{remark}[Caratterizzazione della coerenza]
+    $T$ è coerente se e solo se $T \not \models \bot$.
+\end{remark}
+
+\begin{proof}
+    Vediamo le due implicazioni.
+    \begin{itemize}
+        \item [$\boxed{\implies}$] Se $T$ è coerente, allora ha un modello $M$, per cui deve valere che $M \models \bot$ per definizione di conseguenza logica, ma questo non può essere, per definizione di soddisfacibilità, in quanto $\bot$ non è mai soddisfatta (è vero che $\neg M \models \bot$).
+        \item [$\boxed{\impliedby}$] Se $T \not \models \bot$, allora esiste un modello $M$ di $T$ tale che $M \not \models \bot$, ma questo è sempre vero per definizione di soddisfacibilità nella semantica di Tarski, per cui $M$ è un modello di $T$ e quindi $T$ è coerente.
+    \end{itemize}
+\end{proof}
+
+\begin{definition}[Completezza]
+    La $L$-teoria $T$ è \vocab{completa} se, per ogni $L$-formula \textcolor{purple}{chiusa} $\varphi$, vale una e una sola delle seguenti: $T \models \varphi$ oppure $T \models \neg \varphi$.
+\end{definition}
+
+\begin{remark}[Completezza $\implies$ coerenza]
+    Se una $L$-teoria $T$ è completa, allora è coerente.
+\end{remark}
+
+\begin{proof}
+    Per definizione $T \models \top$, infatti ogni modello di $T$ soddisfa $\top$ per definizione di soddisfacibilità nella semantica di Tarski, dunque, per completezza, vale necessariamente che $T \not\models \neg \top = \bot$,
+    per cui $T$ è coerente per la caratterizzazione vista prima.
+\end{proof}
+
+\subsection{Esempi di teorie}
+È facile costruire una teoria incoerente, per esempio prendendo come \vocab{assioma} il falso: $T = \{\bot\}$. Non sempre, però, è facile distinguere l'incoerenza.
+
+\begin{exercise}[Un esempio di teoria incoerente]
+    Dimostra che la teoria, nel linguaggio $\{f,\alpha, \beta\}$ dove $f$ è un simbolo di funzione binaria e $\alpha,\beta$ sono simboli di costante, data dagli assiomi che seguono:
+    \begin{align*}
+        & \textcolor{purple}{\forall x \; \forall y \; \exists z \; \forall t \; f(x,f(y,t)) = f(z,t)} \\
+        & \textcolor{purple}{\forall x \; f(\alpha,x) = f(x,x)} \\
+        & \textcolor{purple}{\forall x \; \neg (f(\beta,x) = x)}
+    \end{align*}
+    non è coerente.
+\end{exercise}
+
+Per un esempio coerente possiamo considerare la teoria dei gruppi, i cui modelli saranno tutti e soli i gruppi.
+
+\begin{example}[Teoria dei gruppi]
+    Consideriamo il linguaggio $L_{\text{gruppi}} = \{e,\ldots \cdot \ldots, {\ldots}^{-1}\}$, e:
+    \begin{align*}
+        T_{\text{gruppi}} = \{& \forall x \; \forall y \; \forall z \; (x \cdot (y \cdot z) = (x \cdot y) \cdot z), \\
+        & \forall x \; e \cdot x = x && \forall x \; x \cdot e = x, \\
+        & \forall x \; x \cdot x^{-1} = e && \forall x \; x^{-1} \cdot x = e \}
+    \end{align*}
+\end{example}
+
+\begin{exercise}
+    Convinciti del fatto che una struttura $\mathcal G$ è un modello di $T_{\text{gruppi}}$ se e solo se $\mathcal G$ è un gruppo.
+\end{exercise}
+
+La teoria dei gruppi è chiaramente coerente: basta esibire un gruppo qualunque per avere un modello. Questa non è una teoria completa, infatti, ci sono gruppi in cui vale
+$\textcolor{MidnightBlue}{\varphi} = \textcolor{purple}{\forall x \; \forall y \; x \cdot y = y \cdot x}$ e ce ne sono in cui vale $\neg \varphi$ (quindi viene meno la definizione di completezza di una $L$-teoria).\\
+Un esempio di teoria completa si può ottenere considerando tutte le formule vere in una cera struttura.
+
+\begin{definition}[Teoria completa di una struttura]
+    Data una $L$-struttura $M$, definiamo la \vocab{teoria completa di $M$}, denotata $\Th(M)$ è l'insieme di tutte le $L$-formule $\varphi$ tali che $M \models \varphi$.
+\end{definition}
+
+\begin{remark}
+    $\Th(M)$ è una $L$-teoria completa.
+\end{remark}
+
+Si potrebbe pensare a prima vista che una teoria completa caratterizzi un certo modello, a meno di isomorfismi. Non è così, se non nel caso finito.
+
+\begin{definition}[Morfismi di strutture]
+    Date due $L$-strutture $M = (D;i)$ e $M' = (D';i')$ un \vocab{morfismo di strutture} $F : M \to M'$ è una funzione $F : D \to D'$ tale che:
+    \begin{enumerate}[(i)]
+        \item Per ogni simbolo di relazione $r$, e $(x_1,\ldots,x_{\ar(r)}) \in D^{\ar(r)}$ si ha che:
+        \[ (x_1,\ldots,x_{\ar(r)}) \in r_M \implies (F(x_1),\ldots,F(x_{\ar(r)})) \in r_{M'}
+        \]
+        \item Per ogni simbolo di funzione $f$, e $(x_1,\ldots,x_{\ar(f)}) \in D^{\ar(f)}$ si ha che:
+        \[ F \circ f_M(x_1,\ldots,x_{\ar(f)}) = f_{M'}(F(x_1),\ldots,F(x_{\ar(f)}))
+        \]
+    \end{enumerate}  
+\end{definition}
+
+\begin{definition}[Immersioni e isomorfismi di strutture]
+    Un morfismo di $L$-strutture $F : M \to M'$ si dice \vocab{immersione} se $F$, come funzione tra i domini, è iniettiva.\\
+    Un'immersione $F$ è un \vocab{isomorfismo} se $F$ è altresì surgettiva, o $F^{-1}$ è, a sua volta, un morfismo di strutture.
+\end{definition}
+
+\begin{exercise}[Teorie complete e modelli finiti]
+    Dimostra che, se $T$ è completa e $M$ è un modello di $T$, avente dominio finito, allora tutti i modelli di $T$ sono isomorfi a $M$.
+\end{exercise}
+
+Se $T$ ha un modello infinito, però, ne ha almeno uno per ogni cardinalità maggiore o uguale a $|L|$. Questo risultato, che vedremo più avanti,
+preclude una volta per tutte la possibilità di caratterizzare una struttura per mezzo di una teoria del primo ordine (nel senso che due strutture con la stessa teoria non è detto che siano isomorfe).\\
+Quanto a caratterizzare, il meglio che possiamo sperare è di esibire teorie complete, ossia caratterizzare non una struttura, bensì l'insieme degli enunciati veri in una struttura. La teoria degli ordini totali,
+densi e senza estremi è un esempio di teoria completa descritta esplicitamente che ha modelli infiniti.
+
+\begin{example}[Teoria degli ordini totali, densi e senza estremi]
+    Consideriamo il linguaggio $L_{\text{otdse}} = \{\textcolor{purple}{<}\}$, e la teoria:
+    \begin{align*}
+        T_{\text{otdse}} = \{& \textcolor{purple}{\forall x \; \forall y \; \forall z \; x < y \,\land\, y < z \to x < z}, &&\text{\textcolor{MidnightBlue}{(transitività)}} \\
+        & \textcolor{purple}{\forall x \; \neg \,x < x}, &&\text{\textcolor{MidnightBlue}{(irriflessività)}} \\
+        & \textcolor{purple}{\forall x \; \forall y \; x < y \lor x = y \lor y < x}, &&\text{\textcolor{MidnightBlue}{(totalità)}} \\
+        & \textcolor{purple}{\forall x \; \forall y \; x < y \to \exists z \; x < z \land z < y}, &&\text{\textcolor{MidnightBlue}{(densità)}} \\
+        & \textcolor{purple}{\forall x \; \exists y \; x < y}, &&\text{\textcolor{MidnightBlue}{(assenza di massimo)}} \\
+        & \textcolor{purple}{\forall x \; \exists y \; y < x} &&\text{\textcolor{MidnightBlue}{(assenza di minimo)}} \}
+    \end{align*}
+\end{example}
+
+\begin{exercise}[Completezza di $T_{\text{otdse}}$]
+    Leggi nella prossima sezione come dimostrare che $T_{\text{otdse}}$ è completa.
+\end{exercise}
+\subsection{\texorpdfstring{$\mathsf{PA}$ e $\mathsf{Q}$ di Robinson}{PA e Q di Robinson}}
+Altre due teorie rilevanti per questo corso sono due sottoinsiemi di \(\Th(\NN;\textcolor{purple}{0},\textcolor{purple}{s},\textcolor{purple}{+},\textcolor{purple}{\cdot})\), dove \(s\) rappresenta la funzione successore:
+l'\vocab{aritmetica di Peano} (\vocab{$\mathsf{PA}$}) e la \vocab{teoria $\mathsf{Q}$ di Robinson}. Entrambe sono teorie nel \vocab{linguaggio dell'aritmetica} $L_{\text{arit}} = \{\textcolor{purple}{0},\textcolor{purple}{s},\textcolor{purple}{+},\textcolor{purple}{\cdot}\}$.
+
+\begin{definition}[$\mathsf{PA}$ e $\mathsf{Q}$ di Robinson]
+    Le $L_{\text{arit}}$-teorie $\mathsf{PA}$ e $\mathsf{Q}$ hanno in comune i seguenti assiomi:
+    \begin{itemize}
+        \item [\textcolor{purple}{Q1}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
+        \item [\textcolor{purple}{Q2}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
+        \item [\textcolor{purple}{Q3}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{Q4}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{Q5}] $\forall x \; x \cdot 0 = 0$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)};
+        \item [\textcolor{purple}{Q6}] $\forall x \; \forall y \; x \cdot s(y) = (x \cdot y) + x$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)}.
+    \end{itemize}
+    A Q1-6, la teoria $\mathsf{Q}$ aggiunge il seguente assioma:
+    \begin{itemize}
+        \item [\textcolor{purple}{Q7}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
+    \end{itemize}
+    Mentre $\mathsf{PA}$ aggiunge a Q1-6 il seguente \vocab{schema di induzione}:
+    \begin{itemize}
+        \item [\textcolor{purple}{$I_\varphi$}] $(\varphi[0/x_k] \land \forall x_k \; (\varphi \to \varphi[s(x_k)/x_k])) \to \forall x_k \; \varphi$.
+    \end{itemize}
+    Ossia $\mathsf{PA}$ contiene una formula $I_{\varphi}$ per ogni possibile $L_{\text{arit}}$-formula $\varphi$ e ogni possibile variabile $x_k$.
+\end{definition}
+
+\begin{notation}
+    Se indichiamo una formula qualunque con la scrittura $\varphi(\textcolor{purple}{x})$, è per dire che, quando poi scriviamo $\varphi(t)$, intenderemo $\varphi[t/\textcolor{purple}{x}]$.
+    Così lo schema di induzione si può scrivere più familiarmente:
+    \[ (\varphi(0) \land \forall x \; \varphi(x) \to \varphi(s(x))) \to \forall x \; \varphi(x)
+    \]
+    al variare di $\varphi(x)$ fra tutte le formule e di $x$ fra tutte le variabili.
+\end{notation}
+
+\begin{exercise}[$\NN$ modella $\mathsf{PA}$ e $\mathsf{Q}$]
+    Convinciti del fatto che $\NN \models \mathsf{PA}$ e quindi anche $\NN \models \mathsf{Q}$.
+\end{exercise}
+
+\begin{exercise}[Q7 è conseguenza logica di $\mathsf{PA}$]
+    Dimostra che $\mathsf{PA} \models \text{Q7}$, quindi tutti i modelli di $\mathsf{PA}$ sono modelli di $\mathsf{Q}$.
+\end{exercise}
+
+\begin{exercise}[$\mathsf{Q}$ non è completa]
+    Trova un modello di $\mathsf{Q}$ che non è un modello di $\mathsf{PA}$ e deducine che $\mathsf{Q}$ non è completa.
+\end{exercise}
+
+Per l'esercizio precedente, $\mathsf{Q}$ non è completa, ma, a prima vista, si potrebbe pensare $\mathsf{PA}$ lo sia. Infatti è ben noto che il principio di induzione:
+\[ \forall X \subseteq \NN \; (0 \in X \land \forall n \in \NN \; n \in X \to s(n) \in X) \to X = \NN
+\]
+caratterizza $\NN$ a meno di isomorfismi. Tuttavia non è così, e $\mathsf{PA}$ NON è completa: questo è il famoso \vocab{primo teorema di incompleteness di Gödel}. Com'è possibile?\\
+Il guaio sta nel fatto che il principio di induzione scritto qua sopra, che potremmo chiamare \vocab{induzione al secondo ordine}, fa riferimento ad ogni possibile sottoinsieme $X$ di $\NN$.
+Lo schema di induzione di $\mathsf{PA}$, d'altro canto, lavora solo sui sottoinsiemi $X = \{n| \varphi(n)\}$ per qualche $L_{\text{arit}}$-formula $\varphi$, e questi sono molti meno di tutti i
+sottoinsiemi di $\NN$, perché c'è solo una quantità numerabile di formule. La dimostrazione dell'incompletezza di $\mathsf{PA}$ non è banale, e si vedrà in questo corso.
