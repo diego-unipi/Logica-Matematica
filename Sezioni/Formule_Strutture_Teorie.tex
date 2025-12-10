@@ -297,8 +297,8 @@ Così, per esempio, $M \models \{v\} \; \textcolor{purple}{x = y}$ se e solo se 
 
 \begin{definition}
     [Semantica di Tarski]
-    Ricordiamo che è fissato un linguaggio al primo ordine $L$ ed una $L$-struttura $M$. Fissiamo anche un ambiente $v$.
-    In questo contesto possiamo definire per ricorsione strutturale l'\vocab{interpretazione} degli $L$-termini come segue:
+    Ricordiamo che è fissato un linguaggio al primo ordine $L$ ed una $L$-struttura $M$. Fissiamo anche un ambiente $v$ e definiamo i concetti di interpretazione di un $L$-termine e di soddisfacibilità di una $L$-formula.
+    L'\vocab{interpretazione} degli $L$-termini come segue:
     \[ \begin{aligned}
         \{v\}_M \, \textcolor{purple}{x_k} &\Mydef v(\textcolor{purple}{x_k}) \\
         \{v\}_M \, \textcolor{purple}{f}\textcolor{purple}{(} t_1\textcolor{purple}{,} \ldots\textcolor{purple}{,} t_k \textcolor{purple}{)} &\Mydef i(\textcolor{purple}{f})\left(\{v\}_M \, t_1, \ldots, \{v\}_M \, t_k\right) \qquad \text{con $\textcolor{purple}{f} \in F$}
@@ -679,20 +679,20 @@ l'\vocab{aritmetica di Peano} (\vocab{$\mathsf{PA}$}) e la \vocab{teoria $\maths
 \begin{definition}[$\mathsf{PA}$ e $\mathsf{Q}$ di Robinson]
     Le $L_{\text{arit}}$-teorie $\mathsf{PA}$ e $\mathsf{Q}$ hanno in comune i seguenti assiomi:
     \begin{itemize}
-        \item [\textcolor{purple}{Q1}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
-        \item [\textcolor{purple}{Q2}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
-        \item [\textcolor{purple}{Q3}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
-        \item [\textcolor{purple}{Q4}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
-        \item [\textcolor{purple}{Q5}] $\forall x \; x \cdot 0 = 0$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)};
-        \item [\textcolor{purple}{Q6}] $\forall x \; \forall y \; x \cdot s(y) = (x \cdot y) + x$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)}.
+        \item [\textcolor{purple}{$\mathsf{Q1}$}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
+        \item [\textcolor{purple}{$\mathsf{Q2}$}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
+        \item [\textcolor{purple}{$\mathsf{Q3}$}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{$\mathsf{Q4}$}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{$\mathsf{Q5}$}] $\forall x \; x \cdot 0 = 0$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)};
+        \item [\textcolor{purple}{$\mathsf{Q6}$}] $\forall x \; \forall y \; x \cdot s(y) = (x \cdot y) + x$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)}.
     \end{itemize}
-    A Q1-6, la teoria $\mathsf{Q}$ aggiunge il seguente assioma:
+    A $\mathsf{Q1-6}$, la teoria $\mathsf{Q}$ aggiunge il seguente assioma:
     \begin{itemize}
-        \item [\textcolor{purple}{Q7}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
+        \item [\textcolor{purple}{$\mathsf{Q7}$}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
     \end{itemize}
-    Mentre $\mathsf{PA}$ aggiunge a Q1-6 il seguente \vocab{schema di induzione}:
+    Mentre $\mathsf{PA}$ aggiunge a $\mathsf{Q1-6}$ il seguente \vocab{schema di induzione}:
     \begin{itemize}
-        \item [\textcolor{purple}{$I_\varphi$}] $(\varphi[0/x_k] \land \forall x_k \; (\varphi \to \varphi[s(x_k)/x_k])) \to \forall x_k \; \varphi$.
+        \item [\textcolor{purple}{$\mathsf{I}_\varphi$}] $(\varphi[0/x_k] \land \forall x_k \; (\varphi \to \varphi[s(x_k)/x_k])) \to \forall x_k \; \varphi$.
     \end{itemize}
     Ossia $\mathsf{PA}$ contiene una formula $I_{\varphi}$ per ogni possibile $L_{\text{arit}}$-formula $\varphi$ e ogni possibile variabile $x_k$.
 \end{definition}
@@ -710,7 +710,7 @@ l'\vocab{aritmetica di Peano} (\vocab{$\mathsf{PA}$}) e la \vocab{teoria $\maths
 \end{exercise}
 
 \begin{exercise}[Q7 è conseguenza logica di $\mathsf{PA}$]
-    Dimostra che $\mathsf{PA} \models \text{Q7}$, quindi tutti i modelli di $\mathsf{PA}$ sono modelli di $\mathsf{Q}$.
+    Dimostra che $\mathsf{PA} \models \mathsf{Q7}$, quindi tutti i modelli di $\mathsf{PA}$ sono modelli di $\mathsf{Q}$.
 \end{exercise}
 
 \begin{exercise}[$\mathsf{Q}$ non è completa]
@@ -720,7 +720,7 @@ l'\vocab{aritmetica di Peano} (\vocab{$\mathsf{PA}$}) e la \vocab{teoria $\maths
 Per l'esercizio precedente, $\mathsf{Q}$ non è completa, ma, a prima vista, si potrebbe pensare $\mathsf{PA}$ lo sia. Infatti è ben noto che il principio di induzione:
 \[ \forall X \subseteq \NN \; (0 \in X \land \forall n \in \NN \; n \in X \to s(n) \in X) \to X = \NN
 \]
-caratterizza $\NN$ a meno di isomorfismi. Tuttavia non è così, e $\mathsf{PA}$ NON è completa: questo è il famoso \vocab{primo teorema di incompleteness di Gödel}. Com'è possibile?\\
+caratterizza $\NN$ a meno di isomorfismi. Tuttavia non è così, e $\mathsf{PA}$ NON è completa: questo è il famoso \vocab{primo teorema di incompletezza di Gödel}. Com'è possibile?\\
 Il guaio sta nel fatto che il principio di induzione scritto qua sopra, che potremmo chiamare \vocab{induzione al secondo ordine}, fa riferimento ad ogni possibile sottoinsieme $X$ di $\NN$.
 Lo schema di induzione di $\mathsf{PA}$, d'altro canto, lavora solo sui sottoinsiemi $X = \{n| \varphi(n)\}$ per qualche $L_{\text{arit}}$-formula $\varphi$, e questi sono molti meno di tutti i
 sottoinsiemi di $\NN$, perché c'è solo una quantità numerabile di formule. La dimostrazione dell'incompletezza di $\mathsf{PA}$ non è banale, e si vedrà in questo corso.

@@ -1,0 +1,266 @@
+\section{Sintassi}
+
+\begin{definition}[Formula in $\mathsf{ND}$]
+    Sia $L$ un linguaggio, una \vocab{$L$-formula in $\mathsf{ND}$} è una sequenza finita di simboli nell'alfabeto $\{\land, \lor, \to, \neg, \forall, \exists, \top, \bot\} \cup L$ (il primo insieme è costituito dai \vocab{simboli logici}).
+\end{definition}
+
+\begin{definition}[Dimostrazione in $\mathsf{ND}$]
+    Una \vocab{dimostrazione in $\mathsf{ND}$} di una $L$-formula $\varphi$ è una sequenza di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
+    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è in $T$, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale} (\vocab{$\mathsf{ND}$}) qui di seguito riportate.
+\end{definition}
+
+\subsection{\texorpdfstring{Sistema di deduzione naturale ($\mathsf{ND}$)}{Sistema di deduzione naturale (ND)}}
+\iffalse
+$$
+\begin{array}{l}
+%Ax, Wk
+\AxiomC{$\vphantom{T}$}
+\LeftLabel{\textcolor{purple}{Ax}}
+\UnaryInfC{$\varphi \vdash \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{\textcolor{purple}{Wk}}
+\RightLabel{\quad con $T \subseteq T'$}
+\UnaryInfC{$T' \vdash \varphi$}
+\DisplayProof \\[4ex]
+%TOP, BOT
+\AxiomC{$\vphantom{T}$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\top}$}
+\UnaryInfC{$T \vdash \top$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \textcolor{purple}{\bot}$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\bot}$}
+\UnaryInfC{$T \vdash \varphi$}
+\DisplayProof \\[4ex]
+
+%AND
+\AxiomC{$T \vdash \varphi$}
+\AxiomC{$T \vdash \psi$}
+\LeftLabel{$\textcolor{green}{\text{In}}_{\land}$}
+\BinaryInfC{$T \vdash \varphi \,\textcolor{purple}{\land} \, \psi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\land} \, \psi$}
+\LeftLabel{$\textcolor{orange}{\text{El}}_{\land\cdot}$}
+\UnaryInfC{$T \vdash \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\land} \, \psi$}
+\LeftLabel{$\textcolor{orange}{\text{El}}_{\cdot\land}$}
+\UnaryInfC{$T \vdash \psi$}
+\DisplayProof \\[4ex]
+
+%OR
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\lor\cdot}$}
+\UnaryInfC{$T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \psi$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\cdot\lor}$}
+\UnaryInfC{$T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi$}
+\AxiomC{$T, \varphi \vdash \theta$}
+\AxiomC{$T, \psi \vdash \theta$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\lor}$}
+\TrinaryInfC{$T \vdash \theta$}
+\DisplayProof \\[4ex]
+
+%IMPLICATION
+\AxiomC{$T, \varphi \vdash \psi$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\to}$}
+\UnaryInfC{$T \vdash \varphi \,\textcolor{purple}{\to} \, \psi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\to} \, \psi$}
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\to}$}
+\RightLabel{(Modus Ponens)}
+\BinaryInfC{$T \vdash \psi$}
+\DisplayProof
+\\[4ex]
+
+%NOT, RaA
+\AxiomC{$T, \varphi \vdash \,\textcolor{purple}{\bot}$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\neg}$}
+\UnaryInfC{$T \vdash\textcolor{purple}{\neg}\, \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \textcolor{purple}{\neg}\, \varphi$}
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\neg}$}
+\BinaryInfC{$T \vdash \psi$}
+\DisplayProof
+\qquad
+\AxiomC{$T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}$}
+\LeftLabel{$\textcolor{purple}{\text{RaA}}$}
+\UnaryInfC{$T \vdash \varphi$}
+\DisplayProof
+\\[4ex]
+
+%FORALL
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\forall}$}
+\RightLabel{(con $\textcolor{purple}{x_k} \not \in \vl(T)$)}
+\UnaryInfC{$T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\forall}$}
+\UnaryInfC{$T \vdash\varphi[t/\textcolor{purple}{x_k}]$}
+\DisplayProof
+\\[4ex]
+
+%EXISTS
+\AxiomC{$T \vdash \varphi[t/\textcolor{purple}{x_k}]$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\exists}$}
+\UnaryInfC{$T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi$}
+\AxiomC{$T, \varphi \vdash \psi$}
+\RightLabel{(con $\textcolor{purple}{x_k} \not \in \vl(T, \psi)$)}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\exists}$}
+\BinaryInfC{$T \vdash \psi$}
+\DisplayProof \\[4ex]
+
+%EQUALITY
+\AxiomC{$\vphantom{T}$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{=}$}
+\UnaryInfC{$T \vdash t \, \textcolor{purple}{=} \, t$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash s \, \textcolor{purple}{=} \, t$}
+\AxiomC{$T \vdash \varphi[s/\textcolor{purple}{x_k}]$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{=}$}
+\BinaryInfC{$T \vdash \varphi[t/\textcolor{purple}{x_k}]$}
+\DisplayProof
+
+\end{array}
+$$
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}[Sequente in $\mathsf{ND}$]
+    Una \vocab{sequente} $T \vdash_{\mathsf{ND}} \varphi$ indica che esiste una dimostrazione in $\mathsf{ND}$ di $\varphi$ a partire dalle formule in $T$.
+\end{definition}
+
+\begin{definition}[Formula in $\mathsf{ND}_{\to, \bot, \exists, =}$]
+    Sia $L$ un linguaggio, una \vocab{$L$-formula in $\mathsf{ND}_{\to, \bot, \exists, =}$} è una sequenza finita di simboli nell'alfabeto $\{\to, \bot, \exists, =\} \cup L$ (il primo insieme è costituito dai \vocab{simboli logici} di $\mathsf{ND}_{\to, \bot, \exists, =}$).
+\end{definition}
+
+\begin{definition}[Dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$]
+    Una \vocab{dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$} di una $L$-formula $\varphi$ è una sequenza di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
+    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è in $T$, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale ridotto} (\vocab{$\mathsf{ND}_{\to, \bot, \exists, =}$}) qui di seguito riportate.
+\end{definition}
+
+\subsection{\texorpdfstring{Sistema ridotto ($\mathsf{ND}_{\to, \bot, \exists, =}$)}{Sistema ridotto (ND→,⊥,∃,=)}}
+\iffalse
+$$
+\begin{array}{l}
+%Ax, Wk, RaA
+\AxiomC{$\vphantom{T}$}
+\LeftLabel{\textcolor{purple}{Ax}}
+\UnaryInfC{$T \vdash \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{\textcolor{purple}{Wk}}
+\UnaryInfC{$T \vdash \varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}$}
+\LeftLabel{\textcolor{purple}{\text{RaA}}}
+\UnaryInfC{$T \vdash \varphi$}
+\DisplayProof   \\[4ex]
+
+%IMPLICATION
+\AxiomC{$T, \varphi \vdash \psi$}
+\AxiomC{$T \vdash \varphi \to \psi$}
+\LeftLabel{$\textcolor{green}{\text{In}}_{\to}$}
+\BinaryInfC{$T \vdash \varphi \to \psi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \varphi \to \psi$}
+\AxiomC{$T \vdash \varphi$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\to}$}
+\RightLabel{(Modus Ponens)}
+\BinaryInfC{$T \vdash \psi$}
+\DisplayProof \\[4ex]
+
+%EXISTS
+\AxiomC{$T \vdash \varphi[t/\textcolor{purple}{x_k}]$}
+\LeftLabel{$\textcolor{green}{\text{In}}_{\exists}$}
+\UnaryInfC{$T \vdash \exists x_k\,\varphi$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash \exists x_k\,\varphi$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\exists}$}
+\UnaryInfC{$T \vdash \varphi[t/x_k]$}
+\DisplayProof \\[4ex]
+
+%EQUALITY
+\AxiomC{$\vphantom{T}$}
+\LeftLabel{$\textcolor{green}{\mathrm{In}}_{=}$}
+\UnaryInfC{$T \vdash t \,\textcolor{purple}{=}\, t$}
+\DisplayProof
+\qquad
+\AxiomC{$T \vdash s \,\textcolor{purple}{=}\, t$}
+\AxiomC{$T \vdash \varphi[s/\textcolor{purple}{x_k}]$}
+\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{=}$}
+\BinaryInfC{$T \vdash \varphi[t/x_k]$}
+\DisplayProof
+
+\end{array}
+$$
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}[Sequente in $\mathsf{ND}_{\to, \bot, \exists, =}$]
+    Un \vocab{sequente} $T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \varphi$ indica che esiste una dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$ di $\varphi$ a partire dalle formule in $T$.
+\end{definition}
+
+\begin{definition}[$\textcolor{purple}{\neg, \top, \land, \lor, \forall}$]
+    Definiamo i seguenti simboli logici:
+    \begin{alignat*}{4}
+        \textcolor{purple}{\neg}\,\varphi &\overset{\text{def}}{=} \varphi \,\textcolor{purple}{\to}\, \textcolor{purple}{\bot} \qquad & \textcolor{purple}{\top} &\overset{\text{def}}{=} \textcolor{purple}{\neg\bot} \qquad\quad & \varphi \,\textcolor{purple}{\land}\, \psi &\overset{\text{def}}{=} \neg(\varphi \,\textcolor{purple}{\to}\, \neg\psi) \\
+        \varphi \,\textcolor{purple}{\lor}\, \psi &\overset{\text{def}}{=} \neg\varphi \,\textcolor{purple}{\to}\, \psi \qquad & \textcolor{purple}{\forall x_k}\,\varphi &\overset{\text{def}}{=} \textcolor{purple}{\neg\,\exists x_k\,\neg}\,\varphi
+    \end{alignat*}
+\end{definition}
+
+\begin{exercise}[$\mathsf{ND}_{\to, \bot, \exists, =}$ dimostra $\mathsf{ND}$]
+    In $\mathsf{ND}_{\to, \bot, \exists, =}$ si possono dimostrare le regole mancanti di $\mathsf{ND}$ nel seguente ordine: 
+    \textcolor{green}{In}$_{\neg}$, \textcolor{orange}{El}$_{\bot}$, \textcolor{orange}{El}$_{\neg}$, \textcolor{green}{In}$_{\top}$, \textcolor{green}{In}$_{\land}$, \textcolor{orange}{El}$_{\land\cdot}$, \textcolor{orange}{El}$_{\cdot\land}$, \textcolor{green}{In}$_{\lor\cdot}$, \textcolor{green}{In}$_{\cdot\lor}$,
+    \textcolor{orange}{El}$_{\lor}$, \textcolor{green}{In}$_{\forall}$, \textcolor{orange}{El}$_{\forall}$. 
+\end{exercise}
+
+\begin{exercise}[Semantica di Tarski indotta]
+    Verificare che la semantica di Tarski, già definita in precedenza, coincide con quella indotta dalle definizioni date sopra 
+    per i simboli: $\textcolor{purple}{\neg, \top, \land, \lor, \forall}$.
+\end{exercise}
+
+\begin{notation}[Sequenti]
+    Avendo verificato che $\mathsf{ND}$ e $\mathsf{ND}_{\to, \bot, \exists, =}$ sono equivalenti, d'ora in avanti indicheremo semplicemente con $T \vdash \varphi$ il sequente dimostrabile in entrambi i sistemi.
+\end{notation}
+
+\subsection{Teoremi di correttezza e completezza}
+
+\begin{proposition}
+    Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, vale che $T \vdash \varphi \iff$ \textcolor{purple}{per ogni}
+    $L$-struttura $M = (D;i)$ e \textcolor{purple}{per ogni} $v : \Var \to D$ valutazione delle variabili, si ha $M \models \{v\}T \implies M \models \{v\}\varphi$.
+\end{proposition}
+
+\begin{corollary}[Teorema di correttezza]
+    Sia $T$ una $L$-teoria fatta da formule chiuse, e sia $\varphi$ una $L$-formula, allora:
+    \[T \vdash \varphi \implies T \models \varphi\]
+\end{corollary}
+
+\begin{corollary}[Teorema di completezza]
+    Sia $T$ una $L$-teoria fatta da formule chiuse, e sia $\varphi$ una $L$-formula, allora:
+    \[T \models \varphi \implies T \vdash \varphi\]
+\end{corollary}
+

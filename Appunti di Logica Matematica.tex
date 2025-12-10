@@ -1,6 +1,8 @@
 \documentclass[11pt,headheight=35pt]{scrartcl}
 \usepackage[italian]{babel}
 \usepackage[sexy]{evan}
+\usepackage{tabularx}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %.
@@ -53,6 +55,9 @@
 \section*{Premessa}
 Queste dispense sono la quasi esatta trascrizione in \LaTeX\,delle dispense del corso di Logica Matematica \cite{mamino_logica_23_24}, tenuto dal prof. Marcello Mamino nell'anno accademico 2023-24 presso l'Università di Pisa.
 
+\section*{Ringraziamenti}
+Antonio De Lucreziis.
+
 \vfill
 \begin{wrapfigure}{R}{0.2\textwidth}
 	\href{https://creativecommons.org/licenses/by-nc/4.0/deed.it}{\includegraphics[scale=0.20]{immagini/licenza.png}}
@@ -64,6 +69,7 @@ Per leggere una copia della licenza visita il sito web \href{http://creativecomm
 \include{Sezioni/Introduzione}
 \include{Sezioni/Formule_Strutture_Teorie}
 \include{Sezioni/Eliminazione_dei_quantificatori}
+\include{Sezioni/Sintassi}
 
 \begin{thebibliography}{9}
     \addcontentsline{toc}{section}{Bibliografia}
