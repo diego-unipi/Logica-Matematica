@@ -1,5 +1,22 @@
-*.pre
-*.aux
-*.synctex.gz
-*.synctex
-.vscode/
+# Ignore everything by default.
+*
+
+# Re-include directories so whitelist rules can be applied.
+!*/
+
+# Keep essential repo files.
+!.gitignore
+!README.md
+
+# Keep TeX files at repository root.
+!/*.tex
+
+# Keep TeX files inside Sezioni.
+!Sezioni/**/*.tex
+
+# Keep the images folder and all its contents.
+!Immagini/
+!Immagini/**
+
+# Keep PDF files.
+!**/*.pdf

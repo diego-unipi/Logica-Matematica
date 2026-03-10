@@ -5,144 +5,72 @@
 \end{definition}
 
 \begin{definition}[Dimostrazione in $\mathsf{ND}$]
-    Una \vocab{dimostrazione in $\mathsf{ND}$} di una $L$-formula $\varphi$ è una sequenza di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
+    Una \vocab{dimostrazione in $\mathsf{ND}$} di una $L$-formula $\varphi$ è una sequenza finita di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$
     o $\varphi_k$ è un assioma, oppure $\varphi_k$ è in $T$, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale} (\vocab{$\mathsf{ND}$}) qui di seguito riportate.
 \end{definition}
 
 \subsection{\texorpdfstring{Sistema di deduzione naturale ($\mathsf{ND}$)}{Sistema di deduzione naturale (ND)}}
-\iffalse
-$$
+
+\[
+\renewcommand{\arraystretch}{1.8}
 \begin{array}{l}
 %Ax, Wk
-\AxiomC{$\vphantom{T}$}
-\LeftLabel{\textcolor{purple}{Ax}}
-\UnaryInfC{$\varphi \vdash \varphi$}
-\DisplayProof
+\textcolor{purple}{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{\varphi \vdash \varphi}
 \qquad
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{\textcolor{purple}{Wk}}
-\RightLabel{\quad con $T \subseteq T'$}
-\UnaryInfC{$T' \vdash \varphi$}
-\DisplayProof \\[4ex]
+\textcolor{purple}{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T' \vdash \varphi}\;\text{(con }T \subseteq T'\text{)}
+\\[4ex]
 %TOP, BOT
-\AxiomC{$\vphantom{T}$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\top}$}
-\UnaryInfC{$T \vdash \top$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\top}\;\displaystyle\frac{\vphantom{T}}{T \vdash \top}
 \qquad
-\AxiomC{$T \vdash \textcolor{purple}{\bot}$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\bot}$}
-\UnaryInfC{$T \vdash \varphi$}
-\DisplayProof \\[4ex]
-
+\textcolor{orange}{\mathrm{El}}_{\bot}\;\displaystyle\frac{T \vdash \textcolor{purple}{\bot}}{T \vdash \varphi}
+\\[4ex]
 %AND
-\AxiomC{$T \vdash \varphi$}
-\AxiomC{$T \vdash \psi$}
-\LeftLabel{$\textcolor{green}{\text{In}}_{\land}$}
-\BinaryInfC{$T \vdash \varphi \,\textcolor{purple}{\land} \, \psi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\land}\;\displaystyle\frac{T \vdash \varphi \qquad T \vdash \psi}{T \vdash \varphi \,\textcolor{purple}{\land} \, \psi}
 \qquad
-\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\land} \, \psi$}
-\LeftLabel{$\textcolor{orange}{\text{El}}_{\land\cdot}$}
-\UnaryInfC{$T \vdash \varphi$}
-\DisplayProof
+\textcolor{orange}{\mathrm{El}}_{\land\cdot}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\land} \, \psi}{T \vdash \varphi}
 \qquad
-\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\land} \, \psi$}
-\LeftLabel{$\textcolor{orange}{\text{El}}_{\cdot\land}$}
-\UnaryInfC{$T \vdash \psi$}
-\DisplayProof \\[4ex]
-
+\textcolor{orange}{\mathrm{El}}_{\cdot\land}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\land} \, \psi}{T \vdash \psi}
+\\[4ex]
 %OR
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\lor\cdot}$}
-\UnaryInfC{$T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\lor\cdot}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi}
 \qquad
-\AxiomC{$T \vdash \psi$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\cdot\lor}$}
-\UnaryInfC{$T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\cdot\lor}\;\displaystyle\frac{T \vdash \psi}{T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi}
 \qquad
-\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi$}
-\AxiomC{$T, \varphi \vdash \theta$}
-\AxiomC{$T, \psi \vdash \theta$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\lor}$}
-\TrinaryInfC{$T \vdash \theta$}
-\DisplayProof \\[4ex]
-
+\textcolor{orange}{\mathrm{El}}_{\lor}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi \qquad T, \varphi \vdash \theta \qquad T, \psi \vdash \theta}{T \vdash \theta}\text{\hyperref[fn:nd-el-lor]{\textsuperscript{\ref*{fn:nd-el-lor}}}}
+\\[4ex]
 %IMPLICATION
-\AxiomC{$T, \varphi \vdash \psi$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\to}$}
-\UnaryInfC{$T \vdash \varphi \,\textcolor{purple}{\to} \, \psi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi}{T \vdash \varphi \,\textcolor{purple}{\to} \, \psi}
 \qquad
-\AxiomC{$T \vdash \varphi \,\textcolor{purple}{\to} \, \psi$}
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\to}$}
-\RightLabel{(Modus Ponens)}
-\BinaryInfC{$T \vdash \psi$}
-\DisplayProof
+\textcolor{orange}{\mathrm{El}}_{\to}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\to} \, \psi \qquad T \vdash \varphi}{T \vdash \psi}\text{\hyperref[fn:nd-el-to]{\textsuperscript{\ref*{fn:nd-el-to}}}}
 \\[4ex]
-
 %NOT, RaA
-\AxiomC{$T, \varphi \vdash \,\textcolor{purple}{\bot}$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\neg}$}
-\UnaryInfC{$T \vdash\textcolor{purple}{\neg}\, \varphi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\neg}\;\displaystyle\frac{T, \varphi \vdash \,\textcolor{purple}{\bot}}{T \vdash\textcolor{purple}{\neg}\, \varphi}
 \qquad
-\AxiomC{$T \vdash \textcolor{purple}{\neg}\, \varphi$}
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\neg}$}
-\BinaryInfC{$T \vdash \psi$}
-\DisplayProof
+\textcolor{orange}{\mathrm{El}}_{\neg}\;\displaystyle\frac{T \vdash \textcolor{purple}{\neg}\, \varphi \qquad T \vdash \varphi}{T \vdash \psi}\text{\hyperref[fn:nd-el-neg]{\textsuperscript{\ref*{fn:nd-el-neg}}}}
 \qquad
-\AxiomC{$T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}$}
-\LeftLabel{$\textcolor{purple}{\text{RaA}}$}
-\UnaryInfC{$T \vdash \varphi$}
-\DisplayProof
+\textcolor{purple}{\mathrm{RaA}}\;\displaystyle\frac{T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}}{T \vdash \varphi}
 \\[4ex]
-
 %FORALL
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\forall}$}
-\RightLabel{(con $\textcolor{purple}{x_k} \not \in \vl(T)$)}
-\UnaryInfC{$T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\forall}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi}\;\text{(con }\textcolor{purple}{x_k} \notin \vl(T)\text{)}\text{\hyperref[fn:nd-in-forall]{\textsuperscript{\ref*{fn:nd-in-forall}}}}
 \qquad
-\AxiomC{$T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\forall}$}
-\UnaryInfC{$T \vdash\varphi[t/\textcolor{purple}{x_k}]$}
-\DisplayProof
+\textcolor{orange}{\mathrm{El}}_{\forall}\;\displaystyle\frac{T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi}{T \vdash\varphi[t/\textcolor{purple}{x_k}]}
 \\[4ex]
-
 %EXISTS
-\AxiomC{$T \vdash \varphi[t/\textcolor{purple}{x_k}]$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{\exists}$}
-\UnaryInfC{$T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\textcolor{purple}{x_k}]}{T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi}
 \qquad
-\AxiomC{$T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi$}
-\AxiomC{$T, \varphi \vdash \psi$}
-\RightLabel{(con $\textcolor{purple}{x_k} \not \in \vl(T, \psi)$)}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\exists}$}
-\BinaryInfC{$T \vdash \psi$}
-\DisplayProof \\[4ex]
-
+\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi \qquad T, \varphi \vdash \psi}{T \vdash \psi}\;\text{(con }\textcolor{purple}{x_k} \notin \vl(T, \psi)\text{)}
+\\[4ex]
 %EQUALITY
-\AxiomC{$\vphantom{T}$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{=}$}
-\UnaryInfC{$T \vdash t \, \textcolor{purple}{=} \, t$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \, \textcolor{purple}{=} \, t}
 \qquad
-\AxiomC{$T \vdash s \, \textcolor{purple}{=} \, t$}
-\AxiomC{$T \vdash \varphi[s/\textcolor{purple}{x_k}]$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{=}$}
-\BinaryInfC{$T \vdash \varphi[t/\textcolor{purple}{x_k}]$}
-\DisplayProof
-
+\textcolor{orange}{\mathrm{El}}_{=}\;\displaystyle\frac{T \vdash s \, \textcolor{purple}{=} \, t \qquad T \vdash \varphi[s/\textcolor{purple}{x_k}]}{T \vdash \varphi[t/\textcolor{purple}{x_k}]}
 \end{array}
-$$
-\fi
+\]
+
+\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-lor}Dimostrazione per casi.}
+\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-to}Modus Ponens.}
+\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-neg}Ex falso quodlibet.}
+\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-in-forall}Se ho una dimostrazione per una variabile generica, allora vale per ogni variabile.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Sequente in $\mathsf{ND}$]
@@ -154,78 +82,47 @@ $$
 \end{definition}
 
 \begin{definition}[Dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$]
-    Una \vocab{dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$} di una $L$-formula $\varphi$ è una sequenza di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
+    Una \vocab{dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$} di una $L$-formula $\varphi$ è una sequenza finita di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
     o $\varphi_k$ è un assioma, oppure $\varphi_k$ è in $T$, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale ridotto} (\vocab{$\mathsf{ND}_{\to, \bot, \exists, =}$}) qui di seguito riportate.
 \end{definition}
 
 \subsection{\texorpdfstring{Sistema ridotto ($\mathsf{ND}_{\to, \bot, \exists, =}$)}{Sistema ridotto (ND→,⊥,∃,=)}}
-\iffalse
-$$
+
+\[
+\begingroup
+\renewcommand{\arraystretch}{1.8}
 \begin{array}{l}
 %Ax, Wk, RaA
-\AxiomC{$\vphantom{T}$}
-\LeftLabel{\textcolor{purple}{Ax}}
-\UnaryInfC{$T \vdash \varphi$}
-\DisplayProof
+\textcolor{purple}{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{T \vdash \varphi}
 \qquad
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{\textcolor{purple}{Wk}}
-\UnaryInfC{$T \vdash \varphi$}
-\DisplayProof
+\textcolor{purple}{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi}
 \qquad
-\AxiomC{$T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}$}
-\LeftLabel{\textcolor{purple}{\text{RaA}}}
-\UnaryInfC{$T \vdash \varphi$}
-\DisplayProof   \\[4ex]
-
+\textcolor{purple}{\mathrm{RaA}}\;\displaystyle\frac{T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}}{T \vdash \varphi}
+\\[4ex]
 %IMPLICATION
-\AxiomC{$T, \varphi \vdash \psi$}
-\AxiomC{$T \vdash \varphi \to \psi$}
-\LeftLabel{$\textcolor{green}{\text{In}}_{\to}$}
-\BinaryInfC{$T \vdash \varphi \to \psi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi \qquad T \vdash \varphi \to \psi}{T \vdash \varphi \to \psi}
 \qquad
-\AxiomC{$T \vdash \varphi \to \psi$}
-\AxiomC{$T \vdash \varphi$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\to}$}
-\RightLabel{(Modus Ponens)}
-\BinaryInfC{$T \vdash \psi$}
-\DisplayProof \\[4ex]
-
+\textcolor{orange}{\mathrm{El}}_{\to}\;\displaystyle\frac{T \vdash \varphi \to \psi \qquad T \vdash \varphi}{T \vdash \psi}\;\text{(Modus Ponens)}
+\\[4ex]
 %EXISTS
-\AxiomC{$T \vdash \varphi[t/\textcolor{purple}{x_k}]$}
-\LeftLabel{$\textcolor{green}{\text{In}}_{\exists}$}
-\UnaryInfC{$T \vdash \exists x_k\,\varphi$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\textcolor{purple}{x_k}]}{T \vdash \exists x_k\,\varphi}
 \qquad
-\AxiomC{$T \vdash \exists x_k\,\varphi$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{\exists}$}
-\UnaryInfC{$T \vdash \varphi[t/x_k]$}
-\DisplayProof \\[4ex]
-
+\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \exists x_k\,\varphi}{T \vdash \varphi[t/x_k]}
+\\[4ex]
 %EQUALITY
-\AxiomC{$\vphantom{T}$}
-\LeftLabel{$\textcolor{green}{\mathrm{In}}_{=}$}
-\UnaryInfC{$T \vdash t \,\textcolor{purple}{=}\, t$}
-\DisplayProof
+\textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \,\textcolor{purple}{=}\, t}
 \qquad
-\AxiomC{$T \vdash s \,\textcolor{purple}{=}\, t$}
-\AxiomC{$T \vdash \varphi[s/\textcolor{purple}{x_k}]$}
-\LeftLabel{$\textcolor{orange}{\mathrm{El}}_{=}$}
-\BinaryInfC{$T \vdash \varphi[t/x_k]$}
-\DisplayProof
-
+\textcolor{orange}{\mathrm{El}}_{=}\;\displaystyle\frac{T \vdash s \,\textcolor{purple}{=}\, t \qquad T \vdash \varphi[s/\textcolor{purple}{x_k}]}{T \vdash \varphi[t/x_k]}
 \end{array}
-$$
-\fi
+\endgroup
+\]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{definition}[Sequente in $\mathsf{ND}_{\to, \bot, \exists, =}$]
     Un \vocab{sequente} $T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \varphi$ indica che esiste una dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$ di $\varphi$ a partire dalle formule in $T$.
 \end{definition}
 
 \begin{definition}[$\textcolor{purple}{\neg, \top, \land, \lor, \forall}$]
-    Definiamo i seguenti simboli logici:
+    Definiamo i seguenti simboli logici nel sistema ridotto a partire da quelli di base:
     \begin{alignat*}{4}
         \textcolor{purple}{\neg}\,\varphi &\overset{\text{def}}{=} \varphi \,\textcolor{purple}{\to}\, \textcolor{purple}{\bot} \qquad & \textcolor{purple}{\top} &\overset{\text{def}}{=} \textcolor{purple}{\neg\bot} \qquad\quad & \varphi \,\textcolor{purple}{\land}\, \psi &\overset{\text{def}}{=} \neg(\varphi \,\textcolor{purple}{\to}\, \neg\psi) \\
         \varphi \,\textcolor{purple}{\lor}\, \psi &\overset{\text{def}}{=} \neg\varphi \,\textcolor{purple}{\to}\, \psi \qquad & \textcolor{purple}{\forall x_k}\,\varphi &\overset{\text{def}}{=} \textcolor{purple}{\neg\,\exists x_k\,\neg}\,\varphi
@@ -240,27 +137,84 @@ $$
 
 \begin{exercise}[Semantica di Tarski indotta]
     Verificare che la semantica di Tarski, già definita in precedenza, coincide con quella indotta dalle definizioni date sopra 
-    per i simboli: $\textcolor{purple}{\neg, \top, \land, \lor, \forall}$.
+    per i simboli: $\textcolor{purple}{\neg, \top, \land, \lor, \forall}$.\footnote{Nella pratica, ad esempio $M \models \{v\}\neg\varphi$ è $M \models \{v\}\varphi \to \bot$, a questo punto voglio vedere che ottengo la stessa formula insiemistica che ottenevo nella definizione di semantica di Tarski, per cui $\neg(M \models \{v\}\varphi)$ deve avere 
+    lo stesso valore di verità (cioè si ha proprio $\iff$) di $M \models \{v\}\varphi \to M \models \{v\}\bot$ (ricordiamo che il $\to$ è quello metateorico in questo caso).}
 \end{exercise}
 
 \begin{notation}[Sequenti]
     Avendo verificato che $\mathsf{ND}$ e $\mathsf{ND}_{\to, \bot, \exists, =}$ sono equivalenti, d'ora in avanti indicheremo semplicemente con $T \vdash \varphi$ il sequente dimostrabile in entrambi i sistemi.
 \end{notation}
 
-\subsection{Teoremi di correttezza e completezza}
+\begin{definition}[Formule $T$-deduttivamente equivalenti]
+    Due $L$-formule $\varphi$ e $\psi$ sono $T$-\vocab{deduttivamente equivalenti} (o \vocab{deduttivamente equivalenti} per $T$, o \vocab{interderivabili} per $T$) se $T \vdash \varphi \to \psi$ e $T \vdash \psi \to \varphi$. O equivalentemente se $T, \varphi \vdash \psi$ e $T, \psi \vdash \varphi$.
+\end{definition}
 
-\begin{proposition}
+\begin{remark}[Formule deduttivamente equivalenti]
+    Segue quindi che due formule sono deduttivamente equivalenti (o interderivabili) se $\vdash \varphi \to \psi$ e $\vdash \psi \to \varphi$, o equivalentemente se $\varphi \vdash \psi$ e $\psi \vdash \varphi$.
+\end{remark}
+
+\begin{example}[Doppia negazione]
+    Dimostriamo che $\varphi \vdash \neg\neg\varphi$ e $\neg\neg\varphi \vdash \varphi$ per ogni $L$-formula $\varphi$.
+    \begin{align*}
+        \text{In}_\to\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle \text{Ax}\frac{}{\varphi \vdash \varphi}}{\varphi,\neg\varphi\vdash \varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg\varphi}}{\varphi,\neg\varphi\vdash \neg\varphi}}{\varphi,\neg\varphi\vdash\bot}}{\varphi \vdash \neg(\neg\varphi)}}{\vdash \varphi \to \neg(\neg \varphi)}
+    \end{align*}
+    Analogamente per $\neg\neg\varphi \vdash \varphi$.
+    \begin{align*}
+        \text{RaA}\frac{\displaystyle\text{El}_\neg\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\neg\varphi \vdash \neg\neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\neg\varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \bot}}{\neg\neg\varphi \vdash \varphi}
+    \end{align*}
+\end{example}
+
+\begin{example}[Principio del terzo escluso]
+    Dimostriamo che $\vdash \varphi \lor \neg\varphi$ per ogni $L$-formula $\varphi$.
+    \begin{align*}
+        \text{In}_\lor\cdot\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle \text{Ax}\frac{}{\varphi \vdash \varphi}}{\varphi,\neg\varphi\vdash \varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg\varphi}}{\varphi,\neg\varphi\vdash \neg\varphi}}{\varphi,\neg\varphi\vdash\bot}}{\varphi \vdash \neg(\neg\varphi)}}{\vdash \varphi \lor \neg(\neg \varphi)}
+    \end{align*}
+    Quindi, fatto questo, d'ora in poi potremmo aggiungere una nuova regola ammissibile al nostro sistema deduttivo che ci dice:
+    \[ \frac{}{\vdash \varphi \lor \neg\varphi} \]
+    per ogni $L$-formula $\varphi$.
+\end{example}
+
+\subsection{Teoremi di correttezza e completezza}
+Il nostro desiderio a questo punto è quello di dimostrare che $\models$ e $\vdash$ coincidono, cioè che $T \vdash \varphi$ se e solo se $T \models \varphi$. Per cui vorremmo dimostrare dei teoremi di correttezza e completezza, che ci dicono rispettivamente che $T \vdash \varphi$ implica $T \models \varphi$ e che $T \models \varphi$ implica $T \vdash \varphi$.
+Tuttavia, per come abbiamo dato le definizioni c'è un problema.
+
+\begin{example}[Esempio di conseguenza logica non dimostrabile]
+    Consideriamo la seguente conseguenza logica nel linguaggio vuoto: $x_1 = x_2 \models x_3 = x_4$. Per via della semantica di Tarski, questa conseguenza logica si traduce in: per ogni $L$-struttura $M$ tale che $M \models x_1 = x_2$, allora $M \models x_3 = x_4$, i.e.:
+    \[ \forall v : \Var \to M \; M \models \{v\}x_1 = x_2 \implies M \models \{v\}x_3 = x_4 \]
+    cioè per ogni valutazione $v$, se $v(x_1) = v(x_2)$, che significa che la struttura ha un solo elemento nel dominio, allora $v(x_3) = v(x_4)$, che è banalmente vero. Tuttavia è impossibile dimostrare $x_1 = x_2 \vdash x_3 = x_4$.
+\end{example}
+
+Il guaio nell'esempio precedente sta nel fatto che il simbolo $\models$ intende le premesse come universalmente quantificate, mentre il simbolo $\vdash$ intende le premesse come se $x_1 = x_2$ fosse un assioma, cioè come se fosse una formula chiusa ed $x_1$,$x_2$ fossero due costanti.
+Ed un'altra brutta notizia è che il sistema di deduzione naturale non potrebbe funzionare altrimenti. 
+
+\begin{example}[Commutatività dell'uguale]
+    Dimostriamo che l'uguaglianza è commutativa, cioè $\vdash \forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)$:
+    \begin{align*}
+        \text{In}_\forall\frac{\displaystyle\text{In}_\forall\frac{\displaystyle\text{In}_\to\frac{\displaystyle\text{El}_= \frac{\displaystyle \text{Ax}\frac{}{x_1 = x_2 \vdash x_1 = x_2} \; \text{Wk}\frac{\displaystyle \text{In}_{=}\frac{}{\vdash x_1 = x_1}}{x_1 = x_2 \vdash x_1 = x_1} }{x_1 = x_2 \vdash x_2 = x_1}}{x_1 = x_2 \vdash x_1 = x_2 \to x_2 = x_1}}{\forall x_2 (x_1 = x_2 \to x_2 = x_1)}}{\forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)}
+    \end{align*}
+    dove la $\varphi$ usata in El$_=$ è $\varphi := (x_{17} = x_1)$, per cui $\varphi[x_1/x_{17}] = (x_1 = x_1)$ e $\varphi[x_2/x_{17}] = (x_2 = x_1)$. Se $\vdash$ interpretasse le premesse come universalmente quantificate, il sequente $x_1 = x_2 \vdash x_2 = x_1$ verrebbe letto come ``per ogni valutazione $v$, se $v(x_1)=v(x_2)$ allora $v(x_2)=v(x_1)$''.
+    Ma questa è già la lettura semantica della formula chiusa,  $\vdash \forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)$, che vogliamo arrivare a dimostrare. Nel sistema deduttivo, invece, la riga $x_1 = x_2 \vdash x_2 = x_1$ è un passaggio con ipotesi aperta che viene scaricata da In$_\to$ per ottenere $\vdash x_1 = x_2 \to x_2 = x_1$, e solo dopo generalizzata con In$_\forall$.
+    In altre parole, partendo da ``il modello ha un solo elemento, allora il modello ha un solo elemento'' non posso arrivare a dimostrare che ``per ogni coppia di elementi del modello se sono uguali in un verso allora sono uguali anche nell'altro verso''.
+\end{example}
+
+Per cui, per fare le dimostrazioni nel sistema $\mathsf{ND}$ abbiamo la necessità di trattare gli elementi nella premessa come elementi fissati, per poi poter usare le regole e se lo vogliamo ottenere frasi generalizzate.\\
+Morale della favola: non solo $\models$ e $\vdash$ non coincidono, ma non possono nemmeno cambiare le regole per provare a far coincidere $\vdash$, se ci provassi otterrei un sistema che non riesce a dimostrare la commutatività dell'uguale, e di tale sistema ce ne facciamo ben poco.
+Per cui va introdotto qualcosa di inelegante per fare in modo che i due simboli $\models,\vdash$ siano uguali, per ora sappiamo che non lo sono se ci sono variabili libere nelle premesse. La vera equivalenza che vogliamo dimostrare è la seguente.
+
+\begin{proposition}[Equivalenza tra $\vdash$ e $\models$]
     Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, vale che $T \vdash \varphi \iff$ \textcolor{purple}{per ogni}
     $L$-struttura $M = (D;i)$ e \textcolor{purple}{per ogni} $v : \Var \to D$ valutazione delle variabili, si ha $M \models \{v\}T \implies M \models \{v\}\varphi$.
 \end{proposition}
 
+Questa proposizione ha i due corollari che desideriamo, ovvero l'equivalenza dei due simboli $\vdash$ e $\models$ quando la teoria ha solo formule chiuse.
+
 \begin{corollary}[Teorema di correttezza]
-    Sia $T$ una $L$-teoria fatta da formule chiuse, e sia $\varphi$ una $L$-formula, allora:
+    Sia $T$ una $L$-teoria fatta da $\boxed{\text{formule chiuse}}$, e sia $\varphi$ una $L$-formula, allora:
     \[T \vdash \varphi \implies T \models \varphi\]
 \end{corollary}
 
 \begin{corollary}[Teorema di completezza]
-    Sia $T$ una $L$-teoria fatta da formule chiuse, e sia $\varphi$ una $L$-formula, allora:
+    Sia $T$ una $L$-teoria fatta da $\boxed{\text{formule chiuse}}$, e sia $\varphi$ una $L$-formula, allora:
     \[T \models \varphi \implies T \vdash \varphi\]
 \end{corollary}
 

@@ -641,10 +641,45 @@
   %%fakesection Fancy section and chapter heads
   \ifevancolorsec
     \@ifundefined{KOMAClassName}{}{
+      \setkomafont{partprefix}{\sffamily\Huge\bfseries\color{MidnightBlue}}
+      \setkomafont{part}{\sffamily\Huge\bfseries\color{MidnightBlue}}
+      \renewcommand*{\raggedpart}{\centering}
+      \renewcommand*{\partheadstartvskip}{\null\vfill}
+      \renewcommand*{\partheadendvskip}{\vfill\null}
+      \renewcommand*{\partlineswithprefixformat}[3]{%
+        \centering
+        {\usekomafont{partprefix}{#1#2\par}}%
+        \vspace{0.8\baselineskip}%
+        {\usekomafont{part}{#3\par}}%
+      }
+      \newcommand{\evan@makepartpage}[2]{%
+        \null\vfill
+        \begin{center}
+          \if\relax\detokenize{#1}\relax\else
+            {\usekomafont{partprefix}{\partname\ #1\par}}%
+            \vspace{0.8\baselineskip}%
+          \fi
+          {\usekomafont{part}{#2\par}}%
+        \end{center}
+        \vfill\null
+        \clearpage
+      }
+      \renewcommand{\part}{%
+        \cleardoublepage
+        \@ifstar{\evan@partstar}{\evan@partnostar}}
+      \newcommand{\evan@partstar}[1]{\evan@makepartpage{}{#1}}
+      \newcommand{\evan@partnostar}{\@ifnextchar[{\evan@partwithopt}{\evan@partwithoutopt}}
+      \newcommand{\evan@partwithopt}[2][]{%
+        \refstepcounter{part}%
+        \if\relax\detokenize{#1}\relax
+          \addcontentsline{toc}{part}{\protect\numberline{\thepart}#2}%
+        \else
+          \addcontentsline{toc}{part}{\protect\numberline{\thepart}#1}%
+        \fi
+        \evan@makepartpage{\thepart}{#2}%
+      }
+      \newcommand{\evan@partwithoutopt}[1]{\evan@partwithopt[]{#1}}
       \@ifundefined{chapter}{}{
-        \addtokomafont{partprefix}{\rmfamily}
-        \renewcommand*{\partformat}{\color{purple}
-          \scalebox{2.5}{\thepart}\enlargethispage{2em}}
         \addtokomafont{chapterprefix}{\raggedleft}
         \RedeclareSectionCommand[beforeskip=0.5em]{chapter}
         \renewcommand*{\chapterformat}{\mbox{%
@@ -717,7 +752,7 @@
 
     % Tiny optimizations:
     \usepackage{mathtools}
-    \usepackage{microtype}
+    \usepackage[nopatch=footnote]{microtype}
     \usepackage{xstring}
     \usepackage{wrapfig}
     \ifevanbritish\usepackage[cleanlook,british]{isodate}\fi % day-first date
@@ -947,7 +982,7 @@
 
 \usepackage{caption}
 \usepackage{graphicx,lipsum}
-\newcommand{\psf}{\ps^{\text{fin.}}}
+\newcommand{\psf}{\ps^{\text{fin}}}
 \newcommand{\notimplies}{\;\not\!\!\!\implies}
 \usepackage{mathdots}
 \newcommand{\e}{\text{e}}
@@ -963,3 +998,15 @@
 \DeclareMathOperator{\diag}{diag}
 % Add this in the document preamble (main .tex)
 \usepackage{bussproofs} % provides prooftree, \AxiomC, \UnaryInfC, \RightLabel
+
+\usepackage{tabularx}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\newcommand{\bij}{\xrightarrow{\sim}}
+
+\makeatletter
+\@ifundefined{bf}{\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}}{}
+\@ifundefined{sf}{\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}}{}
+\@ifundefined{bb}{\newcommand{\bb}{\mathbb}}{}
+\@ifundefined{frak}{\newcommand{\frak}{\mathfrak}}{}
+\makeatother

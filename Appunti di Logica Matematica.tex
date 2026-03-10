@@ -1,8 +1,13 @@
 \documentclass[11pt,headheight=35pt]{scrartcl}
 \usepackage[italian]{babel}
-\usepackage[sexy]{evan}
-\usepackage{tabularx}
-\newcolumntype{C}{>{\centering\arraybackslash}X}
+\usepackage[sexy,noasy]{evan}
+
+%\includeonly{Sezioni/Sintassi}
+%TODO C'È UN ESERCIZIO CON LA SOLUZIONE BUCATA, DA RIVEDERE (È L'ESERCIZIO 3.10)
+%TODO IL GRAFO CONNESSO DEVE AVERE \neg e(a,b)
+%TODO BISOGNA RIVEDERE LA DIM DEI GRAFI CON PARTIZIONE LITIGIOSA
+%TODO BISOGNA AGGIUNGERE LA SOLUZIONE ALL'EX SUI GRAFI 3-COLORABILI
+%TODO ESERCIZI FINALI NELLA PARTE DI SEMANTICA
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %.
@@ -59,31 +64,23 @@ Queste dispense sono la quasi esatta trascrizione in \LaTeX\,delle dispense del 
 Antonio De Lucreziis.
 
 \vfill
-\begin{wrapfigure}{R}{0.2\textwidth}
-	\href{https://creativecommons.org/licenses/by-nc/4.0/deed.it}{\includegraphics[scale=0.20]{immagini/licenza.png}}
-\end{wrapfigure}
-Quest'opera è stata rilasciata con la licenza Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale.
-Per leggere una copia della licenza visita il sito web \href{http://creativecommons.org/licenses/by-sa/4.0/deed.it}{\textcolor{blue}{https://creativecommons.org/licenses/by-nc/4.0/deed.it}}.
+\begin{center}
+\href{https://creativecommons.org/licenses/by-nc/4.0/deed.it}{\includegraphics[width=0.18\textwidth]{immagini/licenza.png}}
+\end{center}
+\noindent
+Quest'opera è stata rilasciata con la licenza Creative Commons Attribuzione -- Non commerciale 4.0 Internazionale.
+Per leggere una copia della licenza visita il sito web \url{https://creativecommons.org/licenses/by-nc/4.0/deed.it}.
 
 \newpage
 \include{Sezioni/Introduzione}
+\part{Semantica}
 \include{Sezioni/Formule_Strutture_Teorie}
 \include{Sezioni/Eliminazione_dei_quantificatori}
+\part{Sintassi}
 \include{Sezioni/Sintassi}
 
-\begin{thebibliography}{9}
-    \addcontentsline{toc}{section}{Bibliografia}
-    \bibitem{mamino_logica_23_24}
-	Marcello Mamino,
-	\href{https://ciovil.li/logica23/}{\textit{Logica Matematica}},
-	Università di Pisa, Pisa,
-	2023-24.
-
-    \bibitem{mamino_logica_24_25}
-	Marcello Mamino,
-	\href{https://ciovil.li/logica24/}{\textit{Logica Matematica}},
-	Università di Pisa, Pisa,
-	2024-25.
-\end{thebibliography}
+\addcontentsline{toc}{section}{Bibliografia}
+\bibliographystyle{plain}
+\bibliography{bibliografia}
 
 \end{document}
