@@ -996,6 +996,21 @@
 \newcommand{\Mydef}{\overset{\text{def}}{=}}
 \DeclareMathOperator{\ED}{ED}
 \DeclareMathOperator{\diag}{diag}
+
+%aggiunti
+\newcommand{\defiff}{\overset{\text{def}}{\iff}}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\nmodels}{%
+  \mathrel{%
+    \ooalign{%
+      $\models$\cr
+      \hidewidth$\smash{\raisebox{0.2ex}{\scalebox{0.8}{/}}}$\hidewidth\cr
+    }%
+  }%
+}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+
 % Add this in the document preamble (main .tex)
 \usepackage{bussproofs} % provides prooftree, \AxiomC, \UnaryInfC, \RightLabel
 

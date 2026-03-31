@@ -15,55 +15,55 @@
 \renewcommand{\arraystretch}{1.8}
 \begin{array}{l}
 %Ax, Wk
-\textcolor{purple}{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{\varphi \vdash \varphi}
+\purple{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{\varphi \vdash \varphi}
 \qquad
-\textcolor{purple}{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T' \vdash \varphi}\;\text{(con }T \subseteq T'\text{)}
+\purple{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T' \vdash \varphi}\;\text{(con }T \subseteq T'\text{)}
 \\[4ex]
 %TOP, BOT
 \textcolor{green}{\mathrm{In}}_{\top}\;\displaystyle\frac{\vphantom{T}}{T \vdash \top}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\bot}\;\displaystyle\frac{T \vdash \textcolor{purple}{\bot}}{T \vdash \varphi}
+\textcolor{orange}{\mathrm{El}}_{\bot}\;\displaystyle\frac{T \vdash \purple{\bot}}{T \vdash \varphi}
 \\[4ex]
 %AND
-\textcolor{green}{\mathrm{In}}_{\land}\;\displaystyle\frac{T \vdash \varphi \qquad T \vdash \psi}{T \vdash \varphi \,\textcolor{purple}{\land} \, \psi}
+\textcolor{green}{\mathrm{In}}_{\land}\;\displaystyle\frac{T \vdash \varphi \qquad T \vdash \psi}{T \vdash \varphi \,\purple{\land} \, \psi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\land\cdot}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\land} \, \psi}{T \vdash \varphi}
+\textcolor{orange}{\mathrm{El}}_{\land\cdot}\;\displaystyle\frac{T \vdash \varphi \,\purple{\land} \, \psi}{T \vdash \varphi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\cdot\land}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\land} \, \psi}{T \vdash \psi}
+\textcolor{orange}{\mathrm{El}}_{\cdot\land}\;\displaystyle\frac{T \vdash \varphi \,\purple{\land} \, \psi}{T \vdash \psi}
 \\[4ex]
 %OR
-\textcolor{green}{\mathrm{In}}_{\lor\cdot}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi}
+\textcolor{green}{\mathrm{In}}_{\lor\cdot}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi \,\purple{\lor} \, \psi}
 \qquad
-\textcolor{green}{\mathrm{In}}_{\cdot\lor}\;\displaystyle\frac{T \vdash \psi}{T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi}
+\textcolor{green}{\mathrm{In}}_{\cdot\lor}\;\displaystyle\frac{T \vdash \psi}{T \vdash \varphi \,\purple{\lor} \, \psi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\lor}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\lor} \, \psi \qquad T, \varphi \vdash \theta \qquad T, \psi \vdash \theta}{T \vdash \theta}\text{\hyperref[fn:nd-el-lor]{\textsuperscript{\ref*{fn:nd-el-lor}}}}
+\textcolor{orange}{\mathrm{El}}_{\lor}\;\displaystyle\frac{T \vdash \varphi \,\purple{\lor} \, \psi \qquad T, \varphi \vdash \theta \qquad T, \psi \vdash \theta}{T \vdash \theta}\text{\hyperref[fn:nd-el-lor]{\textsuperscript{\ref*{fn:nd-el-lor}}}}
 \\[4ex]
 %IMPLICATION
-\textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi}{T \vdash \varphi \,\textcolor{purple}{\to} \, \psi}
+\textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi}{T \vdash \varphi \,\purple{\to} \, \psi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\to}\;\displaystyle\frac{T \vdash \varphi \,\textcolor{purple}{\to} \, \psi \qquad T \vdash \varphi}{T \vdash \psi}\text{\hyperref[fn:nd-el-to]{\textsuperscript{\ref*{fn:nd-el-to}}}}
+\textcolor{orange}{\mathrm{El}}_{\to}\;\displaystyle\frac{T \vdash \varphi \,\purple{\to} \, \psi \qquad T \vdash \varphi}{T \vdash \psi}\text{\hyperref[fn:nd-el-to]{\textsuperscript{\ref*{fn:nd-el-to}}}}
 \\[4ex]
 %NOT, RaA
-\textcolor{green}{\mathrm{In}}_{\neg}\;\displaystyle\frac{T, \varphi \vdash \,\textcolor{purple}{\bot}}{T \vdash\textcolor{purple}{\neg}\, \varphi}
+\textcolor{green}{\mathrm{In}}_{\neg}\;\displaystyle\frac{T, \varphi \vdash \,\purple{\bot}}{T \vdash\purple{\neg}\, \varphi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\neg}\;\displaystyle\frac{T \vdash \textcolor{purple}{\neg}\, \varphi \qquad T \vdash \varphi}{T \vdash \psi}\text{\hyperref[fn:nd-el-neg]{\textsuperscript{\ref*{fn:nd-el-neg}}}}
+\textcolor{orange}{\mathrm{El}}_{\neg}\;\displaystyle\frac{T \vdash \purple{\neg}\, \varphi \qquad T \vdash \varphi}{T \vdash \psi}\text{\hyperref[fn:nd-el-neg]{\textsuperscript{\ref*{fn:nd-el-neg}}}}
 \qquad
-\textcolor{purple}{\mathrm{RaA}}\;\displaystyle\frac{T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}}{T \vdash \varphi}
+\purple{\mathrm{RaA}}\;\displaystyle\frac{T, \purple{\neg}\, \varphi \vdash \,\purple{\bot}}{T \vdash \varphi}
 \\[4ex]
 %FORALL
-\textcolor{green}{\mathrm{In}}_{\forall}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi}\;\text{(con }\textcolor{purple}{x_k} \notin \vl(T)\text{)}\text{\hyperref[fn:nd-in-forall]{\textsuperscript{\ref*{fn:nd-in-forall}}}}
+\textcolor{green}{\mathrm{In}}_{\forall}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \, \purple{\forall x_k}\, \varphi}\;\text{(con }\purple{x_k} \notin \vl(T)\text{)}\text{\hyperref[fn:nd-in-forall]{\textsuperscript{\ref*{fn:nd-in-forall}}}}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\forall}\;\displaystyle\frac{T \vdash \, \textcolor{purple}{\forall x_k}\, \varphi}{T \vdash\varphi[t/\textcolor{purple}{x_k}]}
+\textcolor{orange}{\mathrm{El}}_{\forall}\;\displaystyle\frac{T \vdash \, \purple{\forall x_k}\, \varphi}{T \vdash\varphi[t/\purple{x_k}]}
 \\[4ex]
 %EXISTS
-\textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\textcolor{purple}{x_k}]}{T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi}
+\textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\purple{x_k}]}{T \vdash \, \purple{\exists x_k}\, \varphi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi \qquad T, \varphi \vdash \psi}{T \vdash \psi}\;\text{(con }\textcolor{purple}{x_k} \notin \vl(T, \psi)\text{)}
+\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \, \purple{\exists x_k}\, \varphi \qquad T, \varphi \vdash \psi}{T \vdash \psi}\;\text{(con }\purple{x_k} \notin \vl(T, \psi)\text{)}
 \\[4ex]
 %EQUALITY
-\textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \, \textcolor{purple}{=} \, t}
+\textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \, \purple{=} \, t}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{=}\;\displaystyle\frac{T \vdash s \, \textcolor{purple}{=} \, t \qquad T \vdash \varphi[s/\textcolor{purple}{x_k}]}{T \vdash \varphi[t/\textcolor{purple}{x_k}]}
+\textcolor{orange}{\mathrm{El}}_{=}\;\displaystyle\frac{T \vdash s \, \purple{=} \, t \qquad T \vdash \varphi[s/\purple{x_k}]}{T \vdash \varphi[t/\purple{x_k}]}
 \end{array}
 \]
 
@@ -93,11 +93,11 @@
 \renewcommand{\arraystretch}{1.8}
 \begin{array}{l}
 %Ax, Wk, RaA
-\textcolor{purple}{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{T \vdash \varphi}
+\purple{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{T \vdash \varphi}
 \qquad
-\textcolor{purple}{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi}
+\purple{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi}
 \qquad
-\textcolor{purple}{\mathrm{RaA}}\;\displaystyle\frac{T, \textcolor{purple}{\neg}\, \varphi \vdash \,\textcolor{purple}{\bot}}{T \vdash \varphi}
+\purple{\mathrm{RaA}}\;\displaystyle\frac{T, \purple{\neg}\, \varphi \vdash \,\purple{\bot}}{T \vdash \varphi}
 \\[4ex]
 %IMPLICATION
 \textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi \qquad T \vdash \varphi \to \psi}{T \vdash \varphi \to \psi}
@@ -105,14 +105,14 @@
 \textcolor{orange}{\mathrm{El}}_{\to}\;\displaystyle\frac{T \vdash \varphi \to \psi \qquad T \vdash \varphi}{T \vdash \psi}\;\text{(Modus Ponens)}
 \\[4ex]
 %EXISTS
-\textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\textcolor{purple}{x_k}]}{T \vdash \exists x_k\,\varphi}
+\textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\purple{x_k}]}{T \vdash \exists x_k\,\varphi}
 \qquad
 \textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \exists x_k\,\varphi}{T \vdash \varphi[t/x_k]}
 \\[4ex]
 %EQUALITY
-\textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \,\textcolor{purple}{=}\, t}
+\textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \,\purple{=}\, t}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{=}\;\displaystyle\frac{T \vdash s \,\textcolor{purple}{=}\, t \qquad T \vdash \varphi[s/\textcolor{purple}{x_k}]}{T \vdash \varphi[t/x_k]}
+\textcolor{orange}{\mathrm{El}}_{=}\;\displaystyle\frac{T \vdash s \,\purple{=}\, t \qquad T \vdash \varphi[s/\purple{x_k}]}{T \vdash \varphi[t/x_k]}
 \end{array}
 \endgroup
 \]
@@ -121,11 +121,11 @@
     Un \vocab{sequente} $T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \varphi$ indica che esiste una dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$ di $\varphi$ a partire dalle formule in $T$.
 \end{definition}
 
-\begin{definition}[$\textcolor{purple}{\neg, \top, \land, \lor, \forall}$]
+\begin{definition}[$\purple{\neg, \top, \land, \lor, \forall}$]
     Definiamo i seguenti simboli logici nel sistema ridotto a partire da quelli di base:
     \begin{alignat*}{4}
-        \textcolor{purple}{\neg}\,\varphi &\overset{\text{def}}{=} \varphi \,\textcolor{purple}{\to}\, \textcolor{purple}{\bot} \qquad & \textcolor{purple}{\top} &\overset{\text{def}}{=} \textcolor{purple}{\neg\bot} \qquad\quad & \varphi \,\textcolor{purple}{\land}\, \psi &\overset{\text{def}}{=} \neg(\varphi \,\textcolor{purple}{\to}\, \neg\psi) \\
-        \varphi \,\textcolor{purple}{\lor}\, \psi &\overset{\text{def}}{=} \neg\varphi \,\textcolor{purple}{\to}\, \psi \qquad & \textcolor{purple}{\forall x_k}\,\varphi &\overset{\text{def}}{=} \textcolor{purple}{\neg\,\exists x_k\,\neg}\,\varphi
+        \purple{\neg}\,\varphi &\overset{\text{def}}{=} \varphi \,\purple{\to}\, \purple{\bot} \qquad & \purple{\top} &\overset{\text{def}}{=} \purple{\neg\bot} \qquad\quad & \varphi \,\purple{\land}\, \psi &\overset{\text{def}}{=} \neg(\varphi \,\purple{\to}\, \neg\psi) \\
+        \varphi \,\purple{\lor}\, \psi &\overset{\text{def}}{=} \neg\varphi \,\purple{\to}\, \psi \qquad & \purple{\forall x_k}\,\varphi &\overset{\text{def}}{=} \purple{\neg\,\exists x_k\,\neg}\,\varphi
     \end{alignat*}
 \end{definition}
 
@@ -137,7 +137,7 @@
 
 \begin{exercise}[Semantica di Tarski indotta]
     Verificare che la semantica di Tarski, già definita in precedenza, coincide con quella indotta dalle definizioni date sopra 
-    per i simboli: $\textcolor{purple}{\neg, \top, \land, \lor, \forall}$.\footnote{Nella pratica, ad esempio $M \models \{v\}\neg\varphi$ è $M \models \{v\}\varphi \to \bot$, a questo punto voglio vedere che ottengo la stessa formula insiemistica che ottenevo nella definizione di semantica di Tarski, per cui $\neg(M \models \{v\}\varphi)$ deve avere 
+    per i simboli: $\purple{\neg, \top, \land, \lor, \forall}$.\footnote{Nella pratica, ad esempio $M \models \{v\}\neg\varphi$ è $M \models \{v\}\varphi \to \bot$, a questo punto voglio vedere che ottengo la stessa formula insiemistica che ottenevo nella definizione di semantica di Tarski, per cui $\neg(M \models \{v\}\varphi)$ deve avere 
     lo stesso valore di verità (cioè si ha proprio $\iff$) di $M \models \{v\}\varphi \to M \models \{v\}\bot$ (ricordiamo che il $\to$ è quello metateorico in questo caso).}
 \end{exercise}
 
@@ -202,8 +202,8 @@ Morale della favola: non solo $\models$ e $\vdash$ non coincidono, ma non posson
 Per cui va introdotto qualcosa di inelegante per fare in modo che i due simboli $\models,\vdash$ siano uguali, per ora sappiamo che non lo sono se ci sono variabili libere nelle premesse. La vera equivalenza che vogliamo dimostrare è la seguente.
 
 \begin{proposition}[Equivalenza tra $\vdash$ e $\models$]
-    Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, vale che $T \vdash \varphi \iff$ \textcolor{purple}{per ogni}
-    $L$-struttura $M = (D;i)$ e \textcolor{purple}{per ogni} $v : \Var \to D$ valutazione delle variabili, si ha $M \models \{v\}T \implies M \models \{v\}\varphi$.
+    Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, vale che $T \vdash \varphi \iff$ \purple{per ogni}
+    $L$-struttura $M = (D;i)$ e \purple{per ogni} $v : \Var \to D$ valutazione delle variabili, si ha $M \models \{v\}T \implies M \models \{v\}\varphi$.
 \end{proposition}
 
 Questa proposizione ha i due corollari che desideriamo, ovvero l'equivalenza dei due simboli $\vdash$ e $\models$ quando la teoria ha solo formule chiuse.
