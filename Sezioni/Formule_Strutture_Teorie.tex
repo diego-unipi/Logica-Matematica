@@ -488,7 +488,7 @@ oppure così (biscromaticamente):
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.17\textwidth]{Immagini/nota.png}
-\end{figure}
+\end{figure}\\
 non ci sarebbero problemi, perché il $y$ (o simbolo) che compare nella formula non è lo stesso $y$ che compare nel termine $1+y$. Volendo tuttavia utilizzare gli stessi simboli per le variabili legate e per le variabili libere - convenzione che ha i suoi vantaggi - si cade occasionalmente, ma inevitabilmente nel
 \textcolor{purple}{problema di cattura delle variabili}.\\
 Come ne usciamo? Intanto rallegriamoci! Per gli informatici è peggio: il $\lambda$-calcolo \textbf{vive} di sostituzioni, ed è lì che il male ha messo radici. Noi, ce la caveremo semplicemente vietando le sostituzioni insalubri, cosa che, nel nostro contesto, non ha controindicazioni.
@@ -836,19 +836,19 @@ Per dimostrarlo, definiamo prima formalmente la nozione di morfismo di strutture
     \end{enumerate}  
 \end{definition}
 
-Notare che il morfismo riguarda solo la $L$-struttura e non l'ambiente in cui si lavora. %Per induzione strutturale, possiamo tuttavia ricavare come un morfismo di strutture $F$ si comporti con gli $L$-termini. 
-Si nota tuttavia che $F$ induce una sorta di pushforward della valutazione $v$, che indichiamo con $v_* := F \circ v$. È un semplice esercizio di burocrazia verificare per induzione strutturale che $F(\{v\}_M t) = \{F \circ v\}_{M'} t$ per ogni $L$-termine $t.$
-
-\begingroup
-\mdfsetup{nobreak=true}
+%\begingroup
+%\mdfsetup{nobreak=true}
 \begin{remark}[$L$-termini e morfismi di strutture]
-    Dalla definizione data di morfismo possiamo dedurre per induzione strutturale come un morfismo di strutture $F$ si comporti con gli $L$-termini:
-    \begin{itemize}
-        \item Se $t = x_i$, allora $F(\{v\}_M t) = F(v(x_i)) = \{F \circ v\}_{M'} x_i$.
-        \item Se $t = f(t_1,\ldots,t_{\ar(f)})$, allora $F(\{v\}_M t) = F(f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)})) = f_{M'}(F(\{v\}_M t_1),\ldots,F(\{v\}_M t_{\ar(f)})) = f_{M'}(\{F \circ v\}_{M'} t_1,\ldots,\{F \circ v\}_{M'} t_{\ar(f)}) = \{F \circ v\}_{M'} t$.
-    \end{itemize}
+    Il morfismo riguarda solo la $L$-struttura e non l'ambiente in cui si lavora. %Per induzione strutturale, possiamo tuttavia ricavare come un morfismo di strutture $F$ si comporti con gli $L$-termini. 
+    Si nota tuttavia che $F$ induce una sorta di pushforward della valutazione $v$, che indichiamo con $v_* := F \circ v$. \\
+    È semplice burocrazia verificare per induzione strutturale che $F(\{v\}_M t) = \{F \circ v\}_{M'} t$ per ogni $L$-termine $t$.
+    %Dalla definizione data di morfismo possiamo dedurre per induzione strutturale come un morfismo di strutture $F$ si comporti con gli $L$-termini:
+%    \begin{itemize}
+%        \item Se $t = x_i$, allora $F(\{v\}_M t) = F(v(x_i)) = \{F \circ v\}_{M'} x_i$.
+%        \item Se $t = f(t_1,\ldots,t_{\ar(f)})$, allora $F(\{v\}_M t) = F(f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)})) = f_{M'}(F(\{v\}_M t_1),\ldots,F(\{v\}_M t_{\ar(f)})) = f_{M'}(\{F \circ v\}_{M'} t_1,\ldots,\{F \circ v\}_{M'} t_{\ar(f)}) = \{F \circ v\}_{M'} t$.
+%    \end{itemize}
 \end{remark}
-\endgroup
+%\endgroup
 \begin{definition}[Immersioni e isomorfismi di strutture]
     Un morfismo di $L$-strutture $F : M \to M'$ si dice \vocab{immersione}\footnote{In letteratura si usa anche e soprattutto \vocab{embedding} che richiede un $\iff$, anziché solo $\implies$ nella condizione sui simboli di relazione.}
     se $F$, come funzione tra i domini, è iniettiva.\\ Un'immersione $F$ è un \vocab{isomorfismo} se $F$ è altresì surgettiva e $F^{-1}$ è, a sua volta, un morfismo di strutture.
