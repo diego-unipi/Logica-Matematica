@@ -165,7 +165,14 @@
   \par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
   \par\nointerlineskip \vspace{\baselineskip}
 }
-\providecommand{\arc}[1]{\wideparen{#1}}
+\newcommand{\matharc}[1]{\wideparen{#1}}
+\AtBeginDocument{%
+  \@ifpackageloaded{pict2e}{%
+    \renewcommand{\arc}[1]{\matharc{##1}}%
+  }{%
+    \providecommand{\arc}[1]{\matharc{##1}}%
+  }%
+}
 
 %For use in author command
 \newcommand{\plusemail}[1]{\\ \normalfont \texttt{\mailto{#1}}}
@@ -247,7 +254,6 @@
 \DeclareMathOperator{\Tr}{Tr} % trace
 \DeclareMathOperator{\pr}{pr} % projection
 \DeclareMathOperator{\ext}{ext} % extension
-\DeclareMathOperator{\pred}{pred} % predecessor
 \DeclareMathOperator{\dom}{dom} % domain
 \DeclareMathOperator{\ran}{ran} % range
 \DeclareMathOperator{\Hom}{Hom} % homomorphism
@@ -1016,7 +1022,7 @@
 
 \usepackage{tabularx}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
-
+\newcommand{\pred}{\texttt{pred}}
 \newcommand{\bij}{\xrightarrow{\sim}}
 
 \makeatletter
@@ -1025,3 +1031,29 @@
 \@ifundefined{bb}{\newcommand{\bb}{\mathbb}}{}
 \@ifundefined{frak}{\newcommand{\frak}{\mathfrak}}{}
 \makeatother
+
+
+\usepackage{amssymb}
+% Fallback: \dotminus is not provided by amssymb on all setups.
+\providecommand{\dotminus}{\mathbin{\dot{-}}}
+
+% Redefine \div as integer division operator (textual, like \mod).
+% The original \div (÷ symbol) is preserved as \divSymbol.
+\let\divSymbol\div
+\renewcommand{\div}{\mathbin{\text{\texttt{div}}}}
+\newcommand{\cons}{\texttt{cons}}
+\newcommand{\car}{\texttt{car}}
+\newcommand{\cdr}{\texttt{cdr}}
+\newcommand{\inp}{\texttt{input}}
+\newcommand{\outp}{\texttt{output}}
+\newcommand{\push}{\texttt{push}}
+\newcommand{\rem}{\texttt{rem}}
+\newcommand{\exec}{\texttt{exec}}
+\newcommand{\ttif}{\texttt{if}}
+\newcommand{\nth}{\texttt{nth}}
+\newcommand{\length}{\texttt{length}}
+\newcommand{\head}{\texttt{head}}
+\newcommand{\cat}{\texttt{cat}}
+\newcommand{\step}{\texttt{step}}
+\newcommand{\redtriangle}{\textcolor{purple}{\blacktriangleright}}
+\usepackage{diagbox}

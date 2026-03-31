@@ -1,12 +1,12 @@
-\section{Sintassi}
+\section{Deduzione naturale, teoremi di correttezza e completezza}
 
 \begin{definition}[Formula in $\mathsf{ND}$]
-    Sia $L$ un linguaggio, una \vocab{$L$-formula in $\mathsf{ND}$} è una sequenza finita di simboli nell'alfabeto $\{\land, \lor, \to, \neg, \forall, \exists, \top, \bot\} \cup L$ (il primo insieme è costituito dai \vocab{simboli logici}).
+    Sia $L$ un linguaggio, una \vocab{$L$-formula in $\mathsf{ND}$} è una sequenza finita di simboli nell'alfabeto $\{\land, \lor, \to, \neg, \forall, \exists, \top, \bot,=\} \cup L$ (il primo insieme è costituito dai \vocab{simboli logici}).
 \end{definition}
 
 \begin{definition}[Dimostrazione in $\mathsf{ND}$]
     Una \vocab{dimostrazione in $\mathsf{ND}$} di una $L$-formula $\varphi$ è una sequenza finita di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$
-    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è in $T$, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale} (\vocab{$\mathsf{ND}$}) qui di seguito riportate.
+    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale} (\vocab{$\mathsf{ND}$}) qui di seguito riportate.
 \end{definition}
 
 \subsection{\texorpdfstring{Sistema di deduzione naturale ($\mathsf{ND}$)}{Sistema di deduzione naturale (ND)}}
@@ -58,7 +58,7 @@
 %EXISTS
 \textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\purple{x_k}]}{T \vdash \, \purple{\exists x_k}\, \varphi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \, \purple{\exists x_k}\, \varphi \qquad T, \varphi \vdash \psi}{T \vdash \psi}\;\text{(con }\purple{x_k} \notin \vl(T, \psi)\text{)}
+\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi \qquad T, \varphi \vdash \psi}{T \vdash \psi}\;\text{(con }\textcolor{purple}{x_k} \notin \vl(T, \psi)\text{)}\text{\hyperref[fn:nd-el-exists]{\textsuperscript{\ref*{fn:nd-el-exists}}}}
 \\[4ex]
 %EQUALITY
 \textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \, \purple{=} \, t}
@@ -70,7 +70,8 @@
 \refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-lor}Dimostrazione per casi.}
 \refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-to}Modus Ponens.}
 \refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-neg}Ex falso quodlibet.}
-\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-in-forall}Se ho una dimostrazione per una variabile generica, allora vale per ogni variabile.}
+\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-in-forall}{Per passare da $\varphi$ a $\forall x_k \, \varphi$ è necessario poter cambiare liberamente il valore di $x_k$ senza che questo influenzi la dimostrazione, per cui $x_k$ non deve essere libero in nessuna formula di $T$. Controesempio senza quell'ipotesi: $T = \{P(x_k)\}$.}}
+\refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-exists}La condizione $x_k \notin \vl(T,\psi)$ garantisce che il testimone introdotto da $\exists x_k\,\varphi$ sia generico: la conclusione $\psi$ non deve dipendere da quel nome di variabile, e nemmeno dalle formule aperte in $T$. Controesempio senza quell'ipotesi: $T = \{\exists x_k P(x_k)\}$, $\varphi = P(x_k)$, $\psi = P(x_k)$, che è in generale falso perché $x_k$ è un testimone specifico, e non generico, per cui se la deduzione fosse vera avremmo che $T \vdash P(x_k)$, per qualsiasi valore di $x_k$.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Sequente in $\mathsf{ND}$]
@@ -83,7 +84,7 @@
 
 \begin{definition}[Dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$]
     Una \vocab{dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$} di una $L$-formula $\varphi$ è una sequenza finita di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
-    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è in $T$, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale ridotto} (\vocab{$\mathsf{ND}_{\to, \bot, \exists, =}$}) qui di seguito riportate.
+    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale ridotto} (\vocab{$\mathsf{ND}_{\to, \bot, \exists, =}$}) qui di seguito riportate.
 \end{definition}
 
 \subsection{\texorpdfstring{Sistema ridotto ($\mathsf{ND}_{\to, \bot, \exists, =}$)}{Sistema ridotto (ND→,⊥,∃,=)}}
@@ -93,21 +94,21 @@
 \renewcommand{\arraystretch}{1.8}
 \begin{array}{l}
 %Ax, Wk, RaA
-\purple{\mathrm{Ax}}\;\displaystyle\frac{\vphantom{T}}{T \vdash \varphi}
+\textcolor{purple}{\mathrm{Ax}}\;\displaystyle\frac{}{\varphi \vdash \varphi}
 \qquad
-\purple{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T \vdash \varphi}
+\textcolor{purple}{\mathrm{Wk}}\;\displaystyle\frac{T \vdash \varphi}{T' \vdash \varphi}\text{con $T \subseteq T'$}
 \qquad
 \purple{\mathrm{RaA}}\;\displaystyle\frac{T, \purple{\neg}\, \varphi \vdash \,\purple{\bot}}{T \vdash \varphi}
 \\[4ex]
 %IMPLICATION
-\textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi \qquad T \vdash \varphi \to \psi}{T \vdash \varphi \to \psi}
+\textcolor{green}{\mathrm{In}}_{\to}\;\displaystyle\frac{T, \varphi \vdash \psi}{T \vdash \varphi \to \psi}
 \qquad
 \textcolor{orange}{\mathrm{El}}_{\to}\;\displaystyle\frac{T \vdash \varphi \to \psi \qquad T \vdash \varphi}{T \vdash \psi}\;\text{(Modus Ponens)}
 \\[4ex]
 %EXISTS
 \textcolor{green}{\mathrm{In}}_{\exists}\;\displaystyle\frac{T \vdash \varphi[t/\purple{x_k}]}{T \vdash \exists x_k\,\varphi}
 \qquad
-\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \exists x_k\,\varphi}{T \vdash \varphi[t/x_k]}
+\textcolor{orange}{\mathrm{El}}_{\exists}\;\displaystyle\frac{T \vdash \, \textcolor{purple}{\exists x_k}\, \varphi \qquad T, \varphi \vdash \psi}{T \vdash \psi}\;\text{(con }\textcolor{purple}{x_k} \notin \vl(T, \psi)\text{)}\text{\hyperref[fn:nd-el-exists]{\textsuperscript{\ref*{fn:nd-el-exists}}}}
 \\[4ex]
 %EQUALITY
 \textcolor{green}{\mathrm{In}}_{=}\;\displaystyle\frac{\vphantom{T}}{T \vdash t \,\purple{=}\, t}
@@ -140,7 +141,7 @@
     per i simboli: $\purple{\neg, \top, \land, \lor, \forall}$.\footnote{Nella pratica, ad esempio $M \models \{v\}\neg\varphi$ è $M \models \{v\}\varphi \to \bot$, a questo punto voglio vedere che ottengo la stessa formula insiemistica che ottenevo nella definizione di semantica di Tarski, per cui $\neg(M \models \{v\}\varphi)$ deve avere 
     lo stesso valore di verità (cioè si ha proprio $\iff$) di $M \models \{v\}\varphi \to M \models \{v\}\bot$ (ricordiamo che il $\to$ è quello metateorico in questo caso).}
 \end{exercise}
-
+\pagebreak
 \begin{notation}[Sequenti]
     Avendo verificato che $\mathsf{ND}$ e $\mathsf{ND}_{\to, \bot, \exists, =}$ sono equivalenti, d'ora in avanti indicheremo semplicemente con $T \vdash \varphi$ il sequente dimostrabile in entrambi i sistemi.
 \end{notation}
@@ -155,61 +156,100 @@
 
 \begin{example}[Doppia negazione]
     Dimostriamo che $\varphi \vdash \neg\neg\varphi$ e $\neg\neg\varphi \vdash \varphi$ per ogni $L$-formula $\varphi$.
-    \begin{align*}
-        \text{In}_\to\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle \text{Ax}\frac{}{\varphi \vdash \varphi}}{\varphi,\neg\varphi\vdash \varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg\varphi}}{\varphi,\neg\varphi\vdash \neg\varphi}}{\varphi,\neg\varphi\vdash\bot}}{\varphi \vdash \neg(\neg\varphi)}}{\vdash \varphi \to \neg(\neg \varphi)}
-    \end{align*}
+    \[\displaystyle\text{In}_\to\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle \text{Ax}\frac{}{\varphi \vdash \varphi}}{\varphi,\neg\varphi\vdash \varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg\varphi}}{\varphi,\neg\varphi\vdash \neg\varphi}}{\varphi,\neg\varphi\vdash\bot}}{\varphi \vdash \neg(\neg\varphi)}}{\vdash \varphi \to \neg(\neg \varphi)}\]
     Analogamente per $\neg\neg\varphi \vdash \varphi$.
-    \begin{align*}
-        \text{RaA}\frac{\displaystyle\text{El}_\neg\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\neg\varphi \vdash \neg\neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\neg\varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \bot}}{\neg\neg\varphi \vdash \varphi}
-    \end{align*}
+    \[\displaystyle\text{RaA}\frac{\displaystyle\text{El}_\neg\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\neg\varphi \vdash \neg\neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\neg\varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \bot}}{\neg\neg\varphi \vdash \varphi}\]
 \end{example}
 
 \begin{example}[Principio del terzo escluso]
     Dimostriamo che $\vdash \varphi \lor \neg\varphi$ per ogni $L$-formula $\varphi$.
-    \begin{align*}
-        \text{In}_\lor\cdot\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle \text{Ax}\frac{}{\varphi \vdash \varphi}}{\varphi,\neg\varphi\vdash \varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg\varphi}}{\varphi,\neg\varphi\vdash \neg\varphi}}{\varphi,\neg\varphi\vdash\bot}}{\varphi \vdash \neg(\neg\varphi)}}{\vdash \varphi \lor \neg(\neg \varphi)}
-    \end{align*}
+    \[\resizebox{0.95\linewidth}{!}{$\displaystyle\text{RaA}\frac{\displaystyle\text{El}_\neg\frac{\displaystyle\text{Ax}\frac{}{\neg(\varphi\lor\neg\varphi)\vdash\neg(\varphi\lor\neg\varphi)}\;\text{In}_{\cdot\lor}\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg(\varphi\lor\neg\varphi)\vdash\neg(\varphi\lor\neg\varphi)}}{\neg(\varphi\lor\neg\varphi),\varphi\vdash\neg(\varphi\lor\neg\varphi)}\;\text{In}_{\lor\cdot}\frac{\displaystyle\text{Ax}\frac{}{\varphi\vdash\varphi}}{\neg(\varphi\lor\neg\varphi),\varphi\vdash\varphi\lor\neg\varphi}}{\neg(\varphi\lor\neg\varphi),\varphi\vdash\bot}}{\neg(\varphi\lor\neg\varphi)\vdash\neg\varphi}}{\neg(\varphi\lor\neg\varphi)\vdash\varphi\lor\neg\varphi}}{\neg(\varphi\lor\neg\varphi)\vdash\bot}}{\vdash\varphi\lor\neg\varphi}$}\]
     Quindi, fatto questo, d'ora in poi potremmo aggiungere una nuova regola ammissibile al nostro sistema deduttivo che ci dice:
-    \[ \frac{}{\vdash \varphi \lor \neg\varphi} \]
-    per ogni $L$-formula $\varphi$.
+    \[\frac{}{\vdash \varphi \lor \neg\varphi}\]
+    per ogni $L$-formula \(\varphi\).
 \end{example}
 
-\subsection{Teoremi di correttezza e completezza}
+\begin{example}[Leggi di De Morgan]
+    Partiamo dal verificare che sono deduttivamente equivalenti $\neg (\varphi \land \psi)$ e $\neg\varphi \lor \neg\psi$, vediamo che $\neg \varphi \lor \neg\psi \vdash \neg (\varphi \land \psi)$:
+    \[\resizebox{0.98\linewidth}{!}{$\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\lor\frac{\displaystyle \text{Ax}\frac{}{\neg\varphi\lor\neg\psi\vdash\neg\varphi\lor\neg\psi} \; \text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi\vdash\neg\varphi}}{\neg\varphi,\varphi\land\psi\vdash\neg\varphi} \; \text{El}_{\land\cdot}\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\varphi\land\psi\vdash\varphi\land\psi}}{\neg\varphi,\varphi\land\psi\vdash\varphi\land\psi}}{\neg\varphi,\varphi\land\psi\vdash\varphi}}{\neg\varphi,\varphi\land\psi\vdash\bot} \; \text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\psi\vdash\neg\psi}}{\neg\psi,\varphi\land\psi\vdash\neg\psi} \; \text{El}_{\cdot\land}\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\varphi\land\psi\vdash\varphi\land\psi}}{\neg\psi,\varphi\land\psi\vdash\varphi\land\psi}}{\neg\psi,\varphi\land\psi\vdash\psi}}{\neg\psi,\varphi\land\psi\vdash\bot}}{\neg\varphi\lor\neg\psi,\varphi\land\psi\vdash\bot}}{\neg\varphi\lor\neg\psi\vdash\neg(\varphi\land\psi)}$}\]
+    Analogamente per $\neg (\varphi \land \psi) \vdash \neg\varphi \lor \neg\psi$:
+    \[\resizebox{0.98\linewidth}{!}{$\displaystyle\text{El}_{\lor}\frac{\displaystyle \text{Wk}\frac{\displaystyle\frac{}{\vdash (\neg\varphi\lor\neg\psi)\lor\neg(\neg\varphi\lor\neg\psi)}}{\neg(\varphi\land\psi)\vdash(\neg\varphi\lor\neg\psi)\lor\neg(\neg\varphi\lor\neg\psi)} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi\lor\neg\psi\vdash\neg\varphi\lor\neg\psi}}{\neg(\varphi\land\psi),\neg\varphi\lor\neg\psi\vdash\neg\varphi\lor\neg\psi} \; \frac{(\star)}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\neg\varphi\lor\neg\psi}}{\neg(\varphi\land\psi)\vdash\neg\varphi\lor\neg\psi}$}\]
+    dove $(\star)$ è:
+    \[\resizebox{0.98\linewidth}{!}{$\displaystyle\text{El}_{\bot}\frac{\displaystyle\text{El}_{\neg}\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg(\varphi\land\psi)\vdash\neg(\varphi\land\psi)}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\neg(\varphi\land\psi)} \; \text{In}_{\land}\frac{\displaystyle \text{RaA}\frac{\displaystyle\text{El}_{\neg}\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg(\neg\varphi\lor\neg\psi)\vdash\neg(\neg\varphi\lor\neg\psi)}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\varphi\vdash\neg(\neg\varphi\lor\neg\psi)} \; \text{In}_{\lor\cdot}\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi\vdash\neg\varphi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\varphi\vdash\neg\varphi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\varphi\vdash\neg\varphi\lor\neg\psi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\varphi\vdash\bot}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\varphi} \; \text{RaA}\frac{\displaystyle\text{El}_{\neg}\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg(\neg\varphi\lor\neg\psi)\vdash\neg(\neg\varphi\lor\neg\psi)}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\psi\vdash\neg(\neg\varphi\lor\neg\psi)} \; \text{In}_{\cdot\lor}\frac{\displaystyle \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\psi\vdash\neg\psi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\psi\vdash\neg\psi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\psi\vdash\neg\varphi\lor\neg\psi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi),\neg\psi\vdash\bot}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\psi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\varphi\land\psi}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\bot}}{\neg(\varphi\land\psi),\neg(\neg\varphi\lor\neg\psi)\vdash\neg\varphi\lor\neg\psi}$}\]
+    La seconda legge, $\neg (\varphi \lor \psi)$ è deduttivamente equivalente a $\neg\varphi \land \neg\psi$, si dimostra o direttamente o usando la prima legge e osservando che l'equivalenza deduttiva passa alle negazioni, dimostrato che un'implicazione è equivalente alla sua contronominale, per cui la seconda segue dalla prima.
+\end{example}
+
+\subsection{\texorpdfstring{Equivalenza tra $\vdash$ e $\models$}{Equivalenza tra |- e |=}}
 Il nostro desiderio a questo punto è quello di dimostrare che $\models$ e $\vdash$ coincidono, cioè che $T \vdash \varphi$ se e solo se $T \models \varphi$. Per cui vorremmo dimostrare dei teoremi di correttezza e completezza, che ci dicono rispettivamente che $T \vdash \varphi$ implica $T \models \varphi$ e che $T \models \varphi$ implica $T \vdash \varphi$.
 Tuttavia, per come abbiamo dato le definizioni c'è un problema.
 
 \begin{example}[Esempio di conseguenza logica non dimostrabile]
-    Consideriamo la seguente conseguenza logica nel linguaggio vuoto: $x_1 = x_2 \models x_3 = x_4$. Per via della semantica di Tarski, questa conseguenza logica si traduce in: per ogni $L$-struttura $M$ tale che $M \models x_1 = x_2$, allora $M \models x_3 = x_4$, i.e.:
-    \[ \forall v : \Var \to M \; M \models \{v\}x_1 = x_2 \implies M \models \{v\}x_3 = x_4 \]
+    Consideriamo la seguente conseguenza logica nel linguaggio vuoto: $x_1 = x_2 \models x_3 = x_4$. Per via della semantica di Tarski, questa conseguenza logica si traduce in:
+    \begin{multline*}
+        \forall \text{$L$-struttura } M=(D;i)\;\big((\forall v:\Var\to D\; M \models \{v\}x_1 = x_2) \\
+        \implies (\forall v:\Var\to D\; M \models \{v\}x_3 = x_4)\big)
+    \end{multline*}
     cioè per ogni valutazione $v$, se $v(x_1) = v(x_2)$, che significa che la struttura ha un solo elemento nel dominio, allora $v(x_3) = v(x_4)$, che è banalmente vero. Tuttavia è impossibile dimostrare $x_1 = x_2 \vdash x_3 = x_4$.
 \end{example}
 
 Il guaio nell'esempio precedente sta nel fatto che il simbolo $\models$ intende le premesse come universalmente quantificate, mentre il simbolo $\vdash$ intende le premesse come se $x_1 = x_2$ fosse un assioma, cioè come se fosse una formula chiusa ed $x_1$,$x_2$ fossero due costanti.
-Ed un'altra brutta notizia è che il sistema di deduzione naturale non potrebbe funzionare altrimenti. 
+Per essere più precisi, con formule aperte la semantica lavora con una valutazione fissata delle variabili libere, mentre la deduzione naturale tratta le formule in ipotesi come assunzioni da scaricare.\\
+Un'altra brutta notizia è che il sistema di deduzione naturale non potrebbe funzionare altrimenti. 
 
 \begin{example}[Commutatività dell'uguale]
     Dimostriamo che l'uguaglianza è commutativa, cioè $\vdash \forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)$:
     \begin{align*}
-        \text{In}_\forall\frac{\displaystyle\text{In}_\forall\frac{\displaystyle\text{In}_\to\frac{\displaystyle\text{El}_= \frac{\displaystyle \text{Ax}\frac{}{x_1 = x_2 \vdash x_1 = x_2} \; \text{Wk}\frac{\displaystyle \text{In}_{=}\frac{}{\vdash x_1 = x_1}}{x_1 = x_2 \vdash x_1 = x_1} }{x_1 = x_2 \vdash x_2 = x_1}}{x_1 = x_2 \vdash x_1 = x_2 \to x_2 = x_1}}{\forall x_2 (x_1 = x_2 \to x_2 = x_1)}}{\forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)}
+        \text{In}_\forall\frac{\displaystyle\text{In}_\forall\frac{\displaystyle\text{In}_\to\frac{\displaystyle\text{El}_= \frac{\displaystyle \text{Ax}\frac{}{x_1 = x_2 \vdash x_1 = x_2} \; \text{Wk}\frac{\displaystyle \text{In}_{=}\frac{}{\vdash x_1 = x_1}}{x_1 = x_2 \vdash x_1 = x_1} }{x_1 = x_2 \vdash x_2 = x_1}}{\vdash x_1 = x_2 \to x_2 = x_1}}{\vdash \forall x_2 (x_1 = x_2 \to x_2 = x_1)}}{\vdash \forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)}
     \end{align*}
     dove la $\varphi$ usata in El$_=$ è $\varphi := (x_{17} = x_1)$, per cui $\varphi[x_1/x_{17}] = (x_1 = x_1)$ e $\varphi[x_2/x_{17}] = (x_2 = x_1)$. Se $\vdash$ interpretasse le premesse come universalmente quantificate, il sequente $x_1 = x_2 \vdash x_2 = x_1$ verrebbe letto come ``per ogni valutazione $v$, se $v(x_1)=v(x_2)$ allora $v(x_2)=v(x_1)$''.
     Ma questa è già la lettura semantica della formula chiusa,  $\vdash \forall x_1 \; \forall x_2 (x_1 = x_2 \to x_2 = x_1)$, che vogliamo arrivare a dimostrare. Nel sistema deduttivo, invece, la riga $x_1 = x_2 \vdash x_2 = x_1$ è un passaggio con ipotesi aperta che viene scaricata da In$_\to$ per ottenere $\vdash x_1 = x_2 \to x_2 = x_1$, e solo dopo generalizzata con In$_\forall$.
     In altre parole, partendo da ``il modello ha un solo elemento, allora il modello ha un solo elemento'' non posso arrivare a dimostrare che ``per ogni coppia di elementi del modello se sono uguali in un verso allora sono uguali anche nell'altro verso''.
 \end{example}
 
-Per cui, per fare le dimostrazioni nel sistema $\mathsf{ND}$ abbiamo la necessità di trattare gli elementi nella premessa come elementi fissati, per poi poter usare le regole e se lo vogliamo ottenere frasi generalizzate.\\
-Morale della favola: non solo $\models$ e $\vdash$ non coincidono, ma non possono nemmeno cambiare le regole per provare a far coincidere $\vdash$, se ci provassi otterrei un sistema che non riesce a dimostrare la commutatività dell'uguale, e di tale sistema ce ne facciamo ben poco.
-Per cui va introdotto qualcosa di inelegante per fare in modo che i due simboli $\models,\vdash$ siano uguali, per ora sappiamo che non lo sono se ci sono variabili libere nelle premesse. La vera equivalenza che vogliamo dimostrare è la seguente.
+\begin{remark}[Sulla modifica delle regole in $\mathsf{ND}$]
+    Quindi sintetizzando, non è che qualunque modifica di $\mathsf{ND}$ renda vera solo un'uguaglianza non commutativa, il punto è:
+    \begin{itemize}
+        \item alcune regole di $\mathsf{ND}$ sono progettate per lavorare con ipotesi aperte;
+        \item poi, con $\,\mathrm{In}_\to\,$ e $\,\mathrm{In}_\forall\,$, quelle ipotesi vengono scaricate e generalizzate;
+        \item cambiando queste regole in modo da trattare le ipotesi come se fossero già formule chiuse o già universalmente quantificate,
+        si perde esattamente il meccanismo che permette di dimostrare teoremi come
+        \[\vdash \forall x_1\,\forall x_2\,(x_1=x_2 \to x_2=x_1).\]
+    \end{itemize}
+    Il punto chiave è il sequente intermedio
+    \[x_1=x_2 \vdash x_2=x_1 \]
+    Dentro la dimostrazione, questo non significa ``per ogni valutazione, se gli elementi sono uguali allora sono uguali'', ma solo:
+    \begin{itemize}
+        \item assumo temporaneamente $x_1=x_2$ come ipotesi;
+        \item da questa ipotesi, usando $\,\mathrm{El}_=\,$, ricavo $x_2=x_1$;
+        \item poi scarico l'ipotesi con $\,\mathrm{In}_\to\,$;
+        \item infine generalizzo con due $\,\mathrm{In}_\forall\,$.
+    \end{itemize}
+    Modificando le regole per fare in modo che le ipotesi siano già interpretate universalmente, allora quel passaggio non sarebbe più un uso legittimo di un'ipotesi aperta, ma diventerebbe una tesi già chiusa e più forte. In pratica:
+    \begin{itemize}
+        \item o il sistema diventa troppo debole e non riesce più a fare la dimostrazione;
+        \item oppure diventa troppo forte e perde la correttezza, per esempio permettendo generalizzazioni vietate come inferire $\forall x_k\,\varphi$ da un'ipotesi in cui $x_k$ compare libero.
+    \end{itemize}
+    Quindi alterando le regole per eliminare la distinzione tra ipotesi aperte e formule chiuse, si rompe il meccanismo standard della deduzione naturale; il risultato può essere un sistema che non prova più il teorema desiderato, oppure un sistema non più corretto.
+\end{remark}
 
 \begin{proposition}[Equivalenza tra $\vdash$ e $\models$]
     Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, vale che $T \vdash \varphi \iff$ \purple{per ogni}
     $L$-struttura $M = (D;i)$ e \purple{per ogni} $v : \Var \to D$ valutazione delle variabili, si ha $M \models \{v\}T \implies M \models \{v\}\varphi$.
 \end{proposition}
 
+\begin{remark}[Sulla condizione semantica equivalente a $\vdash$]
+    La cosa a destra dell'equivalenza nella proposizione precedente è più forte di $T \models \varphi$, infatti $T \models \varphi$ significa:
+    \[ \forall M ( \forall v \; M \models \{v\}T \implies \forall v M \models \{v\}\varphi) \]
+    mentre la cosa a destra dell'equivalenza nella proposizione precedente significa:
+    \[ \forall M \forall v ( M \models \{v\}T \implies M \models \{v\}\varphi) \]
+    Per cui la cosa equivalente a $T \vdash \varphi$ in particolare implica $T \models \varphi$. Le due formule scritte sono invece equivalenti se $T$ è fatta da formule chiuse, infatti in questo caso $M \models \{v\}T$ è equivalente a $M \models T$, e da qui si verifica facilmente che quella sopra implica quella sotto;
+    da cui la necessità dell'ipotesi per avere anche il teorema di completezza, una volta dimostrata la proposizione.
+\end{remark}
+
 Questa proposizione ha i due corollari che desideriamo, ovvero l'equivalenza dei due simboli $\vdash$ e $\models$ quando la teoria ha solo formule chiuse.
 
 \begin{corollary}[Teorema di correttezza]
-    Sia $T$ una $L$-teoria fatta da $\boxed{\text{formule chiuse}}$, e sia $\varphi$ una $L$-formula, allora:
+    Sia $T$ una $L$-teoria (chiusa\footnote{Non è necessario in realtà per questa freccia.}), e sia $\varphi$ una $L$-formula, allora:
     \[T \vdash \varphi \implies T \models \varphi\]
 \end{corollary}
 
@@ -218,3 +258,274 @@ Questa proposizione ha i due corollari che desideriamo, ovvero l'equivalenza dei
     \[T \models \varphi \implies T \vdash \varphi\]
 \end{corollary}
 
+\subsection{Teorema di correttezza}
+
+Vogliamo dimostrare la freccia $\implies$ della proposizione, che corrisponderà al teorema di correttezza. Prima di procedere richiamiamo due risultati importanti.
+
+\begin{remark}[Sostituibilità e coincidenza delle valutazioni]
+    Sia $M$ una $L$-struttura.
+    \begin{itemize}
+        \item Se $v_1$ e $v_2$ sono due valutazioni tali che $v_1|_{\vl(\varphi)} \equiv v_2|_{\vl(\varphi)}$, per una $L$-formula, allora $M \models \{v_1\}\varphi \iff M \models \{v_2\}\varphi$.
+        \item Se $\varphi$ è una $L$-formula e $t$ un $L$-termine sostituibile per $x_k$ in $\varphi$, allora $M \models \{v\}\varphi[t/x_k] \iff M \models \{v[\{v\}_M t/x_k]\}\varphi$.
+    \end{itemize}
+\end{remark}
+
+Assumiamo quindi $T \vdash \varphi$ e dimostriamo che $\forall v \; \forall M (M \models \{v\}T \implies M \models \{v\}\varphi)$.
+
+\begin{proof}
+    Sia $T \vdash \varphi$, per definizione questo significa che esiste una dimostrazione (la consideriamo in $\mathsf{ND}_{\to, \bot, \exists, =}$ per comodità), ovvero esiste $\varphi_1, \ldots, \varphi_n$ con $\varphi_n = \varphi$ e tale che per ogni $1 \leq k \leq n$
+    vale che o $\varphi_k$ è un assioma, o $\varphi_k$ è ottenuta da formule precedenti tramite una regola di inferenza in $\mathsf{ND}_{\to, \bot, \exists, =}$.\\
+    Procediamo per induzione sulla lunghezza della dimostrazione, i.e. per ciascuna delle regole di inferenza di $\mathsf{ND}_{\to, \bot, \exists, =}$, assumiamo che la tesi sia vera per le formule che compaiono nelle premesse e dimostriamo che è vera anche per la formula che compare nella conclusione.
+    \begin{itemize}
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{Ax} \frac{}{\varphi \vdash \varphi}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}\varphi \implies M \models \{v\}\varphi)$}, che è banalmente vera.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{Wk} \frac{T \vdash \varphi}{T' \vdash \varphi}$}, con $T \subseteq T'$, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi)$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T' \implies M \models \{v\}\varphi)$}. Fissati $M$ e $v$, se $M \models \{v\}T'$, allora in particolare $M \models \{v\}T$ perché $T \subseteq T'$, e quindi per ipotesi induttiva segue $M \models \{v\}\varphi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{RaA} \frac{T, \neg\varphi \vdash \bot}{T \vdash \varphi}$}, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T,\neg\varphi \implies M \models \{v\}\bot)$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi)$}.
+        Fissiamo $M$, $v$ e assumiamo $M \models \{v\}T$, vogliamo $M \models \{v\}\varphi$; se per assurdo $M \not\models \{v\}\varphi$, i.e $M \models \{v\}\neg\varphi$, allora usando l'ipotesi induttiva con $M$, $v$ otterremmo $M \models \{v\}\bot$, che è assurdo, per cui $M \models \{v\}\varphi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_\to \frac{T,\varphi \vdash \psi}{T \vdash \varphi \to \psi}$}, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T,\varphi\footnote{$T \cup \{\varphi\}$ formalmente.} \implies M \models \{v\}\psi)$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi \to \psi)$}.        
+        Fisso $M$ e $v$, assumo l'antecedente $M \models \{v\}T$, voglio dimostrare:
+        \[ M \models \{v\}\varphi \implies M \models \{v\}\psi \]
+        assumo $M \models \{v\}\varphi$, e voglio $M \models \{v\}\psi$, a questo punto uso l'ipotesi induttiva con $M$ e $v$, e ottengo $M \models \{v\}\psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\to \frac{T \vdash \varphi \to \psi\quad T \vdash \varphi}{T \vdash \psi}$}, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi \to \psi)$} e \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi)$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\psi)$}.
+        Fisso $M$ e $v$, assumo $M \models \{v\}T$, uso la prima ipotesi induttiva con $M$, $v$ e ottengo che $M \models \{v\}\varphi \implies M \models \{v\}\psi$; uso la seconda ipotesi induttiva con $M$, $v$ e ottengo che $M \models \{v\}\varphi$, da cui, combinando le due cose ho $M \models \{v\}\psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_\exists \frac{T \vdash \varphi[t/x_k]}{T \vdash \exists x_k\,\varphi}$}, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi[t/x_k])$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\exists x_k\,\varphi)$}.
+        Fisso $M$ e $v$, assumo l'antecedente $M \models \{v\}T$, voglio dimostrare $M \models \{v\}\exists x_k\,\varphi$, cioè $\exists a \in M \; M \models\{v[a/x_k]\} \varphi$, a questo punto uso l'ipotesi induttiva con $M$ e $v$, e ottengo $M \models \{v\}\varphi[t/x_k]$, usando la seconda osservazione sulla sostituibilità, l'ultima cosa equivale a $M \models \{v[\{v\}_M t/x_k]\}\varphi$,
+        quindi posso prendere $a := \{v\}_M t$ e concludere $M \models \{v[a/x_k]\}\varphi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\exists \frac{T \vdash \exists x_k\,\varphi \quad T,\varphi \vdash \psi}{T \vdash \psi}$}, con $x_k \not\in \vl(T,\psi)$, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\exists x_k\,\varphi)$} e \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T,\varphi \implies M \models \{v\}\psi)$}, vogliamo dimostrare
+        \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\psi)$}. Come sopra fisso $M$, $v$ ed assumo $M \models \{v\}T$, dalla prima ipotesi induttiva ottengo $M \models \{v\}\exists x_k\,\varphi$, cioè $\exists a \in M \; M \models\{v[a/x_k]\} \varphi$, usando ora la seconda ipotesi induttiva con $M$, $v[a/x_k]$, poiché $x_k \not \in \vl(T,\psi)$, allora per la prima osservazione vale $M \models \{v[a/x_k]\}T$, e ottengo $M \models \{v[a/x_k]\}\psi$, da cui, di nuovo perché $x_k \not\in \vl(T,\psi)$, ottengo $M \models \{v\}\psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_= \frac{}{\vdash t = t}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\} t = t)$}, che è banalmente vero per la semantica di Tarski.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_= \frac{T \vdash s = t \quad T \vdash \varphi[s/x_k]}{T \vdash \varphi[t/x_k]}$}, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}s = t)$} e \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi[s/x_k])$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi[t/x_k])$}.
+        Fisso $M$, $v$ ed assumo $M \models\{v\}T$, dalle ipotesi induttive ottengo $M \models \{v\}s = t$ e $M \models \{v\}\varphi[s/x_k]$, usando la seconda osservazione sulla sostituibilità, l'ultima cosa equivale a $M \models \{v[\{v\}_M s/x_k]\}\varphi$, ora $M \models \{v\}s = t$ significa che $\{v\}_M s = \{v\}_M t$, mettendo assieme le due cose ottengo $M \models \{v[\{v\}_M t/x_k]\}\varphi$, che è equivalente a $M \models \{v\}\varphi[t/x_k]$.
+    \end{itemize}
+    Il caso base, in cui la dimostrazione ha lunghezza 1 è già incluso nei casi sopra\footnote{In particolare se $\varphi \in T$, potremmo dire che la dimostrazione è di lunghezza 1, ma in realtà è di lunghezza 2, perché la si ottiene combinando Wk + Ax.}.
+\end{proof}
+
+Segue banalmente il teorema di correttezza.
+
+\begin{proof}
+    Sappiamo che $T \vdash \varphi \implies \forall v \; \forall M (M \models \{v\}T \implies M \models \{v\}\varphi)$, e vogliamo $\forall M (M \models T \implies M \models \varphi)$. 
+    Fisso $M$ e assumo l'antecedente $\forall v \; M \models \{v\}T$, voglio dimostrare $\forall v \; M \models \{v\}\varphi$. Fisso $v$ e voglio dimostrare $M \models \{v\}\varphi$, a questo punto uso il $v$ fissato ed ottengo l'antecedente $M \models \{v\}T$,
+    infine, avendo lo stesso $v$, per ipotesi si ha $M \models \{v\}T \implies M \models \{v\}\varphi$, da cui $M \models \{v\}\varphi$.
+\end{proof}
+
+\begin{remark}[$T$ chiusa e teorema di correttezza]
+    Notare, come anticipato, che non abbiamo usato l'ipotesi che $T$ sia fatta da formule chiuse, che in realtà servirà solo per il teorema di completezza.
+\end{remark}
+
+\begin{theorem}[Teorema di compattezza - versione sintattica]
+    Siano $T$ una $L$-teoria e $\varphi$ una $L$-formula, se $T \vdash \varphi$, allora esiste una sottoteoria finita $T' \subseteq T$ tale che $T' \vdash \varphi$.
+\end{theorem}
+
+\begin{proof}
+    Sia $T \vdash \varphi$, per definizione esiste una dimostrazione di $\varphi$ a partire da $T$, questa dimostrazione è una sequenza finita di formule $\varphi_1, \ldots, \varphi_n$ con $\varphi_n = \varphi$ e tale che per ogni $1 \leq k \leq n$ vale che
+    o $\varphi_k$ è un assioma, o $\varphi_k$ è ottenuta da formule precedenti tramite una regola di inferenza in $\mathsf{ND}$ (useremo comunque sempre $\mathsf{ND}_{\to, \bot, \exists, =}$ per comodità). Procedo di nuovo per induzione sulla lunghezza della dimostrazione,
+    i.e. per ciascuna delle regole di inferenza di $\mathsf{ND}$, assumo che la tesi sia vera per le formule che compaiono nelle premesse e dimostro che è vera anche per la formula che compare nella conclusione.
+    \begin{itemize}
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{Ax} \frac{}{\varphi \vdash \varphi}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare che esiste una sottoteoria finita $T' \subseteq \{\varphi\}$ tale che $T' \vdash \varphi$, e ovviamente basta $T' := \{\varphi\}$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{Wk} \frac{T \vdash \varphi}{T'' \vdash \varphi}$}, con $T'' \supseteq T$, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \varphi$}, e quindi prendiamo $T' \subseteq T \subseteq T''$ finito tale che $T' \vdash \varphi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{RaA} \frac{T, \neg\varphi \vdash \bot}{T \vdash \varphi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T \cup \{\neg\varphi\}$ finita tale che $T' \vdash \bot$}. WLOG $\neg \varphi \not\in T'$, se $\neg \varphi$ fosse in $T'$ lo togliamo perché vogliamo $T' \subseteq T$, eventualmente per Wk si ha $T',\neg\varphi \vdash \bot$, e quindi per RaA: $T' \vdash \varphi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_\to \frac{T,\varphi \vdash \psi}{T \vdash \varphi \to \psi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T \cup \{\varphi\}$ finita tale che $T' \vdash \psi$}. WLOG $\varphi \not\in T'$, se $\varphi$ fosse in $T'$ lo togliamo per avere $T' \subseteq T$, eventualmente per Wk si ha $T',\varphi \vdash \psi$, e quindi per In$_\to$: $T' \vdash \varphi \to \psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\to \frac{T \vdash \varphi \to \psi\quad T \vdash \varphi}{T \vdash \psi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \varphi \to \psi$} e \textcolor{purple}{$\exists T'' \subseteq T$ finita tale che $T'' \vdash \varphi$}, prendiamo $T''' := T' \cup T''$, che è finito. Per Wk si ha $T''' \vdash \varphi \to \psi$ e $T''' \vdash \varphi$, e quindi per El$_\to$: $T''' \vdash \psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_\exists \frac{T \vdash \varphi[t/x_k]}{T \vdash \exists x_k\,\varphi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \varphi[t/x_k]$}, e quindi per In$_\exists$: $T' \vdash \exists x_k\,\varphi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\exists \frac{T \vdash \exists x_k\,\varphi \quad T,\varphi \vdash \psi}{T \vdash \psi}$}, con $x_k \not\in \vl(T,\psi)$, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \exists x_k\,\varphi$} e \textcolor{purple}{$\exists T'' \subseteq T \cup \{\varphi\}$ finita tale che $T'' \vdash \psi$}. Prendiamo $T''' := T''\setminus\{\varphi\}$, che è necessario perché altrimenti potrebbe accadere che $x_k \in \vl(T'')$, in quanto tipicamente $x_k$ è libera in $\varphi$ e $\varphi$ potrebbe essere rimasta in $T''$. 
+        Sia $\widetilde{T} := T' \cup T'''$, per Wk si ha $\widetilde T \vdash \exists x_k\,\varphi$ e $\widetilde{T} ,\varphi \vdash \psi$. Infine $x_k \not\in \vl(\widetilde{T},\psi)$ poiché $\widetilde T\subseteq T$, quindi per El$_\exists$: $\widetilde T \vdash \psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_= \frac{}{\vdash t = t}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare che esiste una sottoteoria finita $T' \subseteq \varnothing$ tale che $T' \vdash t = t$, e ovviamente basta $T' := \varnothing$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_= \frac{T \vdash s = t \quad T \vdash \varphi[s/x_k]}{T \vdash \varphi[t/x_k]}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash s = t$} e \textcolor{purple}{$\exists T'' \subseteq T$ finita tale che $T'' \vdash \varphi[s/x_k]$}, prendiamo $T''' := T' \cup T''$, che è finito. Per Wk si ha $T''' \vdash s = t$ e $T''' \vdash \varphi[s/x_k]$, e quindi per El$_=$ si ha $T''' \vdash \varphi[t/x_k]$.
+    \end{itemize}
+    Il caso base, in cui la dimostrazione ha lunghezza 1, è già incluso nei casi sopra.
+\end{proof}
+
+\subsection{Teorema di completezza}
+
+A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo osservato in precedenza che i simboli $\vdash$ e $\models$ non siano del tutto equivalenti quando ci sono variabili libere nelle premesse, questa condizione non è del tutto restrittiva se espandiamo il linguaggio aggiungendo un simbolo di costante per ogni variabile libera che compare nelle premesse.
+
+\begin{definition}[Coerenza deduttiva]
+    Diciamo che una teoria $T$ è \vocab{deduttivamente coerente} se $T \nvdash \bot$.
+\end{definition}
+
+\begin{remark}[Tesi equivalente alla completezza]
+    Dimostrare che:
+    \[ T \vdash \varphi \impliedby \forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi) \]
+    è equivalente a dimostrare che:
+    \[ T \nvdash \varphi \implies \exists M \; \exists v (M \models \{v\}T \land M \not\models \{v\}\varphi) \]
+    osserviamo ora che $T \nvdash \varphi$ è deduttivamente equivalente a $T':= T,\neg \varphi \nvdash \bot$, per fare ciò dimostriamo l'equivalenza delle negazioni in $\mathsf{ND}$:
+    \[ \text{RaA}\frac{\displaystyle\frac{}{T,\neg\varphi \vdash \bot}}{T \vdash \varphi} \qquad \text{El}_\neg\frac{\displaystyle\text{Wk}\frac{\displaystyle\frac{}{T \vdash \varphi}}{T,\neg\varphi \vdash \varphi} \quad \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg \varphi}}{T,\neg\varphi \vdash \neg \varphi}}{T,\neg\varphi \vdash \bot}
+    \]
+    Pertanto la freccia mancante della proposizione equivale a supporre la deduttiva coerenza di $T'$ e dimostrare che esiste un suo modello:
+    \[ T,\neg \varphi = T' \nvdash \bot \implies \exists M \; \exists v (M \models \{v\}T \land M \not\models \{v\}\varphi) \]
+    ovvero, se una teoria è deduttivamente coerente, allora ha un modello:
+    \[ T' \nvdash \bot \implies \exists M \; \exists v (M \models \{v\}(T, \neg \varphi)) \iff \exists M \exists v \; M \models T' \]
+\end{remark}
+
+\begin{definition}[Deduttiva completezza]
+    Diciamo che $T$ è una $L$-teoria \vocab{deduttivamente completa} se per ogni \textcolor{purple}{$\boxed{\text{$L$-formula chiusa}}$} $\varphi$ vale che o $T \vdash \varphi$ o $T \vdash \neg\varphi$.
+\end{definition}
+
+\begin{exercise}[Deduttiva completezza e disgiunzioni]
+    Sia $T$ una $L$-teoria deduttivamente completa, se $T \vdash \varphi \lor \psi$, con $\varphi$ e $\psi$ chiuse, allora $T \vdash \varphi$ o $T \vdash \psi$.
+\end{exercise}
+
+\begin{soln}
+    Se per assurdo $T \nvdash \varphi$ e $T \nvdash \psi$, allora per deduttiva completezza $T \vdash \neg\varphi$ e $T \vdash \neg\psi$, da cui usando In$_\land$ ho $T \vdash \neg\varphi \land \neg\psi$, che per De Morgan equivale a $T \vdash \neg(\varphi \lor \psi)$, che è contro l'ipotesi $\lightning$.
+\end{soln}
+
+\begin{lemma}[delle costanti]
+    $T \vdash \forall \,\textcolor{purple}{x_k}\, \varphi \iff T \vdash \varphi[\textcolor{purple}{c}/\textcolor{purple}{x_k}]$, dove $\textcolor{purple}{c}\not\in L$.\footnote{Noto anche come lemma ``del grande puffo''.}
+\end{lemma}
+
+\begin{proof}
+    Vediamo le due implicazioni.
+    \begin{itemize}
+        \item[$\boxed{\implies}$] Assumo che $T \vdash \forall x_k\,\varphi$\footnote{Formalmente farò tutto in $L'$, e $T \vdash \forall x_k \varphi$ resta valida nel linguaggio espanso poiché la derivazione in $L$ è una sequenza finita di passi sintattici, passando a $L'$ ogni $\varphi_i$ resta ben formata e le condizioni laterali delle regole (e.g. quella di In$_\forall$) non cambiano.},
+        applico El$_\forall$ (come regola nel linguaggio espanso) con $c$, che essendo costante è sempre sostituibile a $x_k$ in $\varphi$, e ottengo $T \vdash \varphi[c/x_k]$.
+        \item[$\boxed{\impliedby}$] Assumo che $T \vdash \varphi[c/x_k]$ - sempre come sequente in $L' = L \cup \{c\}$, per compattezza sintattica esiste $T' \subseteq T$ finita tale che $T' \vdash \varphi[c/x_k]$,
+        fissiamo inoltre una dimostrazione di $\varphi[c/x_k]$ a partire da $T'$.\\
+        Sia $x_l$ una variabile che non compare né in $T'$ né nella dimostrazione (posso prenderla per finitezza), allora dico che $T' \vdash \varphi[x_l/x_k]$, infatti, sostituendo ogni formula $\varphi_i$ della dimostrazione con $\varphi_i[x_l/c]$ (e posso farlo perché la variabile non potendo essere catturata è sempre sostituibile), ottengo una dimostrazione di $\varphi[x_l/x_k]$ a partire da $T'$.\\
+        Ora per In$_\forall$ ho $\displaystyle\text{In}_\forall\frac{T' \vdash \varphi[x_l/x_k]}{T' \vdash \forall x_l \varphi[x_l/x_k]}$, con $x_l \not\in \vl(T')$ poiché $T' \subseteq T$, usando la conclusione di questa regola voglio dimostrare che $T' \vdash \forall x_k \varphi$, per fare ciò dimostro direttamente che $\vdash \forall x_l \varphi[x_l/x_k] \to \forall x_k \varphi$:
+        \[ \text{In}_\to\frac{\displaystyle \text{In}_\forall\frac{\displaystyle \text{El}_\forall\frac{\displaystyle\text{Ax}\frac{}{\forall x_l \varphi[x_l/x_k]\vdash \forall x_l \varphi[x_l/x_k]}}{\forall x_l \varphi[x_l/x_k] \vdash \varphi}}{\forall x_l \varphi[x_l/x_k] \vdash \forall x_k \varphi}}{\vdash \forall x_l \varphi[x_l/x_k] \to \forall x_k \varphi} \]
+    \end{itemize}
+    Notare che $x_k \not\in \vl(\forall x_l \varphi[x_l/x_k])$, per cui il passaggio con In$_\forall$ è legittimo, inoltre per El$_\forall$ ho usato $(\varphi[x_l/x_k])[x_k/x_l] = \varphi$. La tesi originale si ottiene per Wk.
+\end{proof}
+
+\begin{definition}[Teoria di Henkin]
+    $T$ è una teoria di \vocab{Henkin} se per ogni $\varphi(x_k)$ esiste una costante $c_{\varphi,k}$ tale che:
+    \[ T \vdash \exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k]\]
+    i.e. se la teoria è in grado di dimostrare che esiste un elemento che soddisfa $\varphi$, allora è in grado di fornire una costante, che dipende dalla formula e dalla variabile, che testimonia la deduttiva soddisfacibilità di $\exists x_k\varphi$ - e sarà poi importante che la teoria faccia questi due passaggi assieme (ovvero quello sopra non sia un $\implies T \vdash \varphi(c_{\varphi,k})$).
+\end{definition}
+
+\begin{lemma}[Aggiunta di un assioma di Henkin]
+    Sia $T$ una $L$-teoria deduttivamente coerente, sia $L' = L \cup \{c\}$, sia $\varphi$ una $L$-formula, allora la $L'$-teoria definita da:
+    \[ T' := T \cup \{\exists x \varphi \to \varphi[c/x]\} \]
+    è deduttivamente coerente. Cioè aggiungere un testimone per una formula esistenziale non rende incoerente la teoria.
+\end{lemma}
+
+\begin{proof}
+    Per assurdo, supponiamo che $T' \vdash \bot$, da cui si ha che:
+    \[ \text{In}_\neg \frac{T,\exists x \varphi \to \varphi(c) \vdash \bot}{T \vdash \neg(\exists x \varphi \to \varphi(c))} \]
+    che, esercizio, equivale a $T \vdash \exists x \varphi$ e $T \vdash \neg\varphi(c)$, per il lemma della costante la seconda cosa equivale a $T \vdash \forall x \, \neg\varphi$.
+    Ora $T \vdash \forall x \, \neg\varphi$ equivale a $T \vdash \neg \exists x \, \varphi$, quindi da El$_\neg$ segue che $T \vdash \bot$.
+\end{proof}
+
+\begin{lemma}[Espansione di Henkin]
+    Sia $T$ una $L$-teoria deduttivamente coerente, allora c'è una \vocab{espansione} $L' \supseteq L$ e una \vocab{estensione} $T' \supseteq T$ $L'$-teoria di Henkin deduttivamente coerente.
+\end{lemma}
+
+\begin{proof}
+    Consideriamo la seguente successione di teorie:
+    \[ T_i := \begin{cases}
+        T_0 := T \\
+        T_{i+1} := T_i \cup \{\exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k] : \varphi(x_k) \text{ è una $L_i$-formula}\}
+    \end{cases}\]
+    dove con $L_i$ indichiamo il linguaggio di $T_i$ (definito aggiungendo tutte le costanti di Henkin di $T_i$), definiamo $T' := \bigcup_{i \in \NN} T_i$, tale teoria è coerente.
+    Se per assurdo $T' \vdash \bot$, allora per compattezza sintattica esiste $T'' \subseteq T'$ finito tale che $T'' \vdash \bot$, per finitezza e per il fatto che sia un'unione crescente esiste $i_0 \in \NN$
+    tale che $T'' \subseteq T_{i_0}$, visto che ogni volta aggiungiamo un numero finito di costanti, si ha che $T_{i_0} = T_0 \cup \{\psi_1,\ldots,\psi_k\}$, quindi $T'' \subseteq T_0 \cup \{\psi_1,\ldots,\psi_k\}$, e quindi per Wk $T_0 \cup \{\psi_1,\ldots,\psi_k\} \vdash \bot$.\\
+    Sia ora $n$ il minimo tale che $T \cup \{\psi_1,\ldots,\psi_n\} \vdash\bot$, allora:
+    \[ T \cup \{\psi_1,\ldots,\psi_{n-1}\} \nvdash \bot \qquad T \cup \{\psi_1,\ldots,\psi_n\} \vdash \bot \]
+    ma questo contraddice il lemma precedente. Osserviamo infine che $T'$ è una teoria di Henkin, per ogni $L'$-formula $\varphi(x_k)$, esiste $i \in \NN$ tale che $\varphi(x_k)$ è una $L_i$-formula, e quindi per definizione di $T_{i+1}$ vale $T_{i+1} \vdash \exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k]$.
+\end{proof}
+
+\begin{lemma}[di Lindenbaum]
+    Sia $T$ una $L$-teoria deduttivamente coerente, allora esiste una $L$-teoria $T' \supseteq T$ deduttivamente coerente e deduttivamente completa.
+\end{lemma}
+
+\begin{remark}
+    Notare che il lemma di Lindenbaum non richiede un'espansione del linguaggio.
+\end{remark}
+
+\begin{proof}
+    Sia $S$ l'insieme di tutte le $L$-teorie deduttivamente coerenti che contengono $T$, $S \ne \varnothing$ perché chiaramente $T$ ci appartiene per ipotesi, inoltre $(S,\subseteq)$ è un poset,
+    e vale il lemma di Zorn, presa infatti una catena $\{T_i : i \in I\}$ in $S$, allora $\widetilde{T} := \bigcup_{i \in I} T_i$ è una $L$-teoria che contiene $T$, è un maggiorante della catena ed è deduttivamente coerente,
+    infatti se $\widetilde{T} \vdash \bot$, allora per compattezza esiste $T'' \subseteq \widetilde{T}$ finito tale che $T'' \vdash \bot$, per finitezza e per il fatto che sia un'unione crescente esiste $i_0 \in I$ tale che $T'' \subseteq T_{i_0}$,
+    ma per Wk questo significherebbe che $T_{i_0} \vdash \bot \lightning$.\\ 
+    Possiamo quindi considerare $T'$ deduttivamente coerente e massimale in $(S,\subseteq)$, vediamo che è deduttivamente completa.
+    Se $T'$ non fosse completa allora esisterebbe una $L$-formula chiusa $\varphi$ tale che $T' \nvdash \varphi$ e $T' \nvdash \neg\varphi$, allora potrei estendere $T'$ con $\varphi$ o con $\neg\varphi$ mantenendo la coerenza, usiamo la seguente osservazione.
+    \begin{remark}
+        Se $T' \nvdash \neg \varphi$ allora $T',\varphi \nvdash \bot$. La contronominale segue immediatamente da In$_\neg$.
+    \end{remark}
+    Conseguenza immediata dell'osservazione è che se $T', \varphi \nvdash \bot$ allora $T' \cup \{\varphi\}$ è deduttivamente coerente e $\varphi \not \in T'$ per cui ho un assurdo, e quindi $T'$ è completa.
+\end{proof}
+
+Siamo finalmente pronti per dimostrare l'altra freccia della proposizione, nella forma equivalente, ovvero che se $T$ è deduttivamente coerente, allora esiste un modello $M$ ed una valutazione $v$ che soddisfa $T$. L'idea sarà
+partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teoria ottenuta come estensione di Henkin, infine completare la teoria per ottenere la $L'$-teoria $T''$ che è deduttivamente completa e ancora di Henkin 
+- perché non abbiamo espanso il linguaggio, quindi non possiamo avere nuove formule per cui non valga già la condizione di Henkin.
+
+\begin{proof}
+    Assumo $T \nvdash \bot$, con $T$ $L$-teoria, e voglio $\exists M\;\exists v (M \models \{v\}T)$. Procediamo con i seguenti passi.
+    \begin{enumerate}
+        \item Iniziamo espandendo il linguaggio con l'aggiunta di un simbolo di costante per ogni variabile $L' := L \cup \{c_1,c_2,\ldots\}$, ed estendendo la teoria $T' := T \cup \{c_1 = x_1, c_2 = x_2, \ldots\}$, tale estensione è ancora deduttivamente coerente, infatti se $T' \vdash \bot$, allora per compattezza avremmo un sottoinsieme finito 
+        (WLOG - per Wk) $T \cup \{c_1 = x_1, \ldots, c_n = x_n\} \vdash \bot$. Consideriamo la teoria ottenuta da questa sostituendo $x_i$ ad ogni $c_i$, che è banalmente lecito e dà luogo a $T \cup \{x_1 = x_1, \ldots, x_n = x_n\} \vdash \bot$ - basta fissare una dimostrazione e sostituire $x_i/c_i$,
+        a questo punto notiamo che possiamo eliminare uno alla volta gli assiomi extra, detta $\Gamma := T \cup \{x_1 = x_1, \ldots, x_{n-1} = x_{n-1}\}$, per modus ponens:
+        \[ \text{El}_\to \frac{\displaystyle \text{In}_\to\frac{\displaystyle \frac{}{\Gamma, x_n = x_n \vdash \bot}}{\Gamma \vdash x_n = x_n \to \bot}\quad \text{Wk}\frac{\displaystyle\text{In}_=\frac{}{\vdash x_n = x_n}}{\Gamma \vdash x_n = x_n}}{\Gamma \vdash \bot}\]
+        reiterando $n$ volte questo procedimento ottengo $T \vdash \bot$, che è assurdo.
+        \item Considero $T'' \supseteq T'$ una $L''\supseteq L'$-estensione di Henkin, deduttivamente coerente e completa di $T'$.
+        \item Definisco $M$ partendo dal dominio: $M := \{\text{$L''$-termine chiusi}\}/\sim$, con $t_1 \sim t_2$ se $T'' \vdash t_1 = t_2$ - si verifica che tale relazione è di equivalenza (l'unica cosa non banale è usare El$_=$ per dimostrare la transitività e la simmetria).
+        Definiamo ora l'interpretazione dei simboli di $L''$, se $r$ è un simbolo di relazione, allora:
+        \[ ([t_1],\ldots,[t_{\ar(r)}]) \in r_M \overset{\text{def}}{\iff} T'' \vdash r(t_1,\ldots,t_{\ar(r)}) \]
+        tale definizione è ben posta, i.e. se  $[t_i] = [t_i']$ per ogni $1 \leq i \leq \ar(r)$, ovvero $T'' \vdash t_i = t_i'$ per ogni $1 \leq i \leq \ar(r)$, allora $T'' \vdash r(t_1',\ldots,t_{\ar(r)}')$ (e viceversa, ma è sufficiente una direzione per simmetria), infatti usando El$_=$, $\ar(r)$ volte, sostituiamo $t_i'$ a $t_i$ nella cosa dimostrata da $T''$, e alla fine abbiamo $T'' \vdash r(t_1',\ldots,t_{\ar(r)}')$.\\
+        Se $f$ è un simbolo di funzione, allora:
+        \[[t] = [f_M([t_1],\ldots,[t_{\ar(f)}])] \overset{\text{def}}{\iff} T'' \vdash f(t_1,\ldots,t_{\ar(f)}) = t \]
+        anche questa definizione è ben posta, se $[t_i] = [t_i']$ e $[t] = [t']$, allora, di nuovo iterando El$_=$, ottengo $T'' \vdash f(t_1',\ldots,t_{\ar(f)}') = t'$ - e viceversa.\\
+        Definiamo infine la valutazione $v$ che ci serve come $v(x_i) := [c_i]$.
+        \item Resta da verificare che $M \models \{v\}T''$, ovvero $\forall \varphi \in T'' \; M \models \{v\}\varphi$.\\
+        Per fare questo dimostriamo una cosa più forte, ovvero $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \implies M \models \{v\}\varphi$, anzi ancora più forte, dimostriamo $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \iff M \models \{v\}\varphi$, in pratica dimostriamo che $M$ soddisfa tutte e sole le $L''$-formule dimostrabili da $T''$, anziché solo quelle di $T''$.\\
+        Procediamo ``per induzione strutturale'', o meglio sul numero di simboli logici di $\varphi$, poiché ad ogni passaggio modificheremo la formula, e quindi non avrà senso fare induzione sulla struttura sintattica, nella pratica tuttavia i passaggi che faremo saranno sempre i soliti.
+        Ci serve un lemma sugli $L''$-termini chiusi.
+        \begin{lemma}[$M$ interpreta correttamente i termini chiusi]
+            Sia $t$ un $L''$-termine chiuso allora $\{v\}_M t = [t]$. 
+        \end{lemma}
+        \begin{proof}
+            È ovvio per definizione nel caso di costanti, nel caso in cui $t = f(t_1,\ldots,t_{\ar(f)})$, allora $\{v\}_M t = f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)})$, per ipotesi induttiva $\{v\}_M t_i = [t_i]$, per cui $f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)}) = f_M([t_1],\ldots,[t_{\ar(f)}])$, che per la definizione data è $[f(t_1,\ldots,t_{\ar(f)})]$.
+        \end{proof}
+        Dimostriamo ora che $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \iff M \models \{v\}\varphi$ per induzione sul numero di simboli logici di $\varphi$ (in tal modo, usiamo solo formule del sistema ridotto, e per induzione avremmo verificato che, indipendentemente dal numero di simboli logici, l'equivalenza tiene), useremo solo i simboli logici $\to$, $\bot$, $\exists$ e $=$, serve anche il caso base $r(t_1,\ldots,t_{\ar(r)})$, perché rientrano nel caso $n = 0$ con $n$ numero di simboli logici (assieme a $\bot$).\\
+        \textcolor{MidnightBlue}{$T'' \vdash \bot \iff M \models \{v\}\bot$}\\
+        Questo è immediato, infatti $M \models \{v\}\bot$ è sempre falso nella metateoria, e, analogamente, $T'' \vdash \bot$ è sempre falso perché $T''$ è deduttivamente coerente, per costruzione.\\
+        \textcolor{MidnightBlue}{$T'' \vdash \exists x_k \varphi \iff M \models \{v\}\exists x_k \varphi$}\\
+        Procediamo distinguendo le due implicazioni.
+        \begin{itemize}
+            \item[$\boxed{\impliedby}$] Assumo $M \models \{v\}\exists x_k \varphi$, e verifico che $T'' \vdash \exists x_k \varphi$. Ora l'ipotesi per la semantica di Tarski ed un lemma noto equivale a $\exists [t] \in M$ tale che $M \models \{v\}\varphi[[t]/x_k]$,
+            dunque per ipotesi induttiva $T'' \vdash \varphi[t/x_k]$, e quindi per In$_\exists$ $T'' \vdash \exists x_k \varphi$.
+            \item[$\boxed{\implies}$] Assumo $T'' \vdash \exists x_k \varphi$, e verifico che $M \models \{v\}\exists x_k \varphi$. Essendo $T''$ una teoria di Henkin, esiste una costante $c_{\varphi,k}$ tale che $T'' \vdash \exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k]$,
+            allora, per modus ponens, $T'' \vdash \varphi[c_{\varphi,k}/x_k]$, e quindi per ipotesi induttiva $M \models \{v\}\varphi[[c_{\varphi,k}]/x_k]$, usando di nuovo lemma noto + semantica di Tarski si arriva a $M \models \{v\}\exists x_k \varphi$.
+        \end{itemize}
+        \textcolor{MidnightBlue}{$T'' \vdash t_1 = t_2 \iff M \models \{v\}t_1 = t_2$}\\
+        Se $t_1,t_2$ fossero chiusi, allora $M \models \{v\}t_1 = t_2 \iff \{v\}_M t_1 = \{v\}_M t_2$, per il lemma sugli $L''$-termini chiusi, questo equivale a $[t_1] = [t_2]$, che per definizione di $M$ equivale a $T'' \vdash t_1 = t_2$.\\
+        Tuttavia $t_1$ e $t_2$ potrebbero non essere chiusi, in questo caso, definisco $\overline t := t[c_1/x_1,\ldots,c_n/x_n]$, la chiusura di un termine (con WLOG quelle variabili libere), ora, per la definizione data di $v$ si ha $\{v\}_M t = \{v\}_M \overline t$, e quindi $M \models \{v\}t_1 = t_2 \iff M \models \{v\}\overline{t_1} = \overline{t_2}$;
+        analogamente, iterando El$_=$, $T'' \vdash t_1 = t_2 \iff T'' \vdash \overline{t_1} = \overline{t_2}$, e quindi per il caso precedente $T'' \vdash t_1 = t_2 \iff M \models \{v\}t_1 = t_2$.\\
+        \textcolor{MidnightBlue}{$T'' \vdash \varphi \to \psi \iff M \models \{v\}\varphi \to \psi$}\\
+        Si può dimostrare in modo sintetico assumendo (per completezza deduttiva di $T''$) che $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \neg\varphi$ oppure a $T'' \vdash \psi$, e quindi usare l'ipotesi induttiva:
+        \begin{align*}
+            T'' \vdash \varphi \to \psi &\iff T'' \vdash \neg\varphi \text{ o } T'' \vdash \psi\\
+                                        &\iff M \models \{v\}\neg\varphi \text{ o } M \models \{v\}\psi &&\text{(hp induttiva)}\\
+                                        &\iff M \models \{v\}\varphi \to \psi
+        \end{align*}
+        In alternativa, si può dimostrare direttamente per casi, assumiamo $M \models \{v\}\varphi \to \psi$, ci sono 3 casi possibili e in tutti e 3 vogliamo arrivare alla stessa implicazione sintattica, ad esempio se $M \models \{v\}\varphi$ e $M \models \{v\}\psi$, allora per ipotesi induttiva $T'' \vdash \varphi$ e $T'' \vdash \psi$, da cui per In$_\to$ $T'' \vdash \varphi \to \psi$, e analogamente negli altri 2 casi (nel caso $M \not\models\{v\}\varphi$ si deve usare la deduttiva completezza di $T''$).\\
+        E poi per il viceversa basta un solo caso, se $T'' \vdash \varphi \to \psi$, voglio $M \models \{v\}\varphi \to \psi$, assumo $M \models \{v\}\varphi$, per ipotesi induttiva $T'' \vdash \varphi$, e quindi per El$_\to$ $T'' \vdash \psi$, e quindi per ipotesi induttiva $M \models \{v\}\psi$, da cui $M \models \{v\}\varphi \to \psi$.\\
+        In entrambi i casi abbiamo tuttavia usato che $\varphi$ e $\psi$ sono chiuse, in generale potrebbero non esserlo, in questo caso, come fatto per i termini, definisco $\overline\varphi := \varphi[c_1/x_1,\ldots,c_n/x_n]$ e $\overline\psi := \psi[c_1/x_1,\ldots,c_n/x_n]$, ora, lato sintattico, come prima, per El$_=$, $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \overline\varphi \to \overline\psi$,
+        mentre semanticamente $M \models \{v\}\varphi \to \psi$ è equivalente a $M \models \{v\}\overline\varphi \to \overline\psi$, per la nostra valutazione (bisogna verificarlo induttivamente).\\
+        \textcolor{MidnightBlue}{$T'' \vdash r(t_1,\ldots,t_{\ar(r)}) \iff M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$}\\
+        Se $t_1,\ldots,t_{\ar(r)}$ sono chiusi, allora $M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $([t_1],\ldots,[t_{\ar(r)}]) \in r_M$, che per definizione di $M$ è equivalente a $T'' \vdash r(t_1,\ldots,t_{\ar(r)})$.\\
+        Nel caso in cui $t_1,\ldots,t_{\ar(r)}$ non sono chiusi, come prima, definisco $\overline{t_i} := t_i[c_1/x_1,\ldots,c_n/x_n]$, e quindi $M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $M \models \{v\}r(\overline{t_1},\ldots,\overline{t_{\ar(r)}})$ per via della valutazione $v$, d'altra parte iterando El$_=$, $T'' \vdash r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $T'' \vdash r(\overline{t_1},\ldots,\overline{t_{\ar(r)}})$, e quindi per il caso precedente si conclude.
+    \end{enumerate}
+    Pertanto abbiamo costruito una $L''$-struttura $M$ e una valutazione $v$ tali che $M$ soddisfa $T''$, a questo punto considerando $M|_L$ (dove restringo il dominio della funzione di interpretazione) ottengo una $L$-struttura che soddisfa $T$, infatti, se $M$ come $L''$-struttura soddisfa, con la valutazione $v$, tutte le formule di $T''$,
+    allora in particolare soddisfa tutte le formule di $T$, e quindi $M|_L$ soddisfa $T$ con la stessa valutazione $v$.
+\end{proof}
+
+\begin{remark}[Verifica che $\sim$ sia di equivalenza]
+    Vediamo che la relazione $t_1 \sim t_2 \overset{\text{def}}{\iff} T'' \vdash t_1 = t_2$ è di equivalenza:
+    \begin{itemize}
+        \item \underline{riflessività}: $T'' \vdash t = t$ per In$_=$ + Wk;
+        \item \underline{simmetria}: se $T'' \vdash t_1 = t_2$, allora per El$_=$ $T'' \vdash t_2 = t_1$:
+        \[ \text{El}_=\frac{\displaystyle\frac{}{T'' \vdash t_1 = t_2} \quad \frac{\displaystyle \text{Wk}\frac{\displaystyle \text{In}_=\frac{}{\vdash t_1 = t_1}}{T'' \vdash t_1 = t_1}}{T'' \vdash (x = t_1)[t_1/x]}}{T'' \vdash t_2 = t_1}\]
+        da cui $t_2 \sim t_1$,
+        \item \underline{transitività}: se $T'' \vdash t_1 = t_2$ e $T'' \vdash t_2 = t_3$ allora, sempre per El$_=$, vale:
+        \[ \text{El}_=\frac{\displaystyle\frac{}{T'' \vdash t_2 = t_3} \quad \frac{\displaystyle\frac{}{T'' \vdash t_1 = t_2}}{T'' \vdash (t_1 = x)[t_2/x]}}{T'' \vdash t_1 = t_3} \]
+        per cui $t_1 \sim t_3$.
+    \end{itemize}
+\end{remark}
+
+A questo punto abbiamo ottenuto anche l'altra freccia della proposizione originale, da cui, supponendo $T$ chiusa si ricava banalmente $T \models \varphi \implies T \vdash \varphi$.
+
+\begin{remark}[Stima sulla cardinalità del modello costruito]
+    Osserviamo che abbiamo anche una stima sulla cardinalità del modello costruito nella scorsa proposizione che è data da:
+    \[ |M| \leq |\{\text{$L''$-termini chiusi}\}| = |L| + \aleph_0 \]
+    ed abbiamo usato che $|L''| = |L| + \aleph_0$, in quanto stiamo aggiungendo numerabili volte un numero finito di simboli di costante, quindi al più stiamo aggiungendo $\aleph_0$ simboli di costante, e la formula sopra è valida.
+\end{remark}

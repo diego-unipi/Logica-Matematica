@@ -55,7 +55,7 @@ Vediamo la soluzione dell'esercizio nell'osservazione.
     Una tale $\psi$, essendo senza quantificatori e con una sola variabile libera, può essere scritta in DNF come una disgiunzione di congiunzioni di formule atomiche del tipo $p(x) = 0$ o loro negazioni $p(x) \ne 0$, dove $p(x) \in \RR[x]$ è l'unico tipo di formule atomiche con una sola variabile libera che si possono costruire con i simboli di $L$\footnote{Non ci sono simboli di relazione, per cui rimangono solo uguaglianze di $L$-termini, che equivalgono a $L$-termine = 0, e gli unici $L$-termini in questo linguaggio sono i polinomi a coefficienti in $\RR$.
     Quindi $\psi$ potrebbe essere per esempio: $\psi(x) = ((p_1(x) = 0) \land (p_2(x) \ne 0) \land (p_3(x) = 0))\lor \ldots$}.\\
     Ora $\RR$ è chiaramente un modello di $\Th(\RR;0,1,+,\cdot)$, per cui se $\psi$ e $\varphi$ sono equivalenti, allora devono essere soddisfatte dagli stessi valori in $\RR$, in particolare $\varphi$ è soddisfatta da tutti i reali in $[0,+\infty)$,
-    mentre l'insieme $\{x \in \RR \mid \psi(x)\}$ corrisponde ad un'unione finita di intersezioni di chiusi e aperti di Zariski (ovvero insiemi finiti e cofiniti); ora se tra i termini dell'unione c'è almeno un insieme cofinito allora, allora l'unione sarà $\RR$
+    mentre l'insieme $\{x \in \RR \mid \psi(x)\}$ corrisponde ad un'unione finita di intersezioni di chiusi e aperti di Zariski (ovvero insiemi finiti e cofiniti); ora se tra i termini dell'unione c'è almeno un insieme cofinito allora l'unione sarà $\RR$
     meno un numero finito di elementi, quindi $\psi$ è soddisfatta da tutti i reali tranne un numero finito, che non potrà essere $[0,+\infty)$. Se invece tra i termini dell'unione non c'è nessun insieme cofinito, allora l'unione è un insieme finito, ancora assurdo.
 \end{soln}
 
@@ -99,8 +99,8 @@ Introduciamo due nozioni di logica proposizionali che sono elementari ma spesso 
     \[ \varphi = \purple{(}\, \alpha_{11} \, \purple{\lor} \, \alpha_{12} \, \purple{\lor} \, \dots \, \purple{\lor} \, \alpha_{1n_1} \, \purple{)} \, \purple{\land} \, \dots \, \purple{\land} \, \purple{(}\, \alpha_{m1} \, \purple{\lor} \, \alpha_{m2} \, \purple{\lor} \, \dots \, \purple{\lor} \, \alpha_{mn_m} \, \purple{)}
     \]
     ovvero $\varphi$ una congiunzione di disgiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche. Simmetricamente,
-    $\varphi$ è in \vocab{forma normale disgiuntiva} (\vocab{DNF}) se:
-    \[ \varphi = \purple{(}\, \alpha_{11} \, \purple{\land} \, \alpha_{12} \, \purple{\land} \, \dots \, \purple{\land} \, \alpha_{1n_1} \, \purple{)} \, \purple{\lor} \, \dots \, \purple{\lor} \, \purple{(}\, \alpha_{m1} \, \purple{\land} \, \alpha_{m2} \, \purple{\land} \, \dots \, \purple{\land} \, \alpha_{mn_m} \, \purple{)}
+    $\varphi$, formula \underline{senza quantificatori}, è in \vocab{forma normale disgiuntiva} (\vocab{DNF}) se:
+    \[ \varphi = \textcolor{purple}{(}\, \alpha_{11} \, \textcolor{purple}{\land} \, \alpha_{12} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \alpha_{1n_1} \, \textcolor{purple}{)} \, \textcolor{purple}{\lor} \, \dots \, \textcolor{purple}{\lor} \, \textcolor{purple}{(}\, \alpha_{m1} \, \textcolor{purple}{\land} \, \alpha_{m2} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \alpha_{mn_m} \, \textcolor{purple}{)}
     \]
     ovvero $\varphi$ una disgiunzione di congiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche.
 \end{definition}
@@ -337,7 +337,7 @@ Torniamo all'esempio degli ipernaturali, ed esibiamo un modello non standard del
 
 \begin{proof}
     Sia $U$ un ultrafiltro non principale su $\ps(\NN)$. Consideriamo ${}^*\NN = \faktor{\prod_{i \in \NN}\NN}{U}$ ossia l'ultraprodotto (\vocab{ultrapotenza}) di una quantità numerabile di copie della medesima struttura $(\NN;0,+,\cdot,s)$.
-    Gli elementi di ${}^*\NN$ sono classi di equivalenza di elementi di $\prod_{i \in \NN}\NN$, cioè di sequenze di numeri naturali. Per il corollario precedente ${}^*\NN \models \Th(\NN;0,+,\cdot,s)$. Supponiamo, per assurdo, che $f : \NN \to {}^*\NN$ si un isomorfismo di strutture.
+    Gli elementi di ${}^*\NN$ sono classi di equivalenza di elementi di $\prod_{i \in \NN}\NN$, cioè di sequenze di numeri naturali. Per il corollario precedente ${}^*\NN \models \Th(\NN;0,+,\cdot,s)$. Supponiamo, per assurdo, che $f : \NN \to {}^*\NN$ sia un isomorfismo di strutture.
     Allora $f(0_\NN) = [\mathbf{c}_0] = 0_{{}^*\NN}$ (dove con $\mathbf{c}_x$ indichiamo la successione costante associata ad $x \in \NN$, ed è proprio lei $f(0_\NN)$ in quanto per definizione di morfismo di strutture l'immagine è la successione 
     delle immagini di $0_\NN$ interpretato in ogni modello - inoltre essendo un morfismo deve chiaramente mandare $0_\NN$ in $0_{{}^*\NN}$ per la definizione che usa la commutatività del diagramma).
     Applicando la funzione successore accade che:
@@ -368,7 +368,7 @@ Torniamo all'esempio degli ipernaturali, ed esibiamo un modello non standard del
     questa cosa non vale solo per i primi due indici, e per concludere sul fatto che l'assioma di Archimede non vale in ${}^*\RR$, suppongo per assurdo che esista un $n \in \NN$ tale che:
     \[ [(i)_{i \in \NN}] <_{{}^*\RR} \underbrace{[\mathbf{c}_1] +_{{}^*\RR} \ldots +_{{}^*\RR} [\mathbf{c}_1]}_{\text{$n$ volte}} = [\mathbf{c}_n]
     \]
-    dove la somma nell'ultraprodotto è stata calcolata calcola componente per componente, per definizione di interpretazione dei simboli di funzione. Ma questo non è possibile perché l'insieme degli indici per cui vale questa disuguaglianza è $\{0,1,\ldots,n\}$ che è finito e quindi non appartiene all'ultrafiltro.
+    dove la somma nell'ultraprodotto è stata calcolata componente per componente, per definizione di interpretazione dei simboli di funzione. Ma questo non è possibile perché l'insieme degli indici per cui vale questa disuguaglianza è $\{0,1,\ldots,n\}$ che è finito e quindi non appartiene all'ultrafiltro.
 \end{soln}
 
 \subsection{Teorema di Ax-Grothendieck}
@@ -395,7 +395,7 @@ Per dimostrare il teorema di Ax-Grothendieck, ci serviranno i seguenti fatti.
     \]
     Dove \purple{$x^n$} è un'abbreviazione per \purple{$x \cdot x \ldots x$} $n$ volte. Quindi, siccome i fattori dell'ultraprodotto sono campi algebricamente chiusi, anche $F$ lo è.
     Inoltre $F$ ha caratteristica 0 , infatti, fissato un primo $p_k$:
-    \[ \{i \in \NN : \overline{\FF_{p_i}} \models \underbrace{\purple{1 + \ldots + 1 = 0}}_{\text{$p_k$ volte}}\} = \{i \in \NN : i = k\} = \{k\} \notin U\footnote{Osservare che se un singoletto appartenesse a un ultrafiltro, allora l'ultrafiltro sarebbe principale.}
+    \[ \{i \in \NN : \overline{\FF_{p_i}} \models \underbrace{\textcolor{purple}{1 + \ldots + 1 = 0}}_{\text{$p_k$ volte}}\} = \{i \in \NN : i = k\} = \{k\} \notin U\footnote{Osservare che se un insieme singoletto appartenesse a un ultrafiltro, allora l'ultrafiltro sarebbe principale.}
     \]
     per cui $F$ è un campo tale che $F \not\models \overbrace{\purple{1 + \ldots + 1 = 0}}^{\text{$p_k$ volte}}$, per ogni $k \in \NN$; quindi $F$ ha necessariamente caratteristica 0 per il teorema di Łoś.\\
     Resta da dimostrare che $|F| = 2^{\aleph_0}$. Intanto è banale notare che $|F| \leq \left|\prod_{i \in \NN}\overline{\FF_{p_i}}\right| = 2^{\aleph_0}$; per la disuguaglianza opposta immergiamo i numeri $0,1,2,\ldots,i$ in $\overline{\FF_{p_i}}$ nel modo
@@ -448,7 +448,7 @@ Procediamo ora alla dimostrazione di compattezza semantica e del teorema di Ło�
     tale che $T' \models \varphi$.
 \end{theorem}
 
-Vediamo prima il caso particolare in cui $|T| = \aleph_0$. \textcolor{MidnightBlue}{Questo caso particolare NON necessità di una dimostrazione separata.
+Vediamo prima il caso particolare in cui $|T| = \aleph_0$. \textcolor{MidnightBlue}{Questo caso particolare NON necessita di una dimostrazione separata.
 Tuttavia questa dimostrazione è più semplice di quella generale, servirà per illustrare meglio l'idea.}
 
 \begin{proof}
@@ -572,7 +572,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
 \end{proof}
 
 \begin{exercise}[Modelli non standard di $\Th(\RR;0,1,+,\cdot,<)$]
-    Allo stesso modo si può dimostrare anche che esistono modelli non standard di $\Th(\RR; 0,1,+,\cdot,<)$.\footnote{\underline{Hint}: Basata aggiungere una costante $\purple{c}$ e gli assiomi $\{\purple{1 < c}, \purple{1 + 1 < c}, \purple{1 + 1 + 1 < c}, \ldots\}$, che renderanno di fatto $c$ un \vocab{infinito},
+    Allo stesso modo si può dimostrare anche che esistono modelli non standard di $\Th(\RR; 0,1,+,\cdot,<)$.\footnote{\underline{Hint}: Basta aggiungere una costante $\textcolor{purple}{c}$ e gli assiomi $\{\textcolor{purple}{1 < c}, \textcolor{purple}{1 + 1 < c}, \textcolor{purple}{1 + 1 + 1 < c}, \ldots\}$, che renderanno di fatto $c$ un \vocab{infinito},
     quindi i modelli questa teoria non soddisfano la proprietà Archimedea.}
 \end{exercise}
 
@@ -638,11 +638,15 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         ma questo è assurdo perché $\left| \faktor{\prod_{n \in \NN} \{0,1,\ldots,n\}}{U} \right| = 2^{\aleph_0}$, infatti è chiaro che $\left| \faktor{\prod_{n \in \NN} \{0,1,\ldots,n\}}{U} \right| \leq \left| \prod_{n \in \NN} \{0,1,\ldots,n\} \right| = 2^{\aleph_0}$; inoltre la mappa:
         \[ f : [0,1] \to \faktor{\prod_{n \in \NN} \{0,1,\ldots,n\}}{U} : x \mapsto [(\floor{x \cdot n})_{n \in \NN}] \]
         è iniettiva per la stessa ragione per cui lo era nella dimostrazione della caratterizzazione di $\CC$ come ultraprodotto.
-        \item Supponiamo, per assurdo, che esista una teoria $T$ che assiomatizza la classe dei grafi connessi nel linguaggio $L = \{\purple{e(\cdot,\cdot)}\}$, consideriamo la teoria:
-        \[ T' = T \cup \{\mathsf{AtLeast}_3 \land \mathsf{Path}_{3}(a,b), \mathsf{AtLeast}_4 \land \mathsf{Path}_{4}(a,b), \ldots\}
+        \item Supponiamo, per assurdo, che esista una teoria $T$ che assiomatizza la classe dei grafi connessi nel linguaggio $L = \{\textcolor{purple}{e(\cdot,\cdot)}\}$, e consideriamo la teoria:
+        \[ T' = T \cup \{\neg\,\mathsf{Path}_1(a,b),\neg\,\mathsf{Path}_2(a,b),\ldots\}
         \]
-        dove $\mathsf{Path}_n(a,b) = e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-2},x_{n-1}) \land e(x_{n-1},b)$ è la formula che dice ``c'è un cammino di lunghezza $n$ tra $a$ e $b$''; $T'$ è una $L' := L \cup \{\purple{a}, \purple{b}\} \cup \{c_i : i \in \NN_{\geq 1}\}$-teoria\footnote{Formalmente non servirebbe aggiungere i $c_i$ visto che non li stiamo fissando per qualche ragione in questo caso, tuttavia il risultato non cambia.}.
-        Ora questa teoria è finitamente coerente, infatti data una qualsiasi sottoteoria finita $T'' \subseteq T'$, essa è soddisfatta da un grafo connesso sufficientemente grande del tipo:
+        dove:
+        \[  \mathsf{Path}_1(a,b) := e(a,b), \qquad
+            \mathsf{Path}_n(a,b) := \exists x_1\ldots\exists x_{n-1}\;\bigl(e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-1},b)\bigr),\; n\geq 2 \]
+        Quella ottenuta è una $L' := L \cup \{\textcolor{purple}{a}, \textcolor{purple}{b}\}$-teoria.
+        Mostriamo che è finitamente coerente. Sia $T'' \subseteq T'$ finita. Se $T''$ non contiene formule del tipo $\neg\,\mathsf{Path}_k(a,b)$, allora basta un qualsiasi grafo connesso. Altrimenti, sia $m$ il massimo indice che compare in tali formule e poniamo $n:=m+1$.
+        In questo caso $T''$ è soddisfatta da un grafo connesso del tipo:
         \begin{center}
             \begin{tikzpicture}
                 \node[circle, fill, inner sep=1.5pt, label=below:$a$] (a) at (0,0) {};
@@ -660,12 +664,14 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
                 \draw (cnm1) -- (b);
             \end{tikzpicture}
         \end{center}
-        per cui, per la proposizione precedente, $T'$ è coerente, quindi ha un modello $M \models T'$. Consideriamo il modello ridotto $M|_{L}$, si ha che $M|_{L} \models T$, ma questo è assurdo poiché $M|_{L}$ ha una sequenza infinita di vertici distinti, per cui qualsiasi cammino tra $a$ e $b$ in $M|_{L}$ è di lunghezza infinita, segue che $M|_{L}$ non è connesso $\lightning$.
-        \item Se per assurdo che esista una teoria $T$ che assiomatizza la classe dei campi di caratteristica finita nel linguaggio dei campi $L = \{\purple{0}, \purple{1}, \purple{+}, \purple{\cdot}\}$, per quanto visto:
-        \[ \mathbb{\CC} = \faktor{\prod_{p \text{ primo}} \overline{\mathbb{F}_p}}{U}
+        interpretando $a,b$ come gli estremi della catena. Questo grafo è connesso, quindi soddisfa $T$; inoltre la distanza tra $a$ e $b$ è $n=m+1$, dunque per ogni $k\leq m$ non vale $\mathsf{Path}_k(a,b)$, e quindi soddisfa tutte le formule di $T''$.
+        Per la proposizione precedente, $T'$ è coerente, quindi ha un modello $M \models T'$. Consideriamo il modello ridotto $M|_{L}$: vale $M|_{L} \models T$, dunque $M|_{L}$ è connesso.
+        D'altra parte, in $M$ valgono tutte le formule $\neg\,\mathsf{Path}_n(a,b)$, quindi tra $a_M$ e $b_M$ non esiste alcun cammino finito. Contraddizione, perché in un grafo connesso ogni coppia di vertici è collegata da un cammino finito $\lightning$.
+        \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei campi di caratteristica finita nel linguaggio dei campi $L = \{\textcolor{purple}{0}, \textcolor{purple}{1}, \textcolor{purple}{+}, \textcolor{purple}{\cdot}\}$, per quanto visto:
+        \[ \CC = \faktor{\prod_{p \text{ primo}} \overline{\mathbb{F}_p}}{U}
         \]
-        con $U$ ultrafiltro non principale. Ora se $F$ è un campo di caratteristica finita se e solo se $F \models T$, per il teorema di Łoś si ha che $\mathbb{\CC} \models T$, ma questo è assurdo perché $\mathbb{\CC}$ ha caratteristica 0.
-        \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi liberi nel linguaggio dei gruppi $L_\text{gr} = \{\purple{\cdot}, \purple{^{-1}}, \purple{e}\}$.
+        con $U$ ultrafiltro non principale. Ora se $F$ è un campo di caratteristica finita se e solo se $F \models T$, per il teorema di Łoś si ha che $\CC \models T$, ma questo è assurdo perché $\CC$ ha caratteristica 0.
+        \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi liberi nel linguaggio dei gruppi $L_\text{gr} = \{\textcolor{purple}{\cdot}, \textcolor{purple}{^{-1}}, \textcolor{purple}{e}\}$.
         Allora, preso $U$ ultrafiltro non principale su $\mathcal{P}(\NN)$, possiamo considerare l'ultraprodotto:
         \[ G = \faktor{\prod_{n \in \NN} \ZZ}{U}
         \]
@@ -673,7 +679,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         Verifichiamo quest'ultima cosa, naturalmente, $\left | \faktor{\prod_{n \in \NN} \ZZ}{U} \right | \leq \left | \prod_{n \in \NN} \ZZ \right | = 2^{\aleph_0}$; per la disuguaglianza opposta, consideriamo la funzione:
         \[ f : [0,1] \to \faktor{\prod_{n \in \NN} \ZZ}{U} : x \mapsto [(\floor{x \cdot i})_{i \in \NN}]
         \]
-        Vediamo che $f$ è iniettiva, siano $x < y$ in $[0,1]$, allora vale che $\frac{1}{y-x} \leq i$ definitamente, ma questa disuguaglianza equivale a dire che $\floor{x \cdot i} < \floor{y \cdot i}$, per cui:
+        Vediamo che $f$ è iniettiva, siano $x < y$ in $[0,1]$, allora vale che $\frac{1}{y-x} \leq i$ definitivamente, ma questa disuguaglianza equivale a dire che $\floor{x \cdot i} < \floor{y \cdot i}$, per cui:
         \[ \{i \in \NN | \floor{x \cdot i} \neq \floor{y \cdot i}\} \supseteq \left\{i \in \NN \middle| i \geq \frac{1}{y-x}\right\} \in U
         \]
         dove l'ultima appartenenza vale perché $U$ è un ultrafiltro non principale e quell'insieme è cofinito.
