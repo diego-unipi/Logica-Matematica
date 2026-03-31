@@ -1,0 +1,1681 @@
+\section{Teoria della calcolabilità}
+
+\subsection{Funzioni ricorsive}
+Vorremmo definire la classe delle funzioni implementabili in un calcolatore, tale classe è stata definita in vari modi,
+ad inizio '900 da Church, Turing, Post e altri, e si è poi visto che le varie definizioni date erano equivalenti, seppur magari non fosse quella
+l'intenzione originaria di chi le aveva date. Le principali definizioni che vediamo e che sono state date, sono:
+\begin{enumerate}
+    \item tramite gli operatori di chiusura,
+    \item tramite un modello di calcolo (macchine di Turing),
+    \item tramite formule aritmetiche.
+\end{enumerate}
+
+\begin{definition}[Funzioni primitive ricorsive - PRF]
+    Definiamo la classe delle \vocab{funzioni primitive ricorsive} a partire da alcune funzioni di base e chiudendo la classe sotto alcune operazioni di chiusura.
+    Le funzioni di base vanno da $\NN^k \to \NN$ per qualche $k \in \NN$ e sono:
+    \begin{itemize}
+        \item $0_k : \NN^k \to \NN$, per ogni $k \in \NN$, tale che $0_k(x_1, \dots, x_k) = 0_k(\mathbf x) = 0$,
+        \item $s : \NN \to \NN$, la funzione successore, $s(x) = x + 1$,
+        \item $\pi_{k,i} : \NN^k \to \NN$, per ogni $k \in \NN$ e $1 \leq i \leq k$, tale che $\pi_{k,i}(x_1, \dots, x_k) = x_i$.
+    \end{itemize}
+    Chiudiamo queste funzioni di base sotto le seguenti operazioni, siano $f : \NN^a \to \NN$ e $g_1, \dots, g_a : \NN^b \to \NN$ primitive ricorsive, allora:
+    \[ \NN^b \to \NN : (x_1, \dots, x_b) \mapsto f(g_1(x_1, \dots, x_b), \dots, g_a(x_1, \dots, x_b)) \]
+    è una funzione primitiva ricorsiva, cioè chiudiamo sotto composizione; siano $h : \NN^{k} \to \NN$ e $g : \NN^{k+2} \to \NN$ primitive ricorsive, allora:
+    \[ f : \NN^{k+1} \to \NN : \begin{cases}
+        f(0,y_1, \dots, y_k) = h(y_1, \dots, y_k) \\
+        f(x+1,y_1, \dots, y_k) = g(x,f(x,y_1, \dots, y_k),y_1, \dots, y_k)
+    \end{cases}
+    \]
+    è primitiva ricorsiva, cioè chiudiamo sotto ricorsione.
+\end{definition}
+
+\begin{remark}[Permutazione di primitive ricorsive]
+    Sia $f(x_1, \dots, x_k)$ primitiva ricorsiva, e sia $\sigma \in \mathrm S_k$ una permutazione, allora:
+    \[ g(x_1, \dots, x_k) := f(x_{\sigma(1)}, \dots, x_{\sigma(k)}) \]
+    è primitiva ricorsiva, infatti $g$ si ottiene da $f$ componendo con le proiezioni relative alla permutazione $\sigma$:
+    \[ g(x_1, \dots, x_k) = f(\pi_{k,\sigma(1)}(x_1, \dots, x_k), \dots, \pi_{k,\sigma(k)}(x_1, \dots, x_k)) \]
+    Anzi non è necessario che $\sigma$ sia una permutazione, basta che sia una qualsiasi funzione da $\{1, \dots, k\}$ a $\{1, \dots, k\}$.
+\end{remark}
+
+\begin{notation}[PR]
+    D'ora in avanti PR sarà l'abbreviazione di ``primitivo ricorsivo/a''.
+\end{notation}
+
+Vediamo alcuni esempi di funzioni primitive ricorsive.
+
+\begin{example}[Funzioni costanti]
+    Qualsiasi funzione costante $c_k : \NN^k \to \NN$ è primitiva ricorsiva, infatti $c_k$ si ottiene da $0_k$ componendo con la funzione successore $s$ un numero finito di volte:
+    \[ c_k(x_1, \dots, x_k) = s^k \circ 0_k(x_1, \dots, x_k) \]
+\end{example}
+
+\begin{example}[Funzione somma]
+    La funzione somma $f(x,y) = x + y$ è primitiva ricorsiva, infatti è definita per ricorsione sulla $x$ a partire da $h(y) := \pi_{1,1}(y)$ e $g(x,z,y) := s \circ \pi_{3,2}(x,z,y)$:
+    \[ f(x,y) := \begin{cases}
+        f(0,y) = h(y) = \pi_{1,1}(y) = y \\
+        f(x+1,y) = g(x,f(x,y),y) = s \circ \pi_{3,2}(x,f(x,y),y) = s(f(x,y))
+    \end{cases}\]
+\end{example}
+
+\begin{example}[Funzione prodotto]
+    La funzione prodotto $f(x,y) = x \cdot y$ è primitiva ricorsiva, infatti è definita per ricorsione sulla $x$ a partire da $h(y) := 0_1(y)$ e $g(x,y,z) := \pi_{3,2}(x,y,z) + \pi_{3,3}(x,y,z)$ (che è PR perché è composizione di funzioni PR):
+    \[ f(x,y) := \begin{cases}
+        f(0,y) = h(y) = 0_1(y) = 0 \\
+        f(x+1,y) = g(x,f(x,y),y) = f(x,y) + y
+    \end{cases}\]
+\end{example}
+
+\begin{example}[Funzione potenza]
+    La funzione potenza $f(x,y) = x^y$ è primitiva ricorsiva, infatti posso definire $f(x,y) := F(y,x)$, dove $F$ è definita per ricorsione usando $h(x) := s \circ 0_1(x) = c_1$ e $g(a,b,c) = \pi_{3,2}(a,b,c) \cdot \pi_{3,3}(a,b,c)$:
+    \[ F(y,x) := \begin{cases}
+        F(0,x) = h(x) = c_1(x) = 1 \\
+        F(y+1,x) = g(y,F(y,x),x) = F(y,x) \cdot x
+    \end{cases} \]
+\end{example}
+
+\enlargethispage{2\baselineskip}
+\begin{example}[Funzione predecessore]
+    Definiamo la funzione \vocab{predecessore} $\pred$ come:
+    \[ \pred(x) := \begin{cases}
+        0 & \text{se $x = 0$} \\
+        x - 1 & \text{se $x > 0$}
+    \end{cases} \]
+    $\pred$ è primitiva ricorsiva, ed è definita per ricorsione da $h := 0_0$ e $g(x,z) := \pi_{2,1}(x,z)$:
+    \[ \pred(x) := \begin{cases}
+        \pred(0) = h(0) = 0_0(0) = 0 \\
+        \pred(x+1) = g(x,\pred(x)) = \pi_{2,1}(x,\pred(x)) = x
+    \end{cases} \]
+\end{example}
+
+\begin{example}[Sottrazione troncata]
+    Definiamo la funzione \vocab{sottrazione troncata} $\dotminus$ come:
+    \[ x \dotminus y := \begin{cases}
+        0 & \text{se $x \leq y$} \\
+        x - y & \text{se $x > y$}
+    \end{cases} \]
+    $\dotminus$ è primitiva ricorsiva, infatti è definita per ricorsione sulla $y$ a partire da
+    $h(x) := \pi_{1,1}(x)$ e $g(a,b,c) := \pred \circ \pi_{3,2}(a,b,c)$:
+    \[ x \dotminus y := \begin{cases}
+        x \dotminus 0 = h(x) = \pi_{1,1}(x) = x \\
+        x \dotminus (y+1) = g(y,x \dotminus y,x) = \pred \circ \pi_{3,2}(y,x \dotminus y,x) = \pred(x \dotminus y)
+    \end{cases} \]
+    Notare come stia facendo ricorsione sull'altra variabile, e non su $x$, ma, come già visto, a meno di permutare, posso fare ricorsione su qualsiasi variabile, quindi è ininfluente.
+\end{example}
+
+\begin{definition}[Predicato]
+    $P \subseteq \NN^k$ è un \vocab{predicato PR} se esiste una funzione $f : \NN^k \to \NN$ PR tale che:
+    \[ f(\mathbf x) = \begin{cases}
+        0 & \text{se $\mathbf x \in P$} \\
+        1 & \text{se $\mathbf x \notin P$}
+     \end{cases} \]
+\end{definition}
+
+\begin{notation}[Notazione per i predicati]
+    Eventualmente si confonderanno le notazioni $\mathbf x \in P$ e $P(\bf x)$, intendendo con $P(\bf x)$ la formula $f(\mathbf x) = 0$.
+\end{notation}
+
+\begin{example}[Il predicato $\texttt{zerop}$]
+    Un esempio di predicato è $\texttt{zerop} := \{0\}$, infatti è definito dalla funzione PR:
+    \[ f(x) := 1 \dotminus (1 \dotminus x) \] 
+    infatti, se $\NN\ni x > 1$ allora $1 \dotminus x = 0$ e $1 \dotminus 0 = 1$, per cui $x \not\in \texttt{zerop}$; se $x = 1$ vale ancora $f(1)=1$, mentre se $x = 0$ si ha $1 \dotminus 0 = 1$ e $1 \dotminus 1 = 0$, quindi $x \in \texttt{zerop}$.
+\end{example}
+
+\begin{remark}[Algebra di boole dei predicati PR]
+    I predicati PR sottoinsiemi dello stesso $\NN^k$ formano un'algebra di boole.
+\end{remark}
+
+\begin{proof}
+    Dati $P, Q \subseteq \NN^k$ predicati PR devo verificare che i seguenti sono predicati PR: $P^\complement$, $P \cup Q$, $\NN^k$\footnote{In questo modo ottengo che gli insiemi formano un'algebra sulle parti in senso classico, che corrisponde ad una $\mathbb F_2$-algebra sulle parti, detta anche algebra booleana.}.
+    \begin{itemize}
+        \item[$\boxed{\NN^k}$] È un predicato prendendo la funzione PR data da $0_k$.
+        \item[$\boxed{P^\complement}$] Sia $f$ la funzione PR che definisce $P$, allora $P^\complement$ è definito dalla funzione PR $1 \dotminus f$.
+        \item[$\boxed{P \cup Q}$] Siano $f$ e $g$ le funzioni PR che definiscono rispettivamente $P$ e $Q$, allora $P \cup Q$ è definito dalla funzione PR $(1 \dotminus ((1 \dotminus f) + (1 \dotminus g)))$, oppure da $f \cdot g$.
+    \end{itemize}
+\end{proof}
+
+\begin{example}[Insiemi di confronto]
+    Gli insiemi $\{x \leq y\}$, $\{x < y\}$, $\{x = y\}$, $\{x \neq y\}$\footnote{Nel senso di $\{(x,y) \in \NN^2 |\ldots\}$.} sono predicati PR.
+    Per $\{x = y\}$ è sufficiente usare
+    \[ f(x,y) := (x \dotminus y) + (y \dotminus x), \]
+    infatti $f(x,y)=0$ se e solo se $x=y$. Per $\{x \leq y\}$ è sufficiente usare $g(x,y) := x \dotminus y$.
+    Poi $\{x \neq y\} = \{x = y\}^\complement$ e
+    \[ \{x < y\} = \{x \leq y\} \cap \{x \neq y\}, \]
+    quindi tutti questi insiemi sono nell'algebra dei predicati PR su $\NN^2$.
+\end{example}
+
+\begin{remark}[Definizione per casi]
+    Se $P \subseteq \NN^k$ è un predicato PR, e $f, g : \NN^k \to \NN$ sono funzioni PR, allora la funzione definita per casi da:
+    \[ h(\mathbf x) := \begin{cases}
+        f(\mathbf x) & \text{se $\mathbf x \in P$} \\
+        g(\mathbf x) & \text{se $\mathbf x \notin P$}
+    \end{cases} \]
+    è una funzione PR, infatti posso scrivere $h$ come: $h(\mathbf x) = f(\mathbf x) \cdot (1 \dotminus P(\mathbf x)) + g(\mathbf x) \cdot P(\mathbf x)$, che è una composizione di funzioni PR, e quindi è PR.
+\end{remark}
+
+\begin{example}[Funzione modulo]
+    La funzione $x \bmod y = z \overset{\text{def}}{\iff} z < y \land y \mid x - z$, cioè il rappresentante di $x$ modulo $y$, è una funzione PR poiché è definita per ricorsione e per casi:
+    \[ x \bmod y := \begin{cases}
+        0 \bmod y = 0 \\
+        (x+1) \bmod y := \begin{cases}
+            0 & \text{se $x \bmod y + 1 = y$} \\
+            (x \bmod y) + 1 & \text{se $x \bmod y + 1 \ne y$}
+        \end{cases}
+    \end{cases} \]
+    notare che nella definizione per casi abbiamo usato il predicato PR $P(x,y) := \{x \bmod y + 1 = y\}$, e 
+    la funzione $h$ usata per la ricorsione è:
+    \[ h(a,b,c) := \begin{cases}
+        0 & \text{se $a + 1 = b$} \\
+        a + 1 & \text{se $a + 1 \ne b$}
+    \end{cases} \]
+    che è una funzione PR per definizione per casi.
+\end{example}
+
+\begin{remark}
+    Sia $f : \NN^{k+1} \to \NN$ una funzione PR, allora la funzione $(y_1, \dots, y_k,x) \mapsto \sum_{i < x} f(y_1, \dots, y_k, i)$ è PR,
+    infatti è definita per ricorsione a partire da $h(y_1, \dots, y_k) := 0$ e $g(x,y,z,y_1, \dots, y_k) := y + f(y_1, \dots, y_k, x)$:
+    \[ \sum_{i < x} f(y_1, \dots, y_k, i) := \begin{cases}
+        \sum_{i < 0} f(y_1, \dots, y_k, i) &= h(y_1, \dots, y_k) = 0 \\
+        \sum_{i < x+1} f(y_1, \dots, y_k, i) &= \sum_{i < x} f(y_1, \dots, y_k, i) \\ &+ f(y_1, \dots, y_k,x) 
+    \end{cases} \]
+\end{remark}
+
+\begin{example}[Funzione che conta gli elementi del predicato fino ad $x$]
+    Sia $P \subseteq \NN^{k+1}$ un predicato PR, allora la funzione:
+    \[ g : (y_1, \dots, y_k,x) \mapsto \#\{(y_1, \dots, y_k, i) \in P : i < x\}\] 
+    è una funzione PR, infatti:
+    \[ g(y_1, \dots, y_k,x) = \sum_{i < x} (1 \dotminus P(y_1, \dots, y_k, i))
+    \]
+\end{example}
+
+\begin{example}[Predicato che controlla l'appartenenza ad un altro predicato sotto un certo punto]
+    Sia $Q$ il predicato $(y_1, \dots, y_k,x) \in Q \iff \exists i < x \; (y_1, \dots, y_k,x) \in P$, con $P$ predicato PR, ovvero
+    $(y_1, \dots, y_k,x) \in Q$ se e solo se $(y_1, \dots, y_k,i) \in P$ per qualche $i < x$. $Q$ è un predicato PR, infatti:
+    \[ Q(y_1, \dots, y_k,x) = \{g(y_1, \dots, y_k,x) > 0\} \]
+    dove $g(y_1, \dots, y_k,x) = \#\{(y_1, \dots, y_k, i) \in P : i < x\}$ è la funzione PR che conta gli elementi del predicato $P$ sotto $x$.
+\end{example}
+
+\begin{example}[Funzione quoziente intero]
+    Definiamo $x \div y := \floor{\displaystyle\frac{x}{y}}$, con la convenzione $x \div 0 := 0$.
+    La funzione $x \div y$ è PR, ad esempio per ricorsione su $x$ (con parametro $y$) e per casi:
+    \[ \begin{cases}
+        0 \div y = 0 \\
+        (x+1) \div y := \begin{cases}
+            0 & \text{se $y = 0$} \\
+            (x \div y) + 1 & \text{se $y \neq 0$ e $x \bmod y + 1 = y$} \\
+            x \div y & \text{se $y \neq 0$ e $x \bmod y + 1 \ne y$}
+        \end{cases}
+    \end{cases} \]
+    La definizione usa solo ricorsione primitiva, predicati PR e definizione per casi.
+\end{example}
+
+\subsection{Codifica delle liste}
+
+\begin{definition}[Pairing function]
+    Definiamo la funzione \vocab{pairing function} (o funzione di accoppiamento):
+    \[ \cons : \NN^2 \to \NN : (x,y) \mapsto \frac{(x+y)(x+y+1)}{2} + x + 1\]
+\end{definition}
+
+Tale funzione è biunivoca tra le coppie $(x,y) \in \NN^2$ e i numeri naturali maggiori di 1 (voglio avere un null point, e quindi non voglio che $(0,0)$ venga codificato da $0$).
+La funzione di pairing ha il seguente grafico.
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[x=0.5cm, y=0.5cm, >=stealth]
+        
+        % Disegno degli assi x e y
+        \draw[->, thick] (-0.3, 0) -- (5.5, 0) node[right] {$x$};
+        \draw[->, thick] (0, -0.3) -- (0, 5.5) node[above] {$y$};
+        
+        % Tacche ed etichette sugli assi: a coordinate 1 corrisponde etichetta 0
+        \foreach \i in {1,2,3,4} {
+            \draw[thick] (\i,0.08) -- (\i,-0.08);
+            \node[below=2pt] at (\i,0) {\number\numexpr\i-1\relax};
+        }
+        \foreach \j in {1,2,3,4} {
+            \draw[thick] (0.08,\j) -- (-0.08,\j);
+            \node[left=2pt] at (0,\j) {\number\numexpr\j-1\relax};
+        }
+        
+        % Stile per i numeri: piu piccoli e ravvicinati ai punti interi
+        \tikzset{numero/.style={font=\normalsize\bfseries, anchor=south west, xshift=-8pt, yshift=-8pt}}
+        
+        % Diagonale 1 - Ciano
+        \node[numero, text=cyan] at (1, 1) {1};
+        
+        % Diagonale 2 - Rosso
+        \node[numero, text=red] at (1, 2) {2};
+        \node[numero, text=red] at (2, 1) {3};
+        
+        % Diagonale 3 - Nero
+        \node[numero, text=black] at (1, 3) {4};
+        \node[numero, text=black] at (2, 2) {5};
+        \node[numero, text=black] at (3, 1) {6};
+        
+        % Diagonale 4 - Viola
+        \node[numero, text=purple] at (1, 4) {7};
+        \node[numero, text=purple] at (2, 3) {8};
+        \node[numero, text=purple] at (3, 2) {9};
+        \node[numero, text=purple] at (4, 1) {10};
+        
+        % --- Linee guida opzionali ---
+        % Rimuovi i commenti dalle righe seguenti se desideri aggiungere 
+        % delle leggere linee tratteggiate per enfatizzare le diagonali.
+        % \draw[help lines, color=black!15, dashed] (0.6, 1.4) -- (1.4, 0.6);
+        % \draw[help lines, color=black!15, dashed] (0.6, 2.4) -- (2.4, 0.6);
+        % \draw[help lines, color=black!15, dashed] (0.6, 3.4) -- (3.4, 0.6);
+        % \draw[help lines, color=black!15, dashed] (0.6, 4.4) -- (4.4, 0.6);
+        
+    \end{tikzpicture}
+\end{figure}
+
+\begin{definition}[Funzioni inverse di $\cons$]
+    Definiamo le funzioni $\car, \cdr : \NN \to \NN$ come le funzioni inverse di $\cons$, ovvero:
+    \begin{align*}
+        \car(\cons(x,y)) & := x \\
+        \cdr(\cons(x,y)) & := y
+    \end{align*}
+    che sono funzioni PR. Un modo per verificare che sono PR è osservare che possono essere scritte come:
+    \begin{align*}
+        \car(z) = \sum_{i < z} \sum_{j < z} i \cdot (1 \dotminus \{z = \cons(i,j)\}) \\
+        \cdr(z) = \sum_{i < z} \sum_{j < z} j \cdot (1 \dotminus \{z = \cons(i,j)\})
+    \end{align*}
+    cioè itero la somma finché non becco la coppia $(i,j)$ tale che $z = \cons(i,j)$, allora i due predicati danno 0 e quindi viene 1.
+\end{definition}
+
+\begin{exercise}[Funzione di Ackermann]
+    Dimostrare che la funzione di Ackermann non è una funzione primitiva ricorsiva:\footnote{\underline{\textbf{Hint}}: Un qualunque programma costituito solo da cicli \texttt{for} annidati un numero finito di volte, e senza ricorsione, non può catturare l'intera funzione.}
+    \[ A(m,n) := \begin{cases}
+        A(0,n) = n + 1 \\
+        A(m+1,0) = A(m,1) \\
+        A(m+1,n+1) = A(m, A(m+1,n))
+    \end{cases} \]
+\end{exercise}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Immagini/Ackermann.pdf}
+    \caption{Plot della funzione di Ackermann}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{remark}[Le sezioni $n \mapsto A(m,n)$ sono PR]
+    Per ogni $m \in \NN$, la funzione $A_m : \NN \to \NN$ definita da $A_m(n) := A(m,n)$ è PR.
+    Si dimostra per induzione su $m$: $A_0(n)=n+1$ è il successore, e se $A_m$ è PR allora anche $A_{m+1}$ è PR, perché è definita per ricorsione da:
+    \[ A_{m+1}(0) = A_m(1), \qquad A_{m+1}(n+1) = A_m(A_{m+1}(n)). \]
+\end{remark}
+
+\begin{soln}
+    Per ogni funzione $f : \NN \to \NN$ PR esiste $n \in \NN$ tale che
+    \[ f(x) < A_n(x) \]
+    per ogni $x \in \NN$, dove $A_n(x) := A(n,x)$. In altre parole, le funzioni $x \mapsto A(n,x)$ dominano tutte le funzioni PR unarie.
+    Supponiamo ora per assurdo che $A$ sia PR. Allora anche la funzione diagonale
+    \[ d(x) := A(x,x) + 1 \]
+    sarebbe PR, perché si ottiene da $A$ per composizione con le proiezioni e il successore. Applicando il fatto precedente a $d$, esiste $n \in \NN$ tale che
+    \[ d(x) < A_n(x) \]
+    per ogni $x \in \NN$. Valutando in $x=n$ otteniamo
+    \[ A(n,n) + 1 = d(n) < A_n(n) = A(n,n), \]
+    assurdo. Dunque $A$ non è PR.
+\end{soln}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+L'idea che abbiamo voluto catturare, mediante le funzioni primitive ricorsive, è quella di una classe di funzioni che può essere implementata
+in un calcolatore solo per mezzo di cicli \texttt{for} - per cui sarà già a priori fissato il numero di loop, e che non usino né i costrutti della ricorsione (quindi una funzione non può chiamare se stessa) e 
+non usi cicli potenzialmente illimitati, come i cicli \texttt{while}.\\
+
+Definiamo della notazione per rappresentare funzioni che non convergono.
+
+\begin{definition}[$\NN_\bot$]
+    Definiamo $\NN_\bot := \NN \cup \{\bot\}$.
+\end{definition}
+
+\begin{definition}[Funzioni ricorsive]
+    Definiamo le \vocab{funzioni ricorsive} come le funzioni $f : \NN_\bot^k \to \NN_\bot$ a partire da alcune funzioni di base e chiudendo la classe sotto alcune operazioni di chiusura (in questo caso anche sotto minimizzazione).
+    Le funzioni di base, fissato $k \in \NN$, vanno da $\NN_\bot^k \to \NN_\bot$ e sono:
+    \begin{align*}
+        \pi_{k,i}(x_1, \dots, x_k) &= \begin{cases}
+            x_i & \text{se } x_1, \dots, x_k \in \NN \\
+            \textcolor{purple}{\bot} & \text{altrimenti}
+        \end{cases} \\
+        s(x) &= \begin{cases}
+            x + 1 & \text{se $x \in \NN$} \\
+            \textcolor{purple}{\bot} & \text{se $x = \textcolor{purple}{\bot}$}
+        \end{cases} \\
+        0_k(x_1, \dots, x_k) &= \begin{cases}
+            0 & \text{se } x_1, \dots, x_k \in \NN \\
+            \textcolor{purple}{\bot} & \text{altrimenti}
+        \end{cases}
+    \end{align*}
+    Partendo da queste funzioni faccio la chiusura per le operazioni di:
+    \begin{itemize}
+        \item composizione,
+        \item ricorsione primitiva, con lo stesso schema visto per le funzioni PR, ma con l'aggiunta del caso $f(\textcolor{purple}{\bot},\ldots) := \textcolor{purple}{\bot}$,
+        \item \vocab{minimizzazione}, ovvero se $f : \NN^{k+1} \to \NN_\bot$ è ricorsiva, allora la funzione:
+        \[ \textcolor{purple}{\mu_kf}(x_1, \dots, x_k) = a \in \NN \overset{\text{def}}{\iff} f(x_1, \dots, x_k, a) = 0 \land \forall i < a \; f(x_1, \dots, x_k, i) \in \NN\setminus\{0\} \]
+        in particolare l'ultima cosa non è $\bot$; se non esiste un tale $a$ allora $\mu_kf(x_1, \dots, x_k) := \textcolor{purple}{\bot}$. \textcolor{MidnightBlue}{Cioè $\mu_kf$ produce il valore $a$ tale che $f(x_1, \dots, x_k, a) = 0$, e tale $a$ è il minimo possibile 
+        - l'idea che si vuole catturare è quella della convergenza di un algoritmo, che si ferma quando $f$ produce 0, e se non si ferma allora $\mu_kf$ non converge e quindi è $\bot$.}
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Funzioni ricorsive totali]
+    Diciamo che $f : \NN_\bot^k \to \NN_\bot$ funzione ricorsiva è una \vocab{totale} se $\forall (x_1, \dots, x_k) \in \NN^k \; f(x_1, \dots, x_k) \in \NN$, cioè $f$ non produce mai $\bot$.
+\end{definition}
+
+\begin{remark}[Input $\bot$]
+    Se $f$ è ricorsiva ed uno degli input è $\bot$, allora $f$ produce $\bot$:
+    \[ f(x_1, \dots, x_{i-1}, \textcolor{purple}{\bot}, x_{i+1}, \dots, x_k) = \textcolor{purple}{\bot} \]
+    per ogni $i \in \{1, \dots, k\}$.
+\end{remark}
+
+\begin{proof}
+    Si procede per induzione sulla costruzione di $f$. I casi delle 3 funzioni di base sono banali per la definizione stessa.
+    Per la composizione, se $f = h \circ (g_1, \dots, g_m)$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di qualche $g_i$ è $\bot$, per cui $g_i$ produce $\bot$, e quindi anche $f$ produce $\bot$.\\
+    Per la ricorsione primitiva, se $f$ è definita per ricorsione da $h$ e $g$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $h$ o di $g$ è $\bot$, per cui $h$ o $g$ producono $\bot$, e quindi anche $f$ produce $\bot$.\\
+    Per la minimizzazione, se $f = \mu_kf'$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $f'$ è $\bot$, per cui $f'$ produce $\bot$, e quindi anche $f$ produce $\bot$.
+\end{proof}
+
+\begin{fact}
+    Vale che:
+    \[ \{\text{funzioni PR}\} \subsetneq \{\text{funzioni ricorsive totali}\} \subsetneq \{\text{funzioni ricorsive}\} \]
+\end{fact}
+
+\begin{proof}
+    Per il secondo contenimento si osserva che $\mu_0 s = \textcolor{purple}{\bot}$, perché l'equazione $s(x)=0$ non ha soluzioni. Per il primo è sufficiente considerare la funzione di Ackermann.
+\end{proof}
+
+\subsection{Macchine di Turing}
+
+Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono implementabili da una Macchina di Turing.
+
+\begin{definition}[Macchina di Turing - TM]
+    Siano $\Sigma$ un insieme finito di \vocab{simboli}, $Q$ un insieme finito di \vocab{stati}, una \vocab{macchina di Turing} (\vocab{TM}) è 
+    il dato di $\Sigma$, $Q$, di una \vocab{funzione di transizione}:
+    \[ \delta : Q \times \Sigma \to Q \times \Sigma \times \{\textcolor{purple}{\leftarrow}, \textcolor{purple}{\downarrow}, \textcolor{purple}{\rightarrow}\} \]
+    dove l'ultimo insieme si rappresenta formalmente con $\{0,1,2\}$ (con la corrispondenza in questo esatto ordine), ma è più comodo rappresentarlo con le frecce. Una \vocab{configurazione} è il dato di $(s,p,n)$ dove 
+    $s \in Q$ è lo stato della TM, $p \in \NN$ la posizione, e $n \in \Sigma^*$\footnote{Questa è la notazione di Kleene.} la stringa (o meglio tutto il nastro) in cui ci troviamo, i.e. $n \in \Sigma^{\NN}$ che è quasi sempre 0, i.e. $\exists N \in \NN \; \forall i > N \; n(i) = 0$.\\
+    Dico che la macchina di Turing $M$ passa da una configurazione all'altra:
+    \[ (s,p,n) \overset{M}{\to} (s',p',n') \]
+    se per definizione: $s' = \pi_{3,1} \circ \delta(s,n(p))$, $p' = (p + \pi_{3,3} \circ \delta(s,n(p))) \dotminus 1$ cioè la posizione finale è quella iniziale più 1 se la freccia è $\rightarrow$, è quella iniziale se la freccia è $\downarrow$, e $p-1$ se la freccia è $\leftarrow$ - dove la terza componente di $\delta$ è identificata col numero non con la freccia, e:
+    \[ n'(i) = \begin{cases}
+        n(i) & \text{se $i \ne p$} \\
+        \pi_{3,2} \circ \delta(s,n(p)) & \text{se $i = p$}
+    \end{cases} \]
+    cioè scorrendo il nastro modifico solo la cella in cui mi trovo inizialmente, $n(p)$, lascio le altre uguali e mi sposto.
+\end{definition}
+
+\begin{definition}[Chiusura transitiva]
+    Dico che $c = (s,p,n) \overset{M^*}{\to} c' = (s',p',n')$ è la \vocab{chiusura transitiva} di $c \overset{M}{\to} c'$, se esiste una sequenza finita di configurazioni $c_0, \dots, c_k$ tale che:
+    \[ c_0 \overset{M}{\to} c_1 \overset{M}{\to} \dots \overset{M}{\to} c_k \]
+    con $c_0 = c$ e $c_k = c'$.
+\end{definition}
+
+\begin{exercise}[TM che riconosce i palindromi]
+    Costruire una TM, ovvero la tabella di transizione, che riceva in input:
+    \[ 0110101010111\ldots1011\textcolor{purple}{2}000\ldots \]
+    ed ha due stati terminali, $0$ e $0'$, e termina in $0$ se e solo se la stringa è palindroma. Operiamo nell'alfabeto $\Sigma = \{0,1,2\}$.
+\end{exercise}
+
+\begin{exercise}[Difficile]
+    Dimostra che una TM come nell'esercizio precedente, termina, nel caso peggiore
+    in $O(\text{lunghezza stringa}^2)$ mosse - con $O$ si intende $\leq kl^2 + o(l^2)$ per qualche $k > 0$.\footnote{\underline{\textbf{Hint}}: L'algoritmo più
+    sensato da implementare è: sostituire il primo simbolo con 2, poi spostarsi fino alla fine della stringa, sostituire l'ultimo simbolo con 2, e poi tornare indietro fino al primo simbolo,
+    ripetere finché non si sostituisce tutta la stringa con dei 2, oppure finché non si trova un simbolo diverso da quello sostituito con 2, per cui se la stringa è lunga $l$, allora si fanno $l$ passi per sostituire ciascun simbolo,
+    e quindi $l^2$ passi in totale. Bisogna dimostrare che non si può fare meglio di così, l'idea è che se la stringa è palindroma, la taglio alla metà esatta e posso ricostruire la metà sinistra usando come 
+    informazione tutta la successione di stati che ho ottenuto attraversando il confine. La TM deve attraversare il confine almeno $l/2$ volte, quindi decido di aggiungere un blocco di 0 tra la stringa e la metà riflessa,
+    in modo che la TM non possa usare come informazione il numero di passi fatti, e quindi deve attraversare il confine almeno $l/2$ volte, e ogni volta deve fare almeno $l/2$ passi, per cui ottengo $O(l^2)$.}
+\end{exercise}
+
+\pagebreak
+
+\subsection{Funzioni Turing-computabili}
+
+\begin{definition}[Turing-computabilità]
+    Sia $f : \NN^k \to \NN_\bot$\footnote{Non mettiamo $\bot$ perché, avendo visto che se uno degli input è $\bot$ allora anche l'output è $\bot$, non ci interessa studiare funzioni di questo tipo.} una funzione ricorsiva \vocab{parziale} - nel senso di non necessariamente totale,
+    quindi ricorsiva generica, diciamo che $f$ è \vocab{Turing-computabile} se esiste una TM $M$, con:
+    \begin{itemize}
+        \item $\Sigma \supseteq \{0,1,\textcolor{purple}{\blacktriangleright}\}$,
+        \item $Q \supseteq \{0,1\}$, con 0 \vocab{stop} e 1 \vocab{start},
+        \item $\delta(0,x) = (0,x,\downarrow)$, ovvero lo stato terminale rimane fermo, non cambia simbolo né si muove,
+    \end{itemize}
+    e tale per cui:
+    \begin{itemize}
+        \item se $f(x_1, \dots, x_k) = y$, allora $\textcolor{purple}{\inp(x_1, \dots, x_k)} \overset{M^*}{\to} \textcolor{purple}{\outp(y)}$, con $\inp(x_1, \dots, x_k)$ e $\outp(y)$ due configurazioni,
+        \item se $f(x_1, \dots, x_k) = \textcolor{purple}{\bot}$, allora $\textcolor{purple}{\inp(x_1, \dots, x_k)} \not\overset{M^*}{\to} (0,\ldots)$, ovvero non termina in uno stato 0, dove avverrebbe lo stop, i.e. se non c'è un output non termina mai.
+    \end{itemize}
+    Dove:
+    \[ \inp(x_1, \dots, x_k) := (1,0,\textcolor{purple}{\blacktriangleright}\underbrace{111111}_{x_1}0\underbrace{1111}_{x_2}0\ldots0\underbrace{111}_{x_k}00\ldots) \in Q \times \NN \times \Sigma^* \]
+    dove il numero $x_i$ è rappresentato da una sequenza di $x_i$ simboli 1 (notazione unaria) - tanti quanti il valore di $x_i$, e tra un numero e l'altro c'è uno 0; analogamente:
+    \[ \outp(y) := (0,0,\textcolor{purple}{\blacktriangleright }\underbrace{111\ldots1}_{y}00\ldots) \in Q \times \NN \times \Sigma^* \]
+    dove $y$ è rappresentato da una sequenza di $y$ simboli 1, seguita da una sequenza infinita di 0.
+\end{definition}
+
+\begin{theorem}[Ricorsiva $\Rightarrow$ Turing-computabile]
+    Se $f : \NN^k \to \NN_\bot$ è ricorsiva parziale, allora $f$ è Turing-computabile.
+\end{theorem}
+
+\textcolor{MidnightBlue}{L'idea sarà far vedere che le funzioni di base sono Turing-computabili, e che le funzioni Turing computabili sono chiuse per operazioni di composizione, ricorsione primitiva e minimizzazione.}
+Iniziamo con un caso particolare.
+
+\begin{example}[Composizione di funzioni Turing computabili]
+        Siano $f,g : \NN \to \NN_\bot$ funzioni Turing computabili, verifichiamo che $h(x) := f(g(x))$ è Turing computabile.
+\end{example}
+
+Ciò che vorrei è, detta $G$ la macchina associata a $g$ e $F$ quella associata a $f$, è far partire $G$ dalla sequenza iniziale $\textcolor{purple}{\blacktriangleright}$, farla terminare sempre a $\textcolor{purple}{\blacktriangleright}$, e poi da qui far partire $F$ e farla arrivare a $\textcolor{purple}{\blacktriangleright}$ nello stato $0_F$,
+facendo queste cose avrei di fatto costruito una macchina $H$ che implementa $h$.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Immagini/composizione_di_TC_1.png}
+    \end{minipage}
+    \hspace{0.02\textwidth}
+    \begin{minipage}[b]{0.27\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Immagini/composizione_di_TC_2.png}
+    \end{minipage}
+\end{figure}
+
+Posso costruire per bene una macchina $H$ che implementa le operazioni fatte a mano.
+
+\begin{proof}
+    Supponiamo per comodità che $\Sigma_G = \Sigma_F = \{0,1,\blacktriangleright\} =: \Sigma_H$, definiamo $Q_H := Q_G \sqcup Q_F$, dove poniamo $1_H := 1_G$ e $0_H := 0_F$ - rispettivamente stato iniziale della macchina $H$ 
+    e stato finale della macchina $H$. Per la funzione di transizione definiamo:
+    \[ \delta_H : Q_H \times \Sigma_H \to Q_H \times \Sigma_H \times \{\leftarrow, \downarrow, \rightarrow\} : \delta_H(q,\sigma) := \begin{cases}
+                                                                                                                                     \delta_G(q,\sigma) & \text{se $q \in Q_G\setminus\{0_G\}$} \\
+                                                                                                                                     \delta_F(1_F,\sigma) & \text{se $q = 0_G$} \\
+                                                                                                                                     \delta_F(q,\sigma) & \text{se $q \in Q_F$}
+    \end{cases}\]
+    cioè se sono nello stato iniziale di $G$, mi comporto come se fossi in $F$ - questo corrisponderebbe al nostro intervento manuale, altrimenti mi comporto come la macchina dello stato a cui appartengo.                                                                                 
+\end{proof}
+
+Ora si pone il problema di generalizzare questo argomento alla composizione arbitraria. Costruiamo delle macchine che calcolino $f$, ma con qualche vincolo in più
+rispetto a quelli richiesti dalla definizione di Turing-computabilità, questa scelta è sia comoda che possibile, per cui la adottiamo. Data $f$ vogliamo costruire la
+tabella delle funzioni di transizione della macchina che calcola $f$, lo facciamo a pezzi, cioè prendiamo dei sottoinsiemi degli stati e scriviamo dove vanno.\\
+
+\textbf{Setting}: L'alfabeto per la costruzione di queste macchine sarà costituito solo dai tre simboli di base per la Turing-computabilità, ovvero $\Sigma = \{0,1,\blacktriangleright\}$, per cui definiremo solo nuovi stati.
+
+\begin{notation}[Notazione per descrivere il comportamento di pezzi di TM]
+    Con la notazione: $s_1 \to \texttt{macchina} \to s_2$ intendiamo che, preso un sottoinsieme di stati, dove $s_1$ è lo stato iniziale, che prendiamo sopra a $\blacktriangleright$, seguito da una configurazione
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{Immagini/notazione_macchina_1.png}
+    \end{figure}
+    o non ritorna mai nello stato $s_2$, o ritorna, nello stato $s_2$, sul $\blacktriangleright$, in una nuova configurazione. Assumiamo inoltre che le macchine che stiamo costruendo non vadano mai a sinistra di $\blacktriangleright$.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{Immagini/notazione_macchina_2.png}
+    \end{figure}
+    Quindi $s_1 \to \texttt{macchina} \to s_2 \overset{\text{def}}{\iff}$ la $\texttt{macchina}$ viene posta nello stato $s_1$ sopra a $\blacktriangleright$, con la configurazione - sempre scritta in notazione unaria con gli 0 - che sarà indicata tra parentesi,
+    allora, senza mai toccare ciò che sta a sinistra del triangolino, porta la macchina nello stato $s_2$ sopra a $\blacktriangleright$, con una nuova configurazione - nella solita notazione - che sarà indicata tra parentesi, oppure non termina mai:
+    \[ s_1 \to \texttt{macchina} \to s_2(s_1 \blacktriangleright x_1 x_2 \ldots x_k \ldots) = s_2 \blacktriangleright y_1 y_2 \ldots \]
+\end{notation}
+
+Quindi con questa notazione possiamo facilmente descrivere il comportamento di pezzi di macchine, e poi comporli per ottenere macchine più complesse.
+
+\begin{definition}[Macchine elementari]
+    Definiamo le seguenti macchine elementari.
+    \begin{itemize}
+        \item $\textcolor{purple}{s_1 \to \push_{n,i} s_2}(s_1 \blacktriangleright x_1 x_2 \ldots x_n) = s_2 \blacktriangleright x_1 x_2 \ldots x_n x_i$, dove la nuova configurazione ha $n+1$ numeri, ha copiato l'$i$-esimo numero in fondo alla fila;
+        \item $\textcolor{purple}{s_1 \to \rem_{n,i} s_2}(s_1 \blacktriangleright x_1 x_2 \ldots x_n) = s_2 \blacktriangleright x_1 x_2 \ldots x_{i-1} x_{i+1} \ldots x_n$, dove la nuova configurazione ha $n-1$ numeri, ha rimosso l'$i$-esimo numero;
+        \item $\textcolor{purple}{s_1 \to \exec_{n,k}f s_2}(s_1 \blacktriangleright x_1 x_2 \ldots x_n) = s_2 \blacktriangleright x_1 x_2 \ldots x_{n-k} f(x_{n-k+1}, \ldots, x_n)$, dove la nuova configurazione ha $n-k+1$ numeri, ha eseguito la funzione $f$ sugli ultimi $k$ numeri, e ha aggiunto il risultato in fondo alla fila;
+        \item infine definiamo la macchina che controlla che l'$i$-esimo numero sia 0:
+        \[ \textcolor{purple}{s_1 \to \ttif x_i = 0 \to s_2\lor s_3}(s_1 \blacktriangleright x_1 x_2 \ldots x_n) = \begin{cases}
+            s_2 \blacktriangleright x_1 x_2 \ldots x_n & \text{se $x_i = 0$} \\
+            s_3 \blacktriangleright x_1 x_2 \ldots x_n & \text{se $x_i \ne 0$} 
+        \end{cases} \]
+        i simboli sono uguali, cambia solo lo stato in cui si ritrova la macchina su $\blacktriangleright$, in base a se $x_i$ è 0 o no.
+    \end{itemize}
+\end{definition}
+
+Adesso il piano è: assumiamo di avere queste macchine elementari, e dimostriamo che la classe delle funzioni Turing-computabili, rappresentabili mediante
+macchine di Turing che hanno come alfabeto $\Sigma = \{0,1,\blacktriangleright\}$ e che non vanno mai a sinistra di $\blacktriangleright$, è chiusa per composizione, ricorsione primitiva e minimizzazione.
+Dobbiamo anche definire macchine di Turing che implementino le funzioni: successore, sottrazione troncata per 1, e costante 0. Infine vediamo come implementare le macchine elementari e con questo abbiamo dimostrato che ogni funzione ricorsiva è Turing-computabile.
+
+\begin{proof}
+    Vediamo che la classe delle funzioni Turing-computabili è chiusa per composizione, ricorsione primitiva e minimizzazione. In tutti i casi faremo la seguente cosa: assumiamo di avere le macchine elementari che implementano le operazioni di \texttt{push}, \texttt{rem} e \texttt{exec}, e vediamo come usarle per costruire macchine che implementano le funzioni ottenute per composizione, ricorsione primitiva e minimizzazione.
+    In particolare le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta per evitare problemi - e incollando le funzioni di transizione, ci limiteremo pertanto a descrivere soltanto come sono fatte queste ultime, componendo quelle delle macchine elementari, e non descrivendo per intero le macchine che implementano le funzioni.
+    \begin{itemize}
+        \item[$\boxed{\text{composizione}}$] \underline{Caso particolare}: consideriamo prima il caso $f : \NN^2 \to \NN_\bot$ e $g_1, g_2 : \NN^2 \to \NN_\bot$, e poi generalizziamo. Vogliamo verificare che $f(g_1(x_1,x_2), g_2(x_1,x_2))$ sia Turing computabile. \\
+        Siano $F, G_1, G_2$ le macchine che implementano $f, g_1, g_2$, il nostro obiettivo è costruire una macchina che parta da $\blacktriangleright x_1 x_2$ e arrivi a $\blacktriangleright f(g_1(x_1,x_2), g_2(x_1,x_2))$ - cioè a $\blacktriangleright y$ con $y = f(g_1(x_1,x_2), g_2(x_1,x_2))$, come da definizione.\\
+        In primis vogliamo copiare gli input, altrimenti nel calcolo usando $\exec_{2,2}g_1$ scompaiono e non posso riutilizzarli, quindi operiamo due passaggi di $\push$ per copiare $x_1$ e $x_2$ in fondo alla lista:
+        \[ s_1 \to \push_{2,1} \to \push_{3,2} \to s_2 \]
+        per cui $s_2 \blacktriangleright x_1 x_2 x_1 x_2$. Ora, dallo stato $s_2$ applico $\exec_{4,2}g_1$:
+        \[ s_2 \to \exec_{4,2}g_1 \to s_3 \]
+        con $s_3 \blacktriangleright x_1 x_2 g_1(x_1,x_2)$. Ora copio di nuovo $x_1$ e $x_2$ in fondo alla lista (per usare $\exec$ devo usare i numeri in fondo quindi ho necessità di copiarli) e calcolo $g_2$:
+        \[ s_3 \to \push_{3,1} \to \push_{4,2} \to \exec_{5,2}g_2 \to s_4 \]
+        con $s_4 \blacktriangleright x_1 x_2 g_1(x_1,x_2) g_2(x_1,x_2)$. A questo punto posso cancellare i primi due e calcolare $f$:
+        \[ s_4 \to \rem_{4,1} \to \rem_{3,1} \to \exec_{2,2}f s_5 \]
+        con $s_5 \blacktriangleright f(g_1(x_1,x_2), g_2(x_1,x_2))$, infine vado da $s_5$ a $0$ per stoppare la macchina.\\
+        \underline{Caso generale}: se $f : \NN^k \to \NN_\bot$ e $g_1, \dots, g_k : \NN^h \to \NN_\bot$, vogliamo costruire una macchina che parta da $\blacktriangleright x_1 \ldots x_h$ e arrivi a $\blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$.\\
+        Iniziamo copiando tutti gli input in fondo alla lista:
+        \[ \footnote{Per comodità, d'ora in poi chiameremo gli stati solo con i numeri.}1 \to \push_{h,1} \to \push_{h+1,2} \to \ldots \to \push_{2h-1,h} \to 2 \]
+        con $2 \blacktriangleright x_1 \ldots x_h x_1 \ldots x_h$. Ora usiamo $\exec_{2h,h}g_1$ per calcolare $g_1$:
+        \[ 2 \to \exec_{2h,h}g_1 \to 3 \]
+        con $3 \blacktriangleright x_1 \ldots x_h g_1(x_1, \dots, x_h)$. Ripetendo queste operazioni $k$ volte, e otteniamo lo stato $4 \blacktriangleright x_1 \ldots x_h g_1(x_1, \dots, x_h) \ldots g_k(x_1, \dots, x_h)$. A questo punto cancelliamo i primi $h$ numeri e calcoliamo $f$:
+        \[ 4 \to \rem_{h+k,1} \to \rem_{h+k-1,1} \to \ldots \to \rem_{k+1,1} \to \exec_{k,k}f \to 5 \]
+        con $5 \blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$, infine vado da $5$ a $0$ per stoppare la macchina.
+        \item[$\boxed{\text{ricorsione primitiva}}$] \underline{Caso particolare}: facciamo prima il caso di $f : \NN^2 \to \NN$ con:
+        \[ \begin{cases}
+            f(x_1,0) := g(x_1) \\
+            f(x_1,x_2 + 1) := h(x_1, x_2, f(x_1, x_2))
+        \end{cases}\]
+        dobbiamo implementare $f$ conoscendo $G$ ed $H$. Ci troviamo inizialmente nello stato $1 \blacktriangleright x_1 x_2$, vogliamo arrivare a $0 \blacktriangleright f(x_1,x_2)$.
+        Questo è un ciclo \texttt{for}, per cui ci conviene ragionare al contrario - parto dalla funzione più interna ed arrivo alla più esterna. Iniziamo a calcolare $f(x_1,0) = g(x_1)$,
+        supponiamo di avere già uno 0 (WLOG altrimenti si copia un valore e si calcola $\texttt{exec}0$) in fondo e arriviamo allo stato $\blacktriangleright x_1 x_2 0 f(x_1,0)$: 
+        \[ 1 \to \push_{3,1} \to \exec_{4,1}g \to 2 \]
+        con $2 \blacktriangleright x_1 x_2 0 g(x_1)$, ora:
+        \[ 2 \to \ttif x_2 = 0 \to \begin{cases}
+            3 & \text{se $x_2 = 0$} \\
+            4 & \text{se $x_2 \ne 0$}
+        \end{cases}\]
+        per cui $3 \blacktriangleright x_1 0 0 g(x_1)$, ed è sufficiente cancellare per ottenere $0 \blacktriangleright f(x_1,0)$:
+        \[ 3 \to \rem_{4,1} \to \rem_{3,1} \to \rem_{2,1} = \blacktriangleright f(x_1,0) \to 0 \]
+        se invece $x_2 \ne 0$, possiamo procedere e definire il passo ricorsivo, per cui siamo in uno stato della forma $4 \blacktriangleright x_1 x_2-k k f(x_1,k)$, con $x_2 - k \ne 0$,
+        e dobbiamo arrivare a $\blacktriangleright x_1 x_2-(k+1) (k+1) f(x_1, k+1)$, con $f(x_1, k+1) = h(x_1, k, f(x_1,k))$ per ipotesi.
+        \[ 4 \to \push_{4,2} \to \exec_{5,1}\dotminus 1 \to 5 \]
+        con $5 \blacktriangleright x_1 x_2 - k k f(x_1,k) x_2 - k - 1$, continuiamo a costruire la nuova sequenza:
+        \[ 5 \to \push_{5,3} \to \exec_{6,1}+1 \to 7 \]
+        e $7 \blacktriangleright x_1 x_2 - k k f(x_1,k) x_2 - k - 1 k + 1$, ora ricordando che $f(x_1, k+1) = h(x_1, k, f(x_1,k))$, copio quanto necessario a calcolare $h$ in fondo, la calcolo e poi cancello quello che non serve:
+        \[ 7 \to \push_{6,1} \to \push_{7,3} \to \push_{8,4} \to \exec_{9,3}h \to 8 \]
+        dove $8 \blacktriangleright x_1 x_2 - k k f(x_1,k) x_2 - k - 1 k + 1 h(x_1, k, f(x_1,k))$, poi:
+        \[ 8 \to \rem_{8,2} \to \rem_{7,2} \to \rem_{6,2} \to \rem_{5,1} \to 2\]
+        ovvero $2 \blacktriangleright x_1 x_2 - (k+1) f(x_1, k+1)$, e siamo tornati proprio nello stato 2, da cui ripartire con $\ttif x_2 = 0$, perché abbiamo riottenuto la stessa configurazione invariante che volevamo, ma con $k$ incrementato di 1, per cui possiamo ripetere questo processo finché $x_2 - k \ne 0$,
+        ed a quel punto entriamo nello stato 3, da cui arriviamo a $0 \blacktriangleright f(x_1,x_2)$ come visto prima. Questo completa il passo ricorsivo, tuttavia va anche verificato che se una delle $f(x_1,k)$ è $\bot$, allora anche $f(x_1, k+1)$ è $\bot$, e questo segue dal fatto che $h$ è ricorsiva, e quindi se uno degli input è $\bot$.\\
+        \underline{Caso generale}: esercizio.
+        \item[$\boxed{\text{minimizzazione}}$] Esercizio.
+    \end{itemize}
+\end{proof}
+
+Rimane ora da costruire le macchine elementari, e le macchine che implementano le funzioni $+1$, $\dotminus 1$ (0 non l'abbiamo usata, ma è facile da implementare).
+
+\begin{exercise}
+    Costruire macchine di Turing che implementino le funzioni $+1$ e $\dotminus 1$.
+\end{exercise}
+
+\begin{exercise}
+    Costruire macchine di Turing che implementino le funzioni $\push$, $\rem$, $\exec$ e $\ttif$.
+\end{exercise}
+
+\begin{soln}
+    Vediamo solo il caso di $\exec_{n,k}f$, gli altri sono esercizi.\\
+    Vogliamo costruire una TM che parta da $s_1 \blacktriangleright x_1 \ldots x_n$ e arrivi allo stato $s_2 \blacktriangleright x_1 \ldots x_{n-k} f(x_{n-k+1}, \ldots, x_n)$,
+    supponiamo che la macchina che implementa $f$ sia $F$ - e sia già implementata. La configurazione iniziale corrisponde sul nastro a:
+    \[ \blacktriangleright \underbrace{11\ldots 11}_{x_1} 0 \underbrace{11\ldots 11}_{x_2} 0 \ldots 0 \underbrace{11\ldots 11}_{x_{n-k}} 0 \underbrace{11\ldots 11}_{x_{n-k+1}} 0 \ldots 0 \underbrace{11\ldots 11}_{x_n} 00\ldots \]
+    in primis vogliamo che la macchina si sposti verso destra fino a raggiungere $x_{n-k+1}$; arrivati allo 0 prima di $x_{n-k+1}$, ci mettiamo $\blacktriangleright$,
+    a questo punto si usa che la TM che implementa $f$ non va mai a sinistra di $\blacktriangleright$. Fatto questo abbiamo $f(x_{n-k+1}, \ldots, x_n)$, per cui bisogna tornare indietro e man mano cancellare fino a $x_{n-k}$,
+    infine si continua a spostarsi a sinistra fino a raggiungere $\blacktriangleright$, e da qui si va a $s_2$, che è lo stato di output desiderato.
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{c|ccc}
+        & $\blacktriangleright$ & $0$ & $1$ \\ \hline
+        $s_1$   & $\blacktriangleright$ $s_1$ $\rightarrow$   & $0$ $\alpha_1$ $\rightarrow$  & $1$ $s_1$ $\rightarrow$ \\
+        $\alpha_i$   & $\blacktriangleright$ $\alpha_i$ $\rightarrow$   & $0$ $\alpha_{i+1}$ $\rightarrow$  & $1$ $\alpha_i$ $\rightarrow$ \\
+        $\alpha_{n-k-1}$   & $\blacktriangleright$ $\alpha_{n-k-1}$ $\rightarrow$   & $\blacktriangleright$ $1_F$ $\downarrow$  & $1$ $\alpha_{n-k-1}$ $\rightarrow$ \\
+        $0_F$  & $0$ $\beta$ $\leftarrow$  & $0$ $0_F$ $\downarrow$  & $1$ $0_F$ $\downarrow$ \\
+        $\beta$ & $\blacktriangleright$ $s_2$ $\downarrow$  & $0$ $\beta$ $\leftarrow$  &  $1$ $\beta$ $\leftarrow$
+    \end{tabular}
+    \end{table}
+    Dove $\alpha_1, \dots, \alpha_{n-k-1}$ sono nuovi stati, e nella tabella vanno inclusi anche tutti gli stati di $F$ con le relative transizioni.
+\end{soln}
+
+Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ricorsiva, vedremo una cosa più forte, ovvero che esiste una funzione ricorsiva che simula ogni funzione Turing-computabile.
+
+\begin{remark}
+    Ricordando le definizioni di $\car$ e $\cdr$, come rispettivamente inversa sulla prima e sulla seconda componente di $\cons$,
+    essendo $\cons : \NN^2 \hookrightarrow \NN\setminus\{0\}$, possiamo estendere le definizioni di $\car$ e $\cdr$ in 0, ponendo $\car(0) = \cdr(0) = 0$.
+\end{remark}
+
+\begin{definition}[Codifica di una lista]
+    Definiamo $\langle a_1,\ldots,a_n \rangle$ come:
+    \[ \cons(a_1, \cons(a_2, \ldots \cons(a_{n}, \textcolor{purple}{0})\ldots))\]
+    ovvero codifichiamo una sequenza di numeri in un numero utilizzando la funzione $\cons$ iterata.
+    Alternativamente, se ne può dare una definizione ricorsiva:
+    \begin{itemize}
+        \item $\langle \rangle := 0$,
+        \item $\langle a_1, \ldots, a_n \rangle := \cons(a_1, \langle a_2, \ldots, a_n \rangle)$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Tale codifica è iniettiva, e si verifica per induzione + il fatto che $\cons$ è iniettiva + il fatto che $\cons(a,b) \geq \max\{a,b\}$.
+\end{remark}
+
+\begin{example}
+    La lista $\langle 7,15,0,9 \rangle$ viene codificata come $\cons(7, \cons(15, \cons(0, \cons(9,\textcolor{purple}{0}))))$.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{Immagini/codifica_liste.png}
+    \end{figure}
+    Osservare che $0$ alla fine lo abbiamo messo per indicare la fine della lista, secondo la definizione ricorsiva.
+\end{example}
+
+\begin{definition}[Funzioni PR sulle liste]
+    Definiamo le seguenti funzioni PR sulle liste:
+    \begin{itemize}
+        \item $\nth(\langle a_0, \ldots, a_n \rangle, k) := a_k$ se $k \leq n$, e 0 altrimenti,
+        \item $\length(\langle a_1, \ldots, a_n \rangle) := n$,
+        \item $\cat(\langle a_1, \ldots, a_m \rangle, \langle b_1, \ldots, b_n \rangle) := \langle a_1, \ldots, a_m, b_1, \ldots, b_n \rangle$,
+        \item $\head(\langle a_1, \ldots, a_n \rangle,k) := \langle a_1, \ldots, a_k \rangle$ se $k \leq n$, e $\langle a_1, \ldots, a_n \rangle$ altrimenti,
+    \end{itemize}
+\end{definition}
+
+\begin{exercise}
+    Verificare che le funzioni $\nth$, $\length$, $\cat$ e $\head$ sono PR.
+\end{exercise}
+
+\begin{soln}
+    Vediamo solo il caso di $\nth$. Definiamo la funzione $f$:
+    \[ f(l,k) := \begin{cases}
+        f(l,0) = l \\
+        f(l, k+1) = \cdr(f(l,k))
+    \end{cases} \]
+    di fatto $f(l,k) = \cdr^k(l)$, i.e. $f(l,k)$ è la $k$-esima coda di $l$ (osservare l'immagine nell'esempio sopra). Fissata la coda $k$-esima, prendendone la testa, ottengo proprio il $k$-esimo elemento della lista, per cui:
+    \[ \nth(l,k) = \car(f(l,k)) = \car(\cdr^k(l)) \]
+    Per cui $\nth$ è PR, essendo $\car$ e $\cdr$ PR, e la composizione di funzioni PR è PR.\\
+    Per $\length$ basterà osservare che $\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}$, cioè il numero degli $i$ per cui posso fare $i$-volte coda senza arrivare a 0, ora $\cdr$ è PR e la condizione $\ne$ è PR, così come $i < l$ (notare che 
+    dal fatto che $\cons$ sia maggiore di ciascuno degli elementi segue anche che la codifica di una lista è maggiore di ciascuno degli elementi della lista, per cui $i < l$ è equivalente, a posteriori, a $i < \length(l)$).
+\end{soln}
+
+\begin{lemma}[Ricorsione sul (de)corso dei valori]
+    Sia $f : \NN^{n+1} \to \NN$ una funzione e $g : \NN^{n+1} \to \NN$ PR, tali che:
+    \[ f(x_1, \ldots, x_n,y) = g(x_1, \ldots, x_n, \langle f(\mathbf x,y-1), f(\mathbf x,y-2), \ldots, f(\mathbf x,0) \rangle) \]
+    per cui $f$ è $g$ sugli stessi valori, e sull'ultima componente è la codifica della lista di tutti i valori che assume con entrata $<y$.
+    Se ho una tale $f$, allora $f$ è PR.
+\end{lemma}
+
+\begin{proof}
+    Sia $h(\mathbf{x},y) := \langle f(\mathbf x,y-1), \ldots, f(\mathbf x,0) \rangle$, se riesco a dimostrare che $h$ è PR, allora:
+    \[ f(\mathbf x,y) = g(\mathbf x, h(\mathbf x,y)) \]
+    e $f$ è PR, essendo $g$ e $h$ PR, e la composizione di funzioni PR è PR. Per cui basta dimostrare che $h$ è PR, definiamola per ricorsione primitiva:
+    \[ h(\mathbf x,y) := \begin{cases}
+        h(\mathbf x,0) = \langle \rangle = 0 \\
+        h(\mathbf x,y+1) = \cons(g(\mathbf x, h(\mathbf x,y)), h(\mathbf x,y))
+    \end{cases} \]
+    per la definizione di codifica di una lista ho messo $h(\mathbf x,y)$ come coda di $g(\mathbf x, h(\mathbf x,y))$, che è $f(\mathbf x,y)$ per ipotesi.
+\end{proof}
+
+\begin{example}[Successione di Fibonacci]
+    Dal lemma precedente è facile dimostrare che la successione di Fibonacci $\texttt{fib}$ è PR, infatti:
+    \[ \texttt{fib}(x) = g(\langle \texttt{fib}(x-1), \ldots, \texttt{fib}(0) \rangle) \]
+    e possiamo definire $g$ per casi su un predicato PR come segue:
+    \[ g(l) := \begin{cases}
+        0 & \text{se $\length(l) = 0$} \\
+        1 & \text{se $\length(l) = 1$} \\
+        \car(l) + \car(cdr(l)) & \text{altrimenti}
+    \end{cases} \]
+\end{example}
+
+\begin{remark}
+    Notare che tramite questo lemma è anche più facile verificare che $\cat$ e $\head$ sono PR, infatti:
+    \begin{itemize}
+        \item per $\cat$ si applica il lemma alla successione dei valori $\cat(\cdr^i(l),m)$: il passo successivo si ottiene in modo PR da quello precedente usando $\car$, $\cdr$ e $\cons$;
+        \item per $\head$ si applica il lemma alla successione $\head(l,i)$ per $i \leq k$: il passo è definito in modo PR per casi, usando $\nth$ e $\length$ per decidere se aggiungere un nuovo elemento o lasciare invariato il valore precedente.
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}[Funzione ricorsiva universale]
+    Esiste una funzione ricorsiva parziale $u : \NN^2 \to \NN_\bot$ tale che per ogni $f : \NN^k \to \NN_\bot$ Turing-computabile,
+    esiste un numero $\ulcorner f \urcorner \in \NN$, detto \vocab{codice} di $f$, tale che:
+    \[ \forall x_1, \ldots, x_k \in \NN \; f(x_1, \ldots, x_k) = u(\ulcorner f \urcorner, \langle x_1, \ldots, x_k \rangle) \]
+    ovvero esiste una funzione universale $u$ che simula ogni funzione Turing-computabile, e le basta il codice della funzione e la codifica degli input.
+\end{theorem}
+
+\begin{corollary}[Turing-computabilità $\Rightarrow$ Ricorsività]
+    Se $f : \NN^k \to \NN_\bot$ è Turing-computabile, allora $f$ è ricorsiva.
+\end{corollary}
+
+\begin{proof}
+    La dimostrazione segue dal teorema osservando che:
+    \[ f(x_1, \ldots, x_k) = u(\ulcorner f \urcorner, \cons(x_1, \cons(x_2, \ldots))) \]
+    e $u$ è ricorsiva, $\ulcorner f \urcorner$ è costante, quindi è ricorsiva, $\cons$ è ricorsiva, e la composizione di funzioni ricorsive è ricorsiva.
+\end{proof}
+
+\begin{corollary}
+    $\forall n \in \NN \; \exists u_n : \NN_\bot^{n+1} \to \NN_\bot$ ricorsiva, tale che, data $f : \NN_\bot^n \to \NN_\bot$ ricorsiva,
+    esiste un codice $\ulcorner f \urcorner$ tale che:
+    \[ \forall x_1, \ldots, x_n \in \NN_\bot \; f(x_1, \ldots, x_n) = u_n(\ulcorner f \urcorner, x_1, \ldots, x_n) \]
+\end{corollary}
+
+\begin{proof}
+    È un indebolimento del corollario precedente, comunque fa comodo osservare che ogni funzione ricorsiva può essere simulata da una funzione universale.
+\end{proof}
+
+\begin{remark}[Tesi di Church]
+    ``La classe delle funzioni ricorsive coincide con la classe delle funzioni effettivamente calcolabili''. Tale tesi non è un'affermazione matematica,
+    ma è l'idea che esprime la filosofia dietro alle varie nozioni di calcolabilità che abbiamo dato - e anche non dato, e.g. il $\lambda$-calcolo, che è quella di descrivere tutte le funzioni che 
+    possono essere calcolate effettivamente nella realtà. La tesi di Church può essere espressa in maniera più forte o debole in base a quanto si richieda buona la corrispondenza 
+    tra computabilità pratica e modello teorico, noi ci siamo limitati al risultato semantico - ovvero a quale sia il valore effettivo, ma si può dare anche una corrispondenza tenendo conto della
+    complessità, ed a seconda di quanto uno richiede che la corrispondenza sia precisa viene una tesi più forte o debole.
+\end{remark}
+
+Passiamo alla dimostrazione del teorema.
+
+\begin{proof}
+    Poiché $f$ è Turing-computabile, esiste una macchina di Turing $M$ con $\{0,1,\blacktriangleright\}\supseteq \Sigma, \{0,1\} \supseteq Q \subseteq \NN$,
+    chiamiamo \vocab{configurazione} = $\langle \text{stato}, \text{posizione}, \text{nastro} \rangle$, dove nastro = $\langle a_0, a_1, \ldots, a_n \rangle$, che
+    rappresenta il nastro $a_0a_1\ldots a_n 0 0 \ldots$, chiaramente questa codifica non è univoca perché posso aggiungere 0 in fondo ed ottenere la stessa configurazione, ma questo non è un problema.\\
+    Ci serve anche una codifica della funzione di transizione $\delta : Q \times \Sigma \to Q \times \Sigma \times \{\leftarrow,\downarrow, \rightarrow\}$, posso codificarla con un numero, $\ulcorner \delta \urcorner$, tale che:
+    \[ \nth( \ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \langle \text{stato'}, \text{simbolo'}, \text{spostamento} \rangle \]
+    tale che $\delta(\text{stato}, \text{simbolo}) = (\text{stato'}, \text{simbolo'}, \text{spostamento})$, ovvero $\ulcorner \delta \urcorner$ è il numero la cui posizione nella lista $\langle \text{stato}, \text{simbolo} \rangle$ 
+    contiene la lista $\langle \text{stato'}, \text{simbolo'}, \text{spostamento} \rangle$ che rappresenta l'output di $\delta$ su quell'input - e non è iniettiva.
+    \begin{lemma}
+        Esiste una funzione PR $\step : \NN^2 \to \NN$ tale che per ogni codifica di configurazione $c$:
+        \[ c \overset{M}{\to} \step(\ulcorner \delta \urcorner, c) \]
+        cioè $\step$ calcola la codifica della configurazione successiva a $c$ per la macchina $M$.
+    \end{lemma}
+    \begin{proof}
+        Per la codifica fatta:
+        \begin{itemize}
+            \item \textcolor{purple}{stato} = $\nth(c,0)$,
+            \item \textcolor{purple}{posizione} = $\nth(c,1)$,
+            \item \textcolor{purple}{nastro} = $\nth(c,2)$.
+        \end{itemize}
+        per cui:
+        \[ \textcolor{purple}{nastro} = \langle \underbrace{a_1,\ldots,a_{p-1}}_{\head(\text{nastro},\text{posizione}) =: \alpha}, \underbrace{a_p}_{\nth(\text{nastro},\text{posizione}):=\beta}, \underbrace{a_{p+1}, \ldots, a_n}_{\cdr^{\text{posizione}+1}(\text{nastro})=:\gamma} \rangle \]
+        ora la nuova configurazione dipende da $\nth(\ulcorner \delta \urcorner, \langle \text{stato}, \beta \rangle)$, ovvero $\nth(\ulcorner \delta \urcorner, \cons(\text{stato}, \cons(\beta,0)))$ che chiamo $\texttt{update}$, per cui il nuovo nastro che ottengo è:
+        \[ \text{nastro'} = \cat(\alpha, \cons(\nth(\texttt{update},1), \gamma)) \]
+        il nuovo stato è:
+        \[ \langle \nth(\texttt{update},0),\; \text{posizione} + \nth(\texttt{update},2) \dotminus 1,\; \text{nastro'} \rangle. \]
+        Uniamo queste cose e troviamo la funzione esplicita.
+    \end{proof}
+    Vogliamo descrivere una funzione che dice ``in un certo numero di step, da un certo input arrivo ad un certo output'', per cui definiamo:
+    \[ \texttt{codifica\_input}(\langle x_1, \ldots, x_k \rangle) := \langle 1, 0, \cons(0,\texttt{nastro}(\langle x_1, \ldots, x_k \rangle)) \rangle \]
+    dove $\texttt{nastro}(\langle x_1, \ldots, x_k \rangle)$ è $\cat(\texttt{unario}(x_1), \cons(0, \texttt{nastro}(\langle x_2, \ldots, x_k \rangle)))$.
+    Ora vogliamo dire che c'è una funzione che fa un certo numero di step alla volta, ovvero che la funzione:
+    \[ (n,c,\ulcorner \delta \urcorner) \mapsto \step^n(\ulcorner \delta \urcorner, c) \]
+    è PR, e questo è banale da verificare per induzione su $n$. Vogliamo procurarci, tramite minimizzazione, l'$n$ al quale la macchina termina, consideriamo:
+    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu n\,\big(\nth(\step^n(\ulcorner \delta \urcorner, c),0)=0\big) \]
+    i.e il numero di passi in cui la macchina di Turing $\delta$ si ferma su input $c$. Consideriamo:
+    \[ \texttt{conta\_uni}\!\left(\nth\!\left(\step^{\texttt{n}(\texttt{codifica\_input}(\mathbf{x}),\ulcorner \delta \urcorner)}(\ulcorner \delta \urcorner,\texttt{codifica\_input}(\mathbf{x})),2\right)\right) \]
+    che è il numero di 1 che la macchina di Turing $\delta$ lascia in output dopo essersi fermata su input $\texttt{codifica\_input}(\mathbf{x})$, e quindi è proprio $f(\mathbf x)$. Per il conteggio usiamo la funzione PR:
+    \[ \texttt{conta\_uni}(x) := \begin{cases}
+        0 & \text{se $\car(x) = 0$} \\
+        1 + \texttt{conta\_uni}(\cdr(x)) & \text{se $\car(x) = 1$}
+    \end{cases}\]
+\end{proof}
+
+\begin{corollary}[Forma normale per le funzioni ricorsive]
+    $\forall k \in \NN$ esiste $T_k : \NN^{k+2} \to \NN$ predicato PR, e una funzione $U : \NN \to \NN$ PR, tali che
+    $\forall f : \NN^k \to \NN_\bot$ ricorsiva (parziale) vale:
+    \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0 \]
+    i.e. $x_1, \ldots, x_k$ sono nel dominio di $f$ se e solo se esiste un $n$ tale che il predicato PR $T_k$ applicato all'input di $f$, al codice di $f$ ed a $n$ è 0,
+    e se questo avviene allora:
+    \[ f(x_1, \ldots, x_k) = U(\mu_n(T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0)) \]
+    i.e. se $x_1, \ldots, x_k$ sono nel dominio di $f$, allora $f(x_1, \ldots, x_k)$ è proprio $U$ applicato al minimo $n$ per cui $T_k$ è 0.
+\end{corollary}
+
+\subsection{Teoremi di punto fisso e \texorpdfstring{$s$-$m$-$n$}{s-m-n}}
+
+\begin{theorem}[$s-m-n$]
+    Esiste una funzione ricorsiva totale (in realtà PR):
+    \[ s_n^m : \NN^{m+1} \to \NN \]
+    tale che per ogni $\alpha,x_1, \ldots, x_m,y_1, \ldots, y_n \in \NN$ vale:
+    \[ u_{n+m}(\alpha, \langle x_1, \ldots, x_m, y_1, \ldots, y_n \rangle) = u_n(s_n^m(\alpha,x_1, \ldots, x_m), \langle y_1, \ldots, y_n \rangle) \]
+    ovvero $s_n^m$ è una funzione che, dato il codice di una funzione calcolabile, e alcuni degli input e li fissa, restituisce il codice di una funzione che simula la funzione originale con quegli input fissati.
+\end{theorem}
+
+\begin{example}[Somma PR]
+    Sia $f : \NN^2 \to \NN : (x,y) \mapsto x + y$, allora esiste $s_1^1 : \NN^2 \to \NN$ tale che:
+    \[ u_2(\ulcorner f \urcorner, x,y) = u_1(s_1^1(\ulcorner f \urcorner, x), y) \]
+    ovvero $s_1^1$ è una funzione che, dato il codice di una funzione calcolabile $f$ di due variabili, e un input $x$, restituisce il codice di una funzione che simula $f$ con il primo input fissato a $x$, e quindi che prende un solo input $y$ e restituisce $f(x,y)$.
+    Ad esempio per $x = 7$, ho $\ulcorner g \urcorner := s_1^1(\ulcorner f \urcorner, 7)$, e $g(y) = f(7,y) = 7 + y$, e vale:
+    \[ g(y) = u_1(\ulcorner g \urcorner, y) = u_1(s_1^1(\ulcorner f \urcorner, 7), y) = u_2(\ulcorner f \urcorner, 7,y) = f(7,y) = 7 + y \]
+\end{example}
+
+\begin{theorem}[(Secondo) teorema di punto fisso]
+    Sia $h : \NN \to \NN$ una funzione ricorsiva totale, e sia $n \in \NN$, allora esiste $\alpha$ tale che:
+    \[ \forall x_1, \ldots, x_n \; u_n(\textcolor{purple}{\alpha}, x_1, \ldots, x_n) = u_n(h(\textcolor{purple}{\alpha}), x_1, \ldots, x_n) \]
+    i.e. per ogni funzione ricorsiva totale $h$, esiste un codice $\alpha$ - che codifica una funzione - tale che la funzione codificata da $\alpha$ è uguale alla funzione codificata da $h(\alpha)$, ovvero $h$ ha un punto fisso per quanto riguarda la codifica di funzioni ricorsive.
+\end{theorem}
+
+\begin{example}[Successione di Fibonacci PR - v.2]
+    Consideriamo la classica funzione di Fibonacci $f : \NN \to \NN$ definita da:
+    \[ f(n) := \begin{cases}
+        0 & \text{se $n = 0$} \\
+        1 & \text{se $n = 1$} \\
+        f(n \dotminus 1) + f(n \dotminus 2) & \text{altrimenti}
+    \end{cases} \]
+    che sappiamo essere già PR per il lemma sulla ricorsione sul decorso dei valori, ma vediamo come dimostrarlo usando il secondo teorema di punto fisso.
+    Definiamo la funzione:
+    \[ g(\alpha, n) := \begin{cases}
+        0 & \text{se $n = 0$} \\
+        1 & \text{se $n = 1$} \\
+        u_1(\alpha, n \dotminus 1) + u_1(\alpha, n \dotminus 2) & \text{altrimenti}
+    \end{cases} \]
+    che questa sia una funzione ricorsiva (non necessariamente totale) è ovvio, a questo punto definisco:
+    \[ h(\alpha) := s_1^1(\ulcorner g \urcorner, \alpha) \]
+    cioè la funzione che prende un codice $\alpha$ e restituisce il codice di una funzione che simula $g(\alpha,\cdot)$, ``$\alpha \mapsto \ulcorner g(\alpha,\cdot) \urcorner$'',
+    sia $\alpha$ un punto fisso di $h$, tale che $u_1(\alpha, x) = u_1(h(\alpha), x)$, e dico che $f(x) := u_1(\alpha, x)$, per cui la successione di Fibonacci coincide con una funzione ricorsiva.
+    Vediamo che $f$ coincide con la funzione che ha codice $\alpha$:
+    \begin{align*}
+        u_1(\alpha, x) & = u_1(h(\alpha), x) &&(\text{punto fisso}) \\
+                       & = u_1(s_1^1(\ulcorner g \urcorner, \alpha), x) &&(\text{definizione di $h$}) \\
+                       & = u_2(\ulcorner g \urcorner, \alpha, x) &&(\text{definizione di $s_1^1$}) \\
+                       & = g(\alpha, x) &&(\text{definizione di funzione universale})
+    \end{align*}
+    e, per la definizione di $g$, si ha che $u_1(\alpha, x)$ soddisfa esattamente la definizione ricorsiva di $f$. Se dimostro nella metateoria che
+    c'è una sola funzione che soddisfa la definizione ricorsiva di $f$ - ed in $\mathsf{ZFC}$ è il teorema di ricorsione numerabile, allora $f$ coincide con $u_1(\alpha, x)$, e quindi $f$ è ricorsiva.\footnote{Morale: la nozione di funzione ricorsiva che aveva Gödel è quella giusta.}
+\end{example}
+
+Dimostriamo il teorema $s-m-n$\footnote{Una sorta di half-evaluation per gli informatici.}.
+
+\begin{proof}
+    Iniziamo con l'osservare che basta fare il caso $m = 1$, infatti se riesco a dimostrare che esiste $s_n^1$, allora posso iterare $m$ volte $s_n^1$ per ottenere $s_n^m$.\\
+    Quindi vogliamo solo dimostrare che:
+    \[ \forall \alpha \; \forall x_1, \mathbf{y} \; u_{n+1}(\alpha, x_1, \mathbf{y}) = u_n(s_n^1(\alpha,x_1), \mathbf{y}) \]
+    L'idea è modificare la TM che implementa la funzione codificata da $\alpha$ in modo che, quando riceve un input $x_1$, invece di usarlo come input, lo usi per modificare la propria codifica, e poi si comporti come se avesse ricevuto un input $x_1$ - e quindi simuli la funzione originale con $x_1$ fissato.\\
+    Per fare questo, partendo da un input $1 \blacktriangleright y_1 \ldots y_n$ devo descrivere una macchina che mi porti nello stato $\blacktriangleright x y_1 \ldots y_n$, fatto questo è sufficiente
+    attaccare questa macchina a quella che implementa la funzione codificata da $\alpha$ per concludere. Descriviamo quindi la macchina che ci serve in termini delle transizioni, usando le macchine elementari:
+    \[ 1 \to \underbrace{\exec_{n+1,n+1} s \to \exec_{n+1,n+1} s \to \ldots \to \exec_{n+1,n+1} s}_{\text{$x$ volte}} \to 2 \]
+    con $2 \blacktriangleright y_1 \ldots y_n x$, ho usato $s$ sullo 0 immediatamente a destra di $y_n$; a questo punto non resta che copiare tutto davanti e rimuovere tutto quello che c'è prima:
+    \[ 2 \to \push_{n+1,1} \to \push_{n+2,2} \to \ldots \to \push_{n+n, n} \to 3 \]
+    con $3 \blacktriangleright y_1 \ldots y_n x y_1 \ldots y_n$, e infine:
+    \[ 3 \to \rem_{2n+1,1} \to \rem_{2n,1} \to \ldots \to \rem_{n+2,1} \to 4 \]
+    con $4 \blacktriangleright x y_1 \ldots y_n$, e da qui si attacca la macchina che implementa la funzione codificata da $\alpha$, i.e. $4 \to 1_{\alpha}$.
+    È necessario verificare che la funzione che abbiamo descritto è PR, e si conclude.
+\end{proof}
+
+\begin{exercise}[Effetto collaterale del teorema $s-m-n$]
+    Dimostra che c'è $k : \NN \to \NN$ ricorsiva totale tale che:
+    \[ \forall n \in \NN \; n = u_0(k(n)) \]
+    ovvero c'è una funzione ricorsiva totale che, dato un numero $n$, restituisce un codice di una funzione costante sempre $n$.
+\end{exercise}
+
+\begin{soln}
+    Applichiamo il teorema $s-m-n$ alla funzione $\id_\NN : \NN \to \NN$, che è PR - è la proiezione, e definisco:
+    \[ k(n) := s_0^1(\ulcorner \id_\NN \urcorner, n) \]
+    per cui:
+    \[ u_0(k(n)) = u_0(s_0^1(\ulcorner \id_\NN \urcorner, n)) = u_1(\ulcorner \id_\NN \urcorner, n) = n \]
+    e quindi $k$ soddisfa la richiesta.
+\end{soln}
+
+\begin{exercise}
+    Data $f : \NN_\bot \to \NN_\bot$ ricorsiva, dimostra che esiste $k_f : \NN \to \NN$ ricorsiva totale tale che:
+    \[ \forall n \; f(n) \in \NN \implies f(n) = u_0(k_f(n)) \]
+\end{exercise}
+
+\begin{soln}
+    Una possibilità è definire $k_f(n) := k(f(n))$, dove $k$ è la funzione del precedente esercizio - ma questa non è necessariamente ricorsiva totale, quindi andrebbe verificato.
+    Altrimenti, possiamo definire $k_f(n) := s_0^1(\ulcorner f \urcorner, n)$ - questo è sicuramente ricorsivo totale, perché $s_0^1$ è addirittura PR.
+\end{soln}
+
+Vediamo ora la dimostrazione del (secondo) teorema di punto fisso.
+
+\begin{proof}
+    Abbiamo $h$ fissata e cerchiamo una $\alpha$ tale che $u_n(\alpha, \mathbf x) = u_n(h(\alpha), \mathbf x)$ per ogni $\mathbf x$.
+    Definiamo
+    \[ g(x,\mathbf y) := u_n(h(s_n^1(x,x)),\mathbf y) \]
+    e
+    \[ F(x) := s_n^1(\ulcorner g \urcorner, x). \]
+    Poniamo ora $\alpha := F(\ulcorner g \urcorner) = s_n^1(\ulcorner g \urcorner,\ulcorner g \urcorner)$. Allora:
+    \begin{align*}
+        u_n(\alpha, \mathbf y) & = u_n(s_n^1(\ulcorner g \urcorner,\ulcorner g \urcorner), \mathbf y) \\
+                                 & = u_{n+1}(\ulcorner g \urcorner, \ulcorner g \urcorner, \mathbf y) \\
+                                 & = g(\ulcorner g \urcorner, \mathbf y) \\
+                                 & = u_n(h(s_n^1(\ulcorner g \urcorner,\ulcorner g \urcorner)),\mathbf y) \\
+                                 & = u_n(h(\alpha),\mathbf y).
+    \end{align*}
+    Quindi $\alpha$ è il punto fisso richiesto.
+\end{proof}
+
+\subsection{Insiemi decidibili, semidecidibili e ricorsivamente enumerabili}
+
+\begin{definition}[Insiemi decidibili, semidecidibili e ricorsivamente enumerabili]
+    Sia $R \subseteq \NN^k$, allora $R$ è:
+    \begin{itemize}
+        \item \vocab{semidecidibile} se esiste $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$,
+        \item \vocab{decidibile} se esiste $f$ ricorsiva totale $f : \NN^k \to \NN$ tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$,
+        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva totale tale che $R = \{f(n) | n \in \NN\}$.
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[Equivalenza delle nozioni di decidibilità]
+    Sia $R \subseteq \NN^k$, allora le seguenti sono equivalenti:
+    \begin{enumerate}
+        \item $R$ è semidecidibile,
+        \item $R$ è ricorsivamente enumerabile,
+        \item $R$ è dominio di una funzione ricorsiva parziale, $R = \{\mathbf x \in \NN^k | \exists y \; f(\mathbf x) = y \ne \bot\}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Vediamo $1. \implies 3.$, $3. \implies 2.$ e $2. \implies 1.$.
+    \begin{itemize}
+        \item[$\boxed{1. \Rightarrow 3.}$] Se $R$ è semidecidibile, esiste $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che
+        \[ R = \{\mathbf x \in \NN^k : f(\mathbf x)=0\}. \]
+        Definiamo $\tilde f : \NN^{k+1} \to \NN_\bot$ con
+        \[ \tilde f(\mathbf x,n) := f(\mathbf x), \]
+        e poi
+        \[ h(\mathbf x) := \mu n\,\tilde f(\mathbf x,n). \]
+        Se $\mathbf x \in R$, allora $f(\mathbf x)=0$ e quindi $h(\mathbf x)=0$. Se invece $\mathbf x \notin R$, allora $f(\mathbf x)\in \NN\setminus\{0\}$ oppure $f(\mathbf x)=\bot$, quindi non esiste alcun $n$ con $\tilde f(\mathbf x,n)=0$ e dunque $h(\mathbf x)=\bot$.
+        Quindi
+        \[ R = \{\mathbf x \in \NN^k : h(\mathbf x) \ne \bot\}, \]
+        cioè $R$ è il dominio di una funzione ricorsiva parziale.
+        \item[$\boxed{3. \Rightarrow 2.}$] Se $R$ è dominio di una funzione ricorsiva parziale $f$, per la forma normale esistono $T,U$ PR tali che
+        \[ f(\mathbf x)=U\big(\mu_y(T_{k+1}(\ulcorner f \urcorner,\mathbf x,y)=0)\big). \]
+        Dunque
+        \[ \mathbf x \in R \iff \exists y\; T_{k+1}(\ulcorner f \urcorner,\mathbf x,y)=0. \]
+        Enumerando in diagonale le coppie $(\mathbf x,y)$ e stampando $\mathbf x$ quando la condizione PR vale, si ottiene una funzione totale ricorsiva $e:\NN\to\NN^k$ con immagine esattamente $R$ (eventualmente con ripetizioni). Quindi $R$ è ricorsivamente enumerabile.
+        \item[$\boxed{2. \Rightarrow 1.}$] Se $R$ è ricorsivamente enumerabile, esiste $e:\NN\to\NN^k$ ricorsiva totale con $R=\{e(n):n\in\NN\}$.
+        Sia $\chi_{=}$ un predicato PR su $\NN^k\times\NN^k$ che vale $0$ esattamente quando i due $k$-uple sono uguali. Definiamo
+        \[ m(\mathbf x):=\mu n\,\big(\chi_{=}(e(n),\mathbf x)=0\big). \]
+        Allora $m(\mathbf x)$ converge se e solo se $\mathbf x\in R$. Componendo con la costante zero, $g := 0_1\circ m$ è ricorsiva parziale e soddisfa
+        \[ \mathbf x\in R \iff g(\mathbf x)=0, \]
+        quindi $R$ è semidecidibile.
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    $R$ è decidibile se e solo se $R$ e $R^\complement$ sono semidecidibili.
+\end{proposition}
+
+\begin{remark}[Il complementare di un insieme decidibile è decidibile]
+    Se $R$ è decidibile, allora $R^\complement$ è decidibile, infatti se $f : \NN^k \to \NN$ è ricorsiva totale tale che $R = \{f(\mathbf x) = 0\}$, allora $R^\complement = \{1\dotminus f(\mathbf x) = 0\}$, e quindi è decidibile, perché la funzione ottenuta dalla ricorsione è ancora ricorsiva totale.
+\end{remark}
+
+\begin{proof}
+    È ovvio che se $R$ è decidibile, allora $R$ e $R^\complement$ sono semidecidibili. Per il viceversa, se $R$ e $R^\complement$ sono semidecidibili,
+    per la proposizione precedente sono enumerabili, quindi esistono $f,g : \NN \to \NN^k$ ricorsive totali tali che:
+    \[ R = \{f(n) | n \in \NN\} \quad\text{e}\quad R^\complement = \{g(n) | n \in \NN\} \]
+    a questo punto posso definire $h : \NN \to \NN^k$ come:
+    \[ h(n) := \begin{cases}
+        f(n \div 2) & \text{se $n \bmod 2 = 0$} \\
+        g(n \div 2) & \text{altrimenti}
+    \end{cases} \]
+    in pratica $h$ alterna le due enumerazioni. Sia ancora $\chi_{=}$ il predicato PR di uguaglianza su $\NN^k$ e definiamo
+    \[ m(\mathbf x):=\mu n\,\big(\chi_{=}(h(n),\mathbf x)=0\big). \]
+    Per ogni $\mathbf x$ esiste almeno un tale $n$ (perché $\mathbf x\in R$ oppure $\mathbf x\in R^\complement$), quindi $m$ è totale.
+    Inoltre
+    \[ \mathbf x \in R \iff m(\mathbf x) \bmod 2 = 0. \]
+    Quindi il test di appartenenza a $R$ è ricorsivo totale, cioè $R$ è decidibile.
+\end{proof}
+
+Vediamo un insieme non decidibile.
+
+\begin{proposition}[Halting problem]
+    Sia $H_1 := \{(\alpha,x) \in \NN^2 | u_1(\alpha,x) \ne \bot\}$, ovvero l'insieme di codice-input per cui la macchina universale in dimensione 1 si ferma. Vale che $H_1$ non è decidibile.
+\end{proposition}
+
+\begin{proof}
+    Se per assurdo $H_1$ fosse decidibile, allora la funzione definita per casi:
+    \[ f(\alpha) := \begin{cases}
+        u_1(\alpha,\alpha) + 1 & \text{se $(\alpha,\alpha) \in H_1$} \\
+        0 & \text{altrimenti}
+    \end{cases} \]
+    sarebbe ricorsiva totale: dato $\alpha$, prima decido se $(\alpha,\alpha)\in H_1$; se no restituisco $0$, se sì allora simulo $u_1(\alpha,\alpha)$ fino all'arresto (che esiste proprio perché siamo in $H_1$) e poi aggiungo $1$.
+    Usando $\alpha = \ulcorner f \urcorner$ si danno due casi:
+    \begin{itemize}
+        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, cioè il calcolatore termina su input $\ulcorner f \urcorner$, e quindi $f(\ulcorner f \urcorner) = u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) + 1$, ma $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = f(\ulcorner f \urcorner)$, per cui $f(\ulcorner f \urcorner) = f(\ulcorner f \urcorner) + 1$, assurdo;
+        \item oppure se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \notin H_1$, cioè il calcolatore non termina su input $\ulcorner f \urcorner$, e quindi $f(\ulcorner f \urcorner) = 0$, ma $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = f(\ulcorner f \urcorner) = 0$ e non $\bot$, per cui $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, assurdo.
+    \end{itemize}
+\end{proof}
+
+\begin{exercise}[Halting problem generalizzato]
+    Dimostrare che $H_n$ non è decidibile.
+\end{exercise}
+
+\begin{exercise}
+    Dimostrare che $H_n$ è semidecidibile.
+\end{exercise}
+
+\begin{exercise}[Insiemi non semidecidibili]
+    Dimostrare che l'insieme $TOT := \{\alpha | n \mapsto u_1(\alpha, n) \text{ è totale}\}$, ovvero l'insieme dei codici delle funzioni ricorsive totali,
+    non è semidecidibile e che $TOT^\complement$ non è semidecidibile.\footnote{\underline{\textbf{Hint}}}: Esibisco una $f$ ricorsiva totale tale che,
+    $\alpha \in \NN^2 \setminus H_1 \iff f(\alpha) \in TOT$.
+\end{exercise}
+
+\begin{exercise}
+    Esistono $A,B$ semidecidibili, con $A \cap B = \varnothing$, tali che $\neg \exists C$ decidibile con $A \subseteq C$ e $B \subseteq C^\complement$.
+    Ovvero non esistono due insiemi semidecidibili disgiunti che possono essere separati da un insieme decidibile.
+\end{exercise}
+
+\newpage
+\section{Gerarchie aritmetiche}
+\subsection{Insiemi aritmetici}
+
+\begin{definition}[Insiemi aritmetici]
+    Diciamo che $R \subseteq \NN^k$ è \vocab{aritmetico} se è definibile in $(\NN; +, \cdot, 0, s)$, ovvero:
+    \[ R = \{(x_1,\ldots,x_k) \in \NN^k | (\NN; +, \cdot, 0, s) \models \varphi(x_1, \ldots, x_k)\} \]
+    i.e. aritmetico = $L_{\text{arit}}$-definibile.
+\end{definition}
+
+\begin{definition}[Classi di complessità aritmetica]
+    Diciamo che una formula aritmetica $\varphi$ è \vocab{di classe}:
+    \begin{itemize}
+        \item $\Delta_0^0 = \Sigma_0^0 = \Pi_0^0$ se si ottiene dagli $L_{\text{arit}}$-termini, per chiusura sotto: \textcolor{purple}{$\neg$}, \textcolor{purple}{$\land$}, \textcolor{purple}{$\lor$}, \textcolor{purple}{$\forall x \leq y$}, \textcolor{purple}{$\exists x \leq y$},
+        dove le ultime due sono abbreviazioni per formule della forma $\forall x\,(x \leq y \to \ldots)$ e $\exists x\,(x \leq y \land \ldots)$, con $x < y \overset{\text{def}}{=} \exists t\,(x + t = y)$, per cui possiamo applicare solo \vocab{quantificatori limitati} - i.e. quantificatori che quantificano su un intervallo finito, e quindi non possono essere usati per esprimere proprietà di insiemi infiniti;
+        \item $\Sigma_{n+1}^0$ se $\varphi = \exists x_1 \ldots \exists x_k \psi$ con $\psi$ di classe $\Pi_n^0$;
+        \item $\Pi_{n+1}^0$ se $\varphi = \forall x_1 \ldots \forall x_k \psi$ con $\psi$ di classe $\Sigma_n^0$.
+    \end{itemize}
+    Ovvero il pedice conta il numero di alternanze di blocchi di quantificatori dello stesso tipo, la lettera greca indica se il blocco di quantificatori più esterno è esistenziale o universale.
+\end{definition}
+
+% https://q.uiver.app/#q=WzAsNyxbMSwwLCJcXERlbHRhXzBeMCA9IFxcU2lnbWFfMF4wID0gXFxQaV8wXjAiXSxbMCwxLCJcXFNpZ21hXzFeMCA9IFxcdGV4dGNvbG9ye3B1cnBsZX17XFxleGlzdHN9XFxQaV8wXjAiXSxbMiwxLCJcXFBpXzFeMCA9IFxcdGV4dGNvbG9ye3B1cnBsZX17XFxmb3JhbGx9XFxTaWdtYV8wXjAiXSxbMCwyLCJcXFNpZ21hXzFeMCA9IFxcdGV4dGNvbG9ye3B1cnBsZX17XFxleGlzdHN9XFxQaV8xXjAiXSxbMiwyLCJcXFBpXzFeMCA9IFxcdGV4dGNvbG9ye3B1cnBsZX17XFxmb3JhbGx9XFxTaWdtYV8xXjAiXSxbMCwzLCJcXHZkb3RzIl0sWzIsMywiXFx2ZG90cyJdLFswLDEsIiIsMCx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMCwyLCIiLDIseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEsMywiIiwwLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsxLDQsIiIsMCx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMywyLCIiLDAseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzMsNSwiIiwwLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs0LDYsIiIsMCx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMiw0LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV1d
+\[\begin{tikzcd}
+	& {\Delta_0^0 = \Sigma_0^0 = \Pi_0^0} & \\
+	{\Sigma_1^0 = \textcolor{purple}{\exists}\Pi_0^0} && {\Pi_1^0 = \textcolor{purple}{\forall}\Sigma_0^0} \\
+    {\Sigma_2^0 = \textcolor{purple}{\exists}\Pi_1^0} && {\Pi_2^0 = \textcolor{purple}{\forall}\Sigma_1^0} \\
+	\vdots && \vdots
+	\arrow[no head, from=1-2, to=2-1]
+	\arrow[no head, from=1-2, to=2-3]
+	\arrow[no head, from=2-1, to=3-1]
+	\arrow[no head, from=2-1, to=3-3]
+	\arrow[no head, from=2-3, to=3-3]
+	\arrow[no head, from=3-1, to=2-3]
+	\arrow[no head, from=3-1, to=4-1]
+	\arrow[no head, from=3-3, to=4-3]
+\end{tikzcd}\]
+
+\begin{example}[$p$ è primo]
+    La formula $\textsf{prime}(p) := \forall n \leq p \; (n = 1 \lor n = p \lor \neg \exists m \leq p \; m \cdot n = p)$, che esprime che $p$ è un numero primo,
+    è di classe $\Pi_1^0$, perché è una formula con un blocco di quantificatori universali all'esterno, e all'interno c'è una formula con quantificatori limitati, che è di classe $\Delta_0^0$.  
+\end{example}
+
+\begin{example}
+    Sia $p(x,y)$ polinomio fissato. Il predicato binario
+    \[ R = \{(x,y) \in \NN^2 : p(x,y) = 0\} \]
+    è di classe $\Delta_0^0$, perché la formula $p(x,y)=0$ è senza quantificatori.
+    Invece il predicato unario
+    \[ S = \{x \in \NN : \exists y\; p(x,y)=0\} \]
+    è di classe $\Sigma_1^0$.
+\end{example}
+
+\begin{definition}[Classe di un sottoinsieme di $\NN^k$]
+    $R \subseteq \NN^k$ è di classe $\square$ se esiste una $L_{\text{arit}}$-formula $\varphi$ di classe $\square$ tale che:
+    \[ R = \{(x_1, \ldots, x_k) \in \NN^k : \NN \models \varphi(x_1, \ldots, x_k)\} \]
+\end{definition}
+
+\begin{remark}
+    Ogni insieme aritmetico appartiene alla gerarchia aritmetica, è sufficiente portarla in forma normale premessa.
+\end{remark}
+
+\begin{definition}[Classe $\Delta_n^0$]
+    $R \subseteq \NN^k$ è di classe $\Delta_n^0$ se $R$ è sia un insieme di classe $\Sigma_n^0$ che di classe $\Pi_n^0$.
+\end{definition}
+
+\begin{remark}[Chiusura delle classi aritmetiche]
+    Valgono le seguenti.
+    \begin{itemize}
+        \item $\Sigma_n^0$ è chiusa sotto: $\land$, $\lor$, $\exists$, $\textcolor{purple}{\forall y \leq x}$,
+        \item $\Pi_n^0$ è chiusa sotto: $\land$, $\lor$, $\forall$, $\textcolor{purple}{\exists y \leq x}$,
+        \item $X \subseteq \NN^k$ è di classe $\Sigma_n^0$ se e solo se $X^\complement$ è di classe $\Pi_n^0$.
+    \end{itemize}
+\end{remark}
+
+\begin{proof}
+    La terza è immediata dalla definizione del complementare. Inoltre, poiché la negazione scambia $\Sigma_n^0$ e $\Pi_n^0$, la prima affermazione è duale della seconda: basta dimostrare la prima.
+    Siano dunque $\varphi,\psi$ formule di classe $\Sigma_n^0$.
+    \begin{itemize}
+        \item[$\land,\lor$] Portando entrambe in forma premessa, posso accodare i blocchi esistenziali esterni e lasciare dentro una congiunzione/disgiunzione di formule di classe $\Pi_{n-1}^0$; resto quindi in $\Sigma_n^0$.
+        \item[$\exists$] È banale: aggiungere un blocco esistenziale esterno non aumenta la complessità oltre $\Sigma_n^0$.
+        \item[$\forall y \le x$] Scrivo $\varphi(x,y)$ in forma $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora
+        \[ \forall y\le x\,\varphi(x,y) \iff \exists b\,\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b\,\theta(x,y,\mathbf z). \]
+        L'equivalenza vale perché i testimoni dei quantificatori esistenziali sono cercati su un insieme finito di valori di $y$. I quantificatori limitati non aumentano il livello, quindi la formula interna è di classe $\Pi_n^0$; con l'esistenziale esterno torno in $\Sigma_n^0$.
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}[Chiusura di $\Delta_n^0$]
+    $\Delta_n^0$ è stabile per: $\land$, $\lor$, $\neg$, $\forall y \leq x$, $\exists y \leq x$.
+\end{corollary}
+
+\begin{theorem}[Semidecidibilità in termini della gerarchia aritmetica]
+    $S \subseteq \NN^k$ è semidecidibile se e solo se $S$ è di classe $\Sigma_1^0$.
+\end{theorem}
+
+\begin{corollary}[Decidibilità in termini della gerarchia aritmetica]
+    $S \subseteq \NN^k$ è decidibile se e solo se $S$ è di classe $\Delta_1^0$.
+\end{corollary}
+
+Vediamo subito la dimostrazione del corollario.
+
+\begin{proof}
+    Sappiamo che $S \subseteq \NN^k$ è decidibile se e solo se $S$ e $S^\complement$ sono semidecidibili, che equivale per il teorema a dire che $S$ è di classe $\Sigma_1^0$ e $S^\complement$ è di classe $\Sigma_1^0$.
+    Ora $S^\complement$ è di classe $\Sigma_1^0$ se e solo se $S$ è di classe $\Pi_1^0$, per cui $S$ è sia di classe $\Sigma_1^0$ che di classe $\Pi_1^0$, e quindi è di classe $\Delta_1^0$, e viceversa.\\
+   Abbiamo usato che se un insieme è di classe $\Sigma_n^0$ allora il suo complementare è di classe $\Pi_n^0$, ciò deriva dal fatto che la negazione inverte i quantificatori, e dalla definizione di classe di un sottoinsieme di $\NN^k$.
+\end{proof}
+
+\begin{example}[Insiemi diofantei]
+    L'insieme $\{ (x_1, \ldots, x_k) \in \NN^k : p(x_1, \ldots, x_k) = 0 \}$ è di classe $\Delta_0^0$,
+    infatti la $L_{\text{arit}}$-formula $p(x_1, \ldots, x_k) = 0$ è senza quantificatori.
+    Quando verificheremo che $\Delta_0^0$ è un sottoinsieme dei predicati PR avremo:
+    \[ \{\text{polinomi}\} \subseteq \Delta_0^0 \subseteq \{\text{predicati PR}\} \subseteq \{\text{decidibili}\} \subseteq \{\text{semidecidibili}\} = \Sigma_1^0 \]
+    ora $\textcolor{purple}{\exists}\Sigma_1^0 = \Sigma_1^0$, e se faccio questa cosa con $\Delta_0^0$ ottengo $\textcolor{purple}{\exists}\Delta_0^0 = \Sigma_1^0$, 
+    e quindi tutta la catena diventa $\Sigma_1^0$, per cui:
+    \[ \{(x_1, \ldots, x_k) | \exists y_1 \ldots \exists y_h \; p(x_1, \ldots, x_k, y_1, \ldots, y_h) = 0\} \subseteq \Sigma_1^0 \]
+    questi sono gli insiemi diofantei (parametrici). Quindi, in base a quanto dimostrato sopra, vale l'inclusione:
+    \[ \{\text{insiemi diofantei parametrici}\} \subseteq \Sigma_1^0 \]
+    in particolare, ogni insieme diofanteo parametrico è semidecidibile (equivalentemente, ricorsivamente enumerabile).
+\end{example}
+
+Ci servono dei lemmi per dimostrare il teorema.
+
+\begin{lemma}
+    Sia $f : \NN^k \to \NN_\bot$ ricorsiva parziale, allora esiste $\varphi(x_1, \ldots, x_k, y)$ di classe $\Sigma_1^0$ tale che:
+    \[ f(x_1, \ldots, x_k) = y \iff \NN \models \varphi(x_1, \ldots, x_k, y) \] 
+\end{lemma}
+
+Da questo lemma il teorema è praticamente fatto, come segue.
+
+\begin{proof}
+    Se $S$ è semidecidibile, allora esiste $f$ ricorsiva parziale tale che $S = \{f(x_1, \ldots, x_k) = 0\}$,
+    dal lemma questo equivale a dire che $S = \{(x_1, \ldots, x_k) : \NN \models \varphi(x_1, \ldots, x_k, 0)\}$, e $\varphi(x_1, \ldots, x_k, 0)$ di classe $\Sigma_1^0$ per le ipotesi del lemma,
+    da cui $S$ è di classe $\Sigma_1^0$, e sono tutte delle equivalenze.
+\end{proof}
+
+Dimostriamo ora il lemma.
+
+\begin{proof}
+    Induzione sulla costruzione di $f$.
+    \begin{itemize}
+        \item[$\boxed{\text{composizione}}$] Se $h = f \circ (g_1,\ldots,g_k)$, con $f : \NN^k \to \NN_\bot$ e $g_i : \NN^m \to \NN_\bot$ ricorsive parziali, per ipotesi induttiva esistono formule $\varphi_f(\mathbf z,y)$ e $\varphi_{g_i}(\mathbf x,z_i)$ di classe $\Sigma_1^0$ che rappresentano i rispettivi grafi. Allora
+        \[ h(\mathbf x)=y \iff \exists z_1\ldots\exists z_k\,\Big(\bigwedge_{i=1}^k \varphi_{g_i}(\mathbf x,z_i)\land \varphi_f(z_1,\ldots,z_k,y)\Big), \]
+        che è ancora $\Sigma_1^0$.
+        \item[$\boxed{\begin{matrix}\text{ricorsione}\\\text{primitiva}\end{matrix}}$] Sia
+        \[ f(0,\mathbf x)=h(\mathbf x), \qquad f(y+1,\mathbf x)=g\big(y,f(y,\mathbf x),\mathbf x\big), \]
+        con $h,g$ ricorsive parziali. Per ipotesi induttiva i grafi di $h$ e $g$ sono $\Sigma_1^0$.
+        Usando la codifica $\beta$ delle sequenze finite, $f(y,\mathbf x)=b$ equivale all'esistenza di una sequenza codificata che parte dal valore di $h(\mathbf x)$, applica il passo dato da $g$ per tutti gli indici $<y$ e termina in $b$:
+        \[ \exists p\exists q\,\Big(\varphi_h(\mathbf x,\beta(p,q,0)) \land \beta(p,q,y)=b \land \forall i<y\,\varphi_g\big(i,\beta(p,q,i),\mathbf x,\beta(p,q,i+1)\big)\Big). \]
+        Per la chiusura di $\Sigma_1^0$ rispetto ai quantificatori limitati, otteniamo ancora una formula di classe $\Sigma_1^0$.
+        \item[$\boxed{\text{minimizzazione}}$] Se $f(\mathbf x)=\mu t\,g(\mathbf x,t)$, con $g$ ricorsiva parziale, per ipotesi induttiva esiste $\varphi_g(\mathbf x,t,u)$ di classe $\Sigma_1^0$ che rappresenta $g(\mathbf x,t)=u$.
+        Allora
+        \[ f(\mathbf x)=y \iff \exists u\,\Big(\varphi_g(\mathbf x,y,u)\land u=0\land \forall t<y\,\exists v\,(\varphi_g(\mathbf x,t,v)\land v\neq 0)\Big), \]
+        che è $\Sigma_1^0$ (di nuovo, grazie ai quantificatori limitati).
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}[Codifica $\beta$ di Gödel delle sequenze finite]
+    Sia $\beta(a,b,k) = a \bmod (b\cdot (k+1)+1)$, dati $y,z_0, \ldots, z_y$, esiste $a,b$ tali che:
+    \[ \forall k \leq y \; \beta(a,b,k) = z_k \]
+\end{lemma}
+
+\begin{proof}
+    Pongo
+    \[ b := (y+1)!\cdot\Big(1+\sum_{i\le y} z_i\Big). \]
+    Per ogni $k\le y$ definisco $m_k := b(k+1)+1$. Allora $m_k>z_k$.
+    Inoltre i moduli $m_0,\ldots,m_y$ sono a due a due coprimi: se $i<j$ e $d\mid m_i,m_j$, allora
+    \[ d\mid (m_j-m_i)=b(j-i), \]
+    ma anche $d\mid m_i=b(i+1)+1$, quindi $d\mid 1$ e dunque $d=1$.
+    Per il teorema cinese del resto esiste $a$ tale che
+    \[ a\equiv z_k \pmod{m_k} \qquad (k\le y). \]
+    Siccome $0\le z_k<m_k$, il resto di $a$ modulo $m_k$ è esattamente $z_k$, quindi
+    \[ \beta(a,b,k)=a\bmod(b(k+1)+1)=z_k \quad \text{per ogni }k\le y. \]
+\end{proof}
+
+\begin{remark}[Complessità di $\beta(a,b,k)$]
+    La relazione $r=\beta(a,b,k)$ è equivalente a
+    \[ \exists q\,\big(a=q\cdot(b(k+1)+1)+r \land r<b(k+1)+1\big), \]
+    quindi è di classe $\Sigma_1^0$ (in effetti anche $\Delta_0^0$).
+\end{remark}
+
+Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implicazione inversa.
+
+\begin{lemma}[$\Delta_0^0 \subseteq \{\text{predicati PR}\}$]
+    Vale che:
+    \[ \Delta_0^0 \subseteq \{\text{predicati PR}\} \]
+\end{lemma}
+
+\begin{proof}
+    Induzione strutturale sulle formule di classe $\Delta_0^0$.
+    Le formule atomiche sono uguaglianze tra termini aritmetici, quindi definiscono predicati PR (i termini aritmetici definiscono funzioni PR).
+    La chiusura sotto $\neg,\land,\lor$ segue dall'algebra di Boole dei predicati PR.
+    Per i quantificatori limitati, se $P(\mathbf x,y)$ è PR, allora anche
+    \[ \exists y\le t\,P(\mathbf x,y) \qquad\text{e}\qquad \forall y\le t\,P(\mathbf x,y) \]
+    sono PR, perché si riducono a combinazioni finite di predicati PR su un intervallo limitato.
+    Quindi ogni formula $\Delta_0^0$ definisce un predicato PR.
+\end{proof}
+
+A questo punto manca solo la freccia del teorema.
+
+\begin{proof}
+    Sia $S$ di classe $\Sigma_1^0$. Allora esiste una formula $\theta(\mathbf x,y)$ di classe $\Delta_0^0$ tale che
+    \[ \mathbf x\in S \iff \NN\models \exists y\,\theta(\mathbf x,y). \]
+    Per il lemma precedente, esiste un predicato PR $P(\mathbf x,y)$ con
+    \[ P(\mathbf x,y)=0 \iff \NN\models \theta(\mathbf x,y). \]
+    Definisco la funzione ricorsiva parziale
+    \[ g(\mathbf x):=\mu y\,(P(\mathbf x,y)=0). \]
+    Allora
+    \[ \mathbf x\in S \iff g(\mathbf x)\downarrow. \]
+    Per la proposizione di equivalenza tra semidecidibilità e domini di funzioni ricorsive parziali, $S$ è semidecidibile.
+\end{proof}
+
+Ammettiamo di avere un'enumerazione delle formule, i.e. $\varphi \mapsto \ulcorner \varphi \urcorner$, con questa enumerazione vale il seguente corollario.
+
+\begin{corollary}[Teorema di indecidibilità di Church]
+    L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi \}$ non è (semi)-decidibile.
+\end{corollary}
+
+\begin{proof}
+    Sia
+    \[ V:=\{\ulcorner\varphi\urcorner : \NN\models\varphi\}. \]
+    Se per assurdo $V$ fosse decidibile, potremmo decidere $H_1$, assurdo.
+    Infatti $H_1$ è semidecidibile, quindi per il teorema precedente esiste una formula $\psi(x,y)$ di classe $\Sigma_1^0$ tale che
+    \[ (x,y)\in H_1 \iff \NN\models\psi(x,y). \]
+    Poiché la numerazione di Gödel è effettiva, la mappa
+    \[ (x,y)\mapsto \ulcorner \psi(\ol x,\ol y)\urcorner \]
+    è ricorsiva totale. Dunque
+    \[ (x,y)\in H_1 \iff \ulcorner \psi(\ol x,\ol y)\urcorner \in V, \]
+    e questo darebbe una decisione di $H_1$, contraddizione.
+\end{proof}
+
+Morale l'insieme delle verità aritmetiche non è decidibile, e quindi non esiste un'assiomatizzazione ricorsiva delle verità aritmetiche.
+
+\subsection{Teorema di Rosser}
+Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $L = L_{\text{arit}} = \{0,+,\cdot,s\}$.
+
+\begin{itemize}
+        \item [\textcolor{purple}{$\mathsf{Q1}$}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
+        \item [\textcolor{purple}{$\mathsf{Q2}$}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
+        \item [\textcolor{purple}{$\mathsf{Q3}$}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{$\mathsf{Q4}$}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{$\mathsf{Q5}$}] $\forall x \; x \cdot 0 = 0$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)};
+        \item [\textcolor{purple}{$\mathsf{Q6}$}] $\forall x \; \forall y \; x \cdot s(y) = (x \cdot y) + x$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)}.
+        \item [\textcolor{purple}{$\mathsf{Q7}$}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
+\end{itemize}
+
+Il nostro obiettivo è dimostrare il teorema di Rosser, che sarà una versione più forte del teorema di Gödel.
+
+\begin{theorem}[Rosser]
+    Sia $T$ una $L$-teoria che contiene $\mathsf{Q}$, ovvero $T \vdash \mathsf{Q}$, e sia $T$ \vocab{ricorsivamente assiomatizzabile}\footnote{Si può indebolire a ``$T$ \vocab{interpreta} $\mathsf{Q}$''},
+    i.e. l'insieme delle codifiche degli assiomi è ricorsivamente enumerabile, e coerente, allora $T$ è incompleta, ovvero esiste $\varphi$ chiusa tale che $T \nvdash \varphi$ e $T \nvdash \neg \varphi$.
+\end{theorem}
+
+L'idea del perché questa sia la formulazione giusta è che $Q$ ha un numero finito di assiomi, al contrario di $\mathsf{PA}$.
+
+\begin{proposition}
+    Sia $\varphi$ una formula aritmetica chiusa, valgono i seguenti fatti.
+    \begin{itemize}
+        \item Se $\varphi$ è di classe $\Delta_0^0$, allora:
+        \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \quad \text{e} \quad \NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi \]
+        \item Se $\varphi$ è di classe $\Sigma_1^0$, allora:
+        \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \]
+    \end{itemize}
+\end{proposition}
+
+\begin{remark}
+    Le due condizioni sulle formule chiuse in $\Delta_0^0$ implicano che tali formule sono decidibili in $\mathsf{Q}$, infatti essendo chiuse in $\NN$ vale necessariamente sempre solo una tra $\NN \models \varphi$ e $\NN \models \neg \varphi$,
+    e la validità in $\NN$ è equivalente alla dimostrabilità in $\mathsf{Q}$.
+\end{remark}
+
+\begin{proof}
+    Per formule chiuse $\Delta_0^0$ si procede per induzione strutturale: per il caso atomico si usa il fatto che $\mathsf Q$ sa fare i conti sui termini chiusi, e per i connettivi/quantificatori limitati si usa che la verifica è finita e che $\mathsf Q$ dimostra le identità aritmetiche necessarie.
+    Quindi, per $\Delta_0^0$ chiuse, verità in $\NN$ e dimostrabilità in $\mathsf Q$ coincidono sia per $\varphi$ sia per $\neg\varphi$.
+    Se ora $\varphi$ è $\Sigma_1^0$ chiusa, scrivo $\varphi\equiv\exists x\,\theta(x)$ con $\theta\in\Delta_0^0$. Se $\NN\models\varphi$, esiste $n$ con $\NN\models\theta(\ol n)$; per il caso $\Delta_0^0$ ottengo $\mathsf Q\vdash\theta(\ol n)$, quindi $\mathsf Q\vdash\exists x\,\theta(x)$.
+    Viceversa, se $\mathsf Q\vdash\varphi$, allora $\NN\models\varphi$ per correttezza di $\mathsf Q$ rispetto al modello standard.
+\end{proof}
+
+\begin{definition}[Numerali]
+    Sia $n \in \NN$, chiamo $\ol n \overset{\text{def}}{=} s(s(\ldots s(0)\ldots))$, con $n$ successori, \vocab{numerale} di $n$, formalmente 
+    questi sono termini di $L_{\text{arit}}$ e:
+    \[ \ol n := \begin{cases}
+        \ol 0 = 0 & \text{se $n = 0$} \\
+        \ol{n+1} = s(\ol n) & \text{altrimenti}
+    \end{cases}\]
+    Alternativamente un numerale è una mappa che associa ogni naturale ad un $L_{\text{arit}}$-termine.
+\end{definition}
+
+\begin{lemma}[$\mathsf Q$ sa fare i conti]
+    Sia $t$ un termine di $L_{\text{arit}}$ chiuso, detto $n = \{\ldots\}_\NN t$, allora vale che:
+    \[ Q \vdash t = \ol n \]
+    ovvero l'interpretazione del numerale coincide con quella del termine $t$ che dà lo stesso numero.
+\end{lemma}
+
+\begin{proof}
+    Induzione strutturale sugli $L_{\text{arit}}$-termini (chiusi).
+\end{proof}
+
+\begin{lemma}[Caso base del teorema]
+    Sia $\varphi$ una formula atomica chiusa (solo un'uguaglianza di termini è possibile), allora:
+    \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \quad \text{e} \quad \NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi \]
+\end{lemma}
+
+\begin{definition}[Ordinamento sui termini aritmetici]
+    Siano $t_1, t_2$ $L_{\text{arit}}$-termini, dico che $t_1 \, \textcolor{purple}{\leq} t_2$ se $\exists x \; x + t_1 = t_2$.\footnote{Questa è una relazione di ordinamento, $\mathsf Q$ non è in grado di dimostrare che è un ordinamento, inoltre si poteva anche mettere $+x$ a posto di $x+$,
+    visto che $\mathsf{Q}$ non è in grado di dimostrare che $+$ è commutativo.}
+\end{definition}
+
+\begin{definition}[Elementi standard e non standard]
+    Sia $M \models \mathsf{Q}$, sia $n \in M$, dico che $n$ è \vocab{standard} o \vocab{non standard} se $\exists x \; M \models n = \ol x$ o $\forall x\in M \; M \models n \ne \ol x$.
+\end{definition}
+
+Si possono pensare come elementi fuori dalla catena dei successori, e andranno pensati come più grandi di tutti i numerali.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Immagini/elementi_non_standard.png}
+\end{figure}
+
+\begin{lemma}
+    $\forall n \in \NN$ vale che:
+    \[ \mathsf Q \vdash \forall a (a \leq \ol n \leftrightarrow (a = \ol 0 \lor a = \ol 1 \lor \ldots \lor a = \ol n)) \]
+    ovvero ogni elemento minore o uguale ad un numerale è uguale ad un numerale.
+\end{lemma}
+
+\begin{lemma}
+    Sia $M \models \mathsf{Q}$, sia $\alpha \in M$ non standard, allora:
+    \[ \forall n \in \NN \; M \models \alpha > \ol n \]
+    ovvero ogni elemento non standard è maggiore di ogni numerale.
+\end{lemma}
+
+Finalmente possiamo dimostrare la proposizione che ci serve per il teorema di Rosser.
+
+\begin{corollary}
+    Sia $f : \NN^k \to \NN$ ricorsiva, allora c'è $\varphi$ di classe $\Sigma_1^0$ tale che:
+    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\;\big(\mathsf Q \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \leftrightarrow f(x_1,\ldots,x_k)=y\big) \]
+    ovvero ogni funzione ricorsiva totale è rappresentabile in $\mathsf{Q}$.
+\end{corollary}
+
+\begin{lemma}
+    Sia $f : \NN^k \to \NN_\bot$ ricorsiva \textcolor{purple}{totale}, allora c'è $\varphi$ di classe $\Sigma_1^0$ tale che:
+    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\;\big(\mathsf Q \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \leftrightarrow f(x_1,\ldots,x_k)=y\big) \]
+    che differisce dal corollario precedente perché in questo caso la $\mathsf Q$ non solo dimostra i casi particolari ma proprio il caso generale in cui ho addirittura una funzione degli $y$ che associa $y$ a $f(x_1, \ldots, x_k)$.
+\end{lemma}
+
+\begin{proof}
+    Segue immediatamente dal corollario precedente, perché l'ipotesi di totalità su $f$ è esattamente quella richiesta lì.
+\end{proof}
+
+
+\section{Teoremi di incompletezza}
+\subsection{Numerazione di Gödel}
+
+Una numerazione di Gödel è in generale un modo di associare ad ogni formula di un linguaggio una numero naturale, il modo specifico di farlo non è importante, l'importante è che sia una codifica efficace, ovvero che sia possibile risalire alla formula a partire dal numero e viceversa,
+e che sia possibile decidere se un numero è la codifica di una formula o meno.
+
+Fissiamo una codifica effettiva dei simboli di $L_{\text{arit}}$ mediante numeri naturali distinti e usiamo la codifica di liste
+$\langle a_1,\ldots,a_n\rangle$ introdotta prima per concatenare i codici. Per esempio usiamo tag distinti
+\[ \#0,\#s,\#+,\#\cdot,\#=,\#\neg,\#\to,\#\forall,\#x. \]
+
+La scelta concreta dei numeri è irrilevante: ciò che conta è che le operazioni sintattiche fondamentali siano funzioni ricorsive.
+
+\begin{definition}[Codifica di termini e formule]
+    Definiamo ricorsivamente la codifica di Gödel $\ulcorner\cdot\urcorner$ come segue.
+    \begin{itemize}
+        \item termini:
+        \[ \ulcorner 0\urcorner := \langle\#0\rangle,\qquad \ulcorner x_i\urcorner := \langle\#x,i\rangle, \]
+        \[ \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle,\qquad \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle, \]
+        \[ \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle; \]
+        \item formule:
+        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle,\qquad \ulcorner\neg\varphi\urcorner := \langle\#\neg,\ulcorner\varphi\urcorner\rangle, \]
+        \[ \ulcorner\varphi\to\psi\urcorner := \langle\#\to,\ulcorner\varphi\urcorner,\ulcorner\psi\urcorner\rangle,\qquad \ulcorner\forall x_i\,\varphi\urcorner := \langle\#\forall,i,\ulcorner\varphi\urcorner\rangle. \]
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[Predicati sintattici ricorsivi]
+    I seguenti predicati su $\NN$ sono PR:
+    \begin{itemize}
+        \item $\textsf{Term}(n)$: ``$n$ è codice di un termine'';
+        \item $\textsf{For}(n)$: ``$n$ è codice di una formula'';
+        \item $\textsf{Sent}(n)$: ``$n$ è codice di una formula chiusa'';
+        \item $\textsf{Free}(n,i)$: ``$x_i$ è libera nella formula codificata da $n$''.
+    \end{itemize}
+\end{proposition}
+
+\begin{proof}
+    Si procede per ricorsione strutturale sulla forma del codice, distinguendo il tag iniziale tramite $\nth(n,0)$ e lunghezza tramite $\length(n)$.
+    Tutti i test effettuati sono combinazioni di predicati PR già costruiti su liste e codici, quindi i predicati risultano PR.
+\end{proof}
+
+\begin{proposition}[Numerali e sostituzione]
+    Valgono i seguenti fatti.
+    \begin{itemize}
+        \item La funzione
+        \[ \textsf{Num}(n):=\ulcorner\ol n\urcorner \]
+        è PR.
+        \item La funzione di sostituzione sintattica
+        \[ \textsf{Sub}(\ulcorner\varphi\urcorner,i,\ulcorner t\urcorner):=\ulcorner\varphi[t/x_i]\urcorner \]
+        è PR.
+    \end{itemize}
+\end{proposition}
+
+\begin{proof}
+    Per $\textsf{Num}$ basta la ricorsione:
+    \[ \textsf{Num}(0)=\ulcorner 0\urcorner,\qquad \textsf{Num}(n+1)=\ulcorner s(\ol n)\urcorner=\langle\#s,\textsf{Num}(n)\rangle. \]
+    Per $\textsf{Sub}$ si ricorre sulla struttura sintattica codificata da $n$: nel caso di variabile $x_j$ si sostituisce con $t$ solo se $j=i$, e negli altri costruttori si ricompone ricorsivamente sui sotto-codici.
+\end{proof}
+
+\begin{lemma}[Diagonalizzazione di Gödel]
+    Sia $\varphi(x_i)$ una formula con $x_i$ libera. Esiste una frase chiusa $\gamma$ tale che:
+    \[ \mathsf Q \vdash \gamma \leftrightarrow \varphi[\overline{\ulcorner\gamma\urcorner}/x_i]. \]
+\end{lemma}
+
+\begin{proof}
+    Consideriamo la funzione ricorsiva totale
+    \[ f(n):=\textsf{Sub}(n,i,\textsf{Num}(n)). \]
+    Per il corollario già dimostrato (rappresentabilità in $\mathsf Q$ delle funzioni ricorsive totali) esiste una formula $\psi_f(u,v)$ di classe $\Sigma_1^0$ tale che
+    \[ \mathsf Q\vdash \psi_f(\ol u,\ol v) \leftrightarrow v=f(u). \]
+    Definiamo
+    \[ \theta(u):=\exists v\,(\psi_f(u,v)\land \varphi[v/x_i]). \]
+    e poniamo
+    \[ \gamma:=\theta(\overline{\ulcorner\theta\urcorner}). \]
+    Allora in $\mathsf Q$ otteniamo:
+    \[ \gamma \leftrightarrow \theta(\overline{\ulcorner\theta\urcorner}) \leftrightarrow \varphi(\overline{f(\ulcorner\theta\urcorner)}) \leftrightarrow \varphi(\overline{\ulcorner\gamma\urcorner}), \]
+    perché $f(\ulcorner\theta\urcorner)=\ulcorner\theta(\overline{\ulcorner\theta\urcorner})\urcorner=\ulcorner\gamma\urcorner$.
+\end{proof}
+
+\subsection{Predicato di dimostrazione}
+
+\begin{definition}[Teoria ricorsivamente assiomatizzabile]
+    Una teoria $T$ è ricorsivamente assiomatizzabile se l'insieme
+    \[ \{\ulcorner\sigma\urcorner : \sigma \text{ è un assioma di }T\} \]
+    è ricorsivamente enumerabile.
+\end{definition}
+
+\begin{remark}
+    In particolare, se gli assiomi sono dati da uno schema indicizzato da un predicato semidecidibile,
+    si può passare ad una teoria equivalente ricorsivamente assiomatizzabile esplicitando in modo effettivo
+    le istanze ammesse dallo schema.
+\end{remark}
+
+\begin{lemma}[Predicato di dimostrazione]
+    Sia $T\supseteq\mathsf Q$ ricorsivamente assiomatizzabile. Esiste un predicato ricorsivo binario $\mathsf{Dim}(d,n)$ tale che, per ogni formula chiusa $\sigma$,
+    \[ T\vdash \sigma \iff \NN\models \exists d\,\mathsf{Dim}(d,\ulcorner\sigma\urcorner). \]
+\end{lemma}
+
+\begin{proof}
+    Un codice $d$ rappresenta una lista finita di formule
+    \[ \langle\delta_0,\ldots,\delta_m\rangle, \]
+    e $\mathsf{Dim}(d,n)$ dice che:
+    \begin{itemize}
+        \item ogni riga è o un assioma di $T$ o segue da righe precedenti per modus ponens;
+        \item l'ultima riga ha codice $n$.
+    \end{itemize}
+    Le verifiche interne usano solo predicati ricorsivi su liste, codici sintattici e regole di inferenza fissate, quindi si ottiene un predicato ricorsivo come richiesto.
+\end{proof}
+
+\begin{remark}
+    La formula $\exists d\,\mathsf{Dim}(d,n)$ è di classe $\Sigma_1^0$.
+\end{remark}
+
+\subsection{Primo teorema di incompletezza}
+
+\begin{theorem}[Primo teorema di incompletezza di Gödel]
+    Sia $T$ una teoria aritmetica con
+    \[ \mathsf Q\subseteq T,\qquad T\ \text{ricorsivamente assiomatizzabile},\qquad \NN\models T. \]
+    Allora $T$ è incompleta.
+\end{theorem}
+
+\begin{proof}
+    Consideriamo
+    \[ \chi(x):=\neg\exists d\,\mathsf{Dim}(d,x). \]
+    Per diagonalizzazione esiste una frase $G$ tale che
+    \[ \mathsf Q\vdash G\leftrightarrow \chi(\overline{\ulcorner G\urcorner}), \]
+    dunque anche
+    \[ T\vdash G\leftrightarrow \neg\exists d\,\mathsf{Dim}(d,\ulcorner G\urcorner). \]
+
+    Escludiamo i due casi.
+    \begin{itemize}
+        \item Se $T\vdash G$, allora esiste (metateoricamente) un codice $d_0$ di una dimostrazione di $G$, quindi
+        \[ \NN\models \mathsf{Dim}(d_0,\ulcorner G\urcorner), \]
+        e quindi
+        \[ T\vdash \exists d\,\mathsf{Dim}(d,\ulcorner G\urcorner). \]
+        Dall'equivalenza diagonale segue anche $T\vdash \neg\exists d\,\mathsf{Dim}(d,\ulcorner G\urcorner)$, assurdo.
+        \item Se $T\vdash\neg G$, allora per l'equivalenza diagonale
+        \[ T\vdash \exists d\,\mathsf{Dim}(d,\ulcorner G\urcorner). \]
+        Poiché $\NN\models T$, otteniamo
+        \[ \NN\models \exists d\,\mathsf{Dim}(d,\ulcorner G\urcorner), \]
+        quindi esiste davvero una dimostrazione di $G$ in $T$, ossia $T\vdash G$, di nuovo assurdo.
+    \end{itemize}
+
+    Quindi $T\nvdash G$ e $T\nvdash\neg G$.
+\end{proof}
+
+Mostriamo ora (in forma compatta) la dimostrazione del teorema di Rosser enunciato sopra.
+
+\begin{proof}[Dimostrazione del teorema di Rosser]
+    Sia $\mathrm{Neg}(n)$ la funzione ricorsiva che manda il codice di una formula nel codice della sua negazione.
+    Applichiamo il lemma di diagonalizzazione alla formula
+    \[ \vartheta(x):=\forall d\,\big(\mathsf{Dim}(d,x)\to\exists d'\le d\,\mathsf{Dim}(d',\mathrm{Neg}(x))\big). \]
+    Otteniamo una frase $R$ con
+    \[ \mathsf Q\vdash R\leftrightarrow \forall d\,\big(\mathsf{Dim}(d,\ulcorner R\urcorner)\to\exists d'\le d\,\mathsf{Dim}(d',\ulcorner\neg R\urcorner)\big). \]
+
+    Se $T\vdash R$, prendo il primo codice $d_0$ di dimostrazione di $R$: dall'equivalenza ottengo una dimostrazione di $\neg R$ con codice $\le d_0$, contro la minimalità e quindi contro la coerenza.
+
+    Se $T\vdash\neg R$, usando la forma negata della stessa equivalenza e il primo codice di dimostrazione di $\neg R$, si ottiene simmetricamente una dimostrazione di $R$, ancora in contraddizione con la coerenza.
+
+    Dunque $T\nvdash R$ e $T\nvdash\neg R$, quindi $T$ è incompleta.
+\end{proof}
+
+\begin{proposition}[Completamento decidibile]
+    Sia $T$ una teoria coerente e decidibile. Allora esiste $T'\supseteq T$ coerente, completa e decidibile.
+\end{proposition}
+
+\begin{proof}
+    Fissiamo un'enumerazione efficace delle frasi chiuse $(\varphi_i)_{i\in\NN}$ e definiamo per ricorsione:
+    \[ T_0:=T, \]
+    \[ T_{i+1}:=\begin{cases}
+        T_i\cup\{\varphi_i\} & \text{se } T_i\nvdash\neg\varphi_i,\\
+        T_i\cup\{\neg\varphi_i\} & \text{se } T_i\vdash\neg\varphi_i.
+    \end{cases} \]
+    Poi poniamo
+    \[ T':=\bigcup_{i\in\NN} T_i. \]
+    Per costruzione $T'$ estende $T$, resta coerente e decide ogni frase chiusa. Inoltre la procedura è effettiva perché la deducibilità in ogni passo è decidibile.
+\end{proof}
+
+\begin{corollary}
+    $\mathsf Q$ e $\mathsf{PA}$ non sono decidibili.
+\end{corollary}
+
+\begin{proof}
+    Se una delle due fosse decidibile e coerente, per la proposizione precedente ammetterebbe un'estensione coerente completa e decidibile.
+    Ma ogni estensione coerente ricorsivamente assiomatizzabile di $\mathsf Q$ è incompleta per Rosser. Contraddizione.
+\end{proof}
+
+\begin{corollary}
+    La teoria vuota nel linguaggio aritmetico non è decidibile.
+\end{corollary}
+
+\begin{proof}
+    Supponiamo decidibile la teoria vuota (cioè la validità logica in $L_{\text{arit}}$).
+    Poiché $\mathsf Q$ è finitamente assiomatizzata da $\alpha_1,\ldots,\alpha_m$, per ogni frase chiusa $\varphi$ vale
+    \[ \mathsf Q\vdash\varphi \iff \vdash (\alpha_1\land\cdots\land\alpha_m)\to\varphi. \]
+    Quindi una procedura decisionale per la teoria vuota renderebbe decidibile anche $\mathsf Q$,
+    in contraddizione con il corollario precedente.
+\end{proof}
+
+\begin{corollary}
+    L'insieme
+    \[ \{\ulcorner\varphi\urcorner : \NN\models\varphi\} \]
+    non è ricorsivamente enumerabile.
+\end{corollary}
+
+\begin{proof}
+    È la teoria completa e coerente $\mathrm{Th}(\NN)$, che estende $\mathsf Q$. Se fosse ricorsivamente enumerabile, sarebbe un controesempio al teorema di Rosser.
+\end{proof}
+
+\subsection{Secondo teorema di incompletezza}
+
+\begin{definition}[Provabilità interna in $\mathsf{PA}$]
+    In questa sottosezione fissiamo la formula binaria $\mathsf{Dim}(d,n)$ per $T=\mathsf{PA}$,
+    nel senso che $\mathsf{Dim}(d,n)$ esprime ``$d$ è una dimostrazione in $\mathsf{PA}$ della formula con codice $n$''.
+    Consideriamo la formula
+    \[ \neg\exists d\,\mathsf{Dim}(d,\ulcorner\bot\urcorner), \]
+    che esprime la consistenza interna di $\mathsf{PA}$.
+\end{definition}
+
+\begin{lemma}[Condizioni di derivabilità]
+    Per ogni frase $\varphi,\psi$ valgono:
+    \begin{itemize}
+        \item se $\mathsf{PA}\vdash\varphi$, allora $\mathsf{PA}\vdash\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)$;
+        \item \[ \mathsf{PA}\vdash \big(\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\to\psi\urcorner)\big)\to\Big(\big(\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)\big)\to\big(\exists d\,\mathsf{Dim}(d,\ulcorner\psi\urcorner)\big)\Big); \]
+        \item \[ \mathsf{PA}\vdash \big(\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)\big)\to\exists e\,\mathsf{Dim}\big(e,\ulcorner\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)\urcorner\big). \]
+    \end{itemize}
+\end{lemma}
+
+\begin{theorem}[Secondo teorema di incompletezza di Gödel]
+    Se $\mathsf{PA}$ è coerente, allora
+    \[ \mathsf{PA}\nvdash \neg\exists d\,\mathsf{Dim}(d,\ulcorner\bot\urcorner). \]
+\end{theorem}
+
+\begin{proof}
+    In questa dimostrazione poniamo
+    \[ \square\varphi := \exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner). \]
+    Sia $\gamma$ la frase di Gödel per $\mathsf{PA}$:
+    \[ \mathsf{PA}\vdash \gamma\leftrightarrow\neg\square\gamma. \]
+
+    Riscriviamo le condizioni di derivabilità nella forma usata nel diagramma:
+    \begin{itemize}
+        \item se $\mathsf{PA}\vdash\varphi$, allora $\mathsf{PA}\vdash\square\varphi$;
+        \item $\mathsf{PA}\vdash\square\varphi\to\square\square\varphi$;
+        \item $\mathsf{PA}\vdash\big(\square\varphi\land\square(\varphi\to\psi)\big)\to\square\psi$.
+    \end{itemize}
+
+    Vogliamo dimostrare
+    \[ \mathsf{PA}\vdash \gamma\leftrightarrow\neg\square\bot. \]
+
+    \begin{itemize}
+        \item \textbf{$\mathsf{PA}\vdash \gamma\to\neg\square\bot$.}
+        \[
+        \text{In}_\to\frac
+        {\text{El}_\to\frac
+        {\mathsf{PA}\vdash \big(\square\bot\land\square(\bot\to\gamma)\big)\to\square\gamma\qquad
+        \text{In}_\land\frac{\mathsf{PA}\vdash \square\bot\qquad \mathsf{PA}\vdash \square(\bot\to\gamma)}{\mathsf{PA}\vdash \square\bot\land\square(\bot\to\gamma)}}
+        {\mathsf{PA}\vdash \square\gamma}}
+        {\mathsf{PA}\vdash \square\bot\to\square\gamma}
+        \]
+        \[
+        \text{RaA}\frac{\mathsf{PA}\vdash \square\bot\to\square\gamma}{\mathsf{PA}\vdash \neg\square\gamma\to\neg\square\bot}.
+        \]
+        e, usando il ramo $\mathsf{PA}\vdash\gamma\to\neg\square\gamma$ dell'equivalenza di Gödel,
+        \[ \mathsf{PA}\vdash \gamma\to\neg\square\bot. \]
+
+        \item \textbf{$\mathsf{PA}\vdash \neg\square\bot\to\gamma$.}
+        Dall'equivalenza di Gödel basta mostrare $\mathsf{PA}\vdash\neg\square\bot\to\neg\square\gamma$,
+        perché poi si usa il ramo $\mathsf{PA}\vdash\neg\square\gamma\to\gamma$.
+        Il passaggio principale è:
+        \[
+        \text{In}_\to\frac
+        {\mathsf{PA}\vdash\square\big(\gamma\to(\neg\gamma\to\bot)\big)}
+        {\mathsf{PA}\vdash\square\gamma\to(\square\neg\gamma\to\square\bot)}
+        \]
+        \[
+        \text{El}_\to\frac
+        {(\star)\;\mathsf{PA}\vdash\square\gamma\to\square\neg\gamma\qquad
+        \mathsf{PA}\vdash\square\gamma\to(\square\neg\gamma\to\square\bot)}
+        {\mathsf{PA}\vdash\square\gamma\to\square\bot}
+        \]
+        \[
+        \text{RaA}\frac{\mathsf{PA}\vdash\square\gamma\to\square\bot}{\mathsf{PA}\vdash\neg\square\bot\to\neg\square\gamma}.
+        \]
+        dunque
+        \[ \mathsf{PA}\vdash \neg\square\bot\to\gamma. \]
+    \end{itemize}
+
+    Espandiamo ora il ramo $(\star)$:
+    \[
+    (\star)\quad
+    \text{In}_\to\frac
+    {\text{El}_\to\frac
+    {\mathsf{PA}\vdash\square(\square\gamma\to\neg\gamma)\qquad \mathsf{PA}\vdash\square\gamma}
+    {\mathsf{PA}\vdash\square\neg\gamma}}
+    {\mathsf{PA}\vdash\square\gamma\to\square\neg\gamma}
+    \]
+    dove $\mathsf{PA}\vdash\square(\square\gamma\to\neg\gamma)$ si ottiene dalla prima condizione di derivabilità applicata a
+    $\mathsf{PA}\vdash\square\gamma\to\neg\gamma$, e quest'ultima segue dall'equivalenza di Gödel.
+
+    Quindi
+    \[ \mathsf{PA}\vdash \gamma\leftrightarrow\neg\square\bot. \]
+    Se per assurdo $\mathsf{PA}\vdash\neg\square\bot$, allora $\mathsf{PA}\vdash\gamma$.
+    Per la prima condizione di derivabilità otteniamo $\mathsf{PA}\vdash\square\gamma$,
+    mentre dall'equivalenza di Gödel segue anche $\mathsf{PA}\vdash\gamma\to\neg\square\gamma$ e quindi $\mathsf{PA}\vdash\neg\square\gamma$.
+    Questo contraddice la coerenza di $\mathsf{PA}$.
+    Dunque
+    \[ \mathsf{PA}\nvdash\neg\square\bot, \]
+    cioè
+    \[ \mathsf{PA}\nvdash \neg\exists d\,\mathsf{Dim}(d,\ulcorner\bot\urcorner). \]
+\end{proof}
+
