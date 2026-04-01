@@ -134,12 +134,13 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
 
 \begin{example}[Insiemi di confronto]
     Gli insiemi $\{x \leq y\}$, $\{x < y\}$, $\{x = y\}$, $\{x \neq y\}$\footnote{Nel senso di $\{(x,y) \in \NN^2 |\ldots\}$.} sono predicati PR.
-    Per $\{x = y\}$ è sufficiente usare
-    \[ f(x,y) := (x \dotminus y) + (y \dotminus x), \]
-    infatti $f(x,y)=0$ se e solo se $x=y$. Per $\{x \leq y\}$ è sufficiente usare $g(x,y) := x \dotminus y$.
-    Poi $\{x \neq y\} = \{x = y\}^\complement$ e
-    \[ \{x < y\} = \{x \leq y\} \cap \{x \neq y\}, \]
-    quindi tutti questi insiemi sono nell'algebra dei predicati PR su $\NN^2$.
+    Per $\{x = y\}$ è sufficiente usare:
+    \[ f(x,y) := 1 \dotminus (1 \dotminus (y \dotminus x + x \dotminus y)) \]
+    Per $\{x \leq y\}$ si usa:
+    \[ g(x,y) := 1 \dotminus (1 \dotminus (x \dotminus y)) \]
+    e $g(x,y)=0$ se e solo se $x \leq y$. Mettendo assieme queste due cose si ottiene
+    \[ \{x < y\} = \{x \leq y\} \cap \{x \neq y\}. \]
+    Simmetricamente per $\geq$ e $>$.
 \end{example}
 
 \begin{remark}[Definizione per casi]
