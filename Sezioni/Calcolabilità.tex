@@ -1,6 +1,6 @@
 \section{Teoria della calcolabilità}
 
-\subsection{Funzioni ricorsive}
+\subsection{Funzioni primitivo ricorsive}
 Vorremmo definire la classe delle funzioni implementabili in un calcolatore, tale classe è stata definita in vari modi,
 ad inizio '900 da Church, Turing, Post e altri, e si è poi visto che le varie definizioni date erano equivalenti, seppur magari non fosse quella
 l'intenzione originaria di chi le aveva date. Le principali definizioni che vediamo e che sono state date, sono:
@@ -161,18 +161,18 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
             (x \bmod y) + 1 & \text{se $x \bmod y + 1 \ne y$}
         \end{cases}
     \end{cases} \]
-    notare che nella definizione per casi abbiamo usato il predicato PR $P(x,y) := \{x \bmod y + 1 = y\}$, e 
-    la funzione $h$ usata per la ricorsione è:
+    cioè, visto che $x = qy + x \mod y$, allora $x+1 = qy + (x \mod y + 1)$, per cui se $x \mod y + 1 = y$ allora $x+1 = (q+1)y + 0$, altrimenti $x+1 = qy + (x \mod y + 1)$.
+    Osservare inoltre che nella definizione per casi abbiamo usato il predicato PR $P(a,b) := \{a + 1 = b\}$, e la $h$ per la ricorsione:
     \[ h(a,b,c) := \begin{cases}
         0 & \text{se $a + 1 = b$} \\
         a + 1 & \text{se $a + 1 \ne b$}
     \end{cases} \]
     che è una funzione PR per definizione per casi.
 \end{example}
-
-\begin{remark}
+\pagebreak
+\begin{remark}[Somma dei valori di una funzione PR sotto un certo punto]
     Sia $f : \NN^{k+1} \to \NN$ una funzione PR, allora la funzione $(y_1, \dots, y_k,x) \mapsto \sum_{i < x} f(y_1, \dots, y_k, i)$ è PR,
-    infatti è definita per ricorsione a partire da $h(y_1, \dots, y_k) := 0$ e $g(x,y,z,y_1, \dots, y_k) := y + f(y_1, \dots, y_k, x)$:
+    infatti è definita per ricorsione a partire da $h(y_1, \dots, y_k) := 0$ e $g(a,b,c,d_1, \dots, d_k) := b + f(d_1, \dots, d_k, a)$:
     \[ \sum_{i < x} f(y_1, \dots, y_k, i) := \begin{cases}
         \sum_{i < 0} f(y_1, \dots, y_k, i) &= h(y_1, \dots, y_k) = 0 \\
         \sum_{i < x+1} f(y_1, \dots, y_k, i) &= \sum_{i < x} f(y_1, \dots, y_k, i) \\ &+ f(y_1, \dots, y_k,x) 
@@ -187,13 +187,15 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
     \]
 \end{example}
 
-\begin{example}[Predicato che controlla l'appartenenza ad un altro predicato sotto un certo punto]
-    Sia $Q$ il predicato $(y_1, \dots, y_k,x) \in Q \iff \exists i < x \; (y_1, \dots, y_k,x) \in P$, con $P$ predicato PR, ovvero
-    $(y_1, \dots, y_k,x) \in Q$ se e solo se $(y_1, \dots, y_k,i) \in P$ per qualche $i < x$. $Q$ è un predicato PR, infatti:
+\begin{example}[Appartenenza ad un altro predicato sotto un certo punto]
+    Definiamo il predicato $Q \subseteq \NN^{k+1}$ come:
+    \[ (y_1, \dots, y_k,x) \in Q \iff \exists i < x \; (y_1, \dots, y_k,i) \in P\]
+    con $P \subseteq \NN^{k+1}$ predicato PR. Tale sottoinsieme è un predicato PR in quanto è possibile definirlo come:
     \[ Q(y_1, \dots, y_k,x) = \{g(y_1, \dots, y_k,x) > 0\} \]
-    dove $g(y_1, \dots, y_k,x) = \#\{(y_1, \dots, y_k, i) \in P : i < x\}$ è la funzione PR che conta gli elementi del predicato $P$ sotto $x$.
+    dove $g(y_1, \dots, y_k,x) = \#\{(y_1, \dots, y_k, i) \in P : i < x\}$ è la funzione PR (serve affinché l'insieme di confronto sia un predicato PR) che conta gli elementi del predicato $P$ sotto $x$.
 \end{example}
 
+\enlargethispage{2\baselineskip}
 \begin{example}[Funzione quoziente intero]
     Definiamo $x \div y := \floor{\displaystyle\frac{x}{y}}$, con la convenzione $x \div 0 := 0$.
     La funzione $x \div y$ è PR, ad esempio per ricorsione su $x$ (con parametro $y$) e per casi:
@@ -205,7 +207,8 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
             x \div y & \text{se $y \neq 0$ e $x \bmod y + 1 \ne y$}
         \end{cases}
     \end{cases} \]
-    La definizione usa solo ricorsione primitiva, predicati PR e definizione per casi.
+    il predicato e la funzione usati per la ricorsione sono quasi gli stessi di quelli usati per definire il modulo, anche in questo caso vale che se $x = (x \div y)y + r$,
+    allora $x+1 = (x \div y)y + (r+1)$, per cui se $r+1 = y$ allora $x+1 = (x \div y + 1)y + 0$, altrimenti $x+1 = (x \div y)y + (r+1)$.
 \end{example}
 
 \subsection{Codifica delle liste}
@@ -278,7 +281,7 @@ La funzione di pairing ha il seguente grafico.
         \car(z) = \sum_{i < z} \sum_{j < z} i \cdot (1 \dotminus \{z = \cons(i,j)\}) \\
         \cdr(z) = \sum_{i < z} \sum_{j < z} j \cdot (1 \dotminus \{z = \cons(i,j)\})
     \end{align*}
-    cioè itero la somma finché non becco la coppia $(i,j)$ tale che $z = \cons(i,j)$, allora i due predicati danno 0 e quindi viene 1.
+    cioè itero la somma finché non becco la coppia $(i,j)$ tale che $z = \cons(i,j)$, allora i due predicati danno 0 e quindi viene $1 \cdot i$ o $1 \cdot j$.
 \end{definition}
 
 \begin{exercise}[Funzione di Ackermann]
@@ -295,38 +298,27 @@ La funzione di pairing ha il seguente grafico.
     \includegraphics[width=0.45\textwidth]{Immagini/Ackermann.pdf}
     \caption{Plot della funzione di Ackermann}
 \end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{remark}[Le sezioni $n \mapsto A(m,n)$ sono PR]
     Per ogni $m \in \NN$, la funzione $A_m : \NN \to \NN$ definita da $A_m(n) := A(m,n)$ è PR.
     Si dimostra per induzione su $m$: $A_0(n)=n+1$ è il successore, e se $A_m$ è PR allora anche $A_{m+1}$ è PR, perché è definita per ricorsione da:
     \[ A_{m+1}(0) = A_m(1), \qquad A_{m+1}(n+1) = A_m(A_{m+1}(n)). \]
 \end{remark}
 
-\begin{soln}
-    Per ogni funzione $f : \NN \to \NN$ PR esiste $n \in \NN$ tale che
-    \[ f(x) < A_n(x) \]
-    per ogni $x \in \NN$, dove $A_n(x) := A(n,x)$. In altre parole, le funzioni $x \mapsto A(n,x)$ dominano tutte le funzioni PR unarie.
-    Supponiamo ora per assurdo che $A$ sia PR. Allora anche la funzione diagonale
-    \[ d(x) := A(x,x) + 1 \]
-    sarebbe PR, perché si ottiene da $A$ per composizione con le proiezioni e il successore. Applicando il fatto precedente a $d$, esiste $n \in \NN$ tale che
-    \[ d(x) < A_n(x) \]
-    per ogni $x \in \NN$. Valutando in $x=n$ otteniamo
-    \[ A(n,n) + 1 = d(n) < A_n(n) = A(n,n), \]
-    assurdo. Dunque $A$ non è PR.
-\end{soln}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 L'idea che abbiamo voluto catturare, mediante le funzioni primitive ricorsive, è quella di una classe di funzioni che può essere implementata
 in un calcolatore solo per mezzo di cicli \texttt{for} - per cui sarà già a priori fissato il numero di loop, e che non usino né i costrutti della ricorsione (quindi una funzione non può chiamare se stessa) e 
-non usi cicli potenzialmente illimitati, come i cicli \texttt{while}.\\
+né usi cicli potenzialmente illimitati, come i cicli \texttt{while}.
 
-Definiamo della notazione per rappresentare funzioni che non convergono.
+\subsection{Funzioni ricorsive}
+
+Definiamo inizialmente della notazione per rappresentare funzioni che non convergono.
 
 \begin{definition}[$\NN_\bot$]
     Definiamo $\NN_\bot := \NN \cup \{\bot\}$.
 \end{definition}
 
 \begin{definition}[Funzioni ricorsive]
-    Definiamo le \vocab{funzioni ricorsive} come le funzioni $f : \NN_\bot^k \to \NN_\bot$ a partire da alcune funzioni di base e chiudendo la classe sotto alcune operazioni di chiusura (in questo caso anche sotto minimizzazione).
+    Definiamo le \vocab{funzioni ricorsive} come le funzioni $f : \NN_\bot^k \to \NN_\bot$ a partire da alcune funzioni di base e chiudendo la classe sotto alcune operazioni di chiusura.
     Le funzioni di base, fissato $k \in \NN$, vanno da $\NN_\bot^k \to \NN_\bot$ e sono:
     \begin{align*}
         \pi_{k,i}(x_1, \dots, x_k) &= \begin{cases}
@@ -344,12 +336,15 @@ Definiamo della notazione per rappresentare funzioni che non convergono.
     \end{align*}
     Partendo da queste funzioni faccio la chiusura per le operazioni di:
     \begin{itemize}
-        \item composizione,
-        \item ricorsione primitiva, con lo stesso schema visto per le funzioni PR, ma con l'aggiunta del caso $f(\textcolor{purple}{\bot},\ldots) := \textcolor{purple}{\bot}$,
+        \item composizione;
+        \item ricorsione primitiva, con lo stesso schema visto per le funzioni PR, ma con l'aggiunta del caso $f(\textcolor{purple}{\bot},\ldots) := \textcolor{purple}{\bot}$;
         \item \vocab{minimizzazione}, ovvero se $f : \NN^{k+1} \to \NN_\bot$ è ricorsiva, allora la funzione:
-        \[ \textcolor{purple}{\mu_kf}(x_1, \dots, x_k) = a \in \NN \overset{\text{def}}{\iff} f(x_1, \dots, x_k, a) = 0 \land \forall i < a \; f(x_1, \dots, x_k, i) \in \NN\setminus\{0\} \]
-        in particolare l'ultima cosa non è $\bot$; se non esiste un tale $a$ allora $\mu_kf(x_1, \dots, x_k) := \textcolor{purple}{\bot}$. \textcolor{MidnightBlue}{Cioè $\mu_kf$ produce il valore $a$ tale che $f(x_1, \dots, x_k, a) = 0$, e tale $a$ è il minimo possibile 
-        - l'idea che si vuole catturare è quella della convergenza di un algoritmo, che si ferma quando $f$ produce 0, e se non si ferma allora $\mu_kf$ non converge e quindi è $\bot$.}
+        \begin{multline*}
+            \purple{\mu_kf}(x_1, \dots, x_k) = a \in \NN \overset{\text{def}}{\iff} \\
+             f(x_1, \dots, x_k, a) = 0 \land \forall i < a \; f(x_1, \dots, x_k, i) \in \NN\setminus\{0\}
+        \end{multline*}
+        in particolare $f(x_1, \dots, x_k, i)$ non è $\bot$; se non esistesse un tale $a$ allora poniamo $\mu_kf(x_1, \dots, x_k) := \textcolor{purple}{\bot}$. \textcolor{MidnightBlue}{Cioè $\mu_kf$ produce il valore $a$ tale che $f(x_1, \dots, x_k, a) = 0$, e tale $a$ è il minimo possibile 
+        - l'idea che si vuole catturare è quella della convergenza di un algoritmo, che si ferma al passo $a$, quando $f$ produce 0, e se non si ferma allora $\mu_kf$ non converge e quindi la poniamo $\bot$.}
     \end{itemize}
 \end{definition}
 
@@ -365,20 +360,24 @@ Definiamo della notazione per rappresentare funzioni che non convergono.
 
 \begin{proof}
     Si procede per induzione sulla costruzione di $f$. I casi delle 3 funzioni di base sono banali per la definizione stessa.
-    Per la composizione, se $f = h \circ (g_1, \dots, g_m)$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di qualche $g_i$ è $\bot$, per cui $g_i$ produce $\bot$, e quindi anche $f$ produce $\bot$.\\
-    Per la ricorsione primitiva, se $f$ è definita per ricorsione da $h$ e $g$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $h$ o di $g$ è $\bot$, per cui $h$ o $g$ producono $\bot$, e quindi anche $f$ produce $\bot$.\\
-    Per la minimizzazione, se $f = \mu_kf'$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $f'$ è $\bot$, per cui $f'$ produce $\bot$, e quindi anche $f$ produce $\bot$.
+    \begin{itemize}
+        \item Per la composizione, se $f = h \circ (g_1, \dots, g_m)$, e uno degli input di $f$ è $\bot$, allora anche uno dei $g_i$ è $\bot$, per cui $h$ produce $\bot$ per ipotesi induttiva, e quindi $f$ è $\bot$.
+        \item Per la ricorsione primitiva, se $f$ è definita per ricorsione da $h$ e $g$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $h$ o di $g$ è $\bot$, per cui $h$ o $g$ producono $\bot$ per ipotesi induttiva, e quindi anche $f$ dà $\bot$.
+        \item Per la minimizzazione, se $f = \mu_kf'$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $f'$ è $\bot$, per cui $f'$ produce $\bot$ a prescindere dalla variabile per cui si minimizza, e non fornendo mai un valore in $\NN\setminus\{0\}$, il minimo 
+        non esiste, e quindi anche $f$ è $\bot$ per definizione.
+    \end{itemize}
 \end{proof}
 
-\begin{fact}
-    Vale che:
+\begin{fact}[Inclusione tra le classi di funzioni ricorsive]
+    Valgono le seguenti inclusioni, tutte strette:
     \[ \{\text{funzioni PR}\} \subsetneq \{\text{funzioni ricorsive totali}\} \subsetneq \{\text{funzioni ricorsive}\} \]
 \end{fact}
 
 \begin{proof}
-    Per il secondo contenimento si osserva che $\mu_0 s = \textcolor{purple}{\bot}$, perché l'equazione $s(x)=0$ non ha soluzioni. Per il primo è sufficiente considerare la funzione di Ackermann.
+    I contenimenti sono tutti banali per le definizioni date, vediamo solo i controesempi per mostrare che sono stretti.
+    Per il secondo contenimento si osserva che $\mu_0 s \equiv \textcolor{purple}{\bot}$, perché l'equazione $s(x)=0$ non ha soluzioni. Per il primo è sufficiente considerare la funzione di Ackermann.
 \end{proof}
-
+\pagebreak
 \subsection{Macchine di Turing}
 
 Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono implementabili da una Macchina di Turing.
@@ -391,7 +390,7 @@ Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono i
     $s \in Q$ è lo stato della TM, $p \in \NN$ la posizione, e $n \in \Sigma^*$\footnote{Questa è la notazione di Kleene.} la stringa (o meglio tutto il nastro) in cui ci troviamo, i.e. $n \in \Sigma^{\NN}$ che è quasi sempre 0, i.e. $\exists N \in \NN \; \forall i > N \; n(i) = 0$.\\
     Dico che la macchina di Turing $M$ passa da una configurazione all'altra:
     \[ (s,p,n) \overset{M}{\to} (s',p',n') \]
-    se per definizione: $s' = \pi_{3,1} \circ \delta(s,n(p))$, $p' = (p + \pi_{3,3} \circ \delta(s,n(p))) \dotminus 1$ cioè la posizione finale è quella iniziale più 1 se la freccia è $\rightarrow$, è quella iniziale se la freccia è $\downarrow$, e $p-1$ se la freccia è $\leftarrow$ - dove la terza componente di $\delta$ è identificata col numero non con la freccia, e:
+    se: $s' = \pi_{3,1} \circ \delta(s,n(p))$, $p' = (p + \pi_{3,3} \circ \delta(s,n(p))) \dotminus 1$ cioè la posizione finale è quella iniziale più 1 se la freccia è $\rightarrow$, è quella iniziale se la freccia è $\downarrow$, e $p-1$ se la freccia è $\leftarrow$ - dove la terza componente di $\delta$ è identificata col numero non con la freccia, e:
     \[ n'(i) = \begin{cases}
         n(i) & \text{se $i \ne p$} \\
         \pi_{3,2} \circ \delta(s,n(p)) & \text{se $i = p$}
@@ -421,15 +420,13 @@ Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono i
     in modo che la TM non possa usare come informazione il numero di passi fatti, e quindi deve attraversare il confine almeno $l/2$ volte, e ogni volta deve fare almeno $l/2$ passi, per cui ottengo $O(l^2)$.}
 \end{exercise}
 
-\pagebreak
-
 \subsection{Funzioni Turing-computabili}
 
 \begin{definition}[Turing-computabilità]
     Sia $f : \NN^k \to \NN_\bot$\footnote{Non mettiamo $\bot$ perché, avendo visto che se uno degli input è $\bot$ allora anche l'output è $\bot$, non ci interessa studiare funzioni di questo tipo.} una funzione ricorsiva \vocab{parziale} - nel senso di non necessariamente totale,
     quindi ricorsiva generica, diciamo che $f$ è \vocab{Turing-computabile} se esiste una TM $M$, con:
     \begin{itemize}
-        \item $\Sigma \supseteq \{0,1,\textcolor{purple}{\blacktriangleright}\}$,
+        \item $\Sigma \supseteq \{0,1,\blacktriangleright\}$,
         \item $Q \supseteq \{0,1\}$, con 0 \vocab{stop} e 1 \vocab{start},
         \item $\delta(0,x) = (0,x,\downarrow)$, ovvero lo stato terminale rimane fermo, non cambia simbolo né si muove,
     \end{itemize}
@@ -439,9 +436,9 @@ Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono i
         \item se $f(x_1, \dots, x_k) = \textcolor{purple}{\bot}$, allora $\textcolor{purple}{\inp(x_1, \dots, x_k)} \not\overset{M^*}{\to} (0,\ldots)$, ovvero non termina in uno stato 0, dove avverrebbe lo stop, i.e. se non c'è un output non termina mai.
     \end{itemize}
     Dove:
-    \[ \inp(x_1, \dots, x_k) := (1,0,\textcolor{purple}{\blacktriangleright}\underbrace{111111}_{x_1}0\underbrace{1111}_{x_2}0\ldots0\underbrace{111}_{x_k}00\ldots) \in Q \times \NN \times \Sigma^* \]
+    \[ \inp(x_1, \dots, x_k) := (1,0,\blacktriangleright\underbrace{111111}_{x_1}0\underbrace{1111}_{x_2}0\ldots0\underbrace{111}_{x_k}00\ldots) \in Q \times \NN \times \Sigma^* \]
     dove il numero $x_i$ è rappresentato da una sequenza di $x_i$ simboli 1 (notazione unaria) - tanti quanti il valore di $x_i$, e tra un numero e l'altro c'è uno 0; analogamente:
-    \[ \outp(y) := (0,0,\textcolor{purple}{\blacktriangleright }\underbrace{111\ldots1}_{y}00\ldots) \in Q \times \NN \times \Sigma^* \]
+    \[ \outp(y) := (0,0,\blacktriangleright\underbrace{111\ldots1}_{y}00\ldots) \in Q \times \NN \times \Sigma^* \]
     dove $y$ è rappresentato da una sequenza di $y$ simboli 1, seguita da una sequenza infinita di 0.
 \end{definition}
 
@@ -456,7 +453,7 @@ Iniziamo con un caso particolare.
         Siano $f,g : \NN \to \NN_\bot$ funzioni Turing computabili, verifichiamo che $h(x) := f(g(x))$ è Turing computabile.
 \end{example}
 
-Ciò che vorrei è, detta $G$ la macchina associata a $g$ e $F$ quella associata a $f$, è far partire $G$ dalla sequenza iniziale $\textcolor{purple}{\blacktriangleright}$, farla terminare sempre a $\textcolor{purple}{\blacktriangleright}$, e poi da qui far partire $F$ e farla arrivare a $\textcolor{purple}{\blacktriangleright}$ nello stato $0_F$,
+Ciò che vorrei è, detta $G$ la macchina associata a $g$ e $F$ quella associata a $f$, è far partire $G$ dalla sequenza iniziale $\blacktriangleright$, farla terminare sempre a $\blacktriangleright$, e poi da qui far partire $F$ e farla arrivare a $\blacktriangleright$ nello stato $0_F$,
 facendo queste cose avrei di fatto costruito una macchina $H$ che implementa $h$.
 \begin{figure}[H]
     \centering
