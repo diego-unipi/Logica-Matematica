@@ -522,11 +522,11 @@ Quindi con questa notazione possiamo facilmente descrivere il comportamento di p
 
 Adesso il piano è: assumiamo di avere queste macchine elementari, e dimostriamo che la classe delle funzioni Turing-computabili, rappresentabili mediante
 macchine di Turing che hanno come alfabeto $\Sigma = \{0,1,\blacktriangleright\}$ e che non vanno mai a sinistra di $\blacktriangleright$, è chiusa per composizione, ricorsione primitiva e minimizzazione.
-Dobbiamo anche definire macchine di Turing che implementino le funzioni: successore, sottrazione troncata per 1, e costante 0. Infine vediamo come implementare le macchine elementari e con questo abbiamo dimostrato che ogni funzione ricorsiva è Turing-computabile.
+Dobbiamo anche definire macchine di Turing che implementino le funzioni: successore, sottrazione troncata per 1, costante 0 e proiezione. Infine vediamo come implementare le macchine elementari e con questo abbiamo dimostrato che ogni funzione ricorsiva è Turing-computabile.
 
 \begin{proof}
     Vediamo che la classe delle funzioni Turing-computabili è chiusa per composizione, ricorsione primitiva e minimizzazione. In tutti i casi faremo la seguente cosa: assumiamo di avere le macchine elementari che implementano le operazioni di \texttt{push}, \texttt{rem} e \texttt{exec}, e vediamo come usarle per costruire macchine che implementano le funzioni ottenute per composizione, ricorsione primitiva e minimizzazione.
-    In particolare le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta per evitare problemi - e incollando le funzioni di transizione, ci limiteremo pertanto a descrivere soltanto come sono fatte queste ultime, componendo quelle delle macchine elementari, e non descrivendo per intero le macchine che implementano le funzioni.
+    In particolare le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta per evitare problemi - e incollando le funzioni di transizione (come nell'esempio precedente), ci limiteremo pertanto a descrivere soltanto come sono fatte queste ultime, componendo quelle delle macchine elementari, e non descrivendo per intero le macchine che implementano le funzioni.
     \begin{itemize}
         \item[$\boxed{\text{composizione}}$] \underline{Caso particolare}: consideriamo prima il caso $f : \NN^2 \to \NN_\bot$ e $g_1, g_2 : \NN^2 \to \NN_\bot$, e poi generalizziamo. Vogliamo verificare che $f(g_1(x_1,x_2), g_2(x_1,x_2))$ sia Turing computabile. \\
         Siano $F, G_1, G_2$ le macchine che implementano $f, g_1, g_2$, il nostro obiettivo è costruire una macchina che parta da $\blacktriangleright x_1 x_2$ e arrivi a $\blacktriangleright f(g_1(x_1,x_2), g_2(x_1,x_2))$ - cioè a $\blacktriangleright y$ con $y = f(g_1(x_1,x_2), g_2(x_1,x_2))$, come da definizione.\\
@@ -537,7 +537,7 @@ Dobbiamo anche definire macchine di Turing che implementino le funzioni: success
         con $s_3 \blacktriangleright x_1 x_2 g_1(x_1,x_2)$. Ora copio di nuovo $x_1$ e $x_2$ in fondo alla lista (per usare $\exec$ devo usare i numeri in fondo quindi ho necessità di copiarli) e calcolo $g_2$:
         \[ s_3 \to \push_{3,1} \to \push_{4,2} \to \exec_{5,2}g_2 \to s_4 \]
         con $s_4 \blacktriangleright x_1 x_2 g_1(x_1,x_2) g_2(x_1,x_2)$. A questo punto posso cancellare i primi due e calcolare $f$:
-        \[ s_4 \to \rem_{4,1} \to \rem_{3,1} \to \exec_{2,2}f s_5 \]
+        \[ s_4 \to \rem_{4,1} \to \rem_{3,1} \to \exec_{2,2}f \to s_5 \]
         con $s_5 \blacktriangleright f(g_1(x_1,x_2), g_2(x_1,x_2))$, infine vado da $s_5$ a $0$ per stoppare la macchina.\\
         \underline{Caso generale}: se $f : \NN^k \to \NN_\bot$ e $g_1, \dots, g_k : \NN^h \to \NN_\bot$, vogliamo costruire una macchina che parta da $\blacktriangleright x_1 \ldots x_h$ e arrivi a $\blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$.\\
         Iniziamo copiando tutti gli input in fondo alla lista:
@@ -546,51 +546,105 @@ Dobbiamo anche definire macchine di Turing che implementino le funzioni: success
         \[ 2 \to \exec_{2h,h}g_1 \to 3 \]
         con $3 \blacktriangleright x_1 \ldots x_h g_1(x_1, \dots, x_h)$. Ripetendo queste operazioni $k$ volte, e otteniamo lo stato $4 \blacktriangleright x_1 \ldots x_h g_1(x_1, \dots, x_h) \ldots g_k(x_1, \dots, x_h)$. A questo punto cancelliamo i primi $h$ numeri e calcoliamo $f$:
         \[ 4 \to \rem_{h+k,1} \to \rem_{h+k-1,1} \to \ldots \to \rem_{k+1,1} \to \exec_{k,k}f \to 5 \]
-        con $5 \blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$, infine vado da $5$ a $0$ per stoppare la macchina.
-        \item[$\boxed{\text{ricorsione primitiva}}$] \underline{Caso particolare}: facciamo prima il caso di $f : \NN^2 \to \NN$ con:
-        \[ \begin{cases}
-            f(x_1,0) := g(x_1) \\
-            f(x_1,x_2 + 1) := h(x_1, x_2, f(x_1, x_2))
-        \end{cases}\]
-        dobbiamo implementare $f$ conoscendo $G$ ed $H$. Ci troviamo inizialmente nello stato $1 \blacktriangleright x_1 x_2$, vogliamo arrivare a $0 \blacktriangleright f(x_1,x_2)$.
-        Questo è un ciclo \texttt{for}, per cui ci conviene ragionare al contrario - parto dalla funzione più interna ed arrivo alla più esterna. Iniziamo a calcolare $f(x_1,0) = g(x_1)$,
-        supponiamo di avere già uno 0 (WLOG altrimenti si copia un valore e si calcola $\texttt{exec}0$) in fondo e arriviamo allo stato $\blacktriangleright x_1 x_2 0 f(x_1,0)$: 
-        \[ 1 \to \push_{3,1} \to \exec_{4,1}g \to 2 \]
-        con $2 \blacktriangleright x_1 x_2 0 g(x_1)$, ora:
-        \[ 2 \to \ttif x_2 = 0 \to \begin{cases}
-            3 & \text{se $x_2 = 0$} \\
-            4 & \text{se $x_2 \ne 0$}
-        \end{cases}\]
-        per cui $3 \blacktriangleright x_1 0 0 g(x_1)$, ed è sufficiente cancellare per ottenere $0 \blacktriangleright f(x_1,0)$:
-        \[ 3 \to \rem_{4,1} \to \rem_{3,1} \to \rem_{2,1} = \blacktriangleright f(x_1,0) \to 0 \]
-        se invece $x_2 \ne 0$, possiamo procedere e definire il passo ricorsivo, per cui siamo in uno stato della forma $4 \blacktriangleright x_1 x_2-k k f(x_1,k)$, con $x_2 - k \ne 0$,
-        e dobbiamo arrivare a $\blacktriangleright x_1 x_2-(k+1) (k+1) f(x_1, k+1)$, con $f(x_1, k+1) = h(x_1, k, f(x_1,k))$ per ipotesi.
-        \[ 4 \to \push_{4,2} \to \exec_{5,1}\dotminus 1 \to 5 \]
-        con $5 \blacktriangleright x_1 x_2 - k k f(x_1,k) x_2 - k - 1$, continuiamo a costruire la nuova sequenza:
-        \[ 5 \to \push_{5,3} \to \exec_{6,1}+1 \to 7 \]
-        e $7 \blacktriangleright x_1 x_2 - k k f(x_1,k) x_2 - k - 1 k + 1$, ora ricordando che $f(x_1, k+1) = h(x_1, k, f(x_1,k))$, copio quanto necessario a calcolare $h$ in fondo, la calcolo e poi cancello quello che non serve:
-        \[ 7 \to \push_{6,1} \to \push_{7,3} \to \push_{8,4} \to \exec_{9,3}h \to 8 \]
-        dove $8 \blacktriangleright x_1 x_2 - k k f(x_1,k) x_2 - k - 1 k + 1 h(x_1, k, f(x_1,k))$, poi:
-        \[ 8 \to \rem_{8,2} \to \rem_{7,2} \to \rem_{6,2} \to \rem_{5,1} \to 2\]
-        ovvero $2 \blacktriangleright x_1 x_2 - (k+1) f(x_1, k+1)$, e siamo tornati proprio nello stato 2, da cui ripartire con $\ttif x_2 = 0$, perché abbiamo riottenuto la stessa configurazione invariante che volevamo, ma con $k$ incrementato di 1, per cui possiamo ripetere questo processo finché $x_2 - k \ne 0$,
-        ed a quel punto entriamo nello stato 3, da cui arriviamo a $0 \blacktriangleright f(x_1,x_2)$ come visto prima. Questo completa il passo ricorsivo, tuttavia va anche verificato che se una delle $f(x_1,k)$ è $\bot$, allora anche $f(x_1, k+1)$ è $\bot$, e questo segue dal fatto che $h$ è ricorsiva, e quindi se uno degli input è $\bot$.\\
-        \underline{Caso generale}: esercizio.
-        \item[$\boxed{\text{minimizzazione}}$] Esercizio.
+        con $5 \blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$, infine vado da $5$ a $0$ per stoppare la macchina. Restano i casi in cui $g_i(x_1, \dots, x_h) = \bot$ per qualche $i$, oppure $f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h)) = \bot$,
+        in ambo i casi, per ipotesi, le macchine che implementano $g_i$ o $f$ non terminano, e quindi anche $\exec g_i$ o $\exec f$ non termina, per cui la macchina che abbiamo costruito non termina, e quindi è coerente con $f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h)) = \bot$.
+        \item[$\boxed{\text{ricorsione primitiva}}$] Siano $h : \NN^k \to \NN_\bot$ e $g : \NN^{k+2} \to \NN_\bot$, Turing computabili, e vogliamo implementare $f : \NN^{k+1} \to \NN_\bot$, definita via ricorsione primitiva a partire da $h$ e $g$:
+        \[ f(x,y_1,\dots,y_k) := \begin{cases}
+            f(0, y_1, \dots, y_k) := h(y_1, \dots, y_k) \\
+            f(x + 1, y_1, \dots, y_k) := g(x, f(x, y_1, \dots, y_k), y_1, \dots, y_k)
+        \end{cases} \]
+        Calcoliamo al contrario la ricorsione, e teniamoci un contatore in modo da sapere quando fermarci. Assumiamo, WLOG, di avere uno 0 alla fine della stringa di input,
+        ovvero $1 \blacktriangleright x y_1 \ldots y_k 0$, calcoliamo $f(0, y_1, \dots, y_k) = h(y_1, \dots, y_k)$:
+        \[ 1 \to \push_{k+2,2} \to \push_{k+3,3} \to \ldots \to \push_{2k+1,k+1} \to \exec_{2k+2,k}h \to 2 \]
+        con $2 \blacktriangleright x y_1 \ldots y_k 0 h(y_1, \dots, y_k)$, ora controlliamo se siamo nel caso base o no:
+        \[ 2 \to \ttif x = 0 \to \begin{cases}
+            3 & \text{se $x = 0$} \\
+            4 & \text{se $x \ne 0$}
+        \end{cases} \]
+        per cui $3 \blacktriangleright 0 y_1 \ldots y_k 0 h(y_1, \dots, y_k)$, e siamo arrivati in questo caso, è sufficiente applicare $k+2$ volte $\rem$ e poi andare a $0$ per ottenere $0 \blacktriangleright f(0, y_1, \dots, y_k)$.\\
+        Dimostriamo preliminarmente, per induzione - il caso 0 è quello sopra, che, assumendo $x - t \ne 0$, che da $\blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k)$, riusciamo a passare alla 
+        configurazione $\blacktriangleright x - (t+1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$, in tal modo avremo dimostrato per induzione che se $x - t \ne 0$, allora possiamo passare alla configurazione con $t+1$;
+        fatto questo si applica $\ttif x - (t+1) = 0$ per verificare se siamo arrivati al caso base, ed in tal caso, a meno di cancellare i primi simboli abbiamo concluso, altrimenti si continua, in un altro stato, col passo ricorsivo.
+        Osserviamo inoltre che, essendo $x \in \NN$, si avrà necessariamente $x - t = 0$, per $t$ sufficientemente grande e questo ci permette di passare dallo stato 4 alla terminazione.\\
+        Resta da verificare, per induzione, che si può passare da $\blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k)$ a $\blacktriangleright x - (t+1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$: ricopiamo la stringa e cambiamola nel mentre.
+        \[ 4 \to \push_{k+3,1} \to \exec_{k+4,1}\dotminus 1 \to 5 \]
+        con $5 \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t+1)$, copiamo ora gli input $y_1,\dots,y_k$:
+        \[ 5 \to \push_{k+4,2} \to \push_{k+5,3} \to \ldots \to \push_{2k+3,k+1} \to 6 \]
+        con $6 \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t + 1) y_1 \ldots y_k$, ora ricopiamo di nuovo tutta la stringa (includendo nel mezzo $f(t, y_1, \dots, y_k)$ e $t$ a cui applicare subito dopo $\exec +1$), cancelliamo quello che non serve e calcoliamo $\exec g$.
+        Cancellando con $\rem$ anche $f(t, y_1, \dots, y_k)$, otteniamo $\blacktriangleright x - (t + 1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$, e da qui si arriva allo stato terminale.\\
+        Rimane il caso in cui $h(y_1, \dots, y_k) = \bot$ o $g(x, f(x, y_1, \dots, y_k), y_1, \dots, y_k) = \bot$, in tal caso, per ipotesi, le macchine associate a $h$ e $g$ non terminano e di conseguenza non terminano $\exec h$ o $\exec g$,
+        per cui non termina la macchina che implementa $f$, coerentemente col fatto che $f(x,y_1,\dots,y_k) = \bot$ come funzione ricorsiva.
+        \item[$\boxed{\text{minimizzazione}}$] Sia $g : \NN^{k+1} \to \NN_\bot$ Turing computabile, e vogliamo implementare $f : \NN^k \to \NN_\bot$, definita via minimizzazione a partire da $g$:
+        \[ f(y_1, \dots, y_k) := \mu_x g(x, y_1, \dots, y_k) \]
+        Partiamo da $1 \blacktriangleright 0 y_1 \ldots y_k$, dove usiamo lo 0 come base del contatore che cis serve.
+        Dimostriamo che, partendo dallo stato $2 \blacktriangleright t y_1 \ldots y_k$, con $t \in \NN$, o si ottiene l'output voluto, oppure si ritorna nello stesso stato ma con $t+1$.
+        Copiamo in fondo i valori $t,y_1,\dots,y_k$ e calcoliamo $g(t,y_1,\dots,y_k)$:
+        \[2 \to \push_{k+1,1} \to \push_{k+2,2} \to \ldots \to \push_{2k+1,k+1} \to \exec_{2k+2,k+1}g \to 3\]
+        con $3 \blacktriangleright t y_1 \ldots y_k g(t,y_1,\dots,y_k)$, ora controlliamo se $g(t,y_1,\dots,y_k) = 0$:
+        \[ 3 \to \ttif x_{k+2} = 0 \to \begin{cases}
+            4 & \text{se $g(t,y_1,\dots,y_k) = 0$} \\
+            5 & \text{se $g(t,y_1,\dots,y_k) \ne 0$}
+        \end{cases} \]
+        da 4 è sufficiente cancellare i simboli iniziali e andare a $0$ per concludere. Nel ramo 5, invece, cancelliamo $g(t,y_1,\dots,y_k)$ e torniamo a 2:
+        \begin{multline*}
+            5 \to \rem_{k+2,k+2} \to \push_{k+1,1} \to \exec_{k+2,1}+1 \to \push_{k+2,2} \to \\ \to \push_{k+3,3} \to \ldots \to \push_{2k+1,k+1} \to \rem_{2k+2,1} \to \rem_{2k+1,1} \to \\ \to \ldots \to \rem_{k+2,1} \to 2
+        \end{multline*}
+        Quindi la macchina termina esattamente quando trova il minimo $a$ tale che $g(a,y_1,\dots,y_k)=0$.
+        Se non esiste $i$ tale che la computazione di $g(i,y_1,\dots,y_k)$ termina, oppure se $g(i,y_1,\dots,y_k) = \bot$ per qualche $i$ prima di trovare un valore zero, allora la macchina non raggiunge mai lo stato $0$,
+        e questo è coerente con la definizione di quando si ha $f(y_1,\dots,y_k)=\bot$ per minimizzazione.
     \end{itemize}
 \end{proof}
 
-Rimane ora da costruire le macchine elementari, e le macchine che implementano le funzioni $+1$, $\dotminus 1$ (0 non l'abbiamo usata, ma è facile da implementare).
+Rimane ora da costruire le macchine elementari, e le macchine che implementano le funzioni $s$, $0_k$, $\pi_{k,i}$ e $\dotminus 1$.
+
+\begin{remark}[TM che implementano $\pi_{k,i}$ e $0_k$]
+    Osservare che $\pi_{k,i}$ è implementabile con una sequenza di $\rem$ che cancella tutti i numeri tranne l'$i$-esimo, ricordando che lavoriamo in notazione unaria si lascia solo il blocco di uni relativo all'$i$-esimo numero;
+    $0_k$ è implementabile semplicemente prendendo la rappresentazione in notazione unaria dei $k$ numeri, e cancellando tutto fino a lasciare solo $\blacktriangleright 00\ldots$, che rappresenta correttamente lo 0 in notazione unaria.
+\end{remark}
 
 \begin{exercise}
-    Costruire macchine di Turing che implementino le funzioni $+1$ e $\dotminus 1$.
+    Costruire macchine di Turing che implementino le funzioni $s$ e $\dotminus 1$.
 \end{exercise}
+
+\begin{soln}
+    Per implementare $s$, partendo da $1 \blacktriangleright 1\ldots1$, con $x$ simboli 1, basta aggiungere un altro simbolo 1 alla fine della stringa:
+    \[ 1 \to \push_{x,1} \to 0 \]
+    Per implementare $\dotminus 1$, partendo da $1 \blacktriangleright x$, con $x$ simboli 1, in primis controllo se $x = 0$, e poi decido se restituire 0 o fare la sottrazione:
+    \[ 1 \to \ttif x = 0 \to \begin{cases}
+        2 & \text{se $x = 0$} \\
+        3 & \text{se $x \ne 0$}
+    \end{cases} \]
+    con $2 \blacktriangleright 0$ e $3 \blacktriangleright x$, ora riscrivo $x$ in notazione unaria per comodità, $3 \blacktriangleright 1\ldots1$, con $x$ simboli 1, e poi cancello un simbolo 1:
+    \[ 3 \to \rem_{x,1} \to 0 \]
+    In ambo i casi le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta - e unendo le funzioni di transizione in modo che lo stato di stop di quella applicata prima
+    si comporti come se fosse lo stato iniziale di quella applicata dopo.
+\end{soln}
 
 \begin{exercise}
     Costruire macchine di Turing che implementino le funzioni $\push$, $\rem$, $\exec$ e $\ttif$.
 \end{exercise}
 
 \begin{soln}
-    Vediamo solo il caso di $\exec_{n,k}f$, gli altri sono esercizi.\\
+    Per tutte le macchine elementari usiamo $\Sigma = \{0,1,\blacktriangleright\}$ e $Q \supseteq \{0,1\}$, ma che dipende da quale macchina stiamo costruendo.\\
+    $\boxed{\ttif x_i = 0}$\\
+    Vogliamo costruire una macchina che vada da $1 \blacktriangleright x_1 \ldots x_n$ a $2 \blacktriangleright x_1 \ldots x_n$ se $x_i = 0$, e a $3 \blacktriangleright x_1 \ldots x_n$ se $x_i \ne 0$.
+    Quindi la tabella della funzione di transizione sarà composta da $4+i$ righe che mi servono per arrivare a $x_i$ e poi decidere se andare in 2 o 3, da cui $Q = \{0,1,2,3,\alpha_1,\ldots,\alpha_i\}$ e:
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{c|ccc}
+        & $\blacktriangleright$ & $0$ & $1$ \\ \hline
+        $0$   & $\blacktriangleright$ $0$ $\downarrow$    & $0$ $0$ $\leftarrow$    & $1$ $0$ $\leftarrow$ \\ 
+        $1$   & $\blacktriangleright$ $\alpha_1$ $\rightarrow$   & $0$ $\alpha_1$ $\rightarrow$   & $1$ $\alpha_1$ $\rightarrow$ \\
+        $\alpha_j$ ($1 \leq j \leq i-1$)  & $\blacktriangleright$ $\alpha_j$ $\rightarrow$    & $0$ $\alpha_{j+1}$ $\rightarrow$  & $1$ $\alpha_j$ $\rightarrow$ \\
+        $\alpha_i$ & $\blacktriangleright$ $\alpha_i$ $\rightarrow$    & $0$ $2$ $\rightarrow$   & $1$ $3$ $\rightarrow$ \\
+        $2$   & $\blacktriangleright$ $2$ $\downarrow$   & $0$ $2$ $\leftarrow$    & $1$ $2$ $\leftarrow$ \\
+        $3$   & $\blacktriangleright$ $3$ $\downarrow$    & $0$ $3$ $\leftarrow$    & $1$ $3$ $\leftarrow$
+    \end{tabular}
+    \end{table}
+    avendo definito $\Sigma, Q$ e $\delta$, abbiamo costruito la macchina che implementa $\ttif x_i = 0$.\\
+    $\boxed{\rem_{n,i}}$\\
+    Vogliamo costruire una macchina che parta da $1 \blacktriangleright x_1 \ldots x_n$ e arrivi a $2 \blacktriangleright x_1 \ldots x_{i-1} x_{i+1} \ldots x_n$.\\
+    $\boxed{\exec_{n,k} f}$\\
     Vogliamo costruire una TM che parta da $s_1 \blacktriangleright x_1 \ldots x_n$ e arrivi allo stato $s_2 \blacktriangleright x_1 \ldots x_{n-k} f(x_{n-k+1}, \ldots, x_n)$,
     supponiamo che la macchina che implementa $f$ sia $F$ - e sia già implementata. La configurazione iniziale corrisponde sul nastro a:
     \[ \blacktriangleright \underbrace{11\ldots 11}_{x_1} 0 \underbrace{11\ldots 11}_{x_2} 0 \ldots 0 \underbrace{11\ldots 11}_{x_{n-k}} 0 \underbrace{11\ldots 11}_{x_{n-k+1}} 0 \ldots 0 \underbrace{11\ldots 11}_{x_n} 00\ldots \]
@@ -611,7 +665,7 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
     Dove $\alpha_1, \dots, \alpha_{n-k-1}$ sono nuovi stati, e nella tabella vanno inclusi anche tutti gli stati di $F$ con le relative transizioni.
 \end{soln}
 
-Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ricorsiva, vedremo una cosa più forte, ovvero che esiste una funzione ricorsiva che simula ogni funzione Turing-computabile.
+Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ricorsiva, vedremo una cosa più forte, ovvero che \textcolor{MidnightBlue}{esiste una funzione ricorsiva che simula ogni funzione Turing-computabile}.
 
 \begin{remark}
     Ricordando le definizioni di $\car$ e $\cdr$, come rispettivamente inversa sulla prima e sulla seconda componente di $\cons$,
