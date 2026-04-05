@@ -149,7 +149,8 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
         f(\mathbf x) & \text{se $\mathbf x \in P$} \\
         g(\mathbf x) & \text{se $\mathbf x \notin P$}
     \end{cases} \]
-    è una funzione PR, infatti posso scrivere $h$ come: $h(\mathbf x) = f(\mathbf x) \cdot (1 \dotminus P(\mathbf x)) + g(\mathbf x) \cdot P(\mathbf x)$, che è una composizione di funzioni PR, e quindi è PR.
+    è una funzione PR, infatti posso scrivere $h$ come: $h(\mathbf x) = f(\mathbf x) \cdot (1 \dotminus P(\mathbf x)) + g(\mathbf x) \cdot P(\mathbf x)$, che è una composizione di funzioni PR, e quindi è PR.\\
+    Notare che possiamo anche usare più predicati PR per definizioni con più casi, usando sempre lo schema sopra ed annidando le definizioni.
 \end{remark}
 
 \begin{example}[Funzione modulo]
@@ -642,27 +643,32 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
     \end{tabular}
     \end{table}
     avendo definito $\Sigma, Q$ e $\delta$, abbiamo costruito la macchina che implementa $\ttif x_i = 0$.\\
-    $\boxed{\rem_{n,i}}$\\
-    Vogliamo costruire una macchina che parta da $1 \blacktriangleright x_1 \ldots x_n$ e arrivi a $2 \blacktriangleright x_1 \ldots x_{i-1} x_{i+1} \ldots x_n$.\\
+    $\boxed{\rem_{n,i}}$ e $\boxed{\push_{n,i}}$\\
+    Non sono semplicissime da implementare usando solo $\Sigma = \{0,1,\blacktriangleright\}$, e per far funzionare tutto il resto ci conviene restare solo con questi simboli,
+    pertanto non le riporto, in ogni caso $\push_{n,i}$ è più semplice da implementare, mentre $\rem_{n,i}$ è più complicata.\\
     $\boxed{\exec_{n,k} f}$\\
-    Vogliamo costruire una TM che parta da $s_1 \blacktriangleright x_1 \ldots x_n$ e arrivi allo stato $s_2 \blacktriangleright x_1 \ldots x_{n-k} f(x_{n-k+1}, \ldots, x_n)$,
-    supponiamo che la macchina che implementa $f$ sia $F$ - e sia già implementata. La configurazione iniziale corrisponde sul nastro a:
+    Vogliamo costruire una TM che parta da $1 \blacktriangleright x_1 \ldots x_n$ e arrivi alla configurazione $0 \blacktriangleright x_1 \ldots x_{n-k} f(x_{n-k+1}, \ldots, x_n)$.
+    Trattiamo qui il caso $1 \leq k < n$ (se $k = n$, si applica direttamente la macchina $F$ all'intero input).
+    Sia $F$ la macchina di Turing che implementa $f$. La configurazione iniziale corrisponde sul nastro a:
     \[ \blacktriangleright \underbrace{11\ldots 11}_{x_1} 0 \underbrace{11\ldots 11}_{x_2} 0 \ldots 0 \underbrace{11\ldots 11}_{x_{n-k}} 0 \underbrace{11\ldots 11}_{x_{n-k+1}} 0 \ldots 0 \underbrace{11\ldots 11}_{x_n} 00\ldots \]
     in primis vogliamo che la macchina si sposti verso destra fino a raggiungere $x_{n-k+1}$; arrivati allo 0 prima di $x_{n-k+1}$, ci mettiamo $\blacktriangleright$,
-    a questo punto si usa che la TM che implementa $f$ non va mai a sinistra di $\blacktriangleright$. Fatto questo abbiamo $f(x_{n-k+1}, \ldots, x_n)$, per cui bisogna tornare indietro e man mano cancellare fino a $x_{n-k}$,
-    infine si continua a spostarsi a sinistra fino a raggiungere $\blacktriangleright$, e da qui si va a $s_2$, che è lo stato di output desiderato.
+    a questo punto si usa che la TM che implementa $f$ non va mai a sinistra di $\blacktriangleright$. Fatto questo abbiamo $f(x_{n-k+1}, \ldots, x_n)$, per cui bisogna solo tornare indietro,
+    la tabella della funzione di transizione sarà:
     \begin{table}[H]
     \centering
     \begin{tabular}{c|ccc}
         & $\blacktriangleright$ & $0$ & $1$ \\ \hline
-        $s_1$   & $\blacktriangleright$ $s_1$ $\rightarrow$   & $0$ $\alpha_1$ $\rightarrow$  & $1$ $s_1$ $\rightarrow$ \\
-        $\alpha_i$   & $\blacktriangleright$ $\alpha_i$ $\rightarrow$   & $0$ $\alpha_{i+1}$ $\rightarrow$  & $1$ $\alpha_i$ $\rightarrow$ \\
-        $\alpha_{n-k-1}$   & $\blacktriangleright$ $\alpha_{n-k-1}$ $\rightarrow$   & $\blacktriangleright$ $1_F$ $\downarrow$  & $1$ $\alpha_{n-k-1}$ $\rightarrow$ \\
-        $0_F$  & $0$ $\beta$ $\leftarrow$  & $0$ $0_F$ $\downarrow$  & $1$ $0_F$ $\downarrow$ \\
-        $\beta$ & $\blacktriangleright$ $s_2$ $\downarrow$  & $0$ $\beta$ $\leftarrow$  &  $1$ $\beta$ $\leftarrow$
+        $0$ & $\blacktriangleright$ $0$ $\downarrow$ & $0$ $0$ $\leftarrow$ & $1$ $0$ $\leftarrow$ \\
+        $1$ & $\blacktriangleright$ $\alpha_1$ $\rightarrow$ & $0$ $\alpha_1$ $\rightarrow$ & $1$ $\alpha_1$ $\rightarrow$ \\
+        $\alpha_j$ ($1 \leq j \leq n-k-1$) & $\blacktriangleright$ $\alpha_j$ $\rightarrow$ & $0$ $\alpha_{j+1}$ $\rightarrow$ & $1$ $\alpha_j$ $\rightarrow$ \\
+        $\alpha_{n-k}$ & $\blacktriangleright$ $\alpha_{n-k}$ $\rightarrow$ & $\blacktriangleright$ $1_F$ $\downarrow$ & $1$ $\alpha_{n-k}$ $\rightarrow$ \\
+        \hline
+        \multicolumn{4}{c}{tabella di $F \setminus \{0_F\}$} \\
+        \hline
+        $0_F$ & $0$ $2$ $\leftarrow$ & $0$ $2$ $\leftarrow$ & $1$ $2$ $\leftarrow$ \\
+        $2$ & $\blacktriangleright$ $0$ $\downarrow$ & $0$ $2$ $\leftarrow$ & $1$ $2$ $\leftarrow$
     \end{tabular}
     \end{table}
-    Dove $\alpha_1, \dots, \alpha_{n-k-1}$ sono nuovi stati, e nella tabella vanno inclusi anche tutti gli stati di $F$ con le relative transizioni.
 \end{soln}
 
 Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ricorsiva, vedremo una cosa più forte, ovvero che \textcolor{MidnightBlue}{esiste una funzione ricorsiva che simula ogni funzione Turing-computabile}.
@@ -673,7 +679,7 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
 \end{remark}
 
 \begin{definition}[Codifica di una lista]
-    Definiamo $\langle a_1,\ldots,a_n \rangle$ come:
+    Definiamo $\langle a_1,\ldots,a_n \rangle$, una \vocab{codifica di una lista} di numeri naturali, come il numero:
     \[ \cons(a_1, \cons(a_2, \ldots \cons(a_{n}, \textcolor{purple}{0})\ldots))\]
     ovvero codifichiamo una sequenza di numeri in un numero utilizzando la funzione $\cons$ iterata.
     Alternativamente, se ne può dare una definizione ricorsiva:
@@ -681,10 +687,11 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
         \item $\langle \rangle := 0$,
         \item $\langle a_1, \ldots, a_n \rangle := \cons(a_1, \langle a_2, \ldots, a_n \rangle)$.
     \end{itemize}
+    - osservare che questa è compatibile con la prima definizione, in quanto $\langle a \rangle = \cons(a, \langle \rangle) = \cons(a, 0)$.
 \end{definition}
 
-\begin{remark}
-    Tale codifica è iniettiva, e si verifica per induzione + il fatto che $\cons$ è iniettiva + il fatto che $\cons(a,b) \geq \max\{a,b\}$.
+\begin{remark}[Iniettività della codifica di una lista]
+    Tale codifica è iniettiva, e si verifica per induzione e usando che $\cons$ è iniettiva.
 \end{remark}
 
 \begin{example}
@@ -693,10 +700,9 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
         \centering
         \includegraphics[width=0.7\textwidth]{Immagini/codifica_liste.png}
     \end{figure}
-    Osservare che $0$ alla fine lo abbiamo messo per indicare la fine della lista, secondo la definizione ricorsiva.
 \end{example}
 
-\begin{definition}[Funzioni PR sulle liste]
+\begin{definition}[Funzioni sulle liste]
     Definiamo le seguenti funzioni PR sulle liste:
     \begin{itemize}
         \item $\nth(\langle a_0, \ldots, a_n \rangle, k) := a_k$ se $k \leq n$, e 0 altrimenti,
@@ -706,59 +712,65 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
     \end{itemize}
 \end{definition}
 
-\begin{exercise}
+\begin{exercise}[Le funzioni sulle liste sono PR]
     Verificare che le funzioni $\nth$, $\length$, $\cat$ e $\head$ sono PR.
 \end{exercise}
 
 \begin{soln}
-    Vediamo solo il caso di $\nth$. Definiamo la funzione $f$:
-    \[ f(l,k) := \begin{cases}
-        f(l,0) = l \\
-        f(l, k+1) = \cdr(f(l,k))
+    Vediamo ora solo il caso di $\nth$, $\length$ e $\head$. Per $\nth$ l'idea è che $\nth(\cdot,k) = \car \circ \cdr^k$, tuttavia, non essendo $k$ fissato a priori, non è immediato che la composizione sia PR,
+    per tale ragione introduciamo una funzione ausiliaria $g(l,k)$ che coincide con $\cdr^k$, ed è PR in quanto definita per ricorsione primitiva via funzioni PR:
+    \[ g(l,k) := \begin{cases}
+        g(l,0) := l \\
+        g(l,k+1) := \cdr(g(l,k))
     \end{cases} \]
-    di fatto $f(l,k) = \cdr^k(l)$, i.e. $f(l,k)$ è la $k$-esima coda di $l$ (osservare l'immagine nell'esempio sopra). Fissata la coda $k$-esima, prendendone la testa, ottengo proprio il $k$-esimo elemento della lista, per cui:
-    \[ \nth(l,k) = \car(f(l,k)) = \car(\cdr^k(l)) \]
-    Per cui $\nth$ è PR, essendo $\car$ e $\cdr$ PR, e la composizione di funzioni PR è PR.\\
-    Per $\length$ basterà osservare che $\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}$, cioè il numero degli $i$ per cui posso fare $i$-volte coda senza arrivare a 0, ora $\cdr$ è PR e la condizione $\ne$ è PR, così come $i < l$ (notare che 
-    dal fatto che $\cons$ sia maggiore di ciascuno degli elementi segue anche che la codifica di una lista è maggiore di ciascuno degli elementi della lista, per cui $i < l$ è equivalente, a posteriori, a $i < \length(l)$).
+    ora $g(l,k)$ coincide con $\cdr^k$, infatti il passo ricorsivo fatto $k$ volte corrisponde a $\cdr^k$; 
+    inoltre $\nth(l,k) = \car(g(l,k))$, infatti, se $l = \langle a_0, \ldots, a_n \rangle$, allora $g(l,k) = \langle a_k, \ldots, a_n \rangle$, e prendendo $\car$ si ottiene $a_k$ se $k \leq n$,
+    mentre $g(l,k)=0$ se $k>n$, in quanto arriviamo con $\cdr$ a 0 e $\car(0)=0$. Pertanto $\nth(l,k) = \car(g(l,k)) = \car \circ \cdr^k(l)$.\\
+    Per $\length$ basterà osservare che $\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}$, infatti $\{\cdr^i(l) \ne 0\}$ è un predicato PR - il fatto che $\cdr^i$ sia PR deriva dalla stessa definizione ricorsiva che se ne può dare come fatto sopra,
+    e $l \mapsto \#\{i < l| \cdr^i(l) \ne 0\}$ è una funzione che conta gli elementi di un predicato PR fino a $l$, che è quindi PR per un esempio precedente.\\
+    Per $\head$ è sufficiente osservare che possiamo darne una definizione ricorsiva:
+    \[ \head(l,k) := \begin{cases}
+        \head(l,0) := 0 \\
+        \head(l,k+1) := \cons(\car(l), \head(\cdr(l),k))
+    \end{cases} \]
+    notare che nella ricorsione passo a $\cdr(l)$ per prendere la lista restante, dopo aver preso il primo elemento.
 \end{soln}
+
+Per dimostrare che anche $\cat$ è PR ci serve un lemma.
 
 \begin{lemma}[Ricorsione sul (de)corso dei valori]
     Sia $f : \NN^{n+1} \to \NN$ una funzione e $g : \NN^{n+1} \to \NN$ PR, tali che:
     \[ f(x_1, \ldots, x_n,y) = g(x_1, \ldots, x_n, \langle f(\mathbf x,y-1), f(\mathbf x,y-2), \ldots, f(\mathbf x,0) \rangle) \]
-    per cui $f$ è $g$ sugli stessi valori, e sull'ultima componente è la codifica della lista di tutti i valori che assume con entrata $<y$.
-    Se ho una tale $f$, allora $f$ è PR.
+    ovvero $f$ è definita in modo ricorsivo a partire da $g$, dove il parametro su cui ricorriamo è $y$, e la dipendenza è dalla lista dei valori assunta da $f$ per tutti
+    i valori più piccoli di $y$; in questo caso si ha che $f$ è PR.
 \end{lemma}
 
 \begin{proof}
-    Sia $h(\mathbf{x},y) := \langle f(\mathbf x,y-1), \ldots, f(\mathbf x,0) \rangle$, se riesco a dimostrare che $h$ è PR, allora:
-    \[ f(\mathbf x,y) = g(\mathbf x, h(\mathbf x,y)) \]
-    e $f$ è PR, essendo $g$ e $h$ PR, e la composizione di funzioni PR è PR. Per cui basta dimostrare che $h$ è PR, definiamola per ricorsione primitiva:
+    Sia $h(\mathbf{x},y) := \langle f(\mathbf x,y-1), \ldots, f(\mathbf x,0) \rangle$, se riusciamo a dimostrare che $h$ è PR, segue immediatamente che $f$ è PR per composizione.\\
+    Per verificare che $h$ è PR, ne diamo una definizione per ricorsione primitiva:
     \[ h(\mathbf x,y) := \begin{cases}
         h(\mathbf x,0) = \langle \rangle = 0 \\
         h(\mathbf x,y+1) = \cons(g(\mathbf x, h(\mathbf x,y)), h(\mathbf x,y))
     \end{cases} \]
-    per la definizione di codifica di una lista ho messo $h(\mathbf x,y)$ come coda di $g(\mathbf x, h(\mathbf x,y))$, che è $f(\mathbf x,y)$ per ipotesi.
+    dove abbiamo usato l'ipotesi per cui $f(\mathbf x,y) = g(\mathbf x, h(\mathbf x,y))$.
 \end{proof}
 
 \begin{example}[Successione di Fibonacci]
     Dal lemma precedente è facile dimostrare che la successione di Fibonacci $\texttt{fib}$ è PR, infatti:
     \[ \texttt{fib}(x) = g(\langle \texttt{fib}(x-1), \ldots, \texttt{fib}(0) \rangle) \]
-    e possiamo definire $g$ per casi su un predicato PR come segue:
+    e possiamo definire $g$ per casi, sui predicati PR $\{\length(l) = 0\}$, $\{\length(l) = 1\}$ e $\{\length(l) > 1\}$, come segue:
     \[ g(l) := \begin{cases}
         0 & \text{se $\length(l) = 0$} \\
         1 & \text{se $\length(l) = 1$} \\
-        \car(l) + \car(cdr(l)) & \text{altrimenti}
+        \car(l) + \car(\cdr(l)) & \text{altrimenti}
     \end{cases} \]
 \end{example}
 
-\begin{remark}
-    Notare che tramite questo lemma è anche più facile verificare che $\cat$ e $\head$ sono PR, infatti:
-    \begin{itemize}
-        \item per $\cat$ si applica il lemma alla successione dei valori $\cat(\cdr^i(l),m)$: il passo successivo si ottiene in modo PR da quello precedente usando $\car$, $\cdr$ e $\cons$;
-        \item per $\head$ si applica il lemma alla successione $\head(l,i)$ per $i \leq k$: il passo è definito in modo PR per casi, usando $\nth$ e $\length$ per decidere se aggiungere un nuovo elemento o lasciare invariato il valore precedente.
-    \end{itemize}
-\end{remark}
+A questo punto possiamo anche verificare che $\cat$ è PR.
+
+\begin{soln}
+
+\end{soln}
 
 \begin{theorem}[Funzione ricorsiva universale]
     Esiste una funzione ricorsiva parziale $u : \NN^2 \to \NN_\bot$ tale che per ogni $f : \NN^k \to \NN_\bot$ Turing-computabile,
@@ -965,6 +977,8 @@ Vediamo ora la dimostrazione del (secondo) teorema di punto fisso.
     Quindi $\alpha$ è il punto fisso richiesto.
 \end{proof}
 
+\newpage
+\section{Gerarchie aritmetiche}
 \subsection{Insiemi decidibili, semidecidibili e ricorsivamente enumerabili}
 
 \begin{definition}[Insiemi decidibili, semidecidibili e ricorsivamente enumerabili]
@@ -1076,8 +1090,7 @@ Vediamo un insieme non decidibile.
     Ovvero non esistono due insiemi semidecidibili disgiunti che possono essere separati da un insieme decidibile.
 \end{exercise}
 
-\newpage
-\section{Gerarchie aritmetiche}
+
 \subsection{Insiemi aritmetici}
 
 \begin{definition}[Insiemi aritmetici]
