@@ -884,26 +884,53 @@ Passiamo alla dimostrazione del teorema.
     e $\texttt{unario}(x) := \langle 1, \ldots, 1 \rangle$ è la codifica unaria di $x$, tutte queste cose sono PR per composizione di funzioni PR, va verificato.\\
     Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica deve usare il lemma di ricorsione sul decorso dei valori.
     A questo punto usiamo l'operatore di minimizzazione per procurarci l'$n$ in cui la macchina termina, consideriamo:
-    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0) \]
-    ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM termina a partire da input codificato da $c$. E siamo alla fine perché ora per 
+    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0) = 0) \]
+    ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM termina a partire da input codificato da $c$, tale funzione non è PR in quanto, per un certo input, la macchina potrebbe non terminare, per cui $\texttt n$ è ricorsiva parziale. E siamo alla fine perché ora per 
     ottenere l'output basta prendere il nastro della configurazione finale, ovvero, indicando con $\langle\mathbf{x}\rangle = \langle x_1, \ldots, x_k \rangle$:
-    \[ \nth(\texttt{step}^{\texttt{n}(\texttt{codifica\_input}(\langle\mathbf{x}\rangle),\ulcorner \delta \urcorner}(\ulcorner \delta \urcorner, \texttt{codifica\_input}(\langle\mathbf{x}\rangle))), 2) \]
+    \[ \nth(\texttt{step}^{\texttt{n}(\texttt{codifica\_input}(\langle\mathbf{x}\rangle),\ulcorner \delta \urcorner)}(\ulcorner \delta \urcorner, \texttt{codifica\_input}(\langle\mathbf{x}\rangle))), 2) \]
     a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$, posso definire:
     \[ \texttt{conta\_uni}(l) := \begin{cases}
         0 & \text{se } \car(l) = 0 \\
         1 + \texttt{conta\_uni}(\cdr(l)) & \text{altrimenti}
     \end{cases}\]
-    che è PR, e quindi $u$ si definisce componendo $\texttt{conta\_uni}$ con la funzione scritta sopra.
+    e quindi $u$ si definisce componendo $\texttt{conta\_uni}$ con la funzione scritta sopra, tale composizione, eccetto per la $\texttt n$, che fa uso di minimizzazione, è PR, per cui la composizione è ricorsiva parziale.
 \end{proof}
 
 \begin{corollary}[Forma normale per le funzioni ricorsive]
     $\forall k \in \NN$ esiste $T_k : \NN^{k+2} \to \NN$ predicato PR, e una funzione $U : \NN \to \NN$ PR, tali che
-    $\forall f : \NN^k \to \NN_\bot$ ricorsiva (parziale) vale:
-    \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; \mu_n(T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0) \]
-    e se questo avviene allora:
-    \[ f(x_1, \ldots, x_k) = U(\mu_n(T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0)) \]
-    ovvero se $x_1, \ldots, x_k$ sono nel dominio di $f$, allora $f(x_1, \ldots, x_k)$ è proprio $U$ applicato al minimo $n$ per cui $T_k$ è 0. 
+    $\forall f : \NN_\bot^k \to \NN_\bot$ ricorsiva (parziale) vale:
+    \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) = 0 \]
+    e, quando questo avviene:
+    \[ f(x_1, \ldots, x_k) = U\!\big(\mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) = 0)\big) \]
+    ovvero se $f$ termina su un certo input, allora l'output è dato da $U$ valutata in $\mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0)$.
 \end{corollary}
+
+\begin{proof}
+    Mettiamoci nello stesso setting della dimostrazione del teorema precedente. Definiamo la configurazione raggiunta dopo $t$ passi a partire da un certo input e dal codice di $f$ come:
+    \[ c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t) := \texttt{step}^t\big(\ulcorner f \urcorner, \texttt{codifica\_input}(\langle x_1, \ldots, x_k \rangle)\big) \]
+    che è PR, essendo composizione di PR. Codifichiamo una coppia step-configurazione $(t,c)$ come $n = \langle t,c \rangle$, e definiamo esplicitamente:
+    \[ T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) := \begin{cases}
+        0 & \text{se } \begin{cases}
+            \nth(n,1)=c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, \nth(n,0)) \\
+            \nth(\nth(n,1),0)=0
+        \end{cases} \\
+        1 & \text{altrimenti.}
+    \end{cases} \]
+    ovvero se la configurazione raggiunta dopo $t$ passi, a partire dalla configurazione iniziale è proprio $c$, $c = c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t)$, e se lo stato di tale configurazione è 0, i.e. la macchina si ferma, allora $T_k$ restituisce 0, altrimenti restituisce 1.
+    Abbiamo dato la definizione per casi con le codifiche in modo da avere una definizione PR di $T_k$. 
+    In questo modo:
+    \begin{itemize}
+        \item[$\boxed{\implies}$] se $f(x_1, \ldots, x_k) \ne \bot$, esiste un tempo di arresto $t$ e la relativa configurazione $c = c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t)$ con stato $0$, e quindi scegliendo proprio $n = \langle t,c \rangle$ si ha che $T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0$;
+        \item[$\boxed{\impliedby}$] se esiste $n$ con $T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0$, allora per la definizione per casi, data sopra, $n$ codifica una configurazione di arresto raggiunta in un certo numero finito di passi - per la precisione $\nth(n,0)$, quindi la computazione termina e $f(x_1, \ldots, x_k) \ne \bot$.
+    \end{itemize}
+    Mettiamoci nel caso in cui $f(x_1, \ldots, x_k) \ne \bot$, allora esiste un tempo di arresto minimo:
+    \[ n_0 := \mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)) \]
+    per cui il nastro della configurazione raggiunta dopo $n_0$ passi è data da $\nth(\nth(n_0,1),2)$, quindi non bisogna far altro che convertire il nastro di tale configurazione in output, e questo è esattamente quello che fa $U$:
+    \[ U(n) := \texttt{conta\_uni}(\nth(\nth(n,1),2)) \]
+    ed $U$ è PR per composizione di funzioni PR.
+\end{proof}
+
+Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferiremo al test $T_k$ che verifica se la funzione è PR, ed alla $U$ che ne estrae il testimone.
 
 \subsection{Teoremi di punto fisso e \texorpdfstring{$s$-$m$-$n$}{s-m-n}}
 
@@ -912,7 +939,6 @@ Passiamo alla dimostrazione del teorema.
     \[ s_n^m : \NN^{m+1} \to \NN \]
     tale che per ogni $\alpha,x_1, \ldots, x_m,y_1, \ldots, y_n \in \NN$ vale:
     \[ u_{n+m}(\alpha, \langle x_1, \ldots, x_m, y_1, \ldots, y_n \rangle) = u_n(s_n^m(\alpha,x_1, \ldots, x_m), \langle y_1, \ldots, y_n \rangle) \]
-    ovvero $s_n^m$ è una funzione che, dato il codice di una funzione calcolabile, e alcuni degli input e li fissa, restituisce il codice di una funzione che simula la funzione originale con quegli input fissati.
 \end{theorem}
 
 \begin{example}[Somma PR]
@@ -926,7 +952,6 @@ Passiamo alla dimostrazione del teorema.
 \begin{theorem}[(Secondo) teorema di punto fisso]
     Sia $h : \NN \to \NN$ una funzione ricorsiva totale, e sia $n \in \NN$, allora esiste $\alpha$ tale che:
     \[ \forall x_1, \ldots, x_n \; u_n(\textcolor{purple}{\alpha}, x_1, \ldots, x_n) = u_n(h(\textcolor{purple}{\alpha}), x_1, \ldots, x_n) \]
-    i.e. per ogni funzione ricorsiva totale $h$, esiste un codice $\alpha$ - che codifica una funzione - tale che la funzione codificata da $\alpha$ è uguale alla funzione codificata da $h(\alpha)$, ovvero $h$ ha un punto fisso per quanto riguarda la codifica di funzioni ricorsive.
 \end{theorem}
 
 \begin{example}[Successione di Fibonacci PR - v.2]
@@ -943,10 +968,10 @@ Passiamo alla dimostrazione del teorema.
         1 & \text{se $n = 1$} \\
         u_1(\alpha, n \dotminus 1) + u_1(\alpha, n \dotminus 2) & \text{altrimenti}
     \end{cases} \]
-    che questa sia una funzione ricorsiva (non necessariamente totale) è ovvio, a questo punto definisco:
+    che questa sia una funzione ricorsiva (non necessariamente totale) è ovvio - è definita per casi su un predicato PR, a questo punto definisco:
     \[ h(\alpha) := s_1^1(\ulcorner g \urcorner, \alpha) \]
-    cioè la funzione che prende un codice $\alpha$ e restituisce il codice di una funzione che simula $g(\alpha,\cdot)$, ``$\alpha \mapsto \ulcorner g(\alpha,\cdot) \urcorner$'',
-    sia $\alpha$ un punto fisso di $h$, tale che $u_1(\alpha, x) = u_1(h(\alpha), x)$, e dico che $f(x) := u_1(\alpha, x)$, per cui la successione di Fibonacci coincide con una funzione ricorsiva.
+    cioè la funzione tale che $h(\alpha) = g(\alpha, \cdot)$. Sia $\alpha$ un punto fisso di $h$,
+    per cui $u_1(\alpha, x) = u_1(h(\alpha), x)$, e dico che $f(x) := u_1(\alpha, x)$, per cui la successione di Fibonacci coincide con una funzione ricorsiva.
     Vediamo che $f$ coincide con la funzione che ha codice $\alpha$:
     \begin{align*}
         u_1(\alpha, x) & = u_1(h(\alpha), x) &&(\text{punto fisso}) \\
@@ -954,7 +979,7 @@ Passiamo alla dimostrazione del teorema.
                        & = u_2(\ulcorner g \urcorner, \alpha, x) &&(\text{definizione di $s_1^1$}) \\
                        & = g(\alpha, x) &&(\text{definizione di funzione universale})
     \end{align*}
-    e, per la definizione di $g$, si ha che $u_1(\alpha, x)$ soddisfa esattamente la definizione ricorsiva di $f$. Se dimostro nella metateoria che
+    e, per la definizione di $g$, si ottiene che $u_1(\alpha, x)$ soddisfa esattamente la definizione ricorsiva di $f$. Se dimostro nella metateoria che
     c'è una sola funzione che soddisfa la definizione ricorsiva di $f$ - ed in $\mathsf{ZFC}$ è il teorema di ricorsione numerabile, allora $f$ coincide con $u_1(\alpha, x)$, e quindi $f$ è ricorsiva.\footnote{Morale: la nozione di funzione ricorsiva che aveva Gödel è quella giusta.}
 \end{example}
 
@@ -1026,9 +1051,9 @@ Vediamo ora la dimostrazione del (secondo) teorema di punto fisso.
 \begin{definition}[Insiemi decidibili, semidecidibili e ricorsivamente enumerabili]
     Sia $R \subseteq \NN^k$, allora $R$ è:
     \begin{itemize}
-        \item \vocab{semidecidibile} se esiste $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$,
-        \item \vocab{decidibile} se esiste $f$ ricorsiva totale $f : \NN^k \to \NN$ tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$,
-        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva totale tale che $R = \{f(n) | n \in \NN\}$.
+        \item \vocab{semidecidibile} se esiste una funzione $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, i.e. se $R$ è il luogo di zero di una funzione ricorsiva parziale,
+        \item \vocab{decidibile} se esiste $f$ ricorsiva totale $f : \NN^k \to \NN$ tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, i.e. se $R$ è il luogo di zero di una funzione ricorsiva totale,
+        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva totale tale che $R = \{f(n) | n \in \NN\}$, i.e. se $R$ è l'immagine di una funzione ricorsiva totale.
     \end{itemize}
 \end{definition}
 
@@ -1137,7 +1162,7 @@ Vediamo un insieme non decidibile.
 
 \begin{definition}[Insiemi aritmetici]
     Diciamo che $R \subseteq \NN^k$ è \vocab{aritmetico} se è definibile in $(\NN; +, \cdot, 0, s)$, ovvero:
-    \[ R = \{(x_1,\ldots,x_k) \in \NN^k | (\NN; +, \cdot, 0, s) \models \varphi(x_1, \ldots, x_k)\} \]
+    \[ R = \{(x_1,\ldots,x_k) \in \NN^k : (\NN; +, \cdot, 0, s) \models \varphi(x_1, \ldots, x_k)\} \]
     i.e. aritmetico = $L_{\text{arit}}$-definibile.
 \end{definition}
 
