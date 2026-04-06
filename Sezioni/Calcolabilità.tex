@@ -717,7 +717,7 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
 \end{exercise}
 
 \begin{soln}
-    Vediamo ora solo il caso di $\nth$, $\length$ e $\head$. Per $\nth$ l'idea è che $\nth(\cdot,k) = \car \circ \cdr^k$, tuttavia, non essendo $k$ fissato a priori, non è immediato che la composizione sia PR,
+    Vediamo ora solo il caso di $\nth$, $\length$ e $\cat$. Per $\nth$ l'idea è che $\nth(\cdot,k) = \car \circ \cdr^k$, tuttavia, non essendo $k$ fissato a priori, non è immediato che la composizione sia PR,
     per tale ragione introduciamo una funzione ausiliaria $g(l,k)$ che coincide con $\cdr^k$, ed è PR in quanto definita per ricorsione primitiva via funzioni PR:
     \[ g(l,k) := \begin{cases}
         g(l,0) := l \\
@@ -728,15 +728,15 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
     mentre $g(l,k)=0$ se $k>n$, in quanto arriviamo con $\cdr$ a 0 e $\car(0)=0$. Pertanto $\nth(l,k) = \car(g(l,k)) = \car \circ \cdr^k(l)$.\\
     Per $\length$ basterà osservare che $\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}$, infatti $\{\cdr^i(l) \ne 0\}$ è un predicato PR - il fatto che $\cdr^i$ sia PR deriva dalla stessa definizione ricorsiva che se ne può dare come fatto sopra,
     e $l \mapsto \#\{i < l| \cdr^i(l) \ne 0\}$ è una funzione che conta gli elementi di un predicato PR fino a $l$, che è quindi PR per un esempio precedente.\\
-    Per $\head$ è sufficiente osservare che possiamo darne una definizione ricorsiva:
-    \[ \head(l,k) := \begin{cases}
-        \head(l,0) := 0 \\
-        \head(l,k+1) := \cons(\car(l), \head(\cdr(l),k))
+    Per $\cat$ è sufficiente definire una funzione PR ausiliaria:
+    \[ f(a,b,k) := \begin{cases}
+        f(a,b,0) := b \\
+        f(a,b,k+1) := \cons(\nth(a,k), f(a,b,k))
     \end{cases} \]
-    notare che nella ricorsione passo a $\cdr(l)$ per prendere la lista restante, dopo aver preso il primo elemento.
+    dove $\nth(a,k)$ è l'elemento $a_k$ della lista $a$, e $f(a,b,k)$ è la concatenazione di $b$ con gli ultimi $k$ elementi di $a$; da questa si ha che $\cat(a,b) = f(a,b,\length(b))$.
 \end{soln}
 
-Per dimostrare che anche $\cat$ è PR ci serve un lemma.
+Per dimostrare che anche $\head$ è PR ci serve un lemma.
 
 \begin{lemma}[Ricorsione sul (de)corso dei valori]
     Sia $f : \NN^{n+1} \to \NN$ una funzione e $g : \NN^{n+1} \to \NN$ PR, tali che:
@@ -766,10 +766,25 @@ Per dimostrare che anche $\cat$ è PR ci serve un lemma.
     \end{cases} \]
 \end{example}
 
-A questo punto possiamo anche verificare che $\cat$ è PR.
+A questo punto possiamo anche verificare che $\head$ è PR.
 
 \begin{soln}
-
+    \textcolor{MidnightBlue}{Per $\head$ potremmo dare la seguente definizione ricorsiva:
+    \[ \head(l,k) := \begin{cases}
+        \head(l,0) := 0 \\
+        \head(l,k+1) := \cons(\car(l), \head(\cdr(l),k))
+    \end{cases} \]
+    il problema è che nella ricorsione passo a $\cdr(l)$, anziché ad $l$, per prendere la lista restante dopo aver preso il primo elemento, per cui non siamo in una ricorsione primitiva diretta su $k$ e quindi questo approccio non funziona.}\\ 
+    Usiamo allora il lemma di ricorsione sul decorso dei valori e definiamo:
+    \[ \head(l,y)=g\left(l,\left\langle \head(l,y-1),\ldots,\head(l,0)\right\rangle\right) \]
+    dove $g$ è PR e vale
+    \[ g(l,s):=\begin{cases}
+        0 & \text{se }\length(s)=0,\\
+        \car(s) & \text{se }\length(s)>\length(l),\\
+        \cat\!\left(\car(s),\cons\!\left(\nth(l,\length(s)-1),0\right)\right) & \text{altrimenti}
+    \end{cases} \]
+    infatti, se $s=\langle \head(l,y-1),\ldots,\head(l,0)\rangle$, allora $\car(s)=\head(l,y-1)$. Quando $\length(s)=0$ siamo nel caso base $y=0$, e quindi il valore corretto è $0$. Quando $\length(s)>\length(l)$ abbiamo già superato la lunghezza di $l$, perciò il prefisso richiesto non cresce più e resta uguale all'ultimo valore calcolato, cioè $\car(s)$. Nel caso rimanente, aggiungiamo a $\head(l,y-1)=\car(s)$ l'elemento successivo di $l$, cioè $\nth(l,\length(s)-1)$, e otteniamo esattamente $\head(l,y)$. 
+    Quindi siamo esattamente nel caso del lemma, e $\head$ è PR.
 \end{soln}
 
 \begin{theorem}[Funzione ricorsiva universale]
@@ -779,24 +794,27 @@ A questo punto possiamo anche verificare che $\cat$ è PR.
     ovvero esiste una funzione universale $u$ che simula ogni funzione Turing-computabile, e le basta il codice della funzione e la codifica degli input.
 \end{theorem}
 
-\begin{corollary}[Turing-computabilità $\Rightarrow$ Ricorsività]
+\begin{corollary}[Turing-computabilità $\Rightarrow$ ricorsività]
     Se $f : \NN^k \to \NN_\bot$ è Turing-computabile, allora $f$ è ricorsiva.
 \end{corollary}
 
 \begin{proof}
     La dimostrazione segue dal teorema osservando che:
-    \[ f(x_1, \ldots, x_k) = u(\ulcorner f \urcorner, \cons(x_1, \cons(x_2, \ldots))) \]
-    e $u$ è ricorsiva, $\ulcorner f \urcorner$ è costante, quindi è ricorsiva, $\cons$ è ricorsiva, e la composizione di funzioni ricorsive è ricorsiva.
+    \[ f(\cdot) = u(\ulcorner f \urcorner, \cdot) \]
+    $u$ è ricorsiva dal teorema ed è composta con una costante.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}[Esistenza di una funzione ricorsiva universale per ogni arità]
     $\forall n \in \NN \; \exists u_n : \NN_\bot^{n+1} \to \NN_\bot$ ricorsiva, tale che, data $f : \NN_\bot^n \to \NN_\bot$ ricorsiva,
     esiste un codice $\ulcorner f \urcorner$ tale che:
     \[ \forall x_1, \ldots, x_n \in \NN_\bot \; f(x_1, \ldots, x_n) = u_n(\ulcorner f \urcorner, x_1, \ldots, x_n) \]
 \end{corollary}
 
 \begin{proof}
-    È un indebolimento del corollario precedente, comunque fa comodo osservare che ogni funzione ricorsiva può essere simulata da una funzione universale.
+    Dal teorema precedente, $f$ è ricorsiva, quindi Turing-computabile, per cui esiste $\ulcorner f \urcorner$ tale che $f(\cdot) = u(\ulcorner f \urcorner, \cdot)$,
+    a questo punto è sufficiente definire $u_n$ come:
+    \[ u_n(\ulcorner f \urcorner, x_1, \ldots, x_n) := u(\ulcorner f \urcorner, \langle x_1, \ldots, x_n \rangle) \]
+    essendo la codifica una composizione di $n$ (con $n$ fisso) funzioni $\cons$, che è PR, $u_n$ è ricorsiva per composizione di funzioni ricorsive.
 \end{proof}
 
 \begin{remark}[Tesi di Church]
@@ -810,57 +828,81 @@ A questo punto possiamo anche verificare che $\cat$ è PR.
 Passiamo alla dimostrazione del teorema.
 
 \begin{proof}
-    Poiché $f$ è Turing-computabile, esiste una macchina di Turing $M$ con $\{0,1,\blacktriangleright\}\supseteq \Sigma, \{0,1\} \supseteq Q \subseteq \NN$,
-    chiamiamo \vocab{configurazione} = $\langle \text{stato}, \text{posizione}, \text{nastro} \rangle$, dove nastro = $\langle a_0, a_1, \ldots, a_n \rangle$, che
-    rappresenta il nastro $a_0a_1\ldots a_n 0 0 \ldots$, chiaramente questa codifica non è univoca perché posso aggiungere 0 in fondo ed ottenere la stessa configurazione, ma questo non è un problema.\\
-    Ci serve anche una codifica della funzione di transizione $\delta : Q \times \Sigma \to Q \times \Sigma \times \{\leftarrow,\downarrow, \rightarrow\}$, posso codificarla con un numero, $\ulcorner \delta \urcorner$, tale che:
-    \[ \nth( \ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \langle \text{stato'}, \text{simbolo'}, \text{spostamento} \rangle \]
-    tale che $\delta(\text{stato}, \text{simbolo}) = (\text{stato'}, \text{simbolo'}, \text{spostamento})$, ovvero $\ulcorner \delta \urcorner$ è il numero la cui posizione nella lista $\langle \text{stato}, \text{simbolo} \rangle$ 
-    contiene la lista $\langle \text{stato'}, \text{simbolo'}, \text{spostamento} \rangle$ che rappresenta l'output di $\delta$ su quell'input - e non è iniettiva.
-    \begin{lemma}
-        Esiste una funzione PR $\step : \NN^2 \to \NN$ tale che per ogni codifica di configurazione $c$:
-        \[ c \overset{M}{\to} \step(\ulcorner \delta \urcorner, c) \]
-        cioè $\step$ calcola la codifica della configurazione successiva a $c$ per la macchina $M$.
+    Sia $f : \NN^k \to \NN_\bot$ Turing-computabile, e sia $M$ una macchina di Turing che implementa $f$. Per definizione sappiamo che $\{0,1,\blacktriangleright\} \subseteq \Sigma$ e 
+    $\{0,1\} \subseteq Q$, inoltre, essendo entrambi insiemi finiti, possiamo assumere che $\Sigma, Q \subseteq \NN$ - assumiamo che $\blacktriangleright$ corrisponda a 2, ricordiamo infine che, per le nostre convenzioni, rappresentiamo $\{\leftarrow, \downarrow, \rightarrow\}$ come $\{0,1,2\}$.\\
+    Ora codifichiamo con un numero naturale una configurazione e la funzione $\delta$ di transizione di $M$. Per la codifica di una configurazione usiamo semplicemente una lista:
+    \[ \NN \ni \textcolor{purple}{\text{configurazione}} := \langle \text{stato, posizione, nastro} \rangle \]
+    dove stato e posizione sono i numeri naturali stessi, mentre la funzione nastro, che va da $\NN$ a $\Sigma$, è codificata come una lista di numeri naturali, ovvero la configurazione $a_0a_1\ldots a_n 00\ldots$ corrisponde alla lista $\langle a_0, a_1, \ldots, a_n \rangle$.
+    \begin{remark}[Non iniettività della codifica del nastro]
+        Si osserva che la codifica della funzione nastro introdotta non è iniettiva, infatti $\langle a_0, a_1, \ldots, a_n \rangle$ codifica la 
+        stessa configurazione di $\langle a_0, a_1, \ldots, a_n, 0 \rangle$ e così via, tuttavia questo non è un problema, in quanto non si perde alcuna informazione rispetto a quale sia la configurazione considerata.
+    \end{remark}
+    Per codificare la funzione di transizione $\delta$, associamo a tale funzione il numero $\ulcorner \delta \urcorner$ tale che:
+    \[ \nth(\ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \langle \text{stato'}, \text{simbolo'}, \text{direzione} \rangle \]
+    ovvero se penso $\ulcorner \delta \urcorner$ non come un numero, ma come la funzione da $\NN^2$ a $\NN^3$ dico che in ogni casella del suo dominio c'è la tripla immagina, questo però lo vedo in termini puramente di codifiche.
+    Il fatto che $\ulcorner \delta \urcorner$ esista è garantito dal fatto che la funzione, insiemisticamente, è contenuta in un sottoinsieme finito di $\NN^5$ e quindi posso letteralmente considerare $m := \max\{\langle \text{stato}, \text{simbolo} \rangle\}$, chiamare
+    $a_i := \langle \text{stato}', \text{simbolo}', \text{direzione} \rangle$ con $i = \langle \text{stato}, \text{simbolo} \rangle$, questo se $\delta$ manda effettivamente la configurazione corrispondente all'indice in quella corrispondente alla tripla, altrimenti $a_i := 0$,
+    infine porre $\ulcorner \delta \urcorner := \langle a_0, \ldots, a_m \rangle$, quindi, semplicemente, listo gli output di $\delta$ indicizzati dagli input.\\
+    \begin{remark}[Non iniettività della codifica di $\delta$]
+        Per la stessa ragione di prima, la codifica $\ulcorner \delta \urcorner$ non è iniettiva.
+    \end{remark}
+    A questo punto abbiamo bisogno di una funzione che simuli uno step di $M$ a partire dalla codifica di una configurazione.
+    \begin{lemma}[Funzione PR che simula uno step della TM]
+        Esiste una funzione PR $\texttt{step} : \NN^2 \to \NN$, tale che mappa ogni codifica di configurazione $c$, vale:
+        \[ c \overset{M}{\to} \texttt{step}(\ulcorner \delta \urcorner, c) \]
+        ovvero $\texttt{step}$ è una funzione che, data la codifica di una configurazione e quella della funzione di transizione, restituisce la codifica della configurazione che si ottiene applicando uno step della macchina di Turing.
     \end{lemma}
     \begin{proof}
-        Per la codifica fatta:
+        Con la codifica data all'inizio abbiamo che:
         \begin{itemize}
-            \item \textcolor{purple}{stato} = $\nth(c,0)$,
-            \item \textcolor{purple}{posizione} = $\nth(c,1)$,
-            \item \textcolor{purple}{nastro} = $\nth(c,2)$.
+            \item \textcolor{purple}{stato} $= \nth(c,0)$,
+            \item \textcolor{purple}{posizione} $= \nth(c,1)$,
+            \item \textcolor{purple}{simbolo} $= \nth(c,2)$
         \end{itemize}
-        per cui:
-        \[ \textcolor{purple}{nastro} = \langle \underbrace{a_1,\ldots,a_{p-1}}_{\head(\text{nastro},\text{posizione}) =: \alpha}, \underbrace{a_p}_{\nth(\text{nastro},\text{posizione}):=\beta}, \underbrace{a_{p+1}, \ldots, a_n}_{\cdr^{\text{posizione}+1}(\text{nastro})=:\gamma} \rangle \]
-        ora la nuova configurazione dipende da $\nth(\ulcorner \delta \urcorner, \langle \text{stato}, \beta \rangle)$, ovvero $\nth(\ulcorner \delta \urcorner, \cons(\text{stato}, \cons(\beta,0)))$ che chiamo $\texttt{update}$, per cui il nuovo nastro che ottengo è:
-        \[ \text{nastro'} = \cat(\alpha, \cons(\nth(\texttt{update},1), \gamma)) \]
-        il nuovo stato è:
-        \[ \langle \nth(\texttt{update},0),\; \text{posizione} + \nth(\texttt{update},2) \dotminus 1,\; \text{nastro'} \rangle. \]
-        Uniamo queste cose e troviamo la funzione esplicita.
+        ora il nastro è a sua volta la codifica di una lista:
+        \[ \text{nastro} = \langle \underbrace{a_1,\ldots,a_{p-1}}_{=:\textcolor{MidnightBlue}{\alpha}}, \underbrace{a_p}_{=:\textcolor{MidnightBlue}{\sigma}}, \underbrace{a_{p+1},\ldots}_{=:\textcolor{MidnightBlue}{\beta}} \rangle \]
+        dove:
+        \begin{itemize}
+            \item $\textcolor{MidnightBlue}{\alpha} := \head(\text{nastro},\text{posizione} \dotminus 1) = \langle a_1,\ldots,a_{p-1}\rangle = \head(\nth(c,2),\nth(c,1) \dotminus 1)$,
+            \item $\textcolor{MidnightBlue}{\sigma} := \nth(\text{nastro},\text{posizione}) = a_p = \nth(\nth(c,2),\nth(c,1))$,
+            \item $\textcolor{MidnightBlue}{\beta} := \cdr^{\text{posizione}}(\text{nastro}) = \langle a_{p+1},\ldots\rangle = \cdr^{\nth(c,1)}(\nth(c,2))$.
+        \end{itemize}
+        Quello che vogliamo fare è calcolare $\delta(\text{stato},\text{simbolo})$, ovvero $\nth(\ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \nth(\ulcorner \delta \urcorner, \langle \nth(c,0), \sigma \rangle)$,
+        che dà la tripla codificata da $\langle \textcolor{MidnightBlue}{\text{stato}'}, \textcolor{MidnightBlue}{\text{simbolo}'}, \textcolor{MidnightBlue}{\text{direzione}} \rangle :=$\textcolor{purple}{\texttt{update}}. Da questo posso
+        scrivere la configurazione di arrivo, infatti il nuovo nastro sarà:
+        \[ \text{nastro}' := \cat(\alpha,\cons(\nth(\texttt{update,1}),\beta)) \]
+        dove $\nth(\texttt{update,1})$ è simbolo$'$; il nuovo stato sarà $\nth(\texttt{update,0})$ e la nuova posizione sarà $(\text{posizione} + \nth(\texttt{update,2})) \dotminus 1$.
+        Segue quindi che la nuova configurazione sarà codificata da:
+        \[ \langle \nth(\texttt{update,0}), (\nth(c,1) + \nth(\texttt{update,2})) \dotminus 1, \cat(\alpha,\cons(\nth(\texttt{update,1}),\beta)) \rangle \]
+        e chiamiamo questo numero $\texttt{step}(\ulcorner \delta \urcorner, c)$, che è PR per composizione di funzioni PR.
     \end{proof}
-    Vogliamo descrivere una funzione che dice ``in un certo numero di step, da un certo input arrivo ad un certo output'', per cui definiamo:
-    \[ \texttt{codifica\_input}(\langle x_1, \ldots, x_k \rangle) := \langle 1, 0, \cons(0,\texttt{nastro}(\langle x_1, \ldots, x_k \rangle)) \rangle \]
-    dove $\texttt{nastro}(\langle x_1, \ldots, x_k \rangle)$ è $\cat(\texttt{unario}(x_1), \cons(0, \texttt{nastro}(\langle x_2, \ldots, x_k \rangle)))$.
-    Ora vogliamo dire che c'è una funzione che fa un certo numero di step alla volta, ovvero che la funzione:
-    \[ (n,c,\ulcorner \delta \urcorner) \mapsto \step^n(\ulcorner \delta \urcorner, c) \]
-    è PR, e questo è banale da verificare per induzione su $n$. Vogliamo procurarci, tramite minimizzazione, l'$n$ al quale la macchina termina, consideriamo:
-    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu n\,\big(\nth(\step^n(\ulcorner \delta \urcorner, c),0)=0\big) \]
-    i.e il numero di passi in cui la macchina di Turing $\delta$ si ferma su input $c$. Consideriamo:
-    \[ \texttt{conta\_uni}\!\left(\nth\!\left(\step^{\texttt{n}(\texttt{codifica\_input}(\mathbf{x}),\ulcorner \delta \urcorner)}(\ulcorner \delta \urcorner,\texttt{codifica\_input}(\mathbf{x})),2\right)\right) \]
-    che è il numero di 1 che la macchina di Turing $\delta$ lascia in output dopo essersi fermata su input $\texttt{codifica\_input}(\mathbf{x})$, e quindi è proprio $f(\mathbf x)$. Per il conteggio usiamo la funzione PR:
-    \[ \texttt{conta\_uni}(x) := \begin{cases}
-        0 & \text{se $\car(x) = 0$} \\
-        1 + \texttt{conta\_uni}(\cdr(x)) & \text{se $\car(x) = 1$}
+    Da questa vogliamo scrivere la funzione che, in un certo numero di step, a partire da un certo input e dal codice di $f$, restituisce l'output.\\
+    Iniziamo definendo una codifica dell'input:
+    \[ \texttt{codifica\_input}(\langle x_1, \ldots, x_n \rangle) := \langle 1, 0, \cons(\blacktriangleright, \texttt{nastro}(\langle x_1, \ldots, x_k \rangle)) \rangle \]
+    dove:
+    \[ \texttt{nastro}(\langle x_1, \ldots, x_k \rangle) := \langle \texttt{unario}(x_1),\cons(0,\texttt{nastro}(\langle x_2, \ldots, x_k \rangle)) \rangle \]
+    e $\texttt{unario}(x) := \langle 1, \ldots, 1 \rangle$ è la codifica unaria di $x$, tutte queste cose sono PR per composizione di funzioni PR, va verificato.\\
+    Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica deve usare il lemma di ricorsione sul decorso dei valori.
+    A questo punto usiamo l'operatore di minimizzazione per procurarci l'$n$ in cui la macchina termina, consideriamo:
+    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0) \]
+    ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM termina a partire da input codificato da $c$. E siamo alla fine perché ora per 
+    ottenere l'output basta prendere il nastro della configurazione finale, ovvero, indicando con $\langle\mathbf{x}\rangle = \langle x_1, \ldots, x_k \rangle$:
+    \[ \nth(\texttt{step}^{\texttt{n}(\texttt{codifica\_input}(\langle\mathbf{x}\rangle),\ulcorner \delta \urcorner}(\ulcorner \delta \urcorner, \texttt{codifica\_input}(\langle\mathbf{x}\rangle))), 2) \]
+    a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$, posso definire:
+    \[ \texttt{conta\_uni}(l) := \begin{cases}
+        0 & \text{se } \car(l) = 0 \\
+        1 + \texttt{conta\_uni}(\cdr(l)) & \text{altrimenti}
     \end{cases}\]
+    che è PR, e quindi $u$ si definisce componendo $\texttt{conta\_uni}$ con la funzione scritta sopra.
 \end{proof}
 
 \begin{corollary}[Forma normale per le funzioni ricorsive]
     $\forall k \in \NN$ esiste $T_k : \NN^{k+2} \to \NN$ predicato PR, e una funzione $U : \NN \to \NN$ PR, tali che
     $\forall f : \NN^k \to \NN_\bot$ ricorsiva (parziale) vale:
-    \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0 \]
-    i.e. $x_1, \ldots, x_k$ sono nel dominio di $f$ se e solo se esiste un $n$ tale che il predicato PR $T_k$ applicato all'input di $f$, al codice di $f$ ed a $n$ è 0,
+    \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; \mu_n(T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0) \]
     e se questo avviene allora:
     \[ f(x_1, \ldots, x_k) = U(\mu_n(T_k(x_1, \ldots, x_k, \ulcorner f \urcorner, n) = 0)) \]
-    i.e. se $x_1, \ldots, x_k$ sono nel dominio di $f$, allora $f(x_1, \ldots, x_k)$ è proprio $U$ applicato al minimo $n$ per cui $T_k$ è 0.
+    ovvero se $x_1, \ldots, x_k$ sono nel dominio di $f$, allora $f(x_1, \ldots, x_k)$ è proprio $U$ applicato al minimo $n$ per cui $T_k$ è 0. 
 \end{corollary}
 
 \subsection{Teoremi di punto fisso e \texorpdfstring{$s$-$m$-$n$}{s-m-n}}
