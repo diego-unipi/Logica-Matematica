@@ -935,7 +935,7 @@ Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferi
 \subsection{Teoremi di punto fisso e \texorpdfstring{$s$-$m$-$n$}{s-m-n}}
 
 \begin{theorem}[$s-m-n$]
-    Esiste una funzione ricorsiva totale (in realtà PR):
+    Esiste, per ogni $m,n \in \NN$, una funzione ricorsiva totale (in realtà PR):
     \[ s_n^m : \NN^{m+1} \to \NN \]
     tale che per ogni $\alpha,x_1, \ldots, x_m,y_1, \ldots, y_n \in \NN$ vale:
     \[ u_{n+m}(\alpha, \langle x_1, \ldots, x_m, y_1, \ldots, y_n \rangle) = u_n(s_n^m(\alpha,x_1, \ldots, x_m), \langle y_1, \ldots, y_n \rangle) \]
@@ -970,78 +970,108 @@ Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferi
     \end{cases} \]
     che questa sia una funzione ricorsiva (non necessariamente totale) è ovvio - è definita per casi su un predicato PR, a questo punto definisco:
     \[ h(\alpha) := s_1^1(\ulcorner g \urcorner, \alpha) \]
-    cioè la funzione tale che $h(\alpha) = g(\alpha, \cdot)$. Sia $\alpha$ un punto fisso di $h$,
-    per cui $u_1(\alpha, x) = u_1(h(\alpha), x)$, e dico che $f(x) := u_1(\alpha, x)$, per cui la successione di Fibonacci coincide con una funzione ricorsiva.
-    Vediamo che $f$ coincide con la funzione che ha codice $\alpha$:
+    cioè la funzione tale che $h(\alpha) = g(\alpha, \cdot)$. Sia $\widetilde\alpha$ un punto fisso di $h$,
+    per cui $u_1(\widetilde\alpha, x) = u_1(h(\widetilde\alpha), x)$, e dico che $f(x) := u_1(\widetilde\alpha, x)$, per cui la successione di Fibonacci coincide con una funzione ricorsiva.
+    Vediamo che $f$ coincide con la funzione che ha codice $\widetilde\alpha$:
     \begin{align*}
-        u_1(\alpha, x) & = u_1(h(\alpha), x) &&(\text{punto fisso}) \\
-                       & = u_1(s_1^1(\ulcorner g \urcorner, \alpha), x) &&(\text{definizione di $h$}) \\
-                       & = u_2(\ulcorner g \urcorner, \alpha, x) &&(\text{definizione di $s_1^1$}) \\
-                       & = g(\alpha, x) &&(\text{definizione di funzione universale})
+        u_1(\widetilde\alpha, x) & = u_1(h(\widetilde\alpha), x) &&(\text{punto fisso}) \\
+                       & = u_1(s_1^1(\ulcorner g \urcorner, \widetilde\alpha), x) &&(\text{definizione di $h$}) \\
+                       & = u_2(\ulcorner g \urcorner, \widetilde\alpha, x) &&(\text{definizione di $s_1^1$}) \\
+                       & = g(\widetilde\alpha, x) \quad \forall x \in \NN &&(\text{definizione di funzione universale}) 
     \end{align*}
-    e, per la definizione di $g$, si ottiene che $u_1(\alpha, x)$ soddisfa esattamente la definizione ricorsiva di $f$. Se dimostro nella metateoria che
-    c'è una sola funzione che soddisfa la definizione ricorsiva di $f$ - ed in $\mathsf{ZFC}$ è il teorema di ricorsione numerabile, allora $f$ coincide con $u_1(\alpha, x)$, e quindi $f$ è ricorsiva.\footnote{Morale: la nozione di funzione ricorsiva che aveva Gödel è quella giusta.}
+    e, per la definizione di $g$, si ottiene che $u_1(\widetilde\alpha, x)$ soddisfa esattamente la definizione ricorsiva di $f(x)$. Se dimostro nella metateoria che
+    c'è una sola funzione che soddisfa la definizione ricorsiva di $f$ - ed in $\mathsf{ZFC}$ è il teorema di ricorsione numerabile, allora $f$ coincide con $u_1(\widetilde\alpha, x)$, e quindi $f$ è ricorsiva.\footnote{Morale: la nozione di funzione ricorsiva che aveva Gödel è quella giusta.}
 \end{example}
 
-Dimostriamo il teorema $s-m-n$\footnote{Una sorta di half-evaluation per gli informatici.}.
+Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evaluation per gli informatici.}.
 
 \begin{proof}
-    Iniziamo con l'osservare che basta fare il caso $m = 1$, infatti se riesco a dimostrare che esiste $s_n^1$, allora posso iterare $m$ volte $s_n^1$ per ottenere $s_n^m$.\\
-    Quindi vogliamo solo dimostrare che:
-    \[ \forall \alpha \; \forall x_1, \mathbf{y} \; u_{n+1}(\alpha, x_1, \mathbf{y}) = u_n(s_n^1(\alpha,x_1), \mathbf{y}) \]
-    L'idea è modificare la TM che implementa la funzione codificata da $\alpha$ in modo che, quando riceve un input $x_1$, invece di usarlo come input, lo usi per modificare la propria codifica, e poi si comporti come se avesse ricevuto un input $x_1$ - e quindi simuli la funzione originale con $x_1$ fissato.\\
-    Per fare questo, partendo da un input $1 \blacktriangleright y_1 \ldots y_n$ devo descrivere una macchina che mi porti nello stato $\blacktriangleright x y_1 \ldots y_n$, fatto questo è sufficiente
-    attaccare questa macchina a quella che implementa la funzione codificata da $\alpha$ per concludere. Descriviamo quindi la macchina che ci serve in termini delle transizioni, usando le macchine elementari:
-    \[ 1 \to \underbrace{\exec_{n+1,n+1} s \to \exec_{n+1,n+1} s \to \ldots \to \exec_{n+1,n+1} s}_{\text{$x$ volte}} \to 2 \]
-    con $2 \blacktriangleright y_1 \ldots y_n x$, ho usato $s$ sullo 0 immediatamente a destra di $y_n$; a questo punto non resta che copiare tutto davanti e rimuovere tutto quello che c'è prima:
-    \[ 2 \to \push_{n+1,1} \to \push_{n+2,2} \to \ldots \to \push_{n+n, n} \to 3 \]
-    con $3 \blacktriangleright y_1 \ldots y_n x y_1 \ldots y_n$, e infine:
+    Iniziamo con l'osservare che basta fare il caso $m = 1$, infatti se riesco a dimostrare che esiste $s_n^1$, allora posso iterare $m$ volte $s_n^1$ per ottenere $s_n^m$ nel modo seguente:
+    \[ s_n^m(\alpha, x_1, \ldots, x_m) := s_n^1\!\bigl(s_{n+1}^1(\ldots s_{n+m-1}^1(\alpha, x_1)\ldots, x_{m-1}), x_m\bigr) \]
+    e RHS messo in $u_n$ dà:
+    \begin{align*}
+        u_n(s_n^m(\alpha, x_1, \ldots, x_m), \mathbf{y}) & = u_n\bigl(s_n^1(s_{n+1}^1(\ldots s_{n+m-1}^1(\alpha, x_1)\ldots, x_{m-1}), x_m), \mathbf{y}\bigr) \\
+                                                         & = u_{n+1}\bigl(s_{n+1}^1(\ldots s_{n+m-1}^1(\alpha, x_1)\ldots, x_{m-1}), x_m, \mathbf{y}\bigr) \\
+                                                         & = u_{n+2}\bigl(s_{n+2}^1(\ldots s_{n+m-1}^1(\alpha, x_1)\ldots, x_{m-2}), x_{m-1}, x_m, \mathbf{y}\bigr) \\
+                                                         & = \ldots \\
+                                                         & = u_{n+m-1}(s_{n+m-1}^1(\alpha,x_1), x_2, \ldots, x_m, \mathbf{y}) \\
+                                                         & = u_{n+m}(\alpha,x_1, x_2, \ldots, x_m, \mathbf{y})
+    \end{align*}
+    quindi vogliamo solo dimostrare che:
+    \[ \forall \alpha, x_1 \in \NN \; \forall \mathbf{y} \in \NN^n \; u_{n+1}(\alpha, x_1, \mathbf{y}) = u_n(s_n^1(\alpha,x_1), \mathbf{y}) \]
+    Fisso quindi $\alpha$, $x_1$ e $\mathbf{y}$, e considero la TM che implementa la funzione codificata da $\alpha$, l'idea è quella di costruire una macchina che riceve in input $1 \blacktriangleright y_1 \ldots y_n$ e restituisce $1_\alpha \blacktriangleright x_1 y_1 \ldots y_n$,
+    ovvero una macchina che aggiunge $x_1$ davanti all'input, e poi simula la macchina che implementa la funzione codificata da $\alpha$. Unendo tale macchina e quella che implementa la funzione codificata da $\alpha$ ottengo la macchina che implementa la funzione codificata da $s_n^1(\alpha,x_1)$, e quindi ho questa funzione ricorsiva.\\
+    Consideriamo $1 \blacktriangleright y_1 \ldots y_n$, WLOG possiamo supporre di avere già uno 0 in fondo - altrimenti si fa $\push$ di uno dei valori, e si applica la macchina che implementa la funzione costante 0, quindi $1 \blacktriangleright y_1 \ldots y_n 0$, a questo punto trasformo lo 0 alla fine in $x_1$:
+    \[ 1 \to \underbrace{\exec_{n+1,n+1} s \to \exec_{n+1,n+1} s \to \ldots \to \exec_{n+1,n+1} s}_{\text{$x_1$ volte}} \to 2 \]
+    con $2 \blacktriangleright y_1 \ldots y_n x_1$, tutto ciò che rimane da fare è riscrivere l'input nell'ordine corretto e cancellare quello che rimane all'inizio:
+    \[ 2 \to \push_{n+1,1} \to \push_{n+2,2} \to \ldots \to \push_{2n, n} \to 3 \]
+    con $3 \blacktriangleright y_1 \ldots y_n x_1 y_1 \ldots y_n$, e infine:
     \[ 3 \to \rem_{2n+1,1} \to \rem_{2n,1} \to \ldots \to \rem_{n+2,1} \to 4 \]
-    con $4 \blacktriangleright x y_1 \ldots y_n$, e da qui si attacca la macchina che implementa la funzione codificata da $\alpha$, i.e. $4 \to 1_{\alpha}$.
-    È necessario verificare che la funzione che abbiamo descritto è PR, e si conclude.
+    con $4 \blacktriangleright x_1 y_1 \ldots y_n$, e da qui si manda in $0 \blacktriangleright x_1 y_1 \ldots y_n$ (che poi verrà attaccato allo stato iniziale $1_\alpha$ come al solito).\\
+    Osservare infine che la macchina costruita termina sempre, perché è composta da un numero finito di step e nessuna delle macchine che la compongono è non-terminante, per di più abbiamo usato 
+    solo macchine elementari che corrispondono a funzioni PR, per cui $s_n^1$ è PR, e per composizione anche $s_n^m$ è PR.
 \end{proof}
 
 \begin{exercise}[Effetto collaterale del teorema $s-m-n$]
-    Dimostra che c'è $k : \NN \to \NN$ ricorsiva totale tale che:
-    \[ \forall n \in \NN \; n = u_0(k(n)) \]
+    Dimostrare che esiste una funzione $\texttt k : \NN \to \NN$, ricorsiva totale, per cui:
+    \[ \forall n \in \NN \; n = u_0(\texttt k(n)) \]
     ovvero c'è una funzione ricorsiva totale che, dato un numero $n$, restituisce un codice di una funzione costante sempre $n$.
 \end{exercise}
 
+\textcolor{MidnightBlue}{In pratica esiste una funzione che, valutata in un numero dà proprio il codice della funzione costante di quel numero.}
+
 \begin{soln}
-    Applichiamo il teorema $s-m-n$ alla funzione $\id_\NN : \NN \to \NN$, che è PR - è la proiezione, e definisco:
-    \[ k(n) := s_0^1(\ulcorner \id_\NN \urcorner, n) \]
-    per cui:
-    \[ u_0(k(n)) = u_0(s_0^1(\ulcorner \id_\NN \urcorner, n)) = u_1(\ulcorner \id_\NN \urcorner, n) = n \]
-    e quindi $k$ soddisfa la richiesta.
+    Applichiamo il teorema $s-m-n$ alla funzione $\id_\NN : \NN \to \NN$, che è PR, per cui usa $m = 1$ (l'argomento della funzione che simulo) e $n = 0$ (input aggiuntivi), ottengo $s_0^1 : \NN^2 \to \NN$ tale che:
+    \[ u_0(s_0^1(\ulcorner \id_\NN \urcorner, n)) = u_1(\ulcorner \id_\NN \urcorner, n) = \id_\NN(n) = n \]
+    per cui basta definire:
+    \[ \texttt k(n) := s_0^1(\ulcorner \id_\NN \urcorner, n) \]
+    che è ricorsiva totale, perché $s_0^1$ è PR.
 \end{soln}
 
-\begin{exercise}
-    Data $f : \NN_\bot \to \NN_\bot$ ricorsiva, dimostra che esiste $k_f : \NN \to \NN$ ricorsiva totale tale che:
-    \[ \forall n \; f(n) \in \NN \implies f(n) = u_0(k_f(n)) \]
+\begin{exercise}[Generalizzazione dell'esercizio precedente]
+    Data $f : \NN_\bot \to \NN_\bot$ ricorsiva parziale, dimostrare che esiste $\texttt k f : \NN \to \NN$ ricorsiva totale tale che:
+    \[ \forall n \; f(n) \in \NN \implies f(n) = u_0(\texttt k f(n)) \]
 \end{exercise}
 
+\textcolor{MidnightBlue}{In questo caso vogliamo fare la stessa cosa di prima, ma per una funzione non costante e soprattutto non necessariamente totale.}
+
 \begin{soln}
-    Una possibilità è definire $k_f(n) := k(f(n))$, dove $k$ è la funzione del precedente esercizio - ma questa non è necessariamente ricorsiva totale, quindi andrebbe verificato.
-    Altrimenti, possiamo definire $k_f(n) := s_0^1(\ulcorner f \urcorner, n)$ - questo è sicuramente ricorsivo totale, perché $s_0^1$ è addirittura PR.
+    Esattamente come per l'esercizio precedente, applichiamo il teorema $s-m-n$ alla funzione $f : \NN_\bot \to \NN_\bot$, con $m = 1$ e $n = 0$, ottenendo $s_0^1 : \NN^2 \to \NN$ tale che:
+    \[ u_0(s_0^1(\ulcorner f \urcorner, n)) = u_1(\ulcorner f \urcorner, n) = f(n) \]
+    essendo $s_0^1$ PR, è sufficiente definire:
+    \[ \texttt k f(n) := s_0^1(\ulcorner f \urcorner, n) \]
+    che è ricorsiva totale.
 \end{soln}
 
-Vediamo ora la dimostrazione del (secondo) teorema di punto fisso.
+\begin{remark}[Eager evaluation vs lazy evaluation]
+    Nell'esercizio precedente, se avessimo provato ad usare come soluzione $\texttt k f(n) := \texttt k(f(n))$, avremmo ottenuto qualcosa che funziona solo nel caso di funzioni ricorsive totali, perché se $f(n) = \bot$, allora $\texttt k(f(n))$ non è definita - visto che $s_0^1$ è PR, e quindi non è ricorsiva totale.\\
+    Abbiamo già accennato come il teorema $s-m-n$ sia quello che gli informatici chiamano half-evaluation, perché dato il codice di una funzione e un input, restituisce il codice di una funzione che simula la prima con l'input fissato, e quindi è come se avessimo fatto metà della valutazione.\\
+    In questo contesto, l'esempio precedente ci permette di osservare la differenza tra due diversi tipi di valutazione, la valutazione eager (usata da linguaggi come C, Java, Python), in cui gli argomenti di una funzione vengono valutati prima di essere passati alla funzione, quindi nel caso di $\texttt k(f(n))$ si valuta prima $f(n)$,
+    e se $f(n) = \bot$ allora si ottiene un errore di runtime; e la valutazione lazy (usata da linguaggi come Haskell), in cui gli argomenti di una funzione vengono valutati solo quando sono effettivamente usati, quindi nel caso di $\texttt kf(n) = s_0^1(\ulcorner f \urcorner, n)$, si ottiene un codice di una funzione che simula $f$ con input $n$,
+    e se $f(n) = \bot$ allora si ottiene un errore di runtime solo quando si prova ad eseguire la funzione codificata da $\texttt kf(n)$, e non prima.
+\end{remark}
+
+Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
 
 \begin{proof}
-    Abbiamo $h$ fissata e cerchiamo una $\alpha$ tale che $u_n(\alpha, \mathbf x) = u_n(h(\alpha), \mathbf x)$ per ogni $\mathbf x$.
-    Definiamo
-    \[ g(x,\mathbf y) := u_n(h(s_n^1(x,x)),\mathbf y) \]
-    e
-    \[ F(x) := s_n^1(\ulcorner g \urcorner, x). \]
-    Poniamo ora $\alpha := F(\ulcorner g \urcorner) = s_n^1(\ulcorner g \urcorner,\ulcorner g \urcorner)$. Allora:
+    Fissiamo $h : \NN \to \NN$ ricorsiva totale e $n \in \NN$, e cerchiamo $\alpha$ tale che $u_n(\alpha, \mathbf y) = u_n(h(\alpha), \mathbf y)$ per ogni $\mathbf y \in \NN^n$.\\
+    \textcolor{MidnightBlue}{Euristicamente, se potessimo applicare qualsiasi cosa a qualsiasi cosa - come si fa nel $\lambda$-calcolo, definiamo $F(x) := h(x(x))$, e poi consideriamo $F(F) = h(F(F))$, e quindi $F(F)$ è un punto fisso di $h$.
+    Questo non possiamo farlo nel nostro contesto, tuttavia, a meno di passare alle codifiche di funzioni, possiamo fare qualcosa di simile.}\\
+    \textcolor{purple}{Vediamo come la prima cosa possibile, per imitare l'euristica, non funziona, infatti se provassimo a usare $u_1(x,x)$ per $x(x)$ avremmo:
+    \[ F(x) := h(u_1(x,x)) \]
+    da cui $F(\ulcorner F \urcorner) = h(u_1(\ulcorner F \urcorner, \ulcorner F \urcorner))$, cioè $h(F(\ulcorner F \urcorner))$, che è un punto fisso. Il problema sta nel fatto che $F(\ulcorner F \urcorner)$ potrebbe fare $\bot$, che è contro la tesi che il punto fisso stia in $\NN$.}\\
+    Definiamo allora:
+    \[ g(x,\mathbf y) := u_n(h(u_1(x,x)),\mathbf y) \]
+    e definiamo $F(x) := s_n^1(\ulcorner g \urcorner, x)$, per cui $F$ è una funzione ricorsiva totale, in tal modo, sfruttando l'half-evaluation, abbiamo ottenuta la stessa cosa di prima, perché $s_1^1$ si comporta come se avessimo fatto $g(x,\cdot)$, ma mantenendo la totalità e quindi
+    usando $x = \ulcorner F \urcorner$ otteniamo:
     \begin{align*}
-        u_n(\alpha, \mathbf y) & = u_n(s_n^1(\ulcorner g \urcorner,\ulcorner g \urcorner), \mathbf y) \\
-                                 & = u_{n+1}(\ulcorner g \urcorner, \ulcorner g \urcorner, \mathbf y) \\
-                                 & = g(\ulcorner g \urcorner, \mathbf y) \\
-                                 & = u_n(h(s_n^1(\ulcorner g \urcorner,\ulcorner g \urcorner)),\mathbf y) \\
-                                 & = u_n(h(\alpha),\mathbf y).
+        F(\ulcorner F \urcorner) & = s_n^1(\ulcorner g \urcorner, \ulcorner F \urcorner) \\
+                                 & = u_n(\ulcorner g \urcorner, \ulcorner F \urcorner, \mathbf y) \\
+                                 & = g(\ulcorner F \urcorner, \mathbf y) \\
+                                 & = u_n(h(u_1(\ulcorner F \urcorner, \ulcorner F \urcorner)), \mathbf y) \\
+                                 & = u_n(h(F(\ulcorner F \urcorner)), \mathbf y)
     \end{align*}
-    Quindi $\alpha$ è il punto fisso richiesto.
+    e quindi $\alpha := F(\ulcorner F \urcorner)$ è un punto fisso di $h$.
 \end{proof}
 
 \newpage
@@ -1065,6 +1095,8 @@ Vediamo ora la dimostrazione del (secondo) teorema di punto fisso.
         \item $R$ è dominio di una funzione ricorsiva parziale, $R = \{\mathbf x \in \NN^k | \exists y \; f(\mathbf x) = y \ne \bot\}$.
     \end{enumerate}
 \end{proposition}
+
+Morale: essere dominio, immagine o luogo di zero di una funzione ricorsiva parziale sono tutte la stessa cosa, e questa è la nozione di semidecidibilità.
 
 \begin{proof}
     Vediamo $1. \implies 3.$, $3. \implies 2.$ e $2. \implies 1.$.
@@ -1093,7 +1125,7 @@ Vediamo ora la dimostrazione del (secondo) teorema di punto fisso.
     \end{itemize}
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}[Caratterizzazione della decidibilità in termini di semidecidibilità]
     $R$ è decidibile se e solo se $R$ e $R^\complement$ sono semidecidibili.
 \end{proposition}
 
