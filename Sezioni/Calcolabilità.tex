@@ -1065,11 +1065,11 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
     e definiamo $F(x) := s_n^1(\ulcorner g \urcorner, x)$, per cui $F$ è una funzione ricorsiva totale, in tal modo, sfruttando l'half-evaluation, abbiamo ottenuta la stessa cosa di prima, perché $s_1^1$ si comporta come se avessimo fatto $g(x,\cdot)$, ma mantenendo la totalità e quindi
     usando $x = \ulcorner F \urcorner$ otteniamo:
     \begin{align*}
-        F(\ulcorner F \urcorner) & = s_n^1(\ulcorner g \urcorner, \ulcorner F \urcorner) \\
-                                 & = u_n(\ulcorner g \urcorner, \ulcorner F \urcorner, \mathbf y) \\
-                                 & = g(\ulcorner F \urcorner, \mathbf y) \\
-                                 & = u_n(h(u_1(\ulcorner F \urcorner, \ulcorner F \urcorner)), \mathbf y) \\
-                                 & = u_n(h(F(\ulcorner F \urcorner)), \mathbf y)
+        u_n(F(\ulcorner F \urcorner), \mathbf y) & = u_n(s_n^1(\ulcorner g \urcorner, \ulcorner F \urcorner), \mathbf y) \\
+                                               & = u_{n+1}(\ulcorner g \urcorner, \ulcorner F \urcorner, \mathbf y) \\
+                                               & = g(\ulcorner F \urcorner, \mathbf y) \\
+                                               & = u_n(h(u_1(\ulcorner F \urcorner, \ulcorner F \urcorner)),\mathbf y) \\
+                                               & = u_n(h(F(\ulcorner F \urcorner)),\mathbf y)
     \end{align*}
     e quindi $\alpha := F(\ulcorner F \urcorner)$ è un punto fisso di $h$.
 \end{proof}
