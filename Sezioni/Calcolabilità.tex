@@ -1075,7 +1075,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
 \end{proof}
 
 \newpage
-\section{Gerarchie aritmetiche}
+\section{Gerarchie aritmetiche e decidibilità}
 \subsection{Insiemi decidibili, semidecidibili e ricorsivamente enumerabili}
 
 \begin{definition}[Insiemi decidibili, semidecidibili e ricorsivamente enumerabili]
@@ -1083,7 +1083,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
     \begin{itemize}
         \item \vocab{semidecidibile} se esiste una funzione $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, i.e. se $R$ è il luogo di zero di una funzione ricorsiva parziale,
         \item \vocab{decidibile} se esiste $f$ ricorsiva totale $f : \NN^k \to \NN$ tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, i.e. se $R$ è il luogo di zero di una funzione ricorsiva totale,
-        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva totale tale che $R = \{f(n) | n \in \NN\}$, i.e. se $R$ è l'immagine di una funzione ricorsiva totale.
+        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva \textcolor{purple}{totale} tale che $R = \{f(n) | n \in \NN\}$, i.e. se $R$ è l'immagine di una funzione ricorsiva totale.
     \end{itemize}
 \end{definition}
 
@@ -1091,37 +1091,42 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
     Sia $R \subseteq \NN^k$, allora le seguenti sono equivalenti:
     \begin{enumerate}
         \item $R$ è semidecidibile,
-        \item $R$ è ricorsivamente enumerabile,
-        \item $R$ è dominio di una funzione ricorsiva parziale, $R = \{\mathbf x \in \NN^k | \exists y \; f(\mathbf x) = y \ne \bot\}$.
+        \item $R$ è dominio di una funzione ricorsiva parziale, $R = \{\mathbf x \in \NN^k | \exists y \; f(\mathbf x) = y \ne \bot\}$,
+        \item $R$ è ricorsivamente enumerabile.
     \end{enumerate}
 \end{proposition}
 
-Morale: essere dominio, immagine o luogo di zero di una funzione ricorsiva parziale sono tutte la stessa cosa, e questa è la nozione di semidecidibilità.
+Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiva sono tutte la stessa cosa.
 
 \begin{proof}
-    Vediamo $1. \implies 3.$, $3. \implies 2.$ e $2. \implies 1.$.
+    Vediamo le implicazioni in ordine circolare.
     \begin{itemize}
-        \item[$\boxed{1. \Rightarrow 3.}$] Se $R$ è semidecidibile, esiste $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che
-        \[ R = \{\mathbf x \in \NN^k : f(\mathbf x)=0\}. \]
-        Definiamo $\tilde f : \NN^{k+1} \to \NN_\bot$ con
-        \[ \tilde f(\mathbf x,n) := f(\mathbf x), \]
-        e poi
-        \[ h(\mathbf x) := \mu n\,\tilde f(\mathbf x,n). \]
-        Se $\mathbf x \in R$, allora $f(\mathbf x)=0$ e quindi $h(\mathbf x)=0$. Se invece $\mathbf x \notin R$, allora $f(\mathbf x)\in \NN\setminus\{0\}$ oppure $f(\mathbf x)=\bot$, quindi non esiste alcun $n$ con $\tilde f(\mathbf x,n)=0$ e dunque $h(\mathbf x)=\bot$.
-        Quindi
-        \[ R = \{\mathbf x \in \NN^k : h(\mathbf x) \ne \bot\}, \]
-        cioè $R$ è il dominio di una funzione ricorsiva parziale.
-        \item[$\boxed{3. \Rightarrow 2.}$] Se $R$ è dominio di una funzione ricorsiva parziale $f$, per la forma normale esistono $T,U$ PR tali che
-        \[ f(\mathbf x)=U\big(\mu_y(T_{k+1}(\ulcorner f \urcorner,\mathbf x,y)=0)\big). \]
-        Dunque
-        \[ \mathbf x \in R \iff \exists y\; T_{k+1}(\ulcorner f \urcorner,\mathbf x,y)=0. \]
-        Enumerando in diagonale le coppie $(\mathbf x,y)$ e stampando $\mathbf x$ quando la condizione PR vale, si ottiene una funzione totale ricorsiva $e:\NN\to\NN^k$ con immagine esattamente $R$ (eventualmente con ripetizioni). Quindi $R$ è ricorsivamente enumerabile.
-        \item[$\boxed{2. \Rightarrow 1.}$] Se $R$ è ricorsivamente enumerabile, esiste $e:\NN\to\NN^k$ ricorsiva totale con $R=\{e(n):n\in\NN\}$.
-        Sia $\chi_{=}$ un predicato PR su $\NN^k\times\NN^k$ che vale $0$ esattamente quando i due $k$-uple sono uguali. Definiamo
-        \[ m(\mathbf x):=\mu n\,\big(\chi_{=}(e(n),\mathbf x)=0\big). \]
-        Allora $m(\mathbf x)$ converge se e solo se $\mathbf x\in R$. Componendo con la costante zero, $g := 0_1\circ m$ è ricorsiva parziale e soddisfa
-        \[ \mathbf x\in R \iff g(\mathbf x)=0, \]
-        quindi $R$ è semidecidibile.
+        \item[$\boxed{1. \Rightarrow 2.}$] se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, \textcolor{MidnightBlue}{$R$ non è già il dominio di $f$, perché $f$ potrebbe assumere altri valori oltre a 0, ma poco manca}, infatti basta definire $g : \NN^k \to \NN_\bot$ come:
+        \[ g(\mathbf y) := \begin{cases}
+            0 & \text{se $\mathbf y = \mathbf 0$} \\
+            \bot & \text{altrimenti}
+        \end{cases} \]
+        che è ricorsiva parziale \textcolor{MidnightBlue}{- ed in pratica la composizione manda tutti i valori di $f$ che non siano 0 a $\bot$}, per cui si ha $R = \{\mathbf x \in \NN^k | g \circ f(\mathbf x) \ne \bot\}$, infatti $g \circ f(\mathbf x) \ne \bot$ se e solo se $f(\mathbf x) = 0$.
+        \item[$\boxed{2. \Rightarrow 3.}$] Sia $R = \{\mathbf x \in \NN^k | f(\mathbf x) \ne \bot\}$, per qualche funzione ricorsiva parziale $f : \NN^k \to \NN_\bot$, per il teorema della forma normale esistono $T_k$ predicato PR e $U$ funzione PR tali che:
+        \[ f(\mathbf x) \ne \bot \iff \exists m \;T_k(\ulcorner f \urcorner, \mathbf x, m) = 0 \]
+        e, in tal caso, $f(\mathbf x) = U(\mu_m(T_k(\ulcorner f \urcorner, \mathbf x, m))))$, non possiamo usare direttamente $U$ in quanto dipende da $\mathbf x$, tuttavia possiamo definire una funzione che 
+        per ogni $n \in \NN$, che corrisponderà alla codifica della lista $\langle \mathbf x, m \rangle$, restituisce $\mathbf x$ se la minimizzazione del predicato risulta ben definita, altrimenti restituisce un elemento qualsiasi $\mathbf c \in R$:
+        \[ g(n) := \begin{cases}
+            \car(n) & \text{se $T_k(\ulcorner f \urcorner, \nth(n,0), \nth(n,1), \ldots, \nth(n,k)) = 0$} \\
+            \mathbf c & \text{altrimenti}
+        \end{cases} \]
+        che è ricorsiva totale, perché in particolare è PR, e vale che $R = \Img g$ in quanto $\mathbf x \in R$ se e solo se $\exists m \; T_k(\ulcorner f \urcorner, \mathbf x, m) = 0$, e in tal caso $g(\langle \mathbf x, m \rangle) = \mathbf x$.
+        \item[$\boxed{3. \Rightarrow 1.}$] Sia $R = \{f(n) | n \in \NN\}$, per qualche funzione ricorsiva totale $f : \NN \to \NN^k$, allora basta definire $g : \NN^k \to \NN_\bot$ come:
+        \[ g(\mathbf y,n) := \begin{cases}
+            0 & \text{se $f(n) = \mathbf y$} \\
+            1 & \text{altrimenti}
+        \end{cases} \]
+        definiamo infine:
+        \[ h(\mathbf y) := \begin{cases}
+            0 &\text{se $\exists n \; g(\mathbf y,n) = 0$} \\
+            \bot & \text{altrimenti}
+        \end{cases} \]
+        che è ricorsiva parziale, e vale che $h(\mathbf x) = 0$ se e solo se $\mu_n g(\mathbf x,n)$ è ben definita, cioè se e solo se $\exists n \; g(\mathbf x,n) = 0$, che equivale a $\exists n \; f(n) = \mathbf x$.
     \end{itemize}
 \end{proof}
 
@@ -1140,14 +1145,14 @@ Morale: essere dominio, immagine o luogo di zero di una funzione ricorsiva parzi
     a questo punto posso definire $h : \NN \to \NN^k$ come:
     \[ h(n) := \begin{cases}
         f(n \div 2) & \text{se $n \bmod 2 = 0$} \\
-        g(n \div 2) & \text{altrimenti}
+        g(n \div 2) & \text{se $n \bmod 2 = 1$}
     \end{cases} \]
-    in pratica $h$ alterna le due enumerazioni. Sia ancora $\chi_{=}$ il predicato PR di uguaglianza su $\NN^k$ e definiamo
-    \[ m(\mathbf x):=\mu n\,\big(\chi_{=}(h(n),\mathbf x)=0\big). \]
-    Per ogni $\mathbf x$ esiste almeno un tale $n$ (perché $\mathbf x\in R$ oppure $\mathbf x\in R^\complement$), quindi $m$ è totale.
-    Inoltre
-    \[ \mathbf x \in R \iff m(\mathbf x) \bmod 2 = 0. \]
-    Quindi il test di appartenenza a $R$ è ricorsivo totale, cioè $R$ è decidibile.
+    in pratica $h$ alterna le due enumerazioni, calcolate ciascuna su tutti i valori.
+    La funzione ricorsiva totale che decide $R$ è quindi:
+    \[ \mu_n(\chi_{=}(h(n),\mathbf x)) \bmod 2 \]
+    dove $\chi_{=}$ è il predicato PR che definisce l'uguaglianza, e quindi la funzione definita restituisce il minimo $n$, modulo 2, tale che $h(n) = \mathbf x$.
+    Se tale funzione fa 0 allora $\mathbf x = f(n \div 2)$ per qualche $n$, e quindi $\mathbf x \in R$; viceversa se $\mathbf x \in R$, allora $\mathbf x = f(n)$ per qualche $n$, da cui $h(2n) = f(n) = \mathbf x$, per cui la
+    minimizzazione è ben definita e restituisce un valore pari, che dà 0 modulo 2.
 \end{proof}
 
 Vediamo un insieme non decidibile.
@@ -1156,17 +1161,29 @@ Vediamo un insieme non decidibile.
     Sia $H_1 := \{(\alpha,x) \in \NN^2 | u_1(\alpha,x) \ne \bot\}$, ovvero l'insieme di codice-input per cui la macchina universale in dimensione 1 si ferma. Vale che $H_1$ non è decidibile.
 \end{proposition}
 
+\begin{remark}[Definizione per casi di funzioni ricorsive]
+    Osserviamo che se $R$ è decidibile, ovvero $R$ è il luogo di zero di una funzione ricorsiva totale, allora:
+    \[ f(\mathbf x) := \begin{cases}
+        g(\mathbf x) & \text{se $\mathbf x \in R$} \\
+        h(\mathbf x) & \text{altrimenti}
+    \end{cases} \]
+    con $g$ e $h$ funzioni ricorsive parziali, è ricorsiva parziale in quanto $f(\mathbf x) = g(\mathbf x)(1 - R(\mathbf x)) + h(\mathbf x)(1 \dotminus (1 \dotminus R(\mathbf x)))$, dove con $R(\mathbf x)$ indichiamo la funzione che
+    restituisce 0 se $\mathbf x \in R$ e un numero naturale $\geq 1$ altrimenti, che è ricorsiva totale, e quindi $f$ è ricorsiva parziale. Se $g,h$ sono ricorsive totali, allora $f$ è ricorsiva totale.\\
+    Osserviamo infine che se $R$ è semidecidibile allora lo stesso discorso non funzione, perché se $R(\mathbf x) = \bot$ otteniamo solo che $f(\mathbf x)$ è uguale ad un'espressione aritmetica indefinita, perché c'è un $\bot$ in mezzo, e quindi $f$ non fa $\bot$ perché è mal definita.
+\end{remark}
+
 \begin{proof}
-    Se per assurdo $H_1$ fosse decidibile, allora la funzione definita per casi:
+    Se per assurdo $H_1$ sia decidibile, allora la funzione definita per casi da:
     \[ f(\alpha) := \begin{cases}
         u_1(\alpha,\alpha) + 1 & \text{se $(\alpha,\alpha) \in H_1$} \\
         0 & \text{altrimenti}
     \end{cases} \]
-    sarebbe ricorsiva totale: dato $\alpha$, prima decido se $(\alpha,\alpha)\in H_1$; se no restituisco $0$, se sì allora simulo $u_1(\alpha,\alpha)$ fino all'arresto (che esiste proprio perché siamo in $H_1$) e poi aggiungo $1$.
-    Usando $\alpha = \ulcorner f \urcorner$ si danno due casi:
+    è ricorsiva totale, infatti nel caso $(\alpha,\alpha) \in H_1$ sappiamo a priori che $u_1(\alpha,\alpha) \ne \bot$.\\
+    Applichiamo ora $f$ al suo stesso codice, si danno due casi:
     \begin{itemize}
-        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, cioè il calcolatore termina su input $\ulcorner f \urcorner$, e quindi $f(\ulcorner f \urcorner) = u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) + 1$, ma $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = f(\ulcorner f \urcorner)$, per cui $f(\ulcorner f \urcorner) = f(\ulcorner f \urcorner) + 1$, assurdo;
-        \item oppure se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \notin H_1$, cioè il calcolatore non termina su input $\ulcorner f \urcorner$, e quindi $f(\ulcorner f \urcorner) = 0$, ma $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = f(\ulcorner f \urcorner) = 0$ e non $\bot$, per cui $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, assurdo.
+        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, allora $f(\ulcorner f \urcorner) = u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) + 1$,
+        ma per la definizione di $u_1$ si ha che $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = f(\ulcorner f \urcorner)$, da si otterrebbe che $f(\ulcorner f \urcorner) = f(\ulcorner f \urcorner) + 1 \; \lightning$;
+        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \notin H_1$, questo equivale a $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = \bot$, ovvero $f(\ulcorner f \urcorner) = \bot$, che è assurdo visto che $f$ è ricorsiva totale - oppure ancora più nello specifico perché dovrebbe venire proprio 0 per la sua definizione.
     \end{itemize}
 \end{proof}
 
@@ -1174,9 +1191,28 @@ Vediamo un insieme non decidibile.
     Dimostrare che $H_n$ non è decidibile.
 \end{exercise}
 
-\begin{exercise}
-    Dimostrare che $H_n$ è semidecidibile.
+\begin{soln}
+    Supponiamo per assurdo che $H_n := \{(\alpha, \mathbf x) \in \NN^{n+1} | u_n(\alpha, \mathbf x) \ne \bot\}$ sia decidibile, allora si procede allo stesso identico modo, definendo:
+    \[ f(\alpha,\ldots, \alpha) := \begin{cases}
+        u_n(\alpha, \alpha, \ldots, \alpha) + 1 & \text{se $(\alpha, \alpha, \ldots, \alpha) \in H_n$} \\
+        0 & \text{altrimenti}
+    \end{cases} \]
+    che è ricorsiva totale, e poi si applica $f$ al suo stesso codice, ottenendo una contraddizione esattamente come prima:
+    \begin{itemize}
+        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) \in H_n$, allora $f(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) = u_n(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) + 1$,
+        ma, per definizione, si ha $u_n(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) = f(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner)$, da cui $f(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) = f(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) + 1 \; \lightning$;
+        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) \notin H_n$, questo equivale a $u_n(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) = \bot$, ovvero $f(\ulcorner f \urcorner, \ldots, \ulcorner f \urcorner) = \bot$, che è assurdo visto che $f$ è ricorsiva totale, o in particolare dovrebbe essere 0 per definizione.
+    \end{itemize}
+\end{soln}
+
+\begin{exercise}[Semidecidibilità dell'halting problem]
+    Dimostrare che $H_n$ è in particolare semidecidibile, per cui è un esempio di insieme semidecidibile non decidibile.
 \end{exercise}
+
+\begin{soln}
+    Per dimostrare che $H_n$ è semidecidibile dimostriamo che è il dominio di una funzione ricorsiva parziale,
+    ed è infatti banalmente il dominio della funzione ricorsiva $u_n : \NN^{n+1} \to \NN_\bot$.
+\end{soln}
 
 \begin{exercise}[Insiemi non semidecidibili]
     Dimostrare che l'insieme $TOT := \{\alpha | n \mapsto u_1(\alpha, n) \text{ è totale}\}$, ovvero l'insieme dei codici delle funzioni ricorsive totali,
@@ -1194,15 +1230,16 @@ Vediamo un insieme non decidibile.
 
 \begin{definition}[Insiemi aritmetici]
     Diciamo che $R \subseteq \NN^k$ è \vocab{aritmetico} se è definibile in $(\NN; +, \cdot, 0, s)$, ovvero:
-    \[ R = \{(x_1,\ldots,x_k) \in \NN^k : (\NN; +, \cdot, 0, s) \models \varphi(x_1, \ldots, x_k)\} \]
+    \[ R = \{(x_1,\ldots,x_k) \in \NN^k : \NN \models \varphi(x_1, \ldots, x_k)\} \]
     i.e. aritmetico = $L_{\text{arit}}$-definibile.
 \end{definition}
 
 \begin{definition}[Classi di complessità aritmetica]
-    Diciamo che una formula aritmetica $\varphi$ è \vocab{di classe}:
+    Diciamo che una formula aritmetica $\varphi$ è \vocab{di classe} (o ha \vocab{complessità aritmetica}):
     \begin{itemize}
-        \item $\Delta_0^0 = \Sigma_0^0 = \Pi_0^0$ se si ottiene dagli $L_{\text{arit}}$-termini, per chiusura sotto: \textcolor{purple}{$\neg$}, \textcolor{purple}{$\land$}, \textcolor{purple}{$\lor$}, \textcolor{purple}{$\forall x \leq y$}, \textcolor{purple}{$\exists x \leq y$},
-        dove le ultime due sono abbreviazioni per formule della forma $\forall x\,(x \leq y \to \ldots)$ e $\exists x\,(x \leq y \land \ldots)$, con $x < y \overset{\text{def}}{=} \exists t\,(x + t = y)$, per cui possiamo applicare solo \vocab{quantificatori limitati} - i.e. quantificatori che quantificano su un intervallo finito, e quindi non possono essere usati per esprimere proprietà di insiemi infiniti;
+        \item $\Delta_0^0 = \Sigma_0^0 = \Pi_0^0$ se si ottiene dagli $L_{\text{arit}}$-termini per chiusura sotto: \textcolor{purple}{$\neg$}, \textcolor{purple}{$\land$}, \textcolor{purple}{$\lor$}, \textcolor{purple}{$\forall x \leq y$}, \textcolor{purple}{$\exists x \leq y$},
+        dove le ultime due sono abbreviazioni per le formule $\forall x\,(x \leq y \to \ldots)$ e $\exists x\,(x \leq y \land \ldots)$, con $x < y \overset{\text{def}}{=} \exists t\,(x + t = y)$, cioè possiamo applicare solo \vocab{quantificatori limitati} - i.e. quantificatori che quantificano su un intervallo finito,
+        pertanto non possono essere usati per esprimere proprietà di insiemi infiniti;
         \item $\Sigma_{n+1}^0$ se $\varphi = \exists x_1 \ldots \exists x_k \psi$ con $\psi$ di classe $\Pi_n^0$;
         \item $\Pi_{n+1}^0$ se $\varphi = \forall x_1 \ldots \forall x_k \psi$ con $\psi$ di classe $\Sigma_n^0$.
     \end{itemize}
@@ -1227,7 +1264,7 @@ Vediamo un insieme non decidibile.
 
 \begin{example}[$p$ è primo]
     La formula $\textsf{prime}(p) := \forall n \leq p \; (n = 1 \lor n = p \lor \neg \exists m \leq p \; m \cdot n = p)$, che esprime che $p$ è un numero primo,
-    è di classe $\Pi_1^0$, perché è una formula con un blocco di quantificatori universali all'esterno, e all'interno c'è una formula con quantificatori limitati, che è di classe $\Delta_0^0$.  
+    è di classe $\Delta_0^0$, perché è una formula ottenuta solo con quantificatori limitati, e quindi è senza quantificatori veri.
 \end{example}
 
 \begin{example}
@@ -1242,6 +1279,7 @@ Vediamo un insieme non decidibile.
 \begin{definition}[Classe di un sottoinsieme di $\NN^k$]
     $R \subseteq \NN^k$ è di classe $\square$ se esiste una $L_{\text{arit}}$-formula $\varphi$ di classe $\square$ tale che:
     \[ R = \{(x_1, \ldots, x_k) \in \NN^k : \NN \models \varphi(x_1, \ldots, x_k)\} \]
+    ovvero se è definibile da una formula di classe $\square$.
 \end{definition}
 
 \begin{remark}
@@ -1265,9 +1303,9 @@ Vediamo un insieme non decidibile.
     La terza è immediata dalla definizione del complementare. Inoltre, poiché la negazione scambia $\Sigma_n^0$ e $\Pi_n^0$, la prima affermazione è duale della seconda: basta dimostrare la prima.
     Siano dunque $\varphi,\psi$ formule di classe $\Sigma_n^0$.
     \begin{itemize}
-        \item[$\land,\lor$] Portando entrambe in forma premessa, posso accodare i blocchi esistenziali esterni e lasciare dentro una congiunzione/disgiunzione di formule di classe $\Pi_{n-1}^0$; resto quindi in $\Sigma_n^0$.
-        \item[$\exists$] È banale: aggiungere un blocco esistenziale esterno non aumenta la complessità oltre $\Sigma_n^0$.
-        \item[$\forall y \le x$] Scrivo $\varphi(x,y)$ in forma $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora
+        \item[$\boxed{\land,\lor}$] Portando entrambe in forma premessa, posso accodare i blocchi esistenziali esterni e lasciare dentro una congiunzione/disgiunzione di formule di classe $\Pi_{n-1}^0$; resto quindi in $\Sigma_n^0$.
+        \item[$\boxed{\exists}$] È banale: aggiungere un blocco esistenziale esterno non aumenta la complessità oltre $\Sigma_n^0$.
+        \item[$\boxed{\forall y \le x}$] Scrivo $\varphi(x,y)$ in forma $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora
         \[ \forall y\le x\,\varphi(x,y) \iff \exists b\,\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b\,\theta(x,y,\mathbf z). \]
         L'equivalenza vale perché i testimoni dei quantificatori esistenziali sono cercati su un insieme finito di valori di $y$. I quantificatori limitati non aumentano il livello, quindi la formula interna è di classe $\Pi_n^0$; con l'esistenziale esterno torno in $\Sigma_n^0$.
     \end{itemize}
