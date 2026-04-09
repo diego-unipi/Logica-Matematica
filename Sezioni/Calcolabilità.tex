@@ -1215,16 +1215,47 @@ Vediamo un insieme non decidibile.
 \end{soln}
 
 \begin{exercise}[Insiemi non semidecidibili]
-    Dimostrare che l'insieme $TOT := \{\alpha | n \mapsto u_1(\alpha, n) \text{ è totale}\}$, ovvero l'insieme dei codici delle funzioni ricorsive totali,
-    non è semidecidibile e che $TOT^\complement$ non è semidecidibile.\footnote{\underline{\textbf{Hint}}}: Esibisco una $f$ ricorsiva totale tale che,
-    $\alpha \in \NN^2 \setminus H_1 \iff f(\alpha) \in TOT$.
+    Dimostrare che l'insieme:
+    \[ TOT := \{\alpha | n \mapsto u_1(\alpha, n) \text{ è totale}\} \]
+    ovvero l'insieme dei codici dei programmi che terminano su ogni input,
+    non è semidecidibile e che anche $TOT^\complement$ non è semidecidibile.\footnote{\underline{\textbf{Hint}}: Esibisco una $f$ ricorsiva totale tale che,
+    $(\alpha,x) \in \NN^2 \setminus H_1 \iff f(\alpha,x) \in TOT$.}
 \end{exercise}
 
-\begin{exercise}
-    Esistono $A,B$ semidecidibili, con $A \cap B = \varnothing$, tali che $\neg \exists C$ decidibile con $A \subseteq C$ e $B \subseteq C^\complement$.
+\begin{remark}[Algebra degli insiemi decidibili]
+    Osserviamo che gli insiemi decidibili formano un'algebra, infatti: sono chiusi per unione, è sufficiente prendere il prodotto delle due funzioni che decidono i due insiemi;
+    sono chiusi per complementare come già visto in precedenza, inoltre la funzione $0_k$ è PR, e quindi $\NN^k$ è decidibile.\\
+    Osserviamo invece che gli insiemi semidecidibili \textcolor{purple}{non} formano un'algebra, infatti se la chiusura per unione ed il fatto che $\NN^k$ è semidecidibile funzionano come sopra,
+    il passaggio al complementare non funziona in generale, infatti ad esempio $H_1$ è semidecidibile, ma $H_1^\complement$ non lo è, perché se lo fosse, allora $H_1$ sarebbe decidibile $\lightning$.\\
+    Tuttavia, nonostante gli insiemi semidecidibili non siano chiusi per complementare è comunque vero che sono chiusi per intersezione,
+    infatti se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$ e $S = \{\mathbf x \in \NN^k | g(\mathbf x) = 0\}$, con $f,g : \NN^k \to \NN_\bot$ ricorsive parziali, allora $R \cap S = \{\mathbf x \in \NN^k | h(\mathbf x) = 0\}$, con $h : \NN^k \to \NN_\bot$ definita come:
+    \[ h(\mathbf x) := \begin{cases}
+        0 & \text{se $f(\mathbf x) = 0$ e $g(\mathbf x) = 0$} \\
+        \bot & \text{altrimenti}
+    \end{cases} \]
+    che è ricorsiva parziale.
+\end{remark}
+
+\begin{soln}
+    Se riuscissimo a trovare una funzione ricorsiva totale $f : \NN^2 \to \NN$ tale che per ogni $(\alpha,x) \in \NN^2$ si abbia che $(\alpha,x) \in \NN^2 \setminus H_1$ se e solo se $f(\alpha,x) \in TOT$,
+    per cui si avrebbe $H_1^\complement = f^{-1}[TOT]$, allora $TOT$ non è semidecidibile, perché se lo fosse, allora anche $f^{-1}[TOT]$ sarebbe semidecidibile - infatti $TOT$ è semidecidibile se e solo se è dominio di $\varphi$ ricorsiva parziale, e quindi $f^{-1}[TOT]$ è dominio di $\varphi \circ f$, che è ricorsiva parziale, e quindi semidecidibile.
+    Ora definiamo $f : \NN^2 \to \NN$ come:
+    \[ f(\alpha,x) := \ulcorner g_{\alpha,x} \urcorner, \qquad g_{\alpha,x}(n) := \begin{cases}
+        0 & \text{se $\forall m \le n \; T_1(\alpha,x,m) \ne 0$} \\
+        \bot & \text{altrimenti}
+    \end{cases} \]
+    che è ricorsiva totale, e vediamo che soddisfa la condizione richiesta. Se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $T_1(\alpha,x,m) \ne 0$ per ogni $m \in \mathbb N$, perché non esiste minimo, per cui $g_{\alpha,x} \equiv 0$, e quindi il suo codice sta in $TOT$.\\
+    Viceversa, se $(\alpha,x) \in f^{-1}[TOT]$, allora $g_{\alpha,x}$ è totale, per cui per ogni $m \in \NN$ si ha $T_1(\alpha,x,m) \ne 0$, quindi la minimizzazione non è ben definita, quindi $u_1(\alpha,x) = \bot$, e quindi $(\alpha,x) \in H_1^\complement$.
+\end{soln}
+
+\begin{exercise}[Separazione di insiemi semidecidibili]
+    Esistono $A,B$ semidecidibili, con $A \cap B = \varnothing$, tali che non esiste $C$ decidibile con $A \subseteq C$ e $B \subseteq C^\complement$.
     Ovvero non esistono due insiemi semidecidibili disgiunti che possono essere separati da un insieme decidibile.
 \end{exercise}
 
+\begin{soln}
+    TODO
+\end{soln}
 
 \subsection{Insiemi aritmetici}
 
@@ -1267,7 +1298,13 @@ Vediamo un insieme non decidibile.
     è di classe $\Delta_0^0$, perché è una formula ottenuta solo con quantificatori limitati, e quindi è senza quantificatori veri.
 \end{example}
 
-\begin{example}
+\begin{definition}[Classe di un sottoinsieme di $\NN^k$]
+    $R \subseteq \NN^k$ è di classe $\square$ se esiste una $L_{\text{arit}}$-formula $\varphi$ di classe $\square$ tale che:
+    \[ R = \{(x_1, \ldots, x_k) \in \NN^k : \NN \models \varphi(x_1, \ldots, x_k)\} \]
+    ovvero se è definibile da una formula di classe $\square$.
+\end{definition}
+
+\begin{example}[Classe di un predicato polinomiale]
     Sia $p(x,y)$ polinomio fissato. Il predicato binario
     \[ R = \{(x,y) \in \NN^2 : p(x,y) = 0\} \]
     è di classe $\Delta_0^0$, perché la formula $p(x,y)=0$ è senza quantificatori.
@@ -1276,18 +1313,12 @@ Vediamo un insieme non decidibile.
     è di classe $\Sigma_1^0$.
 \end{example}
 
-\begin{definition}[Classe di un sottoinsieme di $\NN^k$]
-    $R \subseteq \NN^k$ è di classe $\square$ se esiste una $L_{\text{arit}}$-formula $\varphi$ di classe $\square$ tale che:
-    \[ R = \{(x_1, \ldots, x_k) \in \NN^k : \NN \models \varphi(x_1, \ldots, x_k)\} \]
-    ovvero se è definibile da una formula di classe $\square$.
-\end{definition}
-
 \begin{remark}
-    Ogni insieme aritmetico appartiene alla gerarchia aritmetica, è sufficiente portarla in forma normale premessa.
+    Ogni insieme aritmetico appartiene alla gerarchia aritmetica, è sufficiente portare la $L_{\text{arit}}$-formula che definisce l'insieme in \vocab{forma normale premessa}, ovvero in una forma in cui tutti i quantificatori esterni sono dello stesso tipo.
 \end{remark}
 
 \begin{definition}[Classe $\Delta_n^0$]
-    $R \subseteq \NN^k$ è di classe $\Delta_n^0$ se $R$ è sia un insieme di classe $\Sigma_n^0$ che di classe $\Pi_n^0$.
+    $R \subseteq \NN^k$ è di classe $\Delta_n^0$ se $R$ è sia un insieme di classe $\Sigma_n^0$ che di classe $\Pi_n^0$, i.e. è definibile sia da una formula di classe $\Sigma_n^0$ che da una formula di classe $\Pi_n^0$.
 \end{definition}
 
 \begin{remark}[Chiusura delle classi aritmetiche]
@@ -1303,17 +1334,44 @@ Vediamo un insieme non decidibile.
     La terza è immediata dalla definizione del complementare. Inoltre, poiché la negazione scambia $\Sigma_n^0$ e $\Pi_n^0$, la prima affermazione è duale della seconda: basta dimostrare la prima.
     Siano dunque $\varphi,\psi$ formule di classe $\Sigma_n^0$.
     \begin{itemize}
-        \item[$\boxed{\land,\lor}$] Portando entrambe in forma premessa, posso accodare i blocchi esistenziali esterni e lasciare dentro una congiunzione/disgiunzione di formule di classe $\Pi_{n-1}^0$; resto quindi in $\Sigma_n^0$.
-        \item[$\boxed{\exists}$] È banale: aggiungere un blocco esistenziale esterno non aumenta la complessità oltre $\Sigma_n^0$.
-        \item[$\boxed{\forall y \le x}$] Scrivo $\varphi(x,y)$ in forma $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora
-        \[ \forall y\le x\,\varphi(x,y) \iff \exists b\,\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b\,\theta(x,y,\mathbf z). \]
-        L'equivalenza vale perché i testimoni dei quantificatori esistenziali sono cercati su un insieme finito di valori di $y$. I quantificatori limitati non aumentano il livello, quindi la formula interna è di classe $\Pi_n^0$; con l'esistenziale esterno torno in $\Sigma_n^0$.
+        \item[$\boxed{\land,\lor}$] Portando entrambe in forma premessa, posso accodare i blocchi esistenziali esterni e lasciare dentro una congiunzione/disgiunzione di formule di classe $\Pi_{n-1}^0$:
+        \begin{align*}
+            \varphi &= \exists x_1 \ldots \exists x_k \; \psi_1 * \exists y_1 \ldots \exists y_m \psi_2 \\
+                    &= \exists x_1 \ldots \exists x_k \exists y_1 \ldots \exists y_m \; (\psi_1 * \psi_2)
+        \end{align*}
+        con $* \in \{\land, \lor\}$, e $\psi_1 * \psi_2$ è di classe $\Pi_{n-1}^0$ per ipotesi induttiva, quindi $\varphi$ è di classe $\Sigma_n^0$. Notare infine che abbiamo supposto WLOG che $y_i \not \in \vl(\psi_1)$ e $x_i \not \in \vl(\psi_2)$,
+        e possiamo farlo perché le variabili sono legate, e.g. le $y_i$ sono legate nel secondo blocco, ma possono essere libere nel primo, nel cui caso le rinominiamo con $x_j$ per qualche $j$ che non compare già, e viceversa; tale procedimento non cambi nulla
+        in quanto $\exists z \; \psi \leftrightarrow \exists z' \; \psi[z'/z]$ se $z'$ è una variabile che non compare in $\psi$, e ugualmente per i quantificatori universali.
+        \item[$\boxed{\exists}$] È banale.
+        \item[$\boxed{\forall y \le x}$] Scriviamo $\varphi(x,y)$ in forma premessa $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora:
+        \[ \forall y\le x\,\varphi(x,y) \leftrightarrow \exists b\,\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b\,\theta(x,y,\mathbf z) \]
+        e l'equivalenza è facile dimostrare, ad esempio semanticamente, in particolare per $\rightarrow$ c'è bisogno che gli $z_i$ siano in numero finito.
     \end{itemize}
 \end{proof}
+
+Vediamo che la chiusura delle $L_{\text{arit}}$-formule corrisponde alla chiusura per delle operazioni di insiemi aritmetici.
+
+\begin{remark}[Corrispettivo insiemistico della chiusura delle classi aritmetiche]
+    Se $R,S \subseteq \NN^k$ sono di classe $\Sigma_n^0$, allora:
+    \begin{itemize}
+        \item $R \cap S$ è di classe $\Sigma_n^0$,
+        \item $R \cup S$ è di classe $\Sigma_n^0$,
+        \item se $R \subseteq \NN^2$ si ha che $\{x \in \NN : \exists y\le x\;(x,y)\in R\}$ e $\{x \in \NN : \forall y\le x\;(x,y)\in R\}$ sono di classe $\Sigma_n^0$.
+    \end{itemize}
+    In tutti i casi la dimostrazione segue semplicemente dal fatto che lo sono le $L_{\text{arit}}$-formule che definiscono $R$ e $S$, e che le classi aritmetiche sono chiuse per le operazioni corrispondenti. Analogamente nel caso di $\Pi_n^0$.
+\end{remark}
+
+Quindi il corollario seguente è una proprietà di chiusura per operazioni su sottoinsiemi $\Delta_n^0$ di $\NN^k$, non avendo il corrispettivo di $L_{\text{arit}}$-formule in questo caso.
+
 
 \begin{corollary}[Chiusura di $\Delta_n^0$]
     $\Delta_n^0$ è stabile per: $\land$, $\lor$, $\neg$, $\forall y \leq x$, $\exists y \leq x$.
 \end{corollary}
+
+\begin{proof}
+    Non c'è bisogno di fare verifiche esplicite, visto che abbiamo già l'osservazione di chiusura sia per $\Sigma_n^0$ che per $\Pi_n^0$, quindi ad esempio se $R,S \in \Delta_n^0$,
+    allora $R \cap S$ è sia di classe $\Sigma_n^0$ che di classe $\Pi_n^0$, e quindi è di classe $\Delta_n^0$, e così via per le altre operazioni.
+\end{proof}
 
 \begin{theorem}[Semidecidibilità in termini della gerarchia aritmetica]
     $S \subseteq \NN^k$ è semidecidibile se e solo se $S$ è di classe $\Sigma_1^0$.
@@ -1331,80 +1389,71 @@ Vediamo subito la dimostrazione del corollario.
    Abbiamo usato che se un insieme è di classe $\Sigma_n^0$ allora il suo complementare è di classe $\Pi_n^0$, ciò deriva dal fatto che la negazione inverte i quantificatori, e dalla definizione di classe di un sottoinsieme di $\NN^k$.
 \end{proof}
 
-\begin{example}[Insiemi diofantei]
-    L'insieme $\{ (x_1, \ldots, x_k) \in \NN^k : p(x_1, \ldots, x_k) = 0 \}$ è di classe $\Delta_0^0$,
-    infatti la $L_{\text{arit}}$-formula $p(x_1, \ldots, x_k) = 0$ è senza quantificatori.
-    Quando verificheremo che $\Delta_0^0$ è un sottoinsieme dei predicati PR avremo:
-    \[ \{\text{polinomi}\} \subseteq \Delta_0^0 \subseteq \{\text{predicati PR}\} \subseteq \{\text{decidibili}\} \subseteq \{\text{semidecidibili}\} = \Sigma_1^0 \]
-    ora $\textcolor{purple}{\exists}\Sigma_1^0 = \Sigma_1^0$, e se faccio questa cosa con $\Delta_0^0$ ottengo $\textcolor{purple}{\exists}\Delta_0^0 = \Sigma_1^0$, 
-    e quindi tutta la catena diventa $\Sigma_1^0$, per cui:
-    \[ \{(x_1, \ldots, x_k) | \exists y_1 \ldots \exists y_h \; p(x_1, \ldots, x_k, y_1, \ldots, y_h) = 0\} \subseteq \Sigma_1^0 \]
-    questi sono gli insiemi diofantei (parametrici). Quindi, in base a quanto dimostrato sopra, vale l'inclusione:
-    \[ \{\text{insiemi diofantei parametrici}\} \subseteq \Sigma_1^0 \]
-    in particolare, ogni insieme diofanteo parametrico è semidecidibile (equivalentemente, ricorsivamente enumerabile).
-\end{example}
+Il nostro obiettivo è ora dimostrare il teorema ed ottenere la seguente catena di inclusioni:
+\[ \Delta_0^0 \subseteq \{\text{predicati PR}\} \subseteq \{\text{decidibili}\} \subseteq \{\text{semidecidibili}\} = \Sigma_1^0 \]
 
-Ci servono dei lemmi per dimostrare il teorema.
+Si osserva che mettendo un blocco di $\exists$ davanti ad una $L_{\text{arit}}$-formula che definisce uno degli insiemi qualsiasi appartenenti ad un elemento della catena
+si ottiene un insieme di classe $\Sigma_1^0$, e quindi gli insiemi di classe $\Sigma_1^0$ possono essere pensati come ``blocco di esistenziali'' seguito da una formula aritmetica qualsiasi in uno degli insiemi della catena.\\
+Alla fine del corso vedremo anche che $\{\text{insiemi polinomiali}\} \subsetneq \Delta_0^0$, in quanto un insieme polinomiale è definito da $\{p(x_1,\ldots,x_k) = 0\}$, che è una formula senza quantificatori, e quindi di classe $\Delta_0^0$,
+ma soprattutto se mettessimo un blocco di $\exists$ davanti ad una formula polinomiale otterremmo i cosiddetti \vocab{insiemi diofantei}, ovvero della forma:
+\[ \{(x_1,\ldots,x_k) \in \NN^k : \exists y_1\ldots\exists y_m\; p(x_1,\ldots,x_k,y_1,\ldots,y_m) = 0\} \]
+cioè l'insieme dei parametri per cui esistono dei valori che soddisfano un'equazione polinomiale, e questi insiemi sono di classe $\Sigma_1^0$. In particolare sempre per la catena sopra abbiamo scoperto allora che 
+ogni insieme semidecidibile è diofanteo, per cui esiste una corrispondenza 1:1 tra insiemi di parametri che risolvono un'equazione diofantea ed insiemi di parametri per cui esiste un programma che può terminare o meno.
+Quello che scopriremo è che appunto esisterà una diofantea, il cui insieme di parametri che la risolvono corrispondente all'halting set, e quindi non necessariamente decidibile, ovvero non esisterà un algoritmo che, dati i coefficienti di un polinomio, riesca a decidere se esiste una soluzione o meno
+e questo ci permetterà di rispondere - negativamente - al decimo problema di Hilbert.\\
 
-\begin{lemma}
+Introduciamo ora i lemmi necessari per dimostrare il teorema.
+
+\begin{lemma}[Corrispondenza tra funzioni ricorsive parziali e formule di classe $\Sigma_1^0$]
     Sia $f : \NN^k \to \NN_\bot$ ricorsiva parziale, allora esiste $\varphi(x_1, \ldots, x_k, y)$ di classe $\Sigma_1^0$ tale che:
-    \[ f(x_1, \ldots, x_k) = y \iff \NN \models \varphi(x_1, \ldots, x_k, y) \] 
+    \[ f(x_1, \ldots, x_k) = y \iff \NN \models \varphi(x_1, \ldots, x_k, y)\footnote{Si intende sempre con la convenzione che le variabili tra parantesi indicano ``per ogni valutazione $v$ tale che la valutazione di $x_i$ corrisponda al valore di $x_i$ della formula a sinistra''.} \]
 \end{lemma}
 
-Da questo lemma il teorema è praticamente fatto, come segue.
+Da questo lemma l'implicazione $\implies$ del teorema è immediata come segue.
 
 \begin{proof}
-    Se $S$ è semidecidibile, allora esiste $f$ ricorsiva parziale tale che $S = \{f(x_1, \ldots, x_k) = 0\}$,
-    dal lemma questo equivale a dire che $S = \{(x_1, \ldots, x_k) : \NN \models \varphi(x_1, \ldots, x_k, 0)\}$, e $\varphi(x_1, \ldots, x_k, 0)$ di classe $\Sigma_1^0$ per le ipotesi del lemma,
-    da cui $S$ è di classe $\Sigma_1^0$, e sono tutte delle equivalenze.
+    Se $S$ è semidecidibile, allora $S = \{\mathbf x \in \NN^k : f(\mathbf x) = 0\}$ per qualche $f : \NN^k \to \NN_\bot$ ricorsiva parziale, per il lemma esiste $\varphi$ $L_{\text{arit}}$-formula di classe $\Sigma_1^0$ 
+    tale che $f(\mathbf x) = 0$ se e solo se $\NN \models \varphi(\mathbf x, 0)$, quindi $S = \{\mathbf x \in \NN^k : \NN \models \varphi(\mathbf x, 0)\}$, per cui $S$ è di classe $\Sigma_1^0$.
 \end{proof}
 
 Dimostriamo ora il lemma.
 
 \begin{proof}
-    Induzione sulla costruzione di $f$.
+    Induzione sulla costruzione di $f$ come funzione ricorsiva.
     \begin{itemize}
-        \item[$\boxed{\text{composizione}}$] Se $h = f \circ (g_1,\ldots,g_k)$, con $f : \NN^k \to \NN_\bot$ e $g_i : \NN^m \to \NN_\bot$ ricorsive parziali, per ipotesi induttiva esistono formule $\varphi_f(\mathbf z,y)$ e $\varphi_{g_i}(\mathbf x,z_i)$ di classe $\Sigma_1^0$ che rappresentano i rispettivi grafi. Allora
+        \item[$\boxed{\text{casi base}}$] Se $f$ è $\mathbf 0_k$, allora $f(\mathbf x) = y$ se e solo se $y=0$, quindi è sufficiente prendere $\varphi(\mathbf x,y) := (y=0)$; se $f$ è $s$, allora $f(x) = y$ se e solo se $y = s(x)$, quindi è sufficiente prendere $\varphi(x,y) := (y = s(x))$; se $f$ è $\pi_{k,i}$, allora $f(\mathbf x) = y$ se e solo se $y = x_i$, quindi è sufficiente prendere $\varphi(\mathbf x,y) := (y = x_i)$.
+        \item[$\boxed{\text{composizione}}$] Se $h = f \circ (g_1,\ldots,g_k)$, con $f : \NN^k \to \NN_\bot$ e $g_i : \NN^h \to \NN_\bot$ ricorsive parziali, per ipotesi induttiva esistono formule $\varphi_f(\mathbf z,y)$ e $\varphi_{g_i}(\mathbf x,z_i)$ di classe $\Sigma_1^0$ che rappresentano i rispettivi grafi. Allora
         \[ h(\mathbf x)=y \iff \exists z_1\ldots\exists z_k\,\Big(\bigwedge_{i=1}^k \varphi_{g_i}(\mathbf x,z_i)\land \varphi_f(z_1,\ldots,z_k,y)\Big), \]
-        che è ancora $\Sigma_1^0$.
-        \item[$\boxed{\begin{matrix}\text{ricorsione}\\\text{primitiva}\end{matrix}}$] Sia
-        \[ f(0,\mathbf x)=h(\mathbf x), \qquad f(y+1,\mathbf x)=g\big(y,f(y,\mathbf x),\mathbf x\big), \]
-        con $h,g$ ricorsive parziali. Per ipotesi induttiva i grafi di $h$ e $g$ sono $\Sigma_1^0$.
-        Usando la codifica $\beta$ delle sequenze finite, $f(y,\mathbf x)=b$ equivale all'esistenza di una sequenza codificata che parte dal valore di $h(\mathbf x)$, applica il passo dato da $g$ per tutti gli indici $<y$ e termina in $b$:
-        \[ \exists p\exists q\,\Big(\varphi_h(\mathbf x,\beta(p,q,0)) \land \beta(p,q,y)=b \land \forall i<y\,\varphi_g\big(i,\beta(p,q,i),\mathbf x,\beta(p,q,i+1)\big)\Big). \]
-        Per la chiusura di $\Sigma_1^0$ rispetto ai quantificatori limitati, otteniamo ancora una formula di classe $\Sigma_1^0$.
-        \item[$\boxed{\text{minimizzazione}}$] Se $f(\mathbf x)=\mu t\,g(\mathbf x,t)$, con $g$ ricorsiva parziale, per ipotesi induttiva esiste $\varphi_g(\mathbf x,t,u)$ di classe $\Sigma_1^0$ che rappresenta $g(\mathbf x,t)=u$.
-        Allora
-        \[ f(\mathbf x)=y \iff \exists u\,\Big(\varphi_g(\mathbf x,y,u)\land u=0\land \forall t<y\,\exists v\,(\varphi_g(\mathbf x,t,v)\land v\neq 0)\Big), \]
-        che è $\Sigma_1^0$ (di nuovo, grazie ai quantificatori limitati).
+        dove quantifico solo sugli $z_i$ perché sono variabili ausiliarie che testimoniano il fatto che $g_i(\mathbf x)=z_i$ per ogni $i$, mentre $x_1,\ldots,x_h$ e $y$ sono variabili libere da ambo i lati dell'equivalenza. Osserviamo infine che avendo usato solo $\land$ ed un blocco di $\exists$ all'inizio la formula è ancora di classe $\Sigma_1^0$.
+        \item[$\boxed{\text{minimizzazione}}$] Sia $f : \NN^k \to \NN_\bot$ definita per minimizzazione da $g : \NN^{k+1} \to \NN_\bot$ come $f(\mathbf x) := \mu_ng(\mathbf x,n)$, con $g$ ricorsiva parziale.
+        Per ipotesi induttiva esiste $\varphi_g(\mathbf x,n,z)$ di classe $\Sigma_1^0$ che rappresenta il grafico di $g$, da questa, usando la definizione di minimizzazione abbiamo:
+        \[ f(\mathbf x) = y \iff \varphi_g(\mathbf x,y,0) \land \forall i < y \, \exists v\, (\varphi_g(\mathbf x,i,v) \land v \ne 0), \]
+        e questa formula è ancora di classe $\Sigma_1^0$ perché abbiamo aggiunto solo un $\land$, una quantificazione limitata $\forall i < y$, ed un esistenziale, che serve per coprire il caso in cui $g(\mathbf x,i)$ non è definita, e quindi non è zero - richiedere solo $\neg \varphi_g(\mathbf x,i,0)$ non coprirebbe questo caso.
+        \item[$\boxed{\begin{matrix}\text{ricorsione}\\\text{primitiva}\end{matrix}}$] Sia $f : \NN^{k+1} \to \NN_\bot$ definita per ricorsione da:
+        \[ f(\mathbf x,0) = g(\mathbf x), \qquad f(\mathbf x,y+1)=g(\mathbf x,y,f(\mathbf x,y)), \]
+        con $h,g$ ricorsive parziali, per ipotesi induttiva esistono $\varphi_g(\mathbf x,y)$ e $\varphi_h(\mathbf a,b,c,t)$ di classe $\Sigma_1^0$, che corrispondono ai grafici di $g$ e $h$.
+        \textcolor{purple}{Quello che vorremmo fare è scrivere la formula:
+        \[ f(\mathbf x,y)=z \iff \exists z_0,\ldots z_y \, (z_0 = g(\mathbf x)) \land (\forall i < y \, z_{i+1} = h(\mathbf x,i,z_i)) \land (z_y = z), \]
+        ma questa formula è sbagliata perché non posso quantificare su un numero variabile di variabili $z_i$, essendo $y$ una variabile libera.}\\
+        Abbiamo quindi necessità di una formula che, fissata a priori una quantità finita di parametri fissata a priori, sia in grado di rappresentare tutte le sequenze finite di lunghezza al più $y$, e tale formula la vogliamo di complessità aritmetica controllabile.
+        Per tale ragione introduciamo la \vocab{codifica $\beta$} di Gödel delle sequenze finite, che ci permetterà di rimpiazzare $\exists z_0 \ldots \exists z_y$ con $\exists a,b$ due parametri e $z_k$ con $\beta(a,b,k)$, e quindi da sopra otteniamo la formula desiderata di classe $\Sigma_1^0$.
+        \begin{lemma}[Codifica $\beta$ di Gödel delle sequenze finite]
+            Sia $\beta(a,b,k) := a \bmod (b\cdot (k+1)+1)$. Dati $y,z_0, \ldots, z_y$, esistono $a,b$ tali che:
+            \[ \forall k \leq y \; \beta(a,b,k) = z_k \]
+            ovvero la $\beta$ codifica la sequenza $z_0, \ldots, z_y$ usando i parametri $a,b$.
+        \end{lemma}
+        \begin{proof}
+            
+        \end{proof}
+        \begin{remark}[Complessità di $\beta(a,b,k)$]
+            La relazione $r=\beta(a,b,k)$ è equivalente a
+            \[ \exists q\,\big(a=q\cdot(b(k+1)+1)+r \land r<b(k+1)+1\big), \]
+            quindi è di classe $\Sigma_1^0$ (in effetti anche $\Delta_0^0$).
+        \end{remark}
     \end{itemize}
 \end{proof}
 
-\begin{lemma}[Codifica $\beta$ di Gödel delle sequenze finite]
-    Sia $\beta(a,b,k) = a \bmod (b\cdot (k+1)+1)$, dati $y,z_0, \ldots, z_y$, esiste $a,b$ tali che:
-    \[ \forall k \leq y \; \beta(a,b,k) = z_k \]
-\end{lemma}
-
-\begin{proof}
-    Pongo
-    \[ b := (y+1)!\cdot\Big(1+\sum_{i\le y} z_i\Big). \]
-    Per ogni $k\le y$ definisco $m_k := b(k+1)+1$. Allora $m_k>z_k$.
-    Inoltre i moduli $m_0,\ldots,m_y$ sono a due a due coprimi: se $i<j$ e $d\mid m_i,m_j$, allora
-    \[ d\mid (m_j-m_i)=b(j-i), \]
-    ma anche $d\mid m_i=b(i+1)+1$, quindi $d\mid 1$ e dunque $d=1$.
-    Per il teorema cinese del resto esiste $a$ tale che
-    \[ a\equiv z_k \pmod{m_k} \qquad (k\le y). \]
-    Siccome $0\le z_k<m_k$, il resto di $a$ modulo $m_k$ è esattamente $z_k$, quindi
-    \[ \beta(a,b,k)=a\bmod(b(k+1)+1)=z_k \quad \text{per ogni }k\le y. \]
-\end{proof}
-
-\begin{remark}[Complessità di $\beta(a,b,k)$]
-    La relazione $r=\beta(a,b,k)$ è equivalente a
-    \[ \exists q\,\big(a=q\cdot(b(k+1)+1)+r \land r<b(k+1)+1\big), \]
-    quindi è di classe $\Sigma_1^0$ (in effetti anche $\Delta_0^0$).
-\end{remark}
-
-Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implicazione inversa.
+Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implicazione inversa. Ci serve un lemma che corrisponde ad uno dei contenimenti indicati all'inizio.
 
 \begin{lemma}[$\Delta_0^0 \subseteq \{\text{predicati PR}\}$]
     Vale che:
@@ -1433,6 +1482,12 @@ A questo punto manca solo la freccia del teorema.
     Allora
     \[ \mathbf x\in S \iff g(\mathbf x)\downarrow. \]
     Per la proposizione di equivalenza tra semidecidibilità e domini di funzioni ricorsive parziali, $S$ è semidecidibile.
+\end{proof}
+
+E quindi possiamo dimostrare la freccia $\impliedby$ del teorema.
+
+\begin{proof}
+    
 \end{proof}
 
 Ammettiamo di avere un'enumerazione delle formule, i.e. $\varphi \mapsto \ulcorner \varphi \urcorner$, con questa enumerazione vale il seguente corollario.
