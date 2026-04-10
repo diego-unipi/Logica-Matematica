@@ -1433,7 +1433,7 @@ Dimostriamo ora il lemma.
         \[ f(\mathbf x,0) = g(\mathbf x), \qquad f(\mathbf x,y+1)=g(\mathbf x,y,f(\mathbf x,y)), \]
         con $h,g$ ricorsive parziali, per ipotesi induttiva esistono $\varphi_g(\mathbf x,y)$ e $\varphi_h(\mathbf a,b,c,t)$ di classe $\Sigma_1^0$, che corrispondono ai grafici di $g$ e $h$.
         \textcolor{purple}{Quello che vorremmo fare è scrivere la formula:
-        \[ f(\mathbf x,y)=z \iff \exists z_0,\ldots z_y \, (z_0 = g(\mathbf x)) \land (\forall i < y \, z_{i+1} = h(\mathbf x,i,z_i)) \land (z_y = z), \]
+        \[ f(\mathbf x,y)=z \iff \exists z_0,\ldots z_y \, (\varphi_g(\mathbf x,0,z_0)) \land (\forall i < y \, \varphi_h(\mathbf x,i,z_i)) \land (z_y = z) \]
         ma questa formula è sbagliata perché non posso quantificare su un numero variabile di variabili $z_i$, essendo $y$ una variabile libera.}\\
         Abbiamo quindi necessità di una formula che, fissata a priori una quantità finita di parametri fissata a priori, sia in grado di rappresentare tutte le sequenze finite di lunghezza al più $y$, e tale formula la vogliamo di complessità aritmetica controllabile.
         Per tale ragione introduciamo la \vocab{codifica $\beta$} di Gödel delle sequenze finite, che ci permetterà di rimpiazzare $\exists z_0 \ldots \exists z_y$ con $\exists a,b$ due parametri e $z_k$ con $\beta(a,b,k)$, e quindi da sopra otteniamo la formula desiderata di classe $\Sigma_1^0$.
@@ -1443,13 +1443,33 @@ Dimostriamo ora il lemma.
             ovvero la $\beta$ codifica la sequenza $z_0, \ldots, z_y$ usando i parametri $a,b$.
         \end{lemma}
         \begin{proof}
-            
+            Dati $y,z_0,\ldots,z_y$ cerchiamo $a,b$ tali che $\beta(a,b,k) = z_k$ per ogni $k \leq y$, ovvero cerchiamo $a,b$ tali che il seguente sistema di $y+1$ equazioni abbia soluzione:
+            \[ \left\{\begin{array}{r c l} a \bmod (b + 1) & = & z_0 \\ a \bmod (2b + 1) & = & z_1 \\ & \vdots & \\ a \bmod (b(y+1)+1) & = & z_y \end{array}\right. \]
+        che può essere riscritto come sistema di congruenze:
+        \[ \left\{\begin{array}{r c l} a & \equiv & z_0 \mod (b + 1) \\ a & \equiv & z_1 \mod (2b + 1) \\ & \vdots & \\ a & \equiv & z_y \mod (b(y+1)+1) \end{array}\right. \]
+        se scegliamo $b$ in modo che $\gcd(b(i+1)+1, b(j+1)+1) = 1$ per ogni $i \ne j$, vale il teorema cinese del resto esiste $a$ che soddisfa tutte le congruenze, tuttavia non vogliamo solo che $a$ sia congruente a $z_k$ modulo $b(k+1)+1$,
+        ma vogliamo proprio che $a \bmod (b(k+1)+1) = z_k$, ovvero che $z_k < b(k+1)+1$ per ogni $k \leq y$, quindi la scelta di $b$ deve essere tale che $b(k+1)+1 > z_k$, quindi ad esempio è sufficiente scegliere $b > \max\{z_0,\ldots,z_y\}$.\\
+        Ora una scelta possibile è $b = (y+1)!\cdot(\max\{z_0,\ldots,z_y\}+1)$, che è ovviamente tale che $b > \max\{z_0,\ldots,z_y\}$, e che soddisfa la condizione di coprimalità in quanto, supponendo WLOG $i < j$:
+        \begin{align*}
+            \gcd(b(i+1) + 1, b(j+1) + 1) &= \gcd(b(i+1)+1, b(j-i)) \\
+                                         &= \gcd(b(i+1)+1, b)\gcd(b(i+1)+1, j-i) \\
+                                         &= \gcd(b(i+1)+1, j-i) = 1
+        \end{align*}
+        dove l'ultima uguaglianza deriva dal fatto che $i,j \leq y \implies j - i < y \implies j - i \mid b$, e quindi $b(i+1)+1 = k(j-i)(i+1)+1$ per qualche $k \in \NN$, da cui la coprimalità.
         \end{proof}
         \begin{remark}[Complessità di $\beta(a,b,k)$]
-            La relazione $r=\beta(a,b,k)$ è equivalente a
-            \[ \exists q\,\big(a=q\cdot(b(k+1)+1)+r \land r<b(k+1)+1\big), \]
-            quindi è di classe $\Sigma_1^0$ (in effetti anche $\Delta_0^0$).
+            La relazione $\beta(a,b,k) = z$ è equivalente a:
+            \[ z < b(k+1)+1 \land \exists t (z + t(b(k+1) = a)) \]
+            che è di classe $\Sigma_1^0$, ma in realtà $t$ è limitato da $a$, quindi potremmo rimpiazzare $\exists t$ con $\exists t \leq a$, e quindi la relazione è addirittura di classe $\Delta_0^0$.
         \end{remark}
+        Quindi possiamo tornare alla formula che rappresenta $f(\mathbf x,y) = z$ e riscriverla come:
+        \[ (\beta(a,b,0) = g(\mathbf x)) \land (\forall i < y \, \beta(a,b,i+1) = h(\mathbf x,i,\beta(a,b,i))) \land (\beta(a,b,y) = z) \]
+        tale formula è di classe $\Sigma_1^0$, ma va scritta per esteso per verificarlo davvero, anche perché altrimenti sembra che stiamo usando $\beta$ come simbolo di funzione, cosa che non è. È facile riscrivere la prima e la terza congiunzione,
+        quella in mezzo:
+        \[ \beta(a,b,i+1) = h(\mathbf x,i,\beta(a,b,i)) \]
+        è equivalente a:
+        \[ \exists m \exists n \; (\beta(a,b,i+1) = n) \land \varphi_h(\mathbf x,i,m) \land (\beta(\mathbf x,i,m) = n) \land (\beta(a,b,i) = m) \]
+        che è di classe $\Sigma_1^0$.
     \end{itemize}
 \end{proof}
 
@@ -1461,58 +1481,70 @@ Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implic
 \end{lemma}
 
 \begin{proof}
-    Induzione strutturale sulle formule di classe $\Delta_0^0$.
-    Le formule atomiche sono uguaglianze tra termini aritmetici, quindi definiscono predicati PR (i termini aritmetici definiscono funzioni PR).
-    La chiusura sotto $\neg,\land,\lor$ segue dall'algebra di Boole dei predicati PR.
-    Per i quantificatori limitati, se $P(\mathbf x,y)$ è PR, allora anche
-    \[ \exists y\le t\,P(\mathbf x,y) \qquad\text{e}\qquad \forall y\le t\,P(\mathbf x,y) \]
-    sono PR, perché si riducono a combinazioni finite di predicati PR su un intervallo limitato.
-    Quindi ogni formula $\Delta_0^0$ definisce un predicato PR.
-\end{proof}
-
-A questo punto manca solo la freccia del teorema.
-
-\begin{proof}
-    Sia $S$ di classe $\Sigma_1^0$. Allora esiste una formula $\theta(\mathbf x,y)$ di classe $\Delta_0^0$ tale che
-    \[ \mathbf x\in S \iff \NN\models \exists y\,\theta(\mathbf x,y). \]
-    Per il lemma precedente, esiste un predicato PR $P(\mathbf x,y)$ con
-    \[ P(\mathbf x,y)=0 \iff \NN\models \theta(\mathbf x,y). \]
-    Definisco la funzione ricorsiva parziale
-    \[ g(\mathbf x):=\mu y\,(P(\mathbf x,y)=0). \]
-    Allora
-    \[ \mathbf x\in S \iff g(\mathbf x)\downarrow. \]
-    Per la proposizione di equivalenza tra semidecidibilità e domini di funzioni ricorsive parziali, $S$ è semidecidibile.
+    Procediamo per induzione strutturale sulla costruzione di una formula di classe $\Delta_0^0$.
+    \begin{itemize}
+        \item[$\boxed{\begin{matrix}\text{formule}\\\text{atomiche}\end{matrix}}$] Se $\varphi$ è una $L_{\text{arit}}$-formula atomica, allora o è $\top,\bot$, nel cui caso gli insiemi 
+        definiti sono $\NN^k$ e $\varnothing$, che sono entrambi predicati PR, oppure è della forma $t_1 = t_2$ con $t_1,t_2$ termini, che nel nostro caso possono essere solo polinomi, per cui formule del tipo:
+        \[ p(x_1,\ldots,x_k) = q(x_1,\ldots,x_k) \]
+        e l'insieme definito è quindi $\{p(x_1,\ldots,x_k) = q(x_1,\ldots,x_k)\}$, che è un predicato PR per quanto visto.
+        \item[$\boxed{\land,\lor}$] Se $\varphi = \psi_1 * \psi_2$ con $\{\NN \models \psi_1\}$ e $\{\NN\models \psi_2\}$, predicati PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi_1\} *' \{\NN \models \psi_2\}$, con $*' \in \{\cap, \cup\}$, è un predicato PR
+        poiché abbiamo visto che i predicati PR formano un'algebra.
+        \item[$\boxed{\neg}$] Se $\varphi = \neg \psi$ con $\{\NN \models \psi\}$ un predicato PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi\}^\complement$ è un predicato PR, poiché i predicati PR sono chiusi per complementare, essendo un'algebra.
+        \item[$\boxed{\forall y \le x}$] Se $\varphi = \forall y \le x \; \psi(y,\mathbf z)$, con $\{\NN \models \psi(y,\mathbf z)\} =: R$ un predicato PR, allora esiste $f : \NN^{k+1} \to \NN$ PR tale che $R = \{f(\mathbf z,y) = 0\}$, e quindi $\{\NN \models \varphi\} = \{\mathbf z \in \NN^k : \forall y \le x \; f(\mathbf z,y) = 0\}$,
+        si può ottenere come $\{\#\{y \le x : f(\mathbf z,y) \ne 0\} = 0\}$ \textcolor{MidnightBlue}{- cioè quando tutti gli elementi sotto $x$ effettivamente azzerano la funzione $f$}, dove la funzione $\#$ che conta il numero di $y \le x$ tali che $f(\mathbf z,y) \ne 0$, ovvero è la funzione che conta il numero di elementi che appartengono ad un altro predicato sotto un certo valore, che abbiamo visto essere PR.
+        \item[$\boxed{\exists y \le x}$] Se $\varphi = \exists y \le x \; \psi(y,\mathbf z)$, con $\{\NN \models \psi(y,\mathbf z)\} =: R$ un predicato PR, allora, possiamo usare direttamente il caso precedente e scrivere:
+        \begin{align*}
+            \{\NN \models \varphi\} &= \{\mathbf z \in \NN^k : \neg (\forall y \le x \; \neg R(\mathbf z,y))\} \\
+                                    &= \{\mathbf z \in \NN^k : \forall y \le x \; \neg R(\mathbf z,y)\}^\complement
+        \end{align*}
+        e quindi è un predicato PR, essendo i predicati PR chiusi per complementare, e quindi anche $\neg R$ è un predicato PR, da questo uso il caso precedente e poi di nuovo il complementare.
+    \end{itemize}
 \end{proof}
 
 E quindi possiamo dimostrare la freccia $\impliedby$ del teorema.
 
 \begin{proof}
-    
+    Sia $S \in \Sigma_1^0$, allora $S = \{\mathbf x \in \NN^k : \NN \models \exists y_1\ldots \exists x_h \varphi(\mathbf x,y_1,\ldots,y_h)\}$, con $\varphi$ di classe $\Delta_0^0$.
+    Per il lemma precedente allora esiste $T$ predicato PR tale che $\varphi(\mathbf x,y_1,\ldots,y_h) \iff (\mathbf x,y_1,\ldots,y_h) \in T$, e quindi:
+    \[ S = \{\mathbf x \in \NN^k : \exists y_1\ldots\exists y_h \; (\mathbf x,y_1,\ldots,y_h) \in T\} \]
+    A questo punto $\mathbf x \in S$ se e solo se:
+    \[ 0_1 \circ \mu_{\mathbf y}((\mathbf x,y_1,\ldots,y_h) \in T) = 0 \]
+    cioè se il minimo $\mathbf y$ tale per cui sto nell'insieme converge, quindi compongo con 0, e se la minimizzazione converge non viene $\bot$, per cui esce 0. In pratica ho definito 
+    $S$ come il luogo di zero di quest'ultima funzione (dove l'appartenenza a $T$ è in realtà l'azzeramento della funzione PR che definisce $T$), che è ricorsiva parziale, e la condizione 
+    è che effettivamente esista $\mathbf y$ tale che $(\mathbf x,\mathbf y) \in T$.
+    \textcolor{MidnightBlue}{Istanziare che  ci sono degli $\mathbf y$ che funzionano equivale a dire che la ricerca del minimo che funziona termina.}
 \end{proof}
 
-Ammettiamo di avere un'enumerazione delle formule, i.e. $\varphi \mapsto \ulcorner \varphi \urcorner$, con questa enumerazione vale il seguente corollario.
+Vediamo infine un interessante corollario sulla non semidecidibilità dell'insieme delle verità aritmetiche. Supponiamo che l'insieme delle $L_{\text{arit}}$-formule chiuse
+sia enumerabile - vedremo più avanti una numerazione di Gödel che ci permetterà di fare ciò, $\varphi \mapsto \ulcorner \varphi \urcorner$, per ora supponiamo che tale enumerazione 
+esista - e che sia compatibile con l'operazione di sostituire un numero al posto di una variabile -, quindi l'insieme $\{\ulcorner \varphi \urcorner : \NN \models \varphi\}$ non è semidecidibile.
 
 \begin{corollary}[Teorema di indecidibilità di Church]
-    L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi \}$ non è (semi)-decidibile.
+    L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi, \text{$\varphi$ chiusa}\}$ non è semidecidibile.
 \end{corollary}
 
 \begin{proof}
-    Sia
-    \[ V:=\{\ulcorner\varphi\urcorner : \NN\models\varphi\}. \]
-    Se per assurdo $V$ fosse decidibile, potremmo decidere $H_1$, assurdo.
-    Infatti $H_1$ è semidecidibile, quindi per il teorema precedente esiste una formula $\psi(x,y)$ di classe $\Sigma_1^0$ tale che
-    \[ (x,y)\in H_1 \iff \NN\models\psi(x,y). \]
-    Poiché la numerazione di Gödel è effettiva, la mappa
-    \[ (x,y)\mapsto \ulcorner \psi(\ol x,\ol y)\urcorner \]
-    è ricorsiva totale. Dunque
-    \[ (x,y)\in H_1 \iff \ulcorner \psi(\ol x,\ol y)\urcorner \in V, \]
-    e questo darebbe una decisione di $H_1$, contraddizione.
+    Poniamo $V := \{\ulcorner\varphi\urcorner : \NN\models\varphi, \text{$\varphi$ chiusa}\}$ e vediamo che non è decidibile.
+    Poiché $H_1$ è semidecidibile, per il teorema precedente esiste una formula $\psi(x,y)$ di classe $\Sigma_1^0$ tale che:
+    \[ (x,y)\in H_1 \iff \NN\models\psi(x,y) \]
+    definiamo la funzione che a $n,m$ associa il codice della formula $\psi$ con $n$ e $m$ al posto di $x$ e $y$ (per ipotesi sulla nostra numerazione questo darà il codice di una formula chiusa dove la sostituzione è stata effettuata):
+    \[ f(n,m):=\ulcorner\psi(n,m)\urcorner \]
+    a questo punto $(n,m) \in H_1$ se e solo se $\NN \models \psi(n,m)$, se e solo se $f(n,m) \in V$, ovvero se il codice di $\psi(n,m)$ è una formula vera in $\NN$, e quindi:
+    \[ H_1 = f^{-1}[V] \]
+    Il fatto di aver assunto che la codifica sia compatibile con la sostituzione ci dirà poi che $f$ è ricorsiva totale, e quindi $H_1$ sarebbe decidibile, in quanto la preimmagine di un insieme decidibile tramite una funzione ricorsiva totale è decidibile\footnote{Abbiamo già visto ciò nel caso semidecidibile,
+    per dimostrare questo lemmetto nel caso decidibile è sufficiente partire da quello ed usare la caratterizzazione degli insiemi decidibili.}, assurdo.\\
+    Mostriamo ora che $V$ non è semidecidibile. Dalla semidecidibilità di $H_1$ e dalla non decidibilità di $H_1$ sappiamo che $H_1^\complement$ non è semidecidibile,
+    consideriamo la funzione:
+    \[ g(n,m):=\ulcorner\neg\psi(n,m)\urcorner \]
+    Allora, analogamente a prima:
+    \[ (n,m)\in H_1^\complement \iff \NN\models\neg\psi(n,m) \]
+    da cui $H_1^\complement = g^{-1}[V]$, e quindi $H_1^\complement$ sarebbe semidecidibile, assurdo.
 \end{proof}
 
-Morale l'insieme delle verità aritmetiche non è decidibile, e quindi non esiste un'assiomatizzazione ricorsiva delle verità aritmetiche.
+Morale l'insieme delle verità aritmetiche non è semidecidibile, e quindi non esiste un'assiomatizzazione ricorsiva dell'aritmetica.
 
 \subsection{Teorema di Rosser}
-Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $L = L_{\text{arit}} = \{0,+,\cdot,s\}$.
+Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $L_{\text{arit}} = \{0,+,\cdot,s\}$.
 
 \begin{itemize}
         \item [\textcolor{purple}{$\mathsf{Q1}$}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
@@ -1524,36 +1556,50 @@ Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $
         \item [\textcolor{purple}{$\mathsf{Q7}$}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
 \end{itemize}
 
-Il nostro obiettivo è dimostrare il teorema di Rosser, che sarà una versione più forte del teorema di Gödel.
+Il nostro obiettivo è dimostrare il teorema di Rosser, che sarà una versione più forte del teorema di Gödel, e soprattutto è un risultato che estende il teorema di incompletezza di Church che abbiamo già visto.
+Diamo per buona l'idea intuitiva di numerazione di Gödel come una codifica di formule, dimostrazioni, eccetera in numeri naturali, e che sia compatibile con le operazioni semantiche e diamo la seguente definizione.
+
+\begin{definition}[Teoria ricorsivamente assiomatizzabile]
+    Sia $T$ una $L$-teoria, diciamo che $T$ è \vocab{ricorsivamente assiomatizzabile} se esiste una numerazione di Gödel $\varphi \mapsto \ulcorner \varphi \urcorner$ tale che l'insieme $\{\ulcorner \varphi \urcorner : \varphi \in T\}$ sia ricorsivamente enumerabile. 
+\end{definition}
 
 \begin{theorem}[Rosser]
-    Sia $T$ una $L$-teoria che contiene $\mathsf{Q}$, ovvero $T \vdash \mathsf{Q}$, e sia $T$ \vocab{ricorsivamente assiomatizzabile}\footnote{Si può indebolire a ``$T$ \vocab{interpreta} $\mathsf{Q}$''},
-    i.e. l'insieme delle codifiche degli assiomi è ricorsivamente enumerabile, e coerente, allora $T$ è incompleta, ovvero esiste $\varphi$ chiusa tale che $T \nvdash \varphi$ e $T \nvdash \neg \varphi$.
+    Sia $T$ una $L$-teoria tale che:
+    \begin{enumerate}[(i)]
+        \item $T \vdash \mathsf{Q}$, ovvero $T$ estende $\mathsf{Q}$,
+        \item $T$ è ricorsivamente assiomatizzabile,
+        \item $T$ è coerente,
+    \end{enumerate}
+    allora $T$ è incompleta.\footnote{Si può rimpiazzare l'ipotesi di $T \vdash \mathsf{Q}$ con $T$ \vocab{interpreta} $\mathsf{Q}$, ovvero, informalmente,
+    $T$ è in grado di definire alcuni oggetti, che corrisponderanno ai numeri naturali, e simboli di funzione che corrisponderanno a $0,+,\cdot,s$, e di dimostrare le stesse identità aritmetiche che $\mathsf{Q}$ dimostra su questi oggetti, pur non avendo lo stesso linguaggio;
+    un esempio può essere $\mathsf{ZFC}$ che interpreta $\mathsf{Q}$, in quanto è in grado di definire $\omega$ e i simboli di funzione necessari.}
 \end{theorem}
 
-L'idea del perché questa sia la formulazione giusta è che $Q$ ha un numero finito di assiomi, al contrario di $\mathsf{PA}$.
+L'idea del perché questa sia la formulazione giusta, con $Q$ e non $\mathsf{PA}$, è che $\mathsf{Q}$ ha un numero finito di assiomi, al contrario di $\mathsf{PA}$.\\
+Per arrivare alla dimostrazione del teorema di Rosser, vediamo prima come $\mathsf{Q}$ si comporta rispetto alle funzioni calcolabili, in particolare vogliamo dimostrare la seguente proposizione.
 
-\begin{proposition}
-    Sia $\varphi$ una formula aritmetica chiusa, valgono i seguenti fatti.
+\begin{proposition}[Equivalenza tra validità in $\NN$ e dimostrabilità in $\mathsf{Q}$]
+    Sia $\varphi$ una formula aritmetica $\boxed{\text{chiusa}}$, valgono i seguenti fatti.
     \begin{itemize}
         \item Se $\varphi$ è di classe $\Delta_0^0$, allora:
-        \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \quad \text{e} \quad \NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi \]
+        \begin{enumerate}
+            \item $\NN \models \varphi \iff \mathsf{Q} \vdash \varphi$,
+            \item $\NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi$.
+        \end{enumerate}
         \item Se $\varphi$ è di classe $\Sigma_1^0$, allora:
-        \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \]
+        \begin{itemize}
+            \item[(3)] $\NN \models \varphi \iff \mathsf{Q} \vdash \varphi$.
+        \end{itemize}
     \end{itemize}
 \end{proposition}
 
 \begin{remark}
-    Le due condizioni sulle formule chiuse in $\Delta_0^0$ implicano che tali formule sono decidibili in $\mathsf{Q}$, infatti essendo chiuse in $\NN$ vale necessariamente sempre solo una tra $\NN \models \varphi$ e $\NN \models \neg \varphi$,
-    e la validità in $\NN$ è equivalente alla dimostrabilità in $\mathsf{Q}$.
+    Vale ovviamente che (3) $\implies$ (1), e (1) $\iff$ (2), passando semplicemente alla negazione $\neg \varphi \in \Delta_0^0$.\\
+    Inoltre (1), (2) implicano che le formule chiuse in $\Delta_0^0$ sono decidibili in $\mathsf{Q}$, in quanto a sinistra la decidibilità è garantita dal modello $\NN$ e questa 
+    cosa viene tradotta dalla proposizione in una decidibilità sintattica per $\mathsf{Q}$.
 \end{remark}
 
-\begin{proof}
-    Per formule chiuse $\Delta_0^0$ si procede per induzione strutturale: per il caso atomico si usa il fatto che $\mathsf Q$ sa fare i conti sui termini chiusi, e per i connettivi/quantificatori limitati si usa che la verifica è finita e che $\mathsf Q$ dimostra le identità aritmetiche necessarie.
-    Quindi, per $\Delta_0^0$ chiuse, verità in $\NN$ e dimostrabilità in $\mathsf Q$ coincidono sia per $\varphi$ sia per $\neg\varphi$.
-    Se ora $\varphi$ è $\Sigma_1^0$ chiusa, scrivo $\varphi\equiv\exists x\,\theta(x)$ con $\theta\in\Delta_0^0$. Se $\NN\models\varphi$, esiste $n$ con $\NN\models\theta(\ol n)$; per il caso $\Delta_0^0$ ottengo $\mathsf Q\vdash\theta(\ol n)$, quindi $\mathsf Q\vdash\exists x\,\theta(x)$.
-    Viceversa, se $\mathsf Q\vdash\varphi$, allora $\NN\models\varphi$ per correttezza di $\mathsf Q$ rispetto al modello standard.
-\end{proof}
+Operativamente, nonostante (3) $\implies$ (2) $\iff$ (1), la dimostrazione procede nell'ordine opposto, quindi dimostriamo prima (1) e (2), per poi dimostrare (3). Iniziamo con lo studiare l'aritmetica di $\mathsf{Q}$.
 
 \begin{definition}[Numerali]
     Sia $n \in \NN$, chiamo $\ol n \overset{\text{def}}{=} s(s(\ldots s(0)\ldots))$, con $n$ successori, \vocab{numerale} di $n$, formalmente 
@@ -1572,26 +1618,49 @@ L'idea del perché questa sia la formulazione giusta è che $Q$ ha un numero fin
 \end{lemma}
 
 \begin{proof}
-    Induzione strutturale sugli $L_{\text{arit}}$-termini (chiusi).
+    Induzione strutturale sugli $L_{\text{arit}}$-termini chiusi. Un $L_{\text{arit}}$-termine chiuso è o un successore di qualche altro termine, o il simbolo di costante $0$,
+    o una somma o un prodotto di termini chiusi - non possono esserci variabili, essendo libere.
+    \begin{itemize}
+        \item \textcolor{MidnightBlue}{$t = 0$} In questo caso $n = 0$, indipendentemente dalla valutazione essendo chiuso, e $\ol 0 = 0$ per definizione, quindi $Q \vdash t = \ol n$, per Wk + In$_{=}$.
+        \item \textcolor{MidnightBlue}{$t = s(t')$} Per ipotesi induttiva, detto $m := \{\ldots\}_\NN t'$, vale che $Q \vdash t' = \ol m$, e quindi $Q \vdash s(t') = s(\ol m)$, per El$_{=}$, inoltre per definizione di numerale $s(\ol m) = \ol{m+1}$, e per definizione di interpretazione $\{\ldots\}_\NN s(t') = m + 1$.
+        \item \textcolor{MidnightBlue}{$t = t_1 + t_2$} Detti $a := \{\ldots\}_\NN t_1$, $b := \{\ldots\}_\NN t_2$ e $c := \{\ldots\}_\NN t$, vale per ipotesi induttiva che $Q \vdash t_1 = \ol a$ e $Q \vdash t_2 = \ol b$, inoltre, poiché $\NN \models (t = t_1+t_2)$ vale $c = a + b$. Vogliamo dimostrare che $Q \vdash t = \ol c$,
+        ovvero, per El$_{=}$, che $Q \vdash t_1 + t_2 = \ol c$, che si riduce, sempre per El$_{=}$, a dimostrare che $Q \vdash \ol a + \ol b = \ol c$. Ci siamo quindi ridotti a voler verificare:
+        \[ a+b = c \implies Q \vdash \ol a + \ol b = \ol c \]
+        e lo dimostriamo usando l'induzione metateorica su $b$. Se $b = 0$, allora $a + 0 = a$, e quindi $c = a$, per $\mathsf{Q3}$ vale che $\mathsf{Q} \vdash \ol a + \ol 0 = \ol a$, e per definizione di numerale $\ol 0 = 0$, quindi vale la tesi.
+        Assumiamo che $a + b = c \implies Q \vdash \ol a + \ol b = \ol c$, e vediamo che $a + s(b) = c$, allora $\mathsf{Q} \vdash \ol a + \ol{b+1} = \ol c$, ora per definizione di numerale $\ol{b+1} = \ol b + \ol 1$, e per $\mathsf{Q4}$ vale che $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol a + \ol b)$, 
+        che, per El$_{=}$, è equivalente a $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol c)$, e per definizione di numerale $s(\ol c) = \ol{c+1}$, che corrisponde alla tesi perché semanticamente $a + s(b) = s(a+b) = s(c)$.
+        \item \textcolor{MidnightBlue}{$t = t_1 \cdot t_2$} Analogo al caso precedente.
+    \end{itemize}
 \end{proof}
 
-\begin{lemma}[Caso base del teorema]
-    Sia $\varphi$ una formula atomica chiusa (solo un'uguaglianza di termini è possibile), allora:
+\begin{lemma}[Caso base del teorema di equivalenza]
+    Sia $\varphi$ una formula atomica chiusa, allora:
     \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \quad \text{e} \quad \NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi \]
 \end{lemma}
 
+\begin{proof}
+    L'unica $L_{\text{arit}}$-formule atomica chiusa è del tipo $t_1 = t_2$, con $t_1,t_2$ termini chiusi. Se $\NN \models t_1 = t_2$, allora $\{\ldots\}_\NN t_1 = \{\ldots\}_\NN t_2$, per il lemma precedente valgono $\mathsf{Q} \vdash t_1 = \ol{\{\ldots\}_\NN t_1}$ e $\mathsf{Q} \vdash t_2 = \ol{\{\ldots\}_\NN t_2}$, e quindi
+    usando due volte El$_{=}$ otteniamo questa implicazione, $\mathsf{Q} \vdash t_1 = t_2$.\\
+    Per il viceversa dimostriamo la contronominale, i.e. $\NN \models \neg (t_1 = t_2)$, allora $\mathsf{Q} \vdash \neg (t_1 = t_2)$. WLOG assumiamo che $n_1 := \{\ldots\}_\NN t_1 < \{\ldots\}_\NN t_2 =: n_2$, dal lemma sappiamo che $\mathsf{Q} \vdash t_1 = \ol{n_1}$ e $\mathsf{Q} \vdash t_2 = \ol{n_2}$, per cui è sufficiente dimostrare
+    che $\mathsf{Q} \vdash \neg(\ol{n_1} = \ol{n_2})$. Per induzione metateoretica su $n_1$ (precisamente vogliamo dimostrare $P(n) : \forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, se $n_1 = 0$, allora $n_2 > 0$ e vogliamo dimostrare che $\mathsf{Q} \vdash \neg(\ol 0 = \ol{n_2})$, con $\ol 0 = 0$ per definizione, da $0 < n_2$ segue che $\ol{n_2} = s(\ol{x})$ per qualche $x$, e quindi:
+    \[ Q \vdash \neg(\ol 0 = s(\ol x)) \]
+    che è proprio $\mathsf{Q1}$. Ora per ipotesi induttiva $\forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, e vogliamo dimostrare che $\forall q \; n+1 < q$ allora $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
+    Fisso $q$ tale che $n+1 < q$, allora $q = m+1$ per qualche $m$, da questo segue che $n < m$, e quindi $\mathsf{Q} \vdash \neg(\ol n = \ol m)$, infine per $\mathsf{Q2}$ vale che $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol{m+1})$, che è proprio $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
+\end{proof}
+
 \begin{definition}[Ordinamento sui termini aritmetici]
-    Siano $t_1, t_2$ $L_{\text{arit}}$-termini, dico che $t_1 \, \textcolor{purple}{\leq} t_2$ se $\exists x \; x + t_1 = t_2$.\footnote{Questa è una relazione di ordinamento, $\mathsf Q$ non è in grado di dimostrare che è un ordinamento, inoltre si poteva anche mettere $+x$ a posto di $x+$,
-    visto che $\mathsf{Q}$ non è in grado di dimostrare che $+$ è commutativo.}
+    Siano $t_1, t_2$ $L_{\text{arit}}$-termini, dico che $t_1 \, \textcolor{purple}{\leq} t_2$ se $\exists x \; x + t_1 = t_2$.\footnote{Questa è una relazione di ordinamento, ma $\mathsf Q$ non è in grado di dimostrare che è un ordinamento, inoltre si poteva anche mettere $+x$ a posto di $x+$,
+    visto che $\mathsf{Q}$ non è in grado di dimostrare che $+$ è commutativo, quindi in principio sono due cose diverse.}
 \end{definition}
 
 \begin{definition}[Elementi standard e non standard]
     Sia $M \models \mathsf{Q}$, sia $n \in M$, dico che $n$ è \vocab{standard} o \vocab{non standard} se $\exists x \; M \models n = \ol x$ o $\forall x\in M \; M \models n \ne \ol x$.
+    Cioè dico che un elemento è standard se è uguale ad un numerale, e non standard se è diverso da ogni numerale.
 \end{definition}
 
-Si possono pensare come elementi fuori dalla catena dei successori, e andranno pensati come più grandi di tutti i numerali.
+Gli elementi non standard si possono pensare come elementi fuori dalla catena dei successori, e andranno pensati come più grandi di tutti i numerali.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{Immagini/elementi_non_standard.png}
 \end{figure}
