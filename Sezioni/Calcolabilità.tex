@@ -1547,13 +1547,13 @@ Morale l'insieme delle verità aritmetiche non è semidecidibile, e quindi non e
 Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $L_{\text{arit}} = \{0,+,\cdot,s\}$.
 
 \begin{itemize}
-        \item [\textcolor{purple}{$\mathsf{Q1}$}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
-        \item [\textcolor{purple}{$\mathsf{Q2}$}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
-        \item [\textcolor{purple}{$\mathsf{Q3}$}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
-        \item [\textcolor{purple}{$\mathsf{Q4}$}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
-        \item [\textcolor{purple}{$\mathsf{Q5}$}] $\forall x \; x \cdot 0 = 0$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)};
-        \item [\textcolor{purple}{$\mathsf{Q6}$}] $\forall x \; \forall y \; x \cdot s(y) = (x \cdot y) + x$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)}.
-        \item [\textcolor{purple}{$\mathsf{Q7}$}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
+        \item [\textcolor{purple}{$\mathsf{Q}1$}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
+        \item [\textcolor{purple}{$\mathsf{Q}2$}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
+        \item [\textcolor{purple}{$\mathsf{Q}3$}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{$\mathsf{Q}4$}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
+        \item [\textcolor{purple}{$\mathsf{Q}5$}] $\forall x \; x \cdot 0 = 0$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)};
+        \item [\textcolor{purple}{$\mathsf{Q}6$}] $\forall x \; \forall y \; x \cdot s(y) = (x \cdot y) + x$ \textcolor{MidnightBlue}{(def. ricorsiva prodotto)}.
+        \item [\textcolor{purple}{$\mathsf{Q}7$}] $\forall x \; x = 0 \lor \exists y \; s(y) = x$ \textcolor{MidnightBlue}{(ogni numero eccetto 0 è successore)}.
 \end{itemize}
 
 Il nostro obiettivo è dimostrare il teorema di Rosser, che sarà una versione più forte del teorema di Gödel, e soprattutto è un risultato che estende il teorema di incompletezza di Church che abbiamo già visto.
@@ -1626,8 +1626,8 @@ Operativamente, nonostante (3) $\implies$ (2) $\iff$ (1), la dimostrazione proce
         \item \textcolor{MidnightBlue}{$t = t_1 + t_2$} Detti $a := \{\ldots\}_\NN t_1$, $b := \{\ldots\}_\NN t_2$ e $c := \{\ldots\}_\NN t$, vale per ipotesi induttiva che $Q \vdash t_1 = \ol a$ e $Q \vdash t_2 = \ol b$, inoltre, poiché $\NN \models (t = t_1+t_2)$ vale $c = a + b$. Vogliamo dimostrare che $Q \vdash t = \ol c$,
         ovvero, per El$_{=}$, che $Q \vdash t_1 + t_2 = \ol c$, che si riduce, sempre per El$_{=}$, a dimostrare che $Q \vdash \ol a + \ol b = \ol c$. Ci siamo quindi ridotti a voler verificare:
         \[ a+b = c \implies Q \vdash \ol a + \ol b = \ol c \]
-        e lo dimostriamo usando l'induzione metateorica su $b$. Se $b = 0$, allora $a + 0 = a$, e quindi $c = a$, per $\mathsf{Q3}$ vale che $\mathsf{Q} \vdash \ol a + \ol 0 = \ol a$, e per definizione di numerale $\ol 0 = 0$, quindi vale la tesi.
-        Assumiamo che $a + b = c \implies Q \vdash \ol a + \ol b = \ol c$, e vediamo che $a + s(b) = c$, allora $\mathsf{Q} \vdash \ol a + \ol{b+1} = \ol c$, ora per definizione di numerale $\ol{b+1} = \ol b + \ol 1$, e per $\mathsf{Q4}$ vale che $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol a + \ol b)$, 
+        e lo dimostriamo usando l'induzione metateorica su $b$. Se $b = 0$, allora $a + 0 = a$, e quindi $c = a$, per $\mathsf{Q}3$ vale che $\mathsf{Q} \vdash \ol a + \ol 0 = \ol a$, e per definizione di numerale $\ol 0 = 0$, quindi vale la tesi.
+        Assumiamo che $a + b = c \implies Q \vdash \ol a + \ol b = \ol c$, e vediamo che $a + s(b) = c$, allora $\mathsf{Q} \vdash \ol a + \ol{b+1} = \ol c$, ora per definizione di numerale $\ol{b+1} = \ol b + \ol 1$, e per $\mathsf{Q}4$ vale che $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol a + \ol b)$, 
         che, per El$_{=}$, è equivalente a $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol c)$, e per definizione di numerale $s(\ol c) = \ol{c+1}$, che corrisponde alla tesi perché semanticamente $a + s(b) = s(a+b) = s(c)$.
         \item \textcolor{MidnightBlue}{$t = t_1 \cdot t_2$} Analogo al caso precedente.
     \end{itemize}
@@ -1644,11 +1644,11 @@ Operativamente, nonostante (3) $\implies$ (2) $\iff$ (1), la dimostrazione proce
     Per il viceversa dimostriamo la contronominale, i.e. $\NN \models \neg (t_1 = t_2)$, allora $\mathsf{Q} \vdash \neg (t_1 = t_2)$. WLOG assumiamo che $n_1 := \{\ldots\}_\NN t_1 < \{\ldots\}_\NN t_2 =: n_2$, dal lemma sappiamo che $\mathsf{Q} \vdash t_1 = \ol{n_1}$ e $\mathsf{Q} \vdash t_2 = \ol{n_2}$, per cui è sufficiente dimostrare
     che $\mathsf{Q} \vdash \neg(\ol{n_1} = \ol{n_2})$. Per induzione metateoretica su $n_1$ (precisamente vogliamo dimostrare $P(n) : \forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, se $n_1 = 0$, allora $n_2 > 0$ e vogliamo dimostrare che $\mathsf{Q} \vdash \neg(\ol 0 = \ol{n_2})$, con $\ol 0 = 0$ per definizione, da $0 < n_2$ segue che $\ol{n_2} = s(\ol{x})$ per qualche $x$, e quindi:
     \[ Q \vdash \neg(\ol 0 = s(\ol x)) \]
-    che è proprio $\mathsf{Q1}$. Ora per ipotesi induttiva $\forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, e vogliamo dimostrare che $\forall q \; n+1 < q$ allora $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
-    Fisso $q$ tale che $n+1 < q$, allora $q = m+1$ per qualche $m$, da questo segue che $n < m$, e quindi $\mathsf{Q} \vdash \neg(\ol n = \ol m)$, infine per $\mathsf{Q2}$ vale che $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol{m+1})$, che è proprio $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
+    che è proprio $\mathsf{Q}1$. Ora per ipotesi induttiva $\forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, e vogliamo dimostrare che $\forall q \; n+1 < q$ allora $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
+    Fisso $q$ tale che $n+1 < q$, allora $q = m+1$ per qualche $m$, da questo segue che $n < m$, e quindi $\mathsf{Q} \vdash \neg(\ol n = \ol m)$, infine per $\mathsf{Q}2$ vale che $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol{m+1})$, che è proprio $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
 \end{proof}
 
-\begin{definition}[Ordinamento sui termini aritmetici]
+\begin{definition}[``Ordinamento" sui termini aritmetici]
     Siano $t_1, t_2$ $L_{\text{arit}}$-termini, dico che $t_1 \, \textcolor{purple}{\leq} t_2$ se $\exists x \; x + t_1 = t_2$.\footnote{Questa è una relazione di ordinamento, ma $\mathsf Q$ non è in grado di dimostrare che è un ordinamento, inoltre si poteva anche mettere $+x$ a posto di $x+$,
     visto che $\mathsf{Q}$ non è in grado di dimostrare che $+$ è commutativo, quindi in principio sono due cose diverse.}
 \end{definition}
@@ -1665,36 +1665,154 @@ Gli elementi non standard si possono pensare come elementi fuori dalla catena de
     \includegraphics[width=0.5\textwidth]{Immagini/elementi_non_standard.png}
 \end{figure}
 
-\begin{lemma}
+Indaghiamo ora come funziona questa buffa nozione di $\leq$ per $\mathsf{Q}$, e vediamo che è proprio questa nozione di ordinamento che ci permette di distinguere tra elementi standard e non standard.
+
+\begin{lemma}[Caratterizzazione di $a \leq \ol n$]
     $\forall n \in \NN$ vale che:
     \[ \mathsf Q \vdash \forall a (a \leq \ol n \leftrightarrow (a = \ol 0 \lor a = \ol 1 \lor \ldots \lor a = \ol n)) \]
-    ovvero ogni elemento minore o uguale ad un numerale è uguale ad un numerale.
+    cioè ogni elemento del modello minore o uguale ad un numerale è uguale ad un numerale.
 \end{lemma}
 
-\begin{lemma}
+\begin{lemma}[Ogni elemento non standard è maggiore di ogni elemento standard]
     Sia $M \models \mathsf{Q}$, sia $\alpha \in M$ non standard, allora:
-    \[ \forall n \in \NN \; M \models \alpha > \ol n \]
-    ovvero ogni elemento non standard è maggiore di ogni numerale.
+    \[ \forall n \in \NN \; M \models \alpha \leq \ol n \]
 \end{lemma}
 
-Finalmente possiamo dimostrare la proposizione che ci serve per il teorema di Rosser.
+Dimostriamo in primis il secondo lemma, che è più semplice.
 
-\begin{corollary}
-    Sia $f : \NN^k \to \NN$ ricorsiva, allora c'è $\varphi$ di classe $\Sigma_1^0$ tale che:
-    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\;\big(\mathsf Q \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \leftrightarrow f(x_1,\ldots,x_k)=y\big) \]
-    ovvero ogni funzione ricorsiva totale è rappresentabile in $\mathsf{Q}$.
+\begin{proof}
+    Procediamo per induzione, metateorica, su $n$.
+    \begin{itemize}
+        \item[$\boxed{n = 0}$] Vogliamo dimostrare che $M \models \ol 0 \leq \alpha$, ovvero che $M \models \exists x \; x + \ol 0 = \alpha$, e questo, per la semantica di Tarski equivale a:
+        \[ \exists x \in M \; x + 0 = \alpha \]
+        prendendo $x = \alpha$, e poiché vale $\mathsf{Q}4$, otteniamo la tesi.
+        \item[$\boxed{n \implies n+1}$] Vogliamo dimostrare che $M \models \alpha \leq \ol{n+1}$, come sopra, questo equivale a $M \models \exists x \; x + \ol{n+1} = \alpha$, e usando la semantica di Tarski diventa:
+        \[ \exists x \in M \; x + \{\ldots\}_M \ol{n+1} = \alpha \]
+        dove, essendo per definizione $\ol{n+1} = s(\ol n)$, vale che $\{\ldots\}_M \ol{n+1} = s(\{\ldots\}_M \ol n)$, e quindi, per $\mathsf{Q}4$, $x + \{\ldots\}_M \ol{n+1} = s(x + \{\ldots\}_M \ol n)$.
+        Per $\mathsf{Q}7$ vale che $\alpha = s(\beta)$ - con $\beta$ non standard altrimenti si ha un assurdo, e banalmente, per $\mathsf{Q}2$, da $\ol{n+1} \leq \alpha$ segue che $\ol n \leq \beta$; usano infine l'ipotesi induttiva troviamo $y \in M$ tale che $y + \{\ldots\}_M \ol n = \beta$, e quindi $s(y + \{\ldots\}_M \ol n) = s(\beta)$,
+        pertanto è sufficiente prendere $x = y$ per ottenere la tesi.
+    \end{itemize}
+\end{proof}
+
+Vediamo infine la dimostrazione del primo lemma.
+
+\begin{proof}
+    Per induzione metateorica su $n$.
+    \begin{itemize}
+        \item[$\boxed{n = 0}$] Vogliamo dimostrare che $\mathsf{Q} \vdash \forall a (a \leq \ol 0 \leftrightarrow a = \ol 0)$, per definizione $a \leq 0$ equivale a $\exists x \; x + a = 0$, da cui segue subito $\leftarrow$, infatti in questo caso cerchiamo un $x$ tale che $x + 0 = 0$ e prendendo $x = 0$ otteniamo la tesi per $\mathsf{Q}3$.\\
+        Per $\rightarrow$, se $a \leq 0$, allora $\exists x \; x + a = 0$  e vogliamo dimostrare che $a = 0$. Per assurdo, se $a \ne 0$, allora per $\mathsf{Q}7$ vale che $a = s(y)$ per qualche $y$, e quindi, per $\mathsf{Q}4$ vale che $x + s(y) = s(x + y) = 0$ che contraddice $\mathsf{Q}1$, assurdo.
+        \item[$\boxed{n \implies n+1}$] Ci serve un lemma preliminare.
+        \begin{lemma}[Il successore non fa salti]
+            Nello stesso setting di prima vale:
+            \[ \mathsf{Q} \vdash a \leq \ol{n+1} \leftrightarrow (a = 0) \lor \exists b (a = s(b) \land b \leq \ol n) \]
+        \end{lemma}
+        \begin{proof}
+            In primis la tesi si può riscrivere come:
+            \[ \mathsf{Q} \vdash \exists x (x + a = s(\ol n)) \leftrightarrow (a = 0) \lor \exists b (a = s(b) \land \exists y (y + b = \ol n)) \]
+            Per $\leftarrow$, se $a = 0$, allora si prende come $x$ $\{\ldots\}_M s(\ol n)$ e si conclude per $\mathsf{Q}3$; se $a = s(b)$ e $y + b = \ol n$, allora per $\mathsf{Q}4$ vale che $y + s(b) = s(y + b) = s(\ol n)$, e quindi si prende $x = y$ per concludere.\\
+            Viceversa, per $\rightarrow$, se $a \leq \ol{n+1}$, allora, se $a = 0$ abbiamo finito, altrimenti per $\mathsf{Q}7$ vale che $a = s(b)$ e dall'ipotesi $\exists x\; x + s(b) = s(\ol n)$, per $\mathsf{Q}4$ e $\mathsf{Q}2$ vale che $x + b = \ol n$, e quindi $b \leq \ol n$.
+        \end{proof}
+        Ora vogliamo dimostrare che:
+        \[ \mathsf{Q} \vdash a \leq \ol{n+1} \leftrightarrow (a = \ol 0) \lor (a = \ol 1) \lor \ldots \lor (a = \ol{n+1}) \]
+        Per $\leftarrow$, se $a = \ol{n+1}$ allora è banale che $a \leq \ol{n+1}$, se $a = \ol m$ con $m \leq n$, allora per ipotesi induttiva $\mathsf{Q} \vdash a \leq \ol n$, e quindi banalmente $a \leq \ol{n+1}$.\\
+        Viceversa, per $\rightarrow$, se $a \leq \ol{n+1}$, allora per il lemma precedente vale che $a = 0$ o $a = s(b)$ con $b \leq \ol n$, se $a = 0$ allora abbiamo finito; altrimenti, se $a = s(b)$ con $b \leq \ol n$, allora per ipotesi induttiva $b = \ol m$ per qualche $m \leq n$,
+        e quindi $a = s(\ol m) = \ol{m+1}$, con $m+1 \leq n+1$, e quindi abbiamo finito. 
+    \end{itemize} 
+\end{proof}
+
+Finalmente possiamo dimostrare la prima parte della proposizione sull'equivalenza tra validità in $\NN$ e dimostrabilità in $\mathsf{Q}$ per le formule di classe $\Delta_0^0$ e $\Sigma_1^0$.
+In particolare ora vediamo la dimostrazione di (1) e (2).
+
+\begin{proof}
+    Dimostriamo contemporaneamente (1) e (2).
+    L'implicazione $\impliedby$ è banale poiché $\NN$ è un modello di $\mathsf{Q}$, per cui se $\mathsf{Q} \vdash \varphi$, allora $\NN \models \varphi$.\\
+    Per dimostrare $\implies$, procediamo per induzione strutturale, contemporaneamente sia su (1) che su (2),sulla $L_\text{arit}$-formula $\varphi$ chiusa di classe $\Delta_0^0$, possiamo limitarci ai soli connettivi logici $\neg$ e $\land$, perché $\lor$ si ottiene da loro, e au quantificatori $\forall x \leq t$ e $\exists x \leq t$.
+    \begin{itemize}
+        \item \textcolor{MidnightBlue}{$\varphi$ è atomica} È il lemma già visto.
+        \item \textcolor{MidnightBlue}{$\varphi = \neg \psi$} Abbiamo due casi o $\NN \models \neg \psi$ o $\NN \models \neg(\neg \psi)$, nel primo caso basta l'ipotesi induttiva (2): $\NN \models \neg \psi \implies \mathsf{Q} \vdash \neg \psi$.
+        Il caso in cui invece $\NN \models \neg(\neg \psi)$ è banale, infatti sappiamo già che $\models \neg(\neg \psi) \iff \psi$ e che $\vdash \neg(\neg \psi) \iff \psi$, per cui si riduce all'ipotesi induttiva (1), cioè $\NN \models \psi \implies \mathsf{Q} \vdash \psi$.
+        \item \textcolor{MidnightBlue}{$\varphi = \psi_1 \land \psi_2$} Come prima si danno due casi, quello in cui $\NN \models \psi_1 \land \psi_2$, che segue dalla semantica di Tarski:
+        \begin{align*}
+            \NN \models \psi_1 \land \psi_2 &\iff \NN \models \psi_1 \; \land \; \NN \models \psi_2 &&(\text{Tarski}) \\
+                                              &\iff \mathsf{Q} \vdash \psi_1 \; \land \; \mathsf{Q} \vdash \psi_2 &&(\text{hp induttiva (1)}) \\
+                                              &\iff \mathsf{Q} \vdash \psi_1 \land \psi_2 &&(\text{In$_{\land}$})
+        \end{align*}
+        Se invece $\NN \models \neg(\psi_1 \land \psi_2)$, allora (De Morgan) vale $\NN \models \neg\psi_1 \lor \neg\psi_2$; dunque si danno necessariamente due sottocasi.
+        \begin{itemize}
+            \item Se $\NN \models \neg\psi_1$, per ipotesi induttiva (2) abbiamo $\mathsf{Q} \vdash \neg\psi_1$, e quindi, usando In$_{\lor\cdot}$ e De Morgan, $\mathsf{Q} \vdash \neg(\psi_1 \land \psi_2)$.
+            \item Se $\NN \models \neg\psi_2$, analogamente otteniamo $\mathsf{Q} \vdash \neg\psi_2$, e quindi $\mathsf{Q} \vdash \neg(\psi_1 \land \psi_2)$.
+        \end{itemize}
+        \item \textcolor{MidnightBlue}{$\varphi = \forall x \leq t \; \psi$} Assumiamo che $\NN \models \forall x \leq t \; \psi$, con $t$ termine chiuso perché lo è $\varphi$, e vogliamo dimostrare che $\mathsf{Q} \vdash \forall x \leq t \; \psi$.
+        Sia $\{t\}_\NN = n$, per un lemma sappiamo che $\mathsf{Q} \vdash t = \ol n$, inoltre, per un altro lemma, $\mathsf{Q} \vdash \forall x \leq t \; \psi \leftrightarrow \forall x (x = \ol 0 \lor x = \ol 1 \lor \ldots \lor x = \ol n) \to \psi$,
+        e questa formula equivale a:
+        \[ (\forall x \; x = \ol 0 \to \psi) \land (\forall x \; x = \ol 1 \to \psi) \land \ldots \land (\forall x \; x = \ol n \to \psi) \]
+        dove ciascuna delle sottoformule $\forall x \; x = \ol m \to \psi$ è proprio $\psi[m/x]$ - e questo si verifica tramite semantica di Tarski. Per cui la tesi si riduce a dimostrare che:
+        \[ \mathsf{Q} \vdash \psi[0/x] \land \psi[1/x] \land \ldots \land \psi[n/x] \]
+        ed a questo punto la tesi segue dal caso dell'$\land$.
+        \item \textcolor{MidnightBlue}{$\varphi = \exists x \leq t \; \psi$} Esattamente come nel caso di sopra si arriva a voler dimostrare:
+        \[ \mathsf{Q} \vdash \psi[0/x] \lor \psi[1/x] \lor \ldots \lor \psi[n/x] \]
+        e anche in questo caso la tesi segue dal caso dell'$\lor$.
+    \end{itemize}
+\end{proof}
+
+Infine vediamo anche la dimostrazione di (3).
+
+\begin{proof}
+    Vogliamo dimostrare che se $\varphi$ è chiusa di classe $\Sigma_1^0$, allora $\NN \models \varphi \iff \mathsf{Q} \vdash \varphi$. Come per il caso $\Delta_0^0$, l'implicazione $\impliedby$ è banale in quanto $\NN$ è un modello di $\mathsf{Q}$.\\
+    Sia ora $\varphi = \exists x_1 \ldots \exists x_k \; \psi$, con $\psi$ di classe $\Delta_0^0$ e supponiamo che $\NN \models \varphi$, allora, per la semantica di Tarski + il lemma sulla sostituzione, esistono $n_1,\ldots,n_k \in \NN$ tali che:
+    \[ \NN \models \psi[n_1/x_1,\ldots,n_k/x_k] \]
+    ora, la formula ottenuta sostituendo i numerali $\ol{n_1},\ldots,\ol{n_k}$ a $x_1,\ldots,x_k$ è di classe $\Delta_0^0$, per cui vale l'ipotesi induttiva e si ha $\mathsf{Q} \vdash \psi[\ol{n_1}/x_1,\ldots,\ol{n_k}/x_k]$. Per concludere è sufficiente usare In$_{\exists}$ per $k$ volte e si ottiene $\mathsf{Q} \vdash \varphi$.
+\end{proof}
+
+A questo punto, dalle cose viste, sappiamo che il luogo di zero di una funzione ricorsiva è un insieme semidecidibile, e quindi è rappresentabile da una formula aritmetica di classe $\Sigma_1^0$,
+e che per i parametri per cui la formula è vera, $\mathsf{Q}$ dimostra proprio la formula con i numerali al posto dei parametri, ovvero enunciato precisamente.
+
+\begin{corollary}[Rappresentazione (del grafico) di funzioni ricorsive in $\mathsf{Q}$]
+    Se $f : \NN^k \to \NN_\bot$ è ricorsiva, allora c'è $\varphi(x_1,\ldots,x_k,y)$ di classe $\Sigma_1^0$ tale che:
+    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\;(\mathsf{Q} \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \iff f(x_1,\ldots,x_k)=y) \]
 \end{corollary}
 
-\begin{lemma}
-    Sia $f : \NN^k \to \NN_\bot$ ricorsiva \textcolor{purple}{totale}, allora c'è $\varphi$ di classe $\Sigma_1^0$ tale che:
-    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\;\big(\mathsf Q \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \leftrightarrow f(x_1,\ldots,x_k)=y\big) \]
-    che differisce dal corollario precedente perché in questo caso la $\mathsf Q$ non solo dimostra i casi particolari ma proprio il caso generale in cui ho addirittura una funzione degli $y$ che associa $y$ a $f(x_1, \ldots, x_k)$.
+\begin{proof}
+    La dimostrazione si ottiene considerando $\{f(x_1,\ldots,x_k) - y = 0\}$, che è semidecidibile, e per la caratterizzazione degli insiemi semidecidibili come gli insiemi di classe $\Sigma_1^0$,
+    esiste una formula di classe $\Sigma_1^0$ tale $(x_1,\ldots,x_k,y) \in \{f(x_1,\ldots,x_k) - y = 0\}$ se e solo se $\NN \models \varphi(x_1,\ldots,x_k,y)$.
+    Infine per la proposizione appena dimostrata vale che $\NN \models \varphi(x_1,\ldots,x_k,y)$ se e solo se $\mathsf{Q} \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y)$, e questa è proprio l'equivalenza della tesi.
+\end{proof}
+
+Vediamo un risultato più forte, visto che il precedente è una condizione puntuale, nel senso che fissati a priori i parametri si ha l'equivalenza, possiamo migliorare l'equivalenza richiedendo che la funzione ricorsiva sia totale,
+e ottenendo di conseguenza che la $\mathsf{Q}$ capisca che $f$ è una funzione, ovvero che per ogni $x_1,\ldots,x_k$ esiste un unico $y$ tale che $\varphi(x_1,\ldots,x_k,y)$ è vera, e che questo $y$ è proprio $f(x_1,\ldots,x_k)$.
+
+\begin{lemma}[Rappresentazione di funzioni ricorsive totali in $\mathsf{Q}$]
+    Sia $f : \NN^k \to \NN$ ricorsiva totale, allora c'è $\varphi(x_1,\ldots,x_k,y)$ di classe $\Sigma_1^0$ tale che:
+    \[ \forall x_1,\ldots,x_k\in\NN\; \mathsf{Q} \vdash \forall y \; (\varphi(\ol{x_1},\ldots,\ol{x_k},y) \leftrightarrow y = \ol{f(x_1,\ldots,x_k)}) \]
 \end{lemma}
 
 \begin{proof}
-    Segue immediatamente dal corollario precedente, perché l'ipotesi di totalità su $f$ è esattamente quella richiesta lì.
+    Sia $\psi$ una formula di classe $\Delta_0^0$ tale che per ogni $x_1, \dots, x_k, y \in \NN$:
+    \[ y = f(x_1, \dots, x_k) \iff \mathsf{Q} \vdash \exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, z_1, \dots, z_l) \]
+    Consideriamo la formula $\varphi(x_1, \dots, x_k, y)$ definita come:
+    \begin{align*}
+        \exists N ( & \exists z_1 \le N \dots \exists z_l \le N \, (y \le N \land \psi(x_1, \dots, x_k, y, z_1, \dots, z_l)) \\
+        \land & \forall t \le N \, \forall w_1 \le N \dots \forall w_l \le N \, (\psi(x_1, \dots, x_k, t, w_1, \dots, w_l) \to t = y) )
+    \end{align*}
+    Chiamiamo $\theta_1$ la prima riga tra parentesi e $\theta_2$ la seconda. Dimostriamo separatamente le due implicazioni:
+    \begin{itemize}
+        \item[$\boxed{\implies}$] Vogliamo mostrare che $\mathsf{Q} \vdash \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$.
+        Supponiamo, per assurdo, che non sia così e fissiamo $x_1, \dots, x_k$ e un modello $M \models \mathsf{Q}$ in cui esiste $y \ne f(x_1, \dots, x_k)$ tale che $M \models \varphi(\ol{x_1}, \dots, \ol{x_k}, y)$.
+        Siccome $M \models \varphi$, possiamo fissare $N \in M$ tale che $N$ e $y$ soddisfino, in $M$, le formule $\theta_1$ e $\theta_2$. Si presentano due casi:
+        \begin{itemize}
+            \item \textit{Caso 1: $N$ è standard.} Per $\theta_1$, anche $y$ deve essere standard, ed esistono $z_1, \dots, z_l \in M$ standard tali che $M \models \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, \ol{z_1}, \dots, \ol{z_l})$. Siccome $\psi$ è $\Delta_0^0$, essa è decidibile, quindi $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, \ol{z_1}, \dots, \ol{z_l})$, il che implica $y = f(x_1, \dots, x_k)$, contro l'ipotesi.
+            \item \textit{Caso 2: $N$ non è standard.} La formula $\theta_2$ asserisce che ogni testimone di $\psi$ minore di $N$ deve corrispondere a $y$. Per costruzione, esistono $z_1, \dots, z_l$ standard tali che $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l})$. Poiché ogni numerale standard è minore di un elemento non standard $N$, ponendo $t = \ol{f(x_1, \dots, x_k)}$, i testimoni standard soddisfano la premessa di $\theta_2$, da cui $M \models \ol{f(x_1, \dots, x_k)} = y$, assurdo.
+        \end{itemize}
+        \item[$\boxed{\impliedby}$] Vogliamo mostrare che $\mathsf{Q} \vdash \forall y \, (y = \ol{f(x_1, \dots, x_k)} \to \varphi(\ol{x_1}, \dots, \ol{x_k}, y))$.
+        È sufficiente provare che $\mathsf{Q} \vdash \varphi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$.\\
+        Siano $z_1, \dots, z_l$ tali che $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l})$.
+        Scegliamo $N := \max\{f(x_1, \dots, x_k), z_1, \dots, z_l\}$, in ogni modello $M \models \mathsf{Q}$, il numerale $\ol{N}$ funge da limitazione corretta:
+        \begin{enumerate}
+            \item $\theta_1$ è soddisfatta in $M$ dai testimoni $\ol{z_1}, \dots, \ol{z_l}$ e $\ol{f(x_1, \dots, x_k)}$, che sono tutti minori o uguali a $\ol{N}$.
+            \item Per $\theta_2$, se $M \models t \le \ol{N} \land \psi(\dots, t, \dots)$, allora $t$ deve essere standard (perché minore di un numerale standard). Per la costruzione di $\psi$, l'unico valore standard che soddisfa la relazione è proprio $f(x_1, \dots, x_k)$, quindi $M \models t = \ol{f(x_1, \dots, x_k)}$.
+        \end{enumerate}
+    \end{itemize}
 \end{proof}
-
 
 \section{Teoremi di incompletezza}
 \subsection{Numerazione di Gödel}
@@ -1703,74 +1821,94 @@ Una numerazione di Gödel è in generale un modo di associare ad ogni formula di
 e che sia possibile decidere se un numero è la codifica di una formula o meno.
 
 Fissiamo una codifica effettiva dei simboli di $L_{\text{arit}}$ mediante numeri naturali distinti e usiamo la codifica di liste
-$\langle a_1,\ldots,a_n\rangle$ introdotta prima per concatenare i codici. Per esempio usiamo tag distinti
-\[ \#0,\#s,\#+,\#\cdot,\#=,\#\neg,\#\to,\#\forall,\#x. \]
-
+$\langle a_1,\ldots,a_n\rangle$ introdotta prima per concatenare i codici. Usiamo i tag per numerare i simboli, usiamo il sistema ridotto, quindi i simboli numerati sono:
+\[ \begin{array}{cccccccccc}
+    & \textcolor{purple}{\bot} & \textcolor{purple}{\to} & \textcolor{purple}{\forall} & \textcolor{purple}{=} & \textcolor{purple}{0} & \textcolor{purple}{s} & \textcolor{purple}{+} & \textcolor{purple}{\cdot} & \textcolor{purple}{x_i} \\
+    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8+i \\
+    & \textcolor{green!50!black}{\#\bot} & \textcolor{green!50!black}{\#\to} & \textcolor{green!50!black}{\#\forall} & \textcolor{green!50!black}{\#=} & \textcolor{green!50!black}{\#0} & \textcolor{green!50!black}{\#s} & \textcolor{green!50!black}{\#+} & \textcolor{green!50!black}{\#\cdot} & \textcolor{green!50!black}{\#x_i}
+\end{array}\]
+quindi d'ora in poi $\#\cdot$ è il numero che abbiamo scelto per codificare il simbolo di moltiplicazione, $\#\forall$ è il numero che abbiamo scelto per codificare il quantificatore universale, e così via.
 La scelta concreta dei numeri è irrilevante: ciò che conta è che le operazioni sintattiche fondamentali siano funzioni ricorsive.
 
 \begin{definition}[Codifica di termini e formule]
-    Definiamo ricorsivamente la codifica di Gödel $\ulcorner\cdot\urcorner$ come segue.
+    Fissata una numerazione dei simboli di $L_{\text{arit}}$, possiamo definire ricorsivamente la \vocab{codifica di Gödel} (o \vocab{numerazione di Gödel}) $\ulcorner\cdot\urcorner$ come segue.
     \begin{itemize}
-        \item termini:
-        \[ \ulcorner 0\urcorner := \langle\#0\rangle,\qquad \ulcorner x_i\urcorner := \langle\#x,i\rangle, \]
-        \[ \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle,\qquad \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle, \]
-        \[ \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle; \]
-        \item formule:
-        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle,\qquad \ulcorner\neg\varphi\urcorner := \langle\#\neg,\ulcorner\varphi\urcorner\rangle, \]
-        \[ \ulcorner\varphi\to\psi\urcorner := \langle\#\to,\ulcorner\varphi\urcorner,\ulcorner\psi\urcorner\rangle,\qquad \ulcorner\forall x_i\,\varphi\urcorner := \langle\#\forall,i,\ulcorner\varphi\urcorner\rangle. \]
+        \item $L_{\text{arit}}$-termini:
+        \[ \ulcorner 0\urcorner := \langle\#0\rangle \qquad \ulcorner x_i\urcorner := \langle\#x_i\rangle \]
+        \[ \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle\qquad \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
+        \[ \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
+        \item $L_{\text{arit}}$-formule:
+        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle\qquad \ulcorner\neg\varphi\urcorner := \langle\#\neg,\ulcorner\varphi\urcorner\rangle \]
+        \[ \ulcorner\varphi\to\psi\urcorner := \langle\#\to,\ulcorner\varphi\urcorner,\ulcorner\psi\urcorner\rangle\qquad \ulcorner\forall x_i\,\varphi\urcorner := \langle\#\forall,\#x_i,\ulcorner\varphi\urcorner\rangle \]
     \end{itemize}
 \end{definition}
 
-\begin{proposition}[Predicati sintattici ricorsivi]
-    I seguenti predicati su $\NN$ sono PR:
-    \begin{itemize}
-        \item $\textsf{Term}(n)$: ``$n$ è codice di un termine'';
-        \item $\textsf{For}(n)$: ``$n$ è codice di una formula'';
-        \item $\textsf{Sent}(n)$: ``$n$ è codice di una formula chiusa'';
-        \item $\textsf{Free}(n,i)$: ``$x_i$ è libera nella formula codificata da $n$''.
-    \end{itemize}
-\end{proposition}
+Abbiamo così ottenuto una numerazione iniettiva di ogni $L_{\text{arit}}$-termine e di ogni $L_{\text{arit}}$-formula.
+Il nostro obiettivo sarà dimostrare il seguente lemma.
 
-\begin{proof}
-    Si procede per ricorsione strutturale sulla forma del codice, distinguendo il tag iniziale tramite $\nth(n,0)$ e lunghezza tramite $\length(n)$.
-    Tutti i test effettuati sono combinazioni di predicati PR già costruiti su liste e codici, quindi i predicati risultano PR.
-\end{proof}
-
-\begin{proposition}[Numerali e sostituzione]
-    Valgono i seguenti fatti.
-    \begin{itemize}
-        \item La funzione
-        \[ \textsf{Num}(n):=\ulcorner\ol n\urcorner \]
-        è PR.
-        \item La funzione di sostituzione sintattica
-        \[ \textsf{Sub}(\ulcorner\varphi\urcorner,i,\ulcorner t\urcorner):=\ulcorner\varphi[t/x_i]\urcorner \]
-        è PR.
-    \end{itemize}
-\end{proposition}
-
-\begin{proof}
-    Per $\textsf{Num}$ basta la ricorsione:
-    \[ \textsf{Num}(0)=\ulcorner 0\urcorner,\qquad \textsf{Num}(n+1)=\ulcorner s(\ol n)\urcorner=\langle\#s,\textsf{Num}(n)\rangle. \]
-    Per $\textsf{Sub}$ si ricorre sulla struttura sintattica codificata da $n$: nel caso di variabile $x_j$ si sostituisce con $t$ solo se $j=i$, e negli altri costruttori si ricompone ricorsivamente sui sotto-codici.
-\end{proof}
-
-\begin{lemma}[Diagonalizzazione di Gödel]
-    Sia $\varphi(x_i)$ una formula con $x_i$ libera. Esiste una frase chiusa $\gamma$ tale che:
-    \[ \mathsf Q \vdash \gamma \leftrightarrow \varphi[\overline{\ulcorner\gamma\urcorner}/x_i]. \]
+\begin{lemma}[Lemma di diagonalizzazione di Gödel]
+    Sia $\varphi$ una formula aritmetica, esiste una formula aritmetica $\textcolor{purple}{\psi}$ tale che:
+    \[ \mathsf{Q} \vdash \textcolor{purple}{\psi} \leftrightarrow \varphi[\overline{\ulcorner\textcolor{purple}{\psi}\urcorner}/x_1] \]
+    cioè per ogni formula con una variabile libere né esiste un'altra che è vera se e solo se è vera ``$\varphi(\psi)$".
 \end{lemma}
 
+Di fatto il lemma ci dà una specie di teorema di punto fisso per le formule, cioè per ogni formula ne esiste un'altra 
+la cui validità è equivalente alla validità della proprietà che la prima formula esprime valida per la seconda. In altre parole, c'è sempre una formula che dice di sé stessa che è vera se e solo se è vera una certa proprietà per lei.
+La proprietà che ci interesserà sarà ``io sono dimostrabile''.
+
+\begin{remark}[$n$ è il codice di una formula]
+    Il predicato $\textsf{For}(n) :=$ ``$n$ è codice di una formula'' è PR.
+\end{remark}
+
 \begin{proof}
-    Consideriamo la funzione ricorsiva totale
-    \[ f(n):=\textsf{Sub}(n,i,\textsf{Num}(n)). \]
-    Per il corollario già dimostrato (rappresentabilità in $\mathsf Q$ delle funzioni ricorsive totali) esiste una formula $\psi_f(u,v)$ di classe $\Sigma_1^0$ tale che
-    \[ \mathsf Q\vdash \psi_f(\ol u,\ol v) \leftrightarrow v=f(u). \]
-    Definiamo
-    \[ \theta(u):=\exists v\,(\psi_f(u,v)\land \varphi[v/x_i]). \]
-    e poniamo
-    \[ \gamma:=\theta(\overline{\ulcorner\theta\urcorner}). \]
-    Allora in $\mathsf Q$ otteniamo:
-    \[ \gamma \leftrightarrow \theta(\overline{\ulcorner\theta\urcorner}) \leftrightarrow \varphi(\overline{f(\ulcorner\theta\urcorner)}) \leftrightarrow \varphi(\overline{\ulcorner\gamma\urcorner}), \]
-    perché $f(\ulcorner\theta\urcorner)=\ulcorner\theta(\overline{\ulcorner\theta\urcorner})\urcorner=\ulcorner\gamma\urcorner$.
+    Per decidere se $n$ è codice di una formula, basta verificare che il primo simbolo della lista sia un connettivo o che la formula sia atomica, per cui il
+    predicato $\textsf{For}(n)$ si può definire per casi come segue:
+    \begin{align*}
+        \textsf{For}(n) &= (\nth(n,0) = \#\bot \land \length(n) = 1) \\
+                        &\land (\nth(n,0) = \#= \land \length(n) = 3 \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
+                        &\land (\nth(n,0) = \#\neg \land \length(n) = 2 \land \textsf{For}(\nth(n,1))) \\
+                        &\land (\nth(n,0) = \#\to \land \length(n) = 3 \land \textsf{For}(\nth(n,1)) \land \textsf{For}(\nth(n,2))) \\
+                        &\land (\nth(n,0) = \#\forall \land \length(n) = 3 \land \nth(n,1) \geq 8 \land \textsf{For}(\nth(n,2)))
+    \end{align*}
+    dove aggiungiamo gli altri $\textsf{For}$ ricorsivamente perché la formula codificata da $n$ è una formula se e solo se le sottoformule codificate dai sotto-codici sono formule,
+    ed ovviamente, essendo $\textsf{For}$ un'indicazione finita di predicati PR, $\textsf{For}$ è PR.
+\end{proof}
+
+\begin{remark}[$n$ è il codice di un numerale]
+    Definiamo la funzione $\textsf{Num}(n) : n \mapsto \ulcorner\ol n\urcorner$, ovvero la funzione che associa ad ogni numero naturale il numerale corrispondente,
+    tale funzione è PR.
+\end{remark}
+
+\begin{proof}
+    Come prima si può definire a partire da altre funzioni PR come segue:
+    \[ \textsf{Num}(n) := \begin{cases}
+        \textsf{Num}(0) = \ulcorner 0\urcorner = \langle\#0\rangle \\
+        \textsf{Num}(n+1) = \ulcorner s(\ol n)\urcorner = \langle\#s, \textsf{Num}(n)\rangle
+    \end{cases} \]
+\end{proof}
+
+
+\begin{remark}[Codice della sosituzione]
+    Sia $\textsf{Sub}(\ulcorner\varphi\urcorner, i, \ulcorner t\urcorner) := \ulcorner\varphi[t/x_i]\urcorner$ la funzione che associa il codice di una formula,
+    di una variabile e di un termine al codice ottenuto facendo la sostituzione del termine al posto della variabile, tale funzione è PR.
+\end{remark}
+
+\begin{proof}
+    Anche questa può essere definita a partire da funzioni PR:
+    \[ \textsf{Sub}(n,i,x) := \begin{cases}
+        0 & \text{se $\neg\textsf{For}(n)$} \\
+        \langle \#\bot \rangle & \text{se $n = \langle\#\bot\rangle$} \\
+        \langle \#=, \textsf{Sub}(a,i,x), \textsf{Sub}(b,i,x) \rangle & \text{se $n = \langle\#=,a,b\rangle$} \\
+        \langle \#\neg, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\neg,a\rangle$} \\
+        \langle \#\to, \textsf{Sub}(a,i,x), \textsf{Sub}(b,i,x) \rangle & \text{se $n = \langle\#\to,a,b\rangle$} \\
+        \langle \#\forall, j, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\forall,j,a\rangle$ e $j \ne i$} \\
+    \end{cases} \]
+\end{proof}
+
+Possiamo quindi dimostrare il lemma di diagonalizzazione di Gödel.
+
+\begin{proof}
+    
 \end{proof}
 
 \subsection{Predicato di dimostrazione}
