@@ -2185,23 +2185,35 @@ Usando il lemma possiamo concludere dimostrando il secondo teorema di incomplete
         \item \textcolor{purple}{$\mathsf{PA} \vdash \gamma \to \neg\square\bot$}, poiché $\mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma$, allora è equivalente dimostrare $\mathsf{PA} \vdash \neg\square\gamma \to \neg\square\bot$.
         Procediamo dimostrando la contronominale, che è equivalente, ovvero $\mathsf{PA} \vdash \square\bot \to \square\gamma$, e questo segue per El$_\to$:
         \[ \text{El}_\to\frac{\displaystyle \mathsf{PA} \vdash \textcolor{MidnightBlue}{\square(\bot \to \gamma)} \quad \mathsf{PA} \vdash \textcolor{MidnightBlue}{(\square \bot \land \square(\bot \to \gamma)) \to \square\gamma}}{\mathsf{PA} \vdash \square\bot \to \square\gamma} \]
-        dove $\mathsf{PA} \vdash \square(\bot \to \gamma)$ perché $\mathsf{PA} \vdash \bot \to \gamma$ (è El$_\bot$) unito con la (1); mentre $\mathsf{PA} \vdash (\square \bot \land \square(\bot \to \gamma)) \to \square\gamma$ è la (2) del lemma.
-        \item \textcolor{purple}{$\mathsf{PA} \vdash \neg\square\bot \to \gamma$}, come prima usiamo $\neg\square \gamma$ al posto di $\gamma$, e dimostriamo $\mathsf{PA} \vdash \neg\square\bot \to \neg\square\gamma$ usando la contronominale. [COMPLETARE]
+        dove $\mathsf{PA} \vdash \square(\bot \to \gamma)$ perché $\mathsf{PA} \vdash \bot \to \gamma$ (è El$_\bot$) unito con la (1); mentre $\mathsf{PA} \vdash (\square \bot \land \square(\bot \to \gamma)) \to \square\gamma$ è la (3) del lemma.
+        \item \textcolor{purple}{$\mathsf{PA} \vdash \neg\square\bot \to \gamma$}, come prima usiamo $\neg\square \gamma$ al posto di $\gamma$, e dimostriamo $\mathsf{PA} \vdash \neg\square\bot \to \neg\square\gamma$ usando la contronominale.
+        \[ (a)\frac{\displaystyle \frac{(\star)}{\mathsf{PA}\vdash \square \gamma \to \square \neg \gamma} \quad (b)\frac{\displaystyle \frac{(\star')}{\mathsf{PA} \vdash \square (\gamma \to (\neg \gamma \to \bot))}}{\mathsf{PA} \vdash \square \gamma \to (\square\neg \gamma \to \square \bot)}}{\mathsf{PA} \vdash \square\gamma \to \square\bot} \]
     \end{itemize}
+    dove $(a)$ si ottiene perché stiamo assumendo $\square\gamma$, quindi aggiungiamo $\square\gamma$ come premessa e otteniamo, per El$_\to$, $\mathsf{PA} \vdash \square\neg\gamma$, e usando questa come premessa per la cosa a destra, sempre via El$_\to$, otteniamo $\mathsf{PA} \vdash \square\bot$;
+    mentre $(\star')$ si ottiene applicando: il punto (1) del lemma, due volte In$_\to$ e poi El$_\neg$; $(b)$ si ottiene invece applicando il punto (3) del lemma, sempre ricordando che stiamo assumendo $\square\gamma$, così abbiamo $\mathsf{PA},\square \gamma \vdash \square(\neg \gamma \to \bot)$, e si conclude con In$_\to$.\\
+    Infine $(\star)$ si ottiene come segue:
+    \[ (d)\frac{\displaystyle (c)\frac{\displaystyle (2)\frac{\displaystyle \frac{\displaystyle\frac{}{\mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma}}{\mathsf{PA} \vdash \square \gamma \to \neg \gamma}}{\mathsf{PA} \vdash \square(\square \gamma \to \neg \gamma)}}{\mathsf{PA} \vdash \square \square \gamma \to \square \neg \gamma} \qquad (2)\frac{}{\mathsf{PA} \vdash \square \gamma \to \square \square \gamma}}{\mathsf{PA} \vdash \square\gamma \to \square\neg\gamma} \]
+    come prima $(d)$ si ottiene perché stiamo assumendo $\square\gamma$ e usando El$_\to$ due volte;
+    infine per $(c)$, usando (2) e El$_{\to}$ ho che $\mathsf{PA} \vdash \square\square\gamma$, quindi posso usare (3) con $\mathsf{PA} \vdash (\square\square\gamma \land \square(\square\gamma \to \neg\gamma)) \to \square\neg\gamma$, da cui, usando Wk, ottengo $\mathsf{PA} \vdash \square\gamma \to \square\neg\gamma$.
 \end{proof}
 
-SISTEMARE
-
-\begin{remark}[Osservazioni filosofiche sul secondo teorema di incompletezza]
+\begin{remark}[Sulla scelta della codifica e sulla coerenza di $\mathsf{PA}$]
     Alla fine dei conti, la formula che esprime la coerenza di $\mathsf{PA}$, $\neg\square\bot \equiv \exists d\,\neg\mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\bot\urcorner)$, è
     un numero naturale che noi scegliamo di leggere come la formula che dice ``esiste una dimostrazione di $\bot$ in $\mathsf{PA}$'', nulla esclude a priori che ci sia un'altro numero 
-    che corrisponde, in un'altra codifica, alla formula che dice che $\mathsf{PA}$ dimostra la propria stessa coerenza.\\
-    Non è detto, a priori, che se dovessimo scrivere una formula che dice ``Peano è coerente'' finiremmo sulla formula $\neg\square\bot$.\\
-    Ad esempio, se definissimo Peano in questo modo, enumerando tutti gli assiomi e aggiungendo quelli di base ed uno alla volta quelli dello schema di induzione,
-    fermandomi non appena arrivo al primo assioma che dà incoerenza; questa è una definizione del tutto corretta di Peano, perché sappiamo che di fatto non beccheremo mai 
-    un assioma che dà incoerenza, quindi gli assiomi ci sono tutti, e questa teoria sarà in grado di dimostrare la propria coerenza, perché è definita in modo che sia così - basterebbe usare compattezza.\\
-    Quindi il fatto che Peano non sia in grado di dimostrare la propria coerenza è un fatto che dipende da come è descritta Peano e la sua coerenza; se trovassimo un'altra descrizione di Peano e della sua coerenza magari riusciremmo a dimostrarla.
-    Quello che alla fine abbiamo dimostrato noi è che, con le codifiche che abbiamo scelto, non riusciamo a dimostrare una certa formula, all'interno della quale leggo che Peano non può dimostrare la propria coerenza.\\
-    $\mathsf{ZF}$, che è più potente, non è in grado di dimostrare la propria coerenza, ma è in grado di dimostrare vari teoremi che caratterizzano la coerenza; ad esempio, se ci fosse un cardinale inaccessibile, allora $\mathsf{ZF}$ sarebbe coerente - e quindi $ZF$ non dimostra che c'è un cardinale inaccessibile;
-    questa implicazione è proprio possibile grazie al fatto che ZF è abbastanza potente da poter connettere la formula che esprime la coerenza di ZF con l'esistenza di un cardinale inaccessibile; in generale non è detto che la teoria stessa sia in grado in generale di rendersi conto dei diversi modi di dire "$T$ è coerente".
+    che corrisponde, in un'altra codifica, alla formula che dice che $\mathsf{PA}$ dimostra la propria stessa coerenza.
+    Cioè, non è detto, a priori, che se dovessimo scrivere una formula che dice ``Peano è coerente'' finiremmo sulla formula $\neg\square\bot$.\\
+    Ad esempio, se definissimo Peano in questo modo: enumerando tutti gli assiomi, aggiungendo quelli di base, ed uno alla volta quelli dello schema di induzione,
+    fermandoci non appena arriviamo al primo assioma che dà incoerenza; avremmo ottenuto una definizione del tutto corretta di Peano - perché sappiamo che concretamente non beccheremo mai 
+    un assioma che dà incoerenza - quindi gli assiomi ci sono tutti, e questa teoria sarà coerente perché è definita apposta modo che sia così - volendo essere formali basterebbe usare la compattezza.\\
+    Quindi il fatto che Peano non sia in grado di dimostrare la propria coerenza è un fatto che dipende da come è descritta Peano e la formula che enuncia coerenza; se trovassimo un'altra descrizione di Peano e della sua coerenza magari riusciremmo a dimostrarla.
+    Ciò che alla fine abbiamo fatto noi è, fissando una particolare codifica, dimostrare una certa formula, all'interno della quale leggo che Peano non può dimostrare la propria coerenza.\footnote{In realtà, se la codifica è \textit{efficace}, nel senso che le principali operazioni sintattiche
+    che abbiamo usato, e.g. $\textsf{Dim}_T$, $\textsf{Sub}$, etc..., sono tutte funzioni PR, allora è possibile dimostrare che l'incompletezza continua a valere anche con queste altre codifiche compatibili, a meno di ri-enumerare delle formule.
+    Nell'esempio sopra menzionato Gödel non vale invece perché la teoria così presentata non è ricorsivamente assiomatizzata, e quindi non vale l'incompletezza.}
+\end{remark}
+
+\begin{remark}[$\mathsf{ZF}$ e incompletezza]
+    $\mathsf{ZF}$, che è più potente di $\mathsf{PA}$, non è in grado di dimostrare la propria coerenza, ma è in grado di dimostrare vari teoremi che caratterizzano la coerenza.
+    Ad esempio, se ci fosse un cardinale inaccessibile $\kappa$, allora $\mathsf{ZF}$ sarebbe coerente (per via di $V_{\kappa}$) - e quindi $\mathsf{ZF}$ non dimostra che c'è un cardinale inaccessibile.
+    Questa implicazione è proprio possibile grazie al fatto che $\mathsf{ZF}$ è abbastanza potente da poter connettere la formula che esprime la coerenza di $\mathsf{ZF}$ con l'esistenza di un cardinale inaccessibile;
+    non è detto che la teoria stessa sia in grado, in generale, di rendersi conto dei diversi modi di dire ``$T$ è coerente".
 \end{remark}
