@@ -1977,20 +1977,19 @@ Possiamo quindi dimostrare il lemma di diagonalizzazione di Gödel.
 Il nostro scopo in questa sezione sarà dimostrare che esiste una $L_{\text{arit}}$-formula che dice di sé stessa che è dimostrabile, per poi combinarla col lemma di diagonalizzazione di Gödel
 ed ottenere il primo teorema di incompletezza di Gödel. Richiamiamo una definizione già data, ma senza formalizzare bene le enumerazioni di Gödel.
 
-\begin{definition}[Teoria ricorsivamente assiomatizzabile]
-    Una teoria $T$ è ricorsivamente assiomatizzabile se:
-    \[ T = \{\sigma : P(\ulcorner\sigma\urcorner) = 0 \} \]
-    con $P$ una funzione ricorsiva totale.
+\begin{definition}[Teoria ricorsivamente (o semidecidibilmente) assiomatizzabile]
+    Una teoria $T$ è \vocab{ricorsivamente assiomatizzabile}, o \vocab{semidecidibilmente assiomatizzabile}, se:
+    \[ T = \{\sigma : P(\ulcorner\sigma\urcorner) \ne \bot \} \]
+    con $P$ una funzione ricorsiva parziale, ovvero esiste un algoritmo che stabilisce se una formula è un assioma di $T$ o no.
 \end{definition}
 
-In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assiomi sia decidibile.
+In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assiomi sia addirittura decidibile.
 
-\begin{exercise}[Ogni teoria semidecidibile è equivalente ad una decidibile ]
-    Sia $T := \{\varphi : P(\ulcorner\varphi\urcorner) = 0 \}$ una teoria, con $P$ una funzione ricorsiva parziale,
-    dimostrare che esiste una teoria $T'$ equivalente a $T$ e ricorsivamente assiomatizzabile.
+\begin{exercise}[Teorema di Craig]
+    Sia $T := \{\varphi : P(\ulcorner\varphi\urcorner) = 0 \}$ ricorsivamente assiomatizzabile, allora esiste una teoria \vocab{decidibilmente assiomatizzabile}, i.e. l'insieme dei codici degli assiomi è decidibile, tale che $T$ e $T'$ sono equivalenti.
 \end{exercise}
 
-\begin{proof}
+\begin{soln}
     Per ipotesi, $T$ è descrivibile come insieme semidecidibile, quindi esiste una funzione ricorsiva totale $f$ tale che $T = \{ \varphi : \exists n \, f(n) = \ulcorner\varphi\urcorner \}$,
     quindi possiamo supporre $T = \{\varphi_1, \varphi_2, \ldots\}$, WLOG $f(1) = \ulcorner\varphi_1\urcorner$, $f(2) = \ulcorner\varphi_2\urcorner$ e così via.\\
     Ora, definiamo la nuova lista di assiomi di $T'$ come segue:
@@ -2007,8 +2006,8 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
         0 & \text{se $\exists n \le z\; h(n) = z$} \\
         1 & \text{altrimenti}
     \end{cases} \]
-    infatti $g(z)=0$ se e solo se $z$ è il codice di un assioma di $T'$, per cui $T'$ è ricorsivamente assiomatizzabile.
-\end{proof}
+    infatti $g(z)=0$ se e solo se $z$ è codice di un assioma di $T'$ - la ricerca è limitata ai primi $z$ numeri perché altrimenti potrebbe non fermarsi e venire $\bot$\footnote{Andrebbe controllato inoltre che il predicato per la definizione per casi sia ricorsivo totale.}; inoltre $g$ è ricorsiva totale, in quanto è definita per casi su una funzione ricorsiva totale.
+\end{soln}
 
 \begin{lemma}[Predicato di dimostrazione]
     Sia $T$ una teoria aritmetica ricorsivamente assiomatizzabile, allora esiste un predicato PR $\mathsf{Dim}_T(x,y)$ tale che:
@@ -2018,7 +2017,7 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
 
 \begin{proof}
     In primis diciamo come è codificata una dimostrazione, sappiamo che $T \vdash \varphi$ se esiste una sequenza finita di formule - anche se tecnicamente per noi è sempre una sequenza finita di sequenti\footnote{Per essere precisi la codifica vera nel nostro sistema $\textsf{ND}$ è la codifica di un sequente $\sigma_i = \ulcorner \varphi_1, \varphi_2, \ldots, \varphi_n \vdash \psi \urcorner$,
-    che possiamo codificare come $\langle \langle \varphi_1\urcorner, \varphi_2\urcorner, \ldots, \varphi_n\urcorner\rangle, \ulcorner\psi\urcorner\rangle$, codificato un sequente in questo modo, codifichiamo la dimostrazione come lista di sequenti $\ulcorner \sigma_1, \sigma_2, \ldots, \sigma_m\urcorner$ come $\langle \ulcorner\sigma_1\urcorner, \ulcorner\sigma_2\urcorner, \ldots, \ulcorner\sigma_m\urcorner\rangle$ così abbiamo codificato esattamente la nostra definizione di dimostrazione.} -
+    che possiamo codificare come $\langle \langle \ulcorner \varphi_1\urcorner, \ulcorner\varphi_2\urcorner, \ldots, \ulcorner\varphi_n\urcorner\rangle, \ulcorner\psi\urcorner\rangle$, codificato un sequente in questo modo, codifichiamo la dimostrazione come lista di sequenti $\ulcorner \sigma_1, \sigma_2, \ldots, \sigma_m\urcorner$ come $\langle \ulcorner\sigma_1\urcorner, \ulcorner\sigma_2\urcorner, \ldots, \ulcorner\sigma_m\urcorner\rangle$ così abbiamo codificato esattamente la nostra definizione di dimostrazione.} -
     con l'ultima che è $\varphi$ e quelle precedenti che sono o assiomi o si ottengono da quelle prima usando le regole di inferenza del sistema di deduzione naturale $\textsf{ND}$, quindi una dimostrazione $\delta$ la si può codificare come la lista delle formule che la compongono:
     \[ \ulcorner \delta\urcorner := \langle \ulcorner\delta_1\urcorner, \ulcorner\delta_2\urcorner, \ldots, \ulcorner\delta_n\urcorner \rangle \]
     dove $\delta_n$ è la formula finale, ovvero $\varphi$.\\
@@ -2077,26 +2076,39 @@ Ora questo teorema è un po' più forte del necessario e si possono indebolire l
 
 Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto uso del fatto che $\NN$ fosse modello di $T$, oltre alla coerenza di $T$, quindi quella dimostrazione non può essere riciclata.
 
-\begin{proof}[Dimostrazione. (IDEA)]
+\begin{proof}[Dimostrazione \textup{(IDEA)}]
     L'idea della dimostrazione, che non vediamo, è quella di usare una formula che dice ``se ci fosse una mia dimostrazione, allora ci sarebbe anche una dimostrazione di una mia negazione più corta'', ovvero:
     \[ \mathsf{Q} \vdash\varphi \leftrightarrow \forall d \, \textsf{Dim}_T(d,\ulcorner\varphi\urcorner) \to \exists d' \leq d \, \textsf{Dim}_T(d',\ulcorner\neg\varphi\urcorner) \]
     e questo è un modo per ottenere comunque una formula che dice di sé stessa che è non dimostrabile - basta pensare alla negazione.
 \end{proof}
 
+\begin{definition}[Teoria decidibile]
+    Una teoria $T$ è \vocab{decidibile} se l'insieme dei codici delle formule dimostrate da $T$ è decidibile, ovvero esiste una funzione ricorsiva totale $P$ tale che:
+    \[ \{\ulcorner\sigma\urcorner : T \vdash \sigma\} = \{ i \in \NN : P(i) = 0 \} \]
+    analogamente si può definire una teoria \vocab{semidecidibile}.
+\end{definition}
+
 \begin{proposition}[Completamento decidibile]
-    Sia $T$ una teoria coerente e decidibile, i.e. $T = \{\sigma | P(\ulcorner\sigma\urcorner) = 0\}$ con $P$ una funzione ricorsiva totale o $\{\ulcorner \varphi \urcorner | T \vdash \varphi\}$ è ricorsivamente enumerabile,
-    allora esiste un'estensione coerente $T'$ di $T$ che è completa e decidibile.
+    Sia $T$ una teoria coerente e decidibile, allora esiste un'estensione coerente $T'$ di $T$ che è completa e decidibile.
 \end{proposition}
 
 \begin{proof}
-    Fissiamo un'enumerazione efficace delle frasi chiuse $(\varphi_i)_{i\in\NN}$ e definiamo per ricorsione:
+    Per ipotesi possiamo fissare un'enumerazione delle formule chiuse $\{\varphi_i\}_{i\in\NN}$ e definiamo per ricorsione:
     \[ T_0:=T \]
     \[ T_{i+1}:=\begin{cases}
-        T_i\cup\{\varphi_i\} & \text{se $i = \ulcorner \varphi_i \urcorner$ e $T_i\nvdash\neg\varphi_i$}\\
+        T_i\cup\{\varphi_i\} & \text{se $T_i\nvdash\neg\varphi_i$}\\
         T_i & \text{altrimenti}
     \end{cases} \]
-    cioè in ogni step se una formula è già conseguenza della teoria aggiungiamo la sua negazione, altrimenti non faccio nulla, e alla fine poniamo $T' := \bigcup_{i\in\NN} T_i$.
-    Per essere precisi nella costruzione 
+    cioè in ogni step se la $i$-esima teoria non dimostra la negazione dell'$i$-esima formula, allora la aggiungo, altrimenti lascio tutto com'è.\\
+    Ora, ponendo $T' := \bigcup_{i\in\NN} T_i$, si verifica che $T'$ è un'estensione di $T$ coerente, infatti se $T'$ fosse incoerente, allora $T' \vdash \bot$,
+    quindi per compattezza esisterebbe un sottoinsieme finito $T'' \subseteq T'$ tale che $T'' \vdash \bot$, per cui esiste un $i_0$ tale che $T'' \subseteq T_{i_0}$, ma allora $T_{i_0} \vdash \bot$,
+    che è assurdo perché si verifica per induzione che ogni $T_i$ è coerente.\\
+    $T'$ è decidibile, presa $\{\sigma_j\}_{j \in \NN}$ un'enumerazione di tutte le $L_{\text{arit}}$-formule, e fissato un algoritmo che decide se una formula è dimostrata da $T$ o no,
+    basta testare, per $\sigma = \sigma_k$, per qualche $k > 0$, se $T_k \vdash \neg\sigma$ o no, e questo posso farlo perché $T_k = T \cup \{\varphi_0, \ldots, \varphi_{k-1}\}$ e:
+    \[ T_k \vdash \neg\sigma \iff T \vdash (\varphi_0 \land \ldots \land \varphi_{k-1}) \to \neg\sigma\]
+    e questo è decidibile per ipotesi, se il risultato dell'algoritmo è falso, allora $T_{k+1} = T_k \cup \{\sigma\}$ e $T' \vdash \sigma$, altrimenti $T_{k+1} = T_k$ e $T' \vdash \neg\sigma$. Nel caso $k = 0$ la tesi è banale perché $T_0 = T$ è decidibile per ipotesi.\\
+    Infine, $T'$ è completa, fissata una enumerazione $\{\varphi_i\}_{i\in\NN}$ di tutte le $L_{\text{arit}}$-formule, allora, per ogni $\varphi_i$, si ha che 
+    o $T_i \nvdash \neg\varphi_i$, e allora $T_{i+1} \vdash \varphi_i$, oppure $T_i \vdash \neg\varphi_i$, nel primo caso ottengo $T' \vdash \varphi_i$, nel secondo caso $T' \vdash \neg\varphi_i$, quindi $T'$ è completa.
 \end{proof}
 
 \begin{corollary}[$\mathsf Q$ e $\mathsf{PA}$ non sono decidibili]
@@ -2104,8 +2116,8 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \end{corollary}
 
 \begin{proof}
-    Se $\mathsf Q$ fosse decidibile, allora per la proposizione precedente esisterebbe un'estensione coerente e completa di $\mathsf Q$, che è impossibile per il teorema di Rosser.
-    Idem per $\mathsf{PA}$, che estende $\mathsf Q$.
+    Se $\mathsf Q$ fosse decidibile, allora per la proposizione precedente esisterebbe un'estensione coerente, completa e decidibile (in particolare ricorsivamente enumerabile e quindi ricorsivamente assiomatizzabile) di $\mathsf Q$,
+    che è impossibile per il teorema di Rosser. Idem per $\mathsf{PA}$, che estende $\mathsf Q$.
 \end{proof}
 
 \begin{corollary}[Indecidibilità della teoria vuota]
@@ -2115,8 +2127,8 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \begin{proof}
     Supponiamo per assurdo che $T = \varnothing$ sia decidibile, poiché $\mathsf{Q}$ è finitamente assiomatizzabile vale che:
     \[ \mathsf{Q} \vdash \varphi \iff T = \varnothing \vdash \mathsf{Q}1 \land \ldots \land \mathsf{Q}7 \to \varphi \]
-    ovvero una formula è conseguenza di $\mathsf{Q}$ se e solo se l'implicazione con premessi gli assiomi di $\mathsf{Q}$ è conseguenza della teoria vuota,
-    ma allora la decidibilità di $T$ implica la decidibilità di $\mathsf{Q}$ in quanto basta testare se $T$ dimostra $\mathsf{Q}1 \land \ldots \land \mathsf{Q}7 \to \varphi$ per ogni formula $\varphi$, controesempio al teorema di Rosser.
+    ovvero una formula è conseguenza di $\mathsf{Q}$ se e solo se l'implicazione con premessi gli assiomi di $\mathsf{Q}$ è conseguenza della teoria vuota;
+    ma allora la decidibilità di $T$ implica la decidibilità di $\mathsf{Q}$ (e di ogni altra $L_{\text{arit}}$-teoria finitamente assiomatizzabile), assurdo per il corollario precedente.
 \end{proof}
 
 \begin{corollary}[Insieme delle verità aritmetiche]
@@ -2126,108 +2138,70 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \end{corollary}
 
 \begin{proof}
-    È la teoria completa e coerente $\mathrm{Th}(\NN)$, che estende $\mathsf Q$. Se fosse ricorsivamente enumerabile, sarebbe un controesempio al teorema di Rosser.
+    È la teoria completa e coerente $\mathrm{Th}(\NN)$, che estende $\mathsf Q$, se fosse ricorsivamente enumerabile, sarebbe un controesempio al teorema di Rosser.
 \end{proof}
 
 \subsection{Secondo teorema di incompletezza}
+Il secondo teorema di incompletezza di Gödel è una conseguenza del primo,
+e dice che dentro la teoria $\mathsf{PA}$ non si può dimostrare la coerenza di $\mathsf{PA}$, e più in generale, se $T$ è una teoria aritmetica che estende $\mathsf{Q}$, allora $T$ non dimostra la propria coerenza.
+D'altronde una teoria incoerente dimostra tutto, quindi anche la propria coerenza, per cui il non dimostrare la propria coerenza è un buon segno.
 
-\begin{definition}[Provabilità interna in $\mathsf{PA}$]
-    In questa sottosezione fissiamo la formula binaria $\mathsf{Dim}(d,n)$ per $T=\mathsf{PA}$,
-    nel senso che $\mathsf{Dim}(d,n)$ esprime ``$d$ è una dimostrazione in $\mathsf{PA}$ della formula con codice $n$''.
-    Consideriamo la formula
-    \[ \neg\exists d\,\mathsf{Dim}(d,\ulcorner\bot\urcorner), \]
-    che esprime la consistenza interna di $\mathsf{PA}$.
-\end{definition}
+\begin{notation}[Formula di dimostrabilità]
+    Introduciamo l'abbreviazione $\square$ per indicare la formula che esprime la dimostrabilità di una proposizione nella teoria di Peano, $\mathsf{PA}$, ovvero:
+    \[ \square \varphi := \exists d\, \mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\varphi\urcorner) \]
+\end{notation}
 
-\begin{lemma}[Condizioni di derivabilità]
-    Per ogni frase $\varphi,\psi$ valgono:
-    \begin{itemize}
-        \item se $\mathsf{PA}\vdash\varphi$, allora $\mathsf{PA}\vdash\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)$;
-        \item \[ \mathsf{PA}\vdash \big(\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\to\psi\urcorner)\big)\to\Big(\big(\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)\big)\to\big(\exists d\,\mathsf{Dim}(d,\ulcorner\psi\urcorner)\big)\Big); \]
-        \item \[ \mathsf{PA}\vdash \big(\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)\big)\to\exists e\,\mathsf{Dim}\big(e,\ulcorner\exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner)\urcorner\big). \]
-    \end{itemize}
-\end{lemma}
+\begin{remark}
+    Con questa notazione, la formula $\gamma$ costruita nel primo teorema di incompletezza di Gödel è tale che:
+    \[ \mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma \]
+     ovvero $\gamma$ dice di sé stessa che non è dimostrabile in $\mathsf{PA}$.
+\end{remark}
+
+Il secondo teorema di incompletezza di Gödel si esprime nel seguente modo con questa notazione.
 
 \begin{theorem}[Secondo teorema di incompletezza di Gödel]
-    Se $\mathsf{PA}$ è coerente, allora
-    \[ \mathsf{PA}\nvdash \neg\exists d\,\mathsf{Dim}(d,\ulcorner\bot\urcorner). \]
+    $\mathsf{PA} \nvdash \neg\square\bot$, ovvero $\mathsf{PA}$ non dimostra la propria incoerenza.
 \end{theorem}
 
+Per dimostrare il teorema ci serve un lemma, che non dimostreremo.
+
+\begin{lemma}[Proprietà della formula di dimostrabilità in $\mathsf{PA}$]
+    Valgono le seguenti proprietà rispetto alla formula di dimostrabilità in $\mathsf{PA}$:
+    \begin{enumerate}
+        \item Se $\mathsf{PA} \vdash \varphi$, allora $\mathsf{PA} \vdash \square\varphi$, cioè dimostrare implica dimostrare di avere una dimostrazione;
+        \item $\mathsf{PA} \vdash \square \varphi \to \square\square\varphi$, cioè se dimostro di avere una dimostrazione, allora dimostro di avere una dimostrazione di avere una dimostrazione;
+        \item $\mathsf{PA} \vdash (\square\varphi \land \square(\varphi \to \psi)) \to \square\psi$, ovvero l'aritmetica di Peano capisce il modus ponens.
+    \end{enumerate}
+\end{lemma}
+
+Usando il lemma possiamo concludere dimostrando il secondo teorema di incompletezza di Gödel.
+
 \begin{proof}
-    In questa dimostrazione poniamo
-    \[ \square\varphi := \exists d\,\mathsf{Dim}(d,\ulcorner\varphi\urcorner). \]
-    Sia $\gamma$ la frase di Gödel per $\mathsf{PA}$:
-    \[ \mathsf{PA}\vdash \gamma\leftrightarrow\neg\square\gamma. \]
-
-    Riscriviamo le condizioni di derivabilità nella forma usata nel diagramma:
+    Dal primo teorema di incompletezza di Gödel, esiste una formula $\gamma$ che è indecidibile in $\mathsf{PA}$, il nostro obiettivo è dimostrare che tale formula è equivalente a $\neg\square\bot$:
+    \[ \mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\bot \]
+    ed essendo, in particolare, che $\mathsf{PA} \nvdash \gamma$, allora $\mathsf{PA} \nvdash \neg\square\bot$. La formula $\gamma$ è costruita in modo che $\mathsf{PA} \vdash \gamma \leftrightarrow \neg \square \gamma$,
+    usiamo questo fatto per dimostrare le equivalenze.
     \begin{itemize}
-        \item se $\mathsf{PA}\vdash\varphi$, allora $\mathsf{PA}\vdash\square\varphi$;
-        \item $\mathsf{PA}\vdash\square\varphi\to\square\square\varphi$;
-        \item $\mathsf{PA}\vdash\big(\square\varphi\land\square(\varphi\to\psi)\big)\to\square\psi$.
+        \item \textcolor{purple}{$\mathsf{PA} \vdash \gamma \to \neg\square\bot$}, poiché $\mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma$, allora è equivalente dimostrare $\mathsf{PA} \vdash \neg\square\gamma \to \neg\square\bot$.
+        Procediamo dimostrando la contronominale, che è equivalente, ovvero $\mathsf{PA} \vdash \square\bot \to \square\gamma$, e questo segue per El$_\to$:
+        \[ \text{El}_\to\frac{\displaystyle \mathsf{PA} \vdash \textcolor{MidnightBlue}{\square(\bot \to \gamma)} \quad \mathsf{PA} \vdash \textcolor{MidnightBlue}{(\square \bot \land \square(\bot \to \gamma)) \to \square\gamma}}{\mathsf{PA} \vdash \square\bot \to \square\gamma} \]
+        dove $\mathsf{PA} \vdash \square(\bot \to \gamma)$ perché $\mathsf{PA} \vdash \bot \to \gamma$ (è El$_\bot$) unito con la (1); mentre $\mathsf{PA} \vdash (\square \bot \land \square(\bot \to \gamma)) \to \square\gamma$ è la (2) del lemma.
+        \item \textcolor{purple}{$\mathsf{PA} \vdash \neg\square\bot \to \gamma$}, come prima usiamo $\neg\square \gamma$ al posto di $\gamma$, e dimostriamo $\mathsf{PA} \vdash \neg\square\bot \to \neg\square\gamma$ usando la contronominale. [COMPLETARE]
     \end{itemize}
-
-    Vogliamo dimostrare
-    \[ \mathsf{PA}\vdash \gamma\leftrightarrow\neg\square\bot. \]
-
-    \begin{itemize}
-        \item \textbf{$\mathsf{PA}\vdash \gamma\to\neg\square\bot$.}
-        \[
-        \text{In}_\to\frac
-        {\text{El}_\to\frac
-        {\mathsf{PA}\vdash \big(\square\bot\land\square(\bot\to\gamma)\big)\to\square\gamma\qquad
-        \text{In}_\land\frac{\mathsf{PA}\vdash \square\bot\qquad \mathsf{PA}\vdash \square(\bot\to\gamma)}{\mathsf{PA}\vdash \square\bot\land\square(\bot\to\gamma)}}
-        {\mathsf{PA}\vdash \square\gamma}}
-        {\mathsf{PA}\vdash \square\bot\to\square\gamma}
-        \]
-        \[
-        \text{RaA}\frac{\mathsf{PA}\vdash \square\bot\to\square\gamma}{\mathsf{PA}\vdash \neg\square\gamma\to\neg\square\bot}.
-        \]
-        e, usando il ramo $\mathsf{PA}\vdash\gamma\to\neg\square\gamma$ dell'equivalenza di Gödel,
-        \[ \mathsf{PA}\vdash \gamma\to\neg\square\bot. \]
-
-        \item \textbf{$\mathsf{PA}\vdash \neg\square\bot\to\gamma$.}
-        Dall'equivalenza di Gödel basta mostrare $\mathsf{PA}\vdash\neg\square\bot\to\neg\square\gamma$,
-        perché poi si usa il ramo $\mathsf{PA}\vdash\neg\square\gamma\to\gamma$.
-        Il passaggio principale è:
-        \[
-        \text{In}_\to\frac
-        {\mathsf{PA}\vdash\square\big(\gamma\to(\neg\gamma\to\bot)\big)}
-        {\mathsf{PA}\vdash\square\gamma\to(\square\neg\gamma\to\square\bot)}
-        \]
-        \[
-        \text{El}_\to\frac
-        {(\star)\;\mathsf{PA}\vdash\square\gamma\to\square\neg\gamma\qquad
-        \mathsf{PA}\vdash\square\gamma\to(\square\neg\gamma\to\square\bot)}
-        {\mathsf{PA}\vdash\square\gamma\to\square\bot}
-        \]
-        \[
-        \text{RaA}\frac{\mathsf{PA}\vdash\square\gamma\to\square\bot}{\mathsf{PA}\vdash\neg\square\bot\to\neg\square\gamma}.
-        \]
-        dunque
-        \[ \mathsf{PA}\vdash \neg\square\bot\to\gamma. \]
-    \end{itemize}
-
-    Espandiamo ora il ramo $(\star)$:
-    \[
-    (\star)\quad
-    \text{In}_\to\frac
-    {\text{El}_\to\frac
-    {\mathsf{PA}\vdash\square(\square\gamma\to\neg\gamma)\qquad \mathsf{PA}\vdash\square\gamma}
-    {\mathsf{PA}\vdash\square\neg\gamma}}
-    {\mathsf{PA}\vdash\square\gamma\to\square\neg\gamma}
-    \]
-    dove $\mathsf{PA}\vdash\square(\square\gamma\to\neg\gamma)$ si ottiene dalla prima condizione di derivabilità applicata a
-    $\mathsf{PA}\vdash\square\gamma\to\neg\gamma$, e quest'ultima segue dall'equivalenza di Gödel.
-
-    Quindi
-    \[ \mathsf{PA}\vdash \gamma\leftrightarrow\neg\square\bot. \]
-    Se per assurdo $\mathsf{PA}\vdash\neg\square\bot$, allora $\mathsf{PA}\vdash\gamma$.
-    Per la prima condizione di derivabilità otteniamo $\mathsf{PA}\vdash\square\gamma$,
-    mentre dall'equivalenza di Gödel segue anche $\mathsf{PA}\vdash\gamma\to\neg\square\gamma$ e quindi $\mathsf{PA}\vdash\neg\square\gamma$.
-    Questo contraddice la coerenza di $\mathsf{PA}$.
-    Dunque
-    \[ \mathsf{PA}\nvdash\neg\square\bot, \]
-    cioè
-    \[ \mathsf{PA}\nvdash \neg\exists d\,\mathsf{Dim}(d,\ulcorner\bot\urcorner). \]
 \end{proof}
 
+SISTEMARE
+
+\begin{remark}[Osservazioni filosofiche sul secondo teorema di incompletezza]
+    Alla fine dei conti, la formula che esprime la coerenza di $\mathsf{PA}$, $\neg\square\bot \equiv \exists d\,\neg\mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\bot\urcorner)$, è
+    un numero naturale che noi scegliamo di leggere come la formula che dice ``esiste una dimostrazione di $\bot$ in $\mathsf{PA}$'', nulla esclude a priori che ci sia un'altro numero 
+    che corrisponde, in un'altra codifica, alla formula che dice che $\mathsf{PA}$ dimostra la propria stessa coerenza.\\
+    Non è detto, a priori, che se dovessimo scrivere una formula che dice ``Peano è coerente'' finiremmo sulla formula $\neg\square\bot$.\\
+    Ad esempio, se definissimo Peano in questo modo, enumerando tutti gli assiomi e aggiungendo quelli di base ed uno alla volta quelli dello schema di induzione,
+    fermandomi non appena arrivo al primo assioma che dà incoerenza; questa è una definizione del tutto corretta di Peano, perché sappiamo che di fatto non beccheremo mai 
+    un assioma che dà incoerenza, quindi gli assiomi ci sono tutti, e questa teoria sarà in grado di dimostrare la propria coerenza, perché è definita in modo che sia così - basterebbe usare compattezza.\\
+    Quindi il fatto che Peano non sia in grado di dimostrare la propria coerenza è un fatto che dipende da come è descritta Peano e la sua coerenza; se trovassimo un'altra descrizione di Peano e della sua coerenza magari riusciremmo a dimostrarla.
+    Quello che alla fine abbiamo dimostrato noi è che, con le codifiche che abbiamo scelto, non riusciamo a dimostrare una certa formula, all'interno della quale leggo che Peano non può dimostrare la propria coerenza.\\
+    $\mathsf{ZF}$, che è più potente, non è in grado di dimostrare la propria coerenza, ma è in grado di dimostrare vari teoremi che caratterizzano la coerenza; ad esempio, se ci fosse un cardinale inaccessibile, allora $\mathsf{ZF}$ sarebbe coerente - e quindi $ZF$ non dimostra che c'è un cardinale inaccessibile;
+    questa implicazione è proprio possibile grazie al fatto che ZF è abbastanza potente da poter connettere la formula che esprime la coerenza di ZF con l'esistenza di un cardinale inaccessibile; in generale non è detto che la teoria stessa sia in grado in generale di rendersi conto dei diversi modi di dire "$T$ è coerente".
+\end{remark}
