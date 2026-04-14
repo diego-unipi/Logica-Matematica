@@ -8,16 +8,25 @@
 !.gitignore
 !README.md
 
+# Keep GitHub configuration files.
+!.github/
+!.github/**
+
 # Keep TeX files at repository root.
 !/*.tex
 
 # Keep TeX files inside Sezioni.
 !Sezioni/**/*.tex
 
+# Keep bibliography and style files at repository root.
+!/*.bib
+!/*.sty
+!/*.cls
+
 # Keep the images folder and all its contents.
 !Immagini/
 !Immagini/**
 
-# Keep PDF files.
-!**/*.pdf
+# Keep only source files in Git; the compiled main PDF is generated in CI.
+Appunti di Logica Matematica.pdf
 Typo.pdf

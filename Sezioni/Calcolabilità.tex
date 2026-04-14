@@ -1884,6 +1884,7 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
     anche in questo caso la definizione è fatta per ricorsione sul corso dei valori intersecando cose PR.
 \end{proof}
 
+\pagebreak
 \begin{remark}[$n$ è il codice di un numerale]
     Definiamo la funzione $\textsf{Num}(n) : n \mapsto \ulcorner\ol n\urcorner$, ovvero la funzione che associa ad ogni numero naturale il numerale corrispondente,
     tale funzione è PR.
@@ -2149,6 +2150,7 @@ D'altronde una teoria incoerente dimostra tutto, quindi anche la propria coerenz
 \begin{notation}[Formula di dimostrabilità]
     Introduciamo l'abbreviazione $\square$ per indicare la formula che esprime la dimostrabilità di una proposizione nella teoria di Peano, $\mathsf{PA}$, ovvero:
     \[ \square \varphi := \exists d\, \mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\varphi\urcorner) \]
+    tale abbreviazione è da intendersi per formule chiuse, e per la chiusura universale di formule aperte.
 \end{notation}
 
 \begin{remark}
@@ -2160,7 +2162,7 @@ D'altronde una teoria incoerente dimostra tutto, quindi anche la propria coerenz
 Il secondo teorema di incompletezza di Gödel si esprime nel seguente modo con questa notazione.
 
 \begin{theorem}[Secondo teorema di incompletezza di Gödel]
-    $\mathsf{PA} \nvdash \neg\square\bot$, ovvero $\mathsf{PA}$ non dimostra la propria incoerenza.
+    $\mathsf{PA} \nvdash \neg\square\bot$, ovvero $\mathsf{PA}$ non dimostra la propria non incoerenza.
 \end{theorem}
 
 Per dimostrare il teorema ci serve un lemma, che non dimostreremo.

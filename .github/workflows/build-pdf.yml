@@ -1,0 +1,60 @@
+name: Build LaTeX PDF
+
+on:
+  push:
+    paths:
+      - '**/*.tex'
+      - '**/*.sty'
+      - '**/*.cls'
+      - '**/*.bib'
+      - 'Immagini/**'
+      - '.github/workflows/build-pdf.yml'
+  pull_request:
+    paths:
+      - '**/*.tex'
+      - '**/*.sty'
+      - '**/*.cls'
+      - '**/*.bib'
+      - 'Immagini/**'
+      - '.github/workflows/build-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile PDF
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: Appunti di Logica Matematica.tex
+          args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Appunti-di-Logica-Matematica-pdf
+          path: Appunti di Logica Matematica.pdf
+          if-no-files-found: error
+
+      - name: Prepare release asset
+        if: github.event_name != 'pull_request'
+        run: cp "Appunti di Logica Matematica.pdf" "Appunti-di-Logica-Matematica.pdf"
+
+      - name: Publish latest PDF release
+        if: github.event_name != 'pull_request'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: latest-notes
+          name: Ultima versione delle note
+          body: Release aggiornata automaticamente da GitHub Actions.
+          prerelease: true
+          allowUpdates: true
+          replacesArtifacts: true
+          artifacts: Appunti-di-Logica-Matematica.pdf
+          token: ${{ secrets.GITHUB_TOKEN }}

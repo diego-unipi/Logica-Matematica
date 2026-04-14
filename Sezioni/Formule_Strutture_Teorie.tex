@@ -5,19 +5,17 @@ Da un punto di vista tecnico, se vogliamo formalizzare il nostro discorso,
 per esempio, nella teoria degli insiemi, potremmo dire che l'alfabeto può essere un insieme qualunque.
 Se, per esempio, vogliamo usare come alfabeto $A = \{a,b,c,\ldots,z\}$, dove $a,b,c$, etc. possono essere qualunque, purché distinti fra loro,
 allora le stringhe sono sequenze \purple{finite} come, per esempio:
-\[ () \qquad (a,x,a,x,a,x,a,x,a,x) \qquad (m,l,\ddot{o})
-\]
+\[ () \qquad (a,x,a,x,a,x,a,x,a,x) \qquad (m,l,\ddot{o}) \]
 che conviene scrivere più compattamente come:
-\[ \varepsilon\footnote{È la \vocab{stringa vuota}.} \qquad axaxaxaxax \qquad ml\ddot{o}
-\]
+\[ \varepsilon\footnote{È la \vocab{stringa vuota}.} \qquad axaxaxaxax \qquad ml\ddot{o} \]
 L'ambiente in cui formalizziamo le nostre definizioni, in questo caso la teoria degli insiemi, si dice \vocab{metateoria}.
 Non vogliamo forzare una particolare scelta per la metateoria. Sarà elementare formalizzare il materiale di questo corso, per chi,
 per esempio, ha seguito il corso di \href{https://ciovil.li/eti22/}{\purple{Elementi di Teoria degli Insiemi}}, prendendo come 
 metateoria la teoria degli insiemi di Zermelo-Fraenkel ($\mathsf{ZFC}$). La nostra esposizione sarà basata su $\mathsf{ZFC}$, mantenendo, però,
 un tono informale, con due promesse: di non fare leva sui dettagli incidentali della formalizzazione di $\mathsf{ZFC}$, e di evidenziare i casi in cui
-si sfruttano principi insiemistici non costitutivi - in pratica, forme dell'assioma di scelta. \\
+si sfruttano principi insiemistici non costruttivi - in pratica, forme dell'assioma di scelta. \\
 In conclusione, parleremo di stringhe che sono sequenze finite di elementi dell'alfabeto, ma mantenendo l'illusione che siano semplicemente tracce di inchiostro sulla carta,
-che è, poi, l'intuizione che intendiamo formalizzare. Illusxione doppiamente, perché, nella fattispecie, non c'è inchiostro, ma configurazioni di elettricità statica.
+che è, poi, l'intuizione che intendiamo formalizzare. Illusione doppiamente, perché, nella fattispecie, non c'è inchiostro, ma configurazioni di elettricità statica.
 
 \subsection{Formule}
 Informalmente, vorremmo generalizzare il meccanismo per mezzo del quale si dice che un \textbf{gruppo} è un insieme dotato di un elemento invertibile \textbf{\textit{e}}, un'operazione $\ldots \cdot \ldots$, etc.
@@ -84,13 +82,13 @@ Lo studio, in generale, delle grammatiche non fa parte degli obiettivi di questo
 \begin{example}
     [Linguaggio degli anelli ordinati]
     Il linguaggio degli anelli ordinati è:
-    \[ L_{\text{or}} = (\{<\},\{0,1,+,\cdot\},\ar_{or})
+    \[ L_{\text{\text{or}}} = (\{<\},\{0,1,+,\cdot\},\ar_{\text{or}})
     \]
     dove:
     \begin{align*}
-        &\ar_{or}(<) = 2 &&\text{\textcolor{orange}{$<$} è un \underline{simbolo di relazione binaria}} \\
-        &\ar_{or}(+) = \ar_{or}(\cdot) = 2 &&\text{\textcolor{orange}{+} e \textcolor{orange}{$\cdot$} sono \underline{simboli di funzione binaria}} \\
-        &\ar_{or}(0) = \ar_{or}(1) = 0 &&\text{\textcolor{orange}{0} e \textcolor{orange}{1} sono \underline{simboli di costante}}
+        &\ar_{\text{or}}(<) = 2 &&\text{\textcolor{orange}{$<$} è un \underline{simbolo di relazione binaria}} \\
+        &\ar_{\text{or}}(+) = \ar_{\text{or}}(\cdot) = 2 &&\text{\textcolor{orange}{+} e \textcolor{orange}{$\cdot$} sono \underline{simboli di funzione binaria}} \\
+        &\ar_{\text{or}}(0) = \ar_{\text{or}}(1) = 0 &&\text{\textcolor{orange}{0} e \textcolor{orange}{1} sono \underline{simboli di costante}}
     \end{align*}
     Si osservi che i simboli di costante li vediamo come funzioni di arietà 0.
 \end{example}
@@ -131,7 +129,7 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
 \end{remark}
 
 \begin{example}[$L$-termini]
-    Ecco alcuni esempi di $L_{\text{or}}$ termini:
+    Ecco alcuni esempi di $L_{\text{\text{or}}}$ termini:
     \[ \cdot(+(x_0,1()),x_1) \qquad +(+(1(),1()),1())
     \]
     Ovvero:
@@ -424,7 +422,7 @@ oppure esiste un $b \in D$ tale che $b \notin p_M$, ma scegliendo $a$ come quel 
                 &\iff \forall a \in D \quad M \models \{v_2[a/x_k]\} \psi &&\text{(hp induttiva)} \\
                 &\iff M \models \{v_2\} \forall x_k \; \psi
             \end{align*}
-            Sia infine \purple{$\varphi = \exists x_k \; \psi$}, ho che $\vl(\varphi) = \vl(\psi) \setminus \{x_k\}$, segue che $v_1|_{\vl(\psi)\setminus\{x_k\}} = v_2|_{\vl(\psi)\setminus\{x_k\}}$ e quindi $\forall a \in D \quad v_1[a/x_k]|_{\vl(\psi)} = v_2[a/x_k]|_{\vl(\psi)}$; come prima, usando la semantica di Tarski si ottiene:
+            Sia infine \purple{$\varphi = \exists x_k \; \psi$}, ho che $\vl(\varphi) = \vl(\psi) \setminus \{x_k\}$, segue che $v_1|_{\vl(\psi)\setminus\{x_k\}} \equiv v_2|_{\vl(\psi)\setminus\{x_k\}}$ e quindi $\forall a \in D \quad v_1[a/x_k]|_{\vl(\psi)} \equiv v_2[a/x_k]|_{\vl(\psi)}$; come prima, usando la semantica di Tarski si ottiene:
             \begin{align*}
                 M \models \{v_1\} \exists x_k \; \psi
                 &\iff \exists a \in D \quad M \models \{v_1[a/x_k]\} \psi \\
@@ -883,7 +881,7 @@ Per dimostrarlo, definiamo prima formalmente la nozione di morfismo di strutture
     
     Abbiamo allora un assurdo, infatti se $M' \models \Phi$, allora esistono $c_1,\ldots,c_n$ distinti in $D'$ tali che,
     definendo la valutazione $\widetilde{w}$ data da $\widetilde{w}(x_j) = c_j$, vale:
-    $M' \models \{\widetilde{w}\}\alpha_g(x_{i_1},\ldots,x_{i_g})$ %(dove la scrittura a destra è un'abbreviazione per dire che stiamo consideranddo la valutazione delle variabili che sostituisce $x_{i_j}$ con $c_{i_j}$) 
+    $M' \models \{\widetilde{w}\}\alpha_g(x_{i_1},\ldots,x_{i_g})$ %(dove la scrittura a destra è un'abbreviazione per dire che stiamo considerando la valutazione delle variabili che sostituisce $x_{i_j}$ con $c_{i_j}$) 
     per ogni bigezione $g$. Allora posso definire:
     \[ \widetilde{g} : D \to D' : a_i \mapsto c_i \]
     che è una bigezione perché sono elementi distinti (quindi la mappa è iniettiva e il codominio finito). Ricapitolando, accade che: 
@@ -892,7 +890,7 @@ Per dimostrarlo, definiamo prima formalmente la nozione di morfismo di strutture
         \item per definizione di $\alpha_{\widetilde{g}}$ vale $M' \models\{\widetilde{g} \circ v\} \neg \alpha_{\widetilde{g}}(x_{i_1},\ldots,x_{i_{\widetilde{g}}})$;
         \item per definizione di $\widetilde{g}$ vale $\widetilde{w}(x_j) = c_j = \widetilde{g}(a_j)$, ovvero $\widetilde{w} = \widetilde{g} \circ v$.
     \end{itemize}
-    Mettendo insieme queste osservarzioni, si ha chiaramente un assurdo. 
+    Mettendo insieme queste osservazioni, si ha chiaramente un assurdo. 
     %Ma ciò è in contraddizione con il fatto che, per definizione di  dovrei anche avere $M' \models\{\widetilde{w}\} \neg \alpha_g(x_{i_1},\ldots,x_{i_g})$
     %poiché i $c_i$ che andrei a sostituire sono stati scelti apposta per soddisfare anche $\alpha_{\widetilde{g}}$, ma per definizione di $\alpha_{\widetilde{g}}$ dovrei anche avere $M' \models\{w^*\} \neg \alpha_g(x_{i_1},\ldots,x_{i_g})$,
     %da cui l'assurdo.
