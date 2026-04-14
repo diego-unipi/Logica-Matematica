@@ -29,22 +29,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Prepare CI root file
+        run: cp "Appunti di Logica Matematica.tex" "Appunti-di-Logica-Matematica.tex"
+
       - name: Compile PDF
         uses: xu-cheng/latex-action@v4
         with:
-          root_file: Appunti di Logica Matematica.tex
+          root_file: Appunti-di-Logica-Matematica.tex
           args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: Appunti-di-Logica-Matematica-pdf
-          path: Appunti di Logica Matematica.pdf
+          path: Appunti-di-Logica-Matematica.pdf
           if-no-files-found: error
-
-      - name: Prepare release asset
-        if: github.event_name != 'pull_request'
-        run: cp "Appunti di Logica Matematica.pdf" "Appunti-di-Logica-Matematica.pdf"
 
       - name: Publish latest PDF release
         if: github.event_name != 'pull_request'
