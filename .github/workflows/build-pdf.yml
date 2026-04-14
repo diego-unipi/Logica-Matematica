@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Prepare CI root file
         run: cp "Appunti di Logica Matematica.tex" "Appunti-di-Logica-Matematica.tex"
@@ -39,7 +39,7 @@ jobs:
           args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Appunti-di-Logica-Matematica-pdf
           path: Appunti-di-Logica-Matematica.pdf
