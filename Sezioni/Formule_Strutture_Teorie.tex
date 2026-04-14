@@ -1,4 +1,4 @@
-\section{Formule, Strutture e Teorie}
+﻿\section{Formule, Strutture e Teorie}
 La logica, lo dice il nome si occupa di linguaggi. Un \vocab{linguaggio} è un insieme di \vocab{stringhe},
 ossia sequenze finite di simboli, di un certo \vocab{alfabeto}\footnote{Tecnicamente $L = A^{<\NN}$, con $A$ alfabeto.} (un insieme di simboli).
 Da un punto di vista tecnico, se vogliamo formalizzare il nostro discorso,
@@ -154,8 +154,8 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
         \item $\purple{(} \varphi \,\purple{\land}\, \psi\purple{)}$ con $\varphi,\psi$ $L$-formule,
         \item $\purple{(} \varphi \,\purple{\lor}\, \psi\purple{)}$ con $\varphi,\psi$ $L$-formule,
         \item $\purple{(} \varphi \,\purple{\to}\, \psi\purple{)}$ con $\varphi,\psi$ $L$-formule,
-        \item $\purple{(\forall x_k} \;\varphi\purple{)}$ con $\varphi$ $L$-formula e $x_k \in \var$ simbolo di variabile,
-        \item $\purple{(\exists x_k} \;\varphi\purple{)}$ con $\varphi$ $L$-formula e $x_k \in \var$ simbolo di variabile.
+        \item $\purple{(\forall x_k} \;\varphi\purple{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile,
+        \item $\purple{(\exists x_k} \;\varphi\purple{)}$ con $\varphi$ $L$-formula e $x_k \in \Var$ simbolo di variabile.
     \end{itemize}
 \end{definition}
 
@@ -199,12 +199,12 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
     Definiamo prima le \vocab{variabili libere di un termine}. Dato un $L$-termine $t$ definiamo $\purple{\var(} t \purple{)}$ dicendo che:
     \begin{itemize}
         \item se $t = \purple{x_i} \in \Var$, allora $\var(t) = \{\purple{x_i}\}$,
-        \item se $t = \purple{f(}t_1\purple{,} \ldots\purple{,} t_k\purple{)}$, allora $\var(t) = \bigcup_{i = 1}^k \var(t_k)$.
+        \item se $t = \purple{f(}t_1\purple{,} \ldots\purple{,} t_k\purple{)}$, allora $\var(t) = \bigcup_{i = 1}^k \var(t_i)$.
     \end{itemize}
     Adesso che abbiamo definito ricorsivamente le variabili libere di un $L$-termine $t$, possiamo definire le \vocab{variabili libere di una $L$-formula} $\varphi$, $\purple{\vl(} \varphi \purple{)}$ come segue per le formule atomiche:
     \begin{itemize}
         \item se $\varphi = \purple{\top}$ o $\varphi = \purple{\bot}$, allora $\vl(\varphi) = \varnothing$,
-        \item se $\varphi = \purple{r(} t_1\purple{,} \ldots\purple{,} t_k\purple{)}$, allora $\vl(\varphi) = \bigcup_{i = 1}^k \var(t_k)$,
+        \item se $\varphi = \purple{r(} t_1\purple{,} \ldots\purple{,} t_k\purple{)}$, allora $\vl(\varphi) = \bigcup_{i = 1}^k \var(t_i)$,
         \item se $\varphi = (t_1\, \purple{=}\, t_2)$, allora $\vl(\varphi) = \var(t_1) \cup \var(t_2)$.
     \end{itemize}
     e per le formule composte:
@@ -342,11 +342,11 @@ Così, per esempio, $M \models \{v\} \; \purple{x = y}$ se e solo se l'ambiente 
     Intuitivamente, ci aspettiamo che asserire che $M$ soddisfa quella formula equivalga, nella metateoria, alla proposizione $\exists a \in D(a \in p_M \to \forall b \in D \; b \in p_M)$.
     Vediamo come questo segue formalmente dalla semantica di Tarski.
     \begin{align*}
-        & M \models \{v\} \purple{(\exists x(p(x) \to \forall y \; p(y))} \\
+        & M \models \{v\} \purple{\exists x(p(x) \to \forall y \; p(y))} \\
         & \exists a \in D \; M \models \{v[a/\purple{x}]\} \purple{(p(x) \to \forall y \; p(y))} \\
         & \exists a \in D \; M \models \{v[a/\purple{x}]\} \purple{p(x)} \to M \models \{v[a/\purple{x}]\} \purple{\forall y \; p(y)} \\
-        & \exists a \in D \; \{v[a/\purple{x}]\}_M \purple{p(x)} \to \forall b \in D \; M \models \{v[a/\purple{x},b/\purple{y}]\} \purple{p(y)} \\
-        & \exists a \in D \; \{v[a/\purple{x}]\}_M \purple{p(x)} \to \forall b \in D \; \{v[a/\purple{x},b/\purple{y}]\}_M \purple{p(y)} \\
+        & \exists a \in D \; \{v[a/\purple{x}]\} \purple{p(x)} \to \forall b \in D \; M \models \{v[a/\purple{x},b/\purple{y}]\} \purple{p(y)} \\
+        & \exists a \in D \; \{v[a/\purple{x}]\} \purple{p(x)} \to \forall b \in D \; \{v[a/\purple{x},b/\purple{y}]\}_M \purple{p(y)} \\
         & \exists a \in D \; (a \in p_M \to \forall b \in D \; b \in p_M)
     \end{align*}
 \end{soln}
@@ -378,7 +378,7 @@ oppure esiste un $b \in D$ tale che $b \notin p_M$, ma scegliendo $a$ come quel 
     Procediamo per induzione strutturale. Dimostriamo prima un risultato preliminare, ovvero: se due valutazioni $v_1,v_2$ coincidono sulle variabili libere di un $L$-termine, allora quel termine viene interpretato nello stesso modo su una $L$-struttura $M$ con entrambe le valutazioni, ossia $\{v_1\}_M t = \{v_2\}_M t$.
     \begin{itemize}
         \item [$\boxed{\text{$L$-termini}}$] Sia \purple{$t = x_k$}, allora da $\var(t) = \{x_k\}$ segue che $\{v_1\}_M x_k = v_1(x_k) \overset{\text{hp.}}{=} v_2(x_k) = \{v_2\}_M x_k$. Sia ora \purple{$t = f(t_1,\ldots,t_k)$}, con $f \in F$ simbolo di funzione, $\ar(f) = k$ e $t_i$ $L$-termini;
-        dato che $\var(t) = \bigcup_{i = 1}^k \var(t_i)$ segue dall'ipotesi che $v_1|_{\var(t_i)} = v_2|_{\var(t_i)}$ per ogni $i = 1,\ldots,k$, a questo punto per ipotesi induttiva (la tesi vale sulle sottoformule) $\{v_1\}_M t_i = \{v_2\}_M t_i$, e si conclude usando la definizione di interpretazione dei termini nella semantica di Tarski:
+        dato che $\var(t) = \bigcup_{i = 1}^k \var(t_i)$ segue dall'ipotesi che $v_1|_{\var(t_i)} = v_2|_{\var(t_i)}$ per ogni $i = 1,\ldots,k$, a questo punto per ipotesi induttiva (la tesi vale sui sottotermini) $\{v_1\}_M t_i = \{v_2\}_M t_i$, e si conclude usando la definizione di interpretazione dei termini nella semantica di Tarski:
         \begin{align*}
             \{v_1\}_M f(t_1,\ldots,t_k) &= i(f)(\{v_1\}_M t_1,\ldots,\{v_1\}_M t_k) \\
             &= i(f)(\{v_2\}_M t_1,\ldots,\{v_2\}_M t_k) &&\text{(hp induttiva)}\\
@@ -528,8 +528,8 @@ In questa formula $s(y)$ e $z \cdot z$ NON sono sostituibili per $x$, mentre $t 
     Per la semantica di Tarski, fissata una valutazione $v$, si ha:
     \begin{align*}
         & M \models \{v\} \forall y \;\forall z \; (y \cdot z = x \to \exists x \;\exists t \; (t = x + x + x \land y \cdot s(t) = y \cdot y + t)) \\
-        & \iff \forall a,c \in \NN \; \Bigl( a \cdot c = v(x) \to \exists n,d \in \NN \, M \models \{v[a/y, c/z, n/x, d/t]\} \\
-        & \qquad (t = n + n + n \land y \cdot s(t) = y \cdot y + t) \Bigl) \\
+        & \iff \forall a,c \in \NN \; ( a \cdot c = v(x) \to \exists n,d \in \NN \, M \models \{v[a/y, c/z, n/x, d/t]\} \\
+        & \qquad (t = n + n + n \land y \cdot s(t) = y \cdot y + t) ) \\
         & \iff \forall a,c \in \NN \; \left( a \cdot c = v(x) \to \exists n,d \in \NN \, (d = 3n \land a \cdot (d+1) = a^2 + d) \right)
     \end{align*}
     A questo punto possiamo chiamare $S$ l'insieme dei numeri naturali $k$ tali che $M \models \{v[k/x]\} \, \varphi(x)$, ossia:
@@ -806,7 +806,7 @@ $\textcolor{MidnightBlue}{\varphi} = \textcolor{purple}{\forall x \; \forall y \
 Un esempio di teoria completa si può ottenere considerando tutte le formule vere in una certa struttura.
 
 \begin{definition}[Teoria completa di una struttura]
-    Data una $L$-struttura $M$, la \vocab{teoria completa di $M$}, è l'insieme $\Th(M)$, o $\Th(M;L)$ se è necessario specificare il linguaggio, di tutte le $L$-formule \purple{$\boxed{\text{chiuse}}$} $\varphi$ tali che $M \models \varphi$.
+    Data una $L$-struttura $M$, la \vocab{teoria completa di $M$}, è l'insieme $\Th(M)$, o $\Th(M;L)$ se è necessario specificare il linguaggio, di tutte le $L$-formule \purple{$\boxed{\text{chiuse}}$} $\varphi$ tali che $M \models \varphi$\footnote{Le formule aperte valide per ogni valutazione ci sono comunque, perché c'è la loro chiusura universale.}.
 \end{definition}
 
 \begin{remark}
@@ -834,32 +834,29 @@ Per dimostrarlo, definiamo prima formalmente la nozione di morfismo di strutture
     \end{enumerate}  
 \end{definition}
 
-%\begingroup
-%\mdfsetup{nobreak=true}
+\begingroup
+\mdfsetup{nobreak=true}
 \begin{remark}[$L$-termini e morfismi di strutture]
     Il morfismo riguarda solo la $L$-struttura e non l'ambiente in cui si lavora. %Per induzione strutturale, possiamo tuttavia ricavare come un morfismo di strutture $F$ si comporti con gli $L$-termini. 
     Si nota tuttavia che $F$ induce una sorta di pushforward della valutazione $v$, che indichiamo con $v_* := F \circ v$. \\
     È semplice burocrazia verificare per induzione strutturale che $F(\{v\}_M t) = \{F \circ v\}_{M'} t$ per ogni $L$-termine $t$.
-    %Dalla definizione data di morfismo possiamo dedurre per induzione strutturale come un morfismo di strutture $F$ si comporti con gli $L$-termini:
-%    \begin{itemize}
-%        \item Se $t = x_i$, allora $F(\{v\}_M t) = F(v(x_i)) = \{F \circ v\}_{M'} x_i$.
-%        \item Se $t = f(t_1,\ldots,t_{\ar(f)})$, allora $F(\{v\}_M t) = F(f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)})) = f_{M'}(F(\{v\}_M t_1),\ldots,F(\{v\}_M t_{\ar(f)})) = f_{M'}(\{F \circ v\}_{M'} t_1,\ldots,\{F \circ v\}_{M'} t_{\ar(f)}) = \{F \circ v\}_{M'} t$.
-%    \end{itemize}
 \end{remark}
-%\endgroup
+\endgroup
+
 \begin{definition}[Immersioni e isomorfismi di strutture]
     Un morfismo di $L$-strutture $F : M \to M'$ si dice \vocab{immersione}\footnote{In letteratura si usa anche e soprattutto \vocab{embedding} che richiede un $\iff$, anziché solo $\implies$ nella condizione sui simboli di relazione.}
     se $F$, come funzione tra i domini, è iniettiva.\\ Un'immersione $F$ è un \vocab{isomorfismo} se $F$ è altresì surgettiva e $F^{-1}$ è, a sua volta, un morfismo di strutture.
 \end{definition}
+
 \begin{samepage}
 \begin{remark}[Gli isomorfismi preservano la soddisfacibilità]
     Si verifica, via induzione strutturale, che se $F : M \to M'$ è un isomorfismo di $L$-strutture, allora per ogni $L$-formula $\varphi$ e ogni valutazione $v : \Var \to D$, vale che $M \models\{v\} \varphi$ se e solo se $M' \models\{F \circ v\} \varphi$.
 \end{remark}
 \end{samepage}
 
-\begin{proposition}[Categoricità delle teorie complete con modelli finiti]
+\begin{exercise}[Categoricità delle teorie complete con modelli finiti]
     Se $T$ è completa e $M$ è un modello di $T$, avente dominio finito, allora tutti i modelli di $T$ sono isomorfi a $M$.
-\end{proposition}
+\end{exercise}
 
 \begin{soln}
     Siano $M = (D;i)$ e $M' = (D';i')$ due modelli di $T$, con $D$ finito, i.e. $|D| = n$ e $D = \{a_1,\ldots,a_n\}$. Definiamo le seguenti formule (che sono definite in ogni linguaggio al primo ordine):
@@ -869,31 +866,28 @@ Per dimostrarlo, definiamo prima formalmente la nozione di morfismo di strutture
     \end{align*}
     che esprimono rispettivamente ``il dominio ha almeno $n$ elementi" e ``il dominio ha al più $n$ elementi". Definiamo inoltre $\mathsf{Size}_n := \mathsf{AtLeast}_n \land \mathsf{AtMost}_n$, che esprime ``il dominio ha esattamente $n$ elementi".
     Poiché $M \models \mathsf{Size}_n$, per completezza ogni modello di $T$ soddisfa $\mathsf{Size}_n$, dunque $|D'| = n$, e poniamo $D' = \{b_1,\ldots,b_n\}$.\\
-    Ora abbiamo $n!$ possibili bigezioni insiemistiche tra $D$ e $D'$. Supponiamo per assurdo che nessuna di queste sia un isomorfismo, allora per ciascuna $g : D \bij D'$, definita una valutazione $v : \Var \to D$ e la corrispondente $w : \Var \to D'$ tali che $v(x_i) = a_i$ e $w(x_i) = g(a_i)$ (ovvero $w = g \circ v$),
-    abbiamo una $L$-formula $\alpha_g(x_1,\ldots,x_n)$ (che è atomica o negazione di atomica) tale che:
-    \[ M \models\{v\} \alpha_g(x_1,\ldots,x_n) \quad\text{e}\quad M' \models\{w\} \neg \alpha_g(x_1,\ldots,x_n) 
+    Ora abbiamo $n!$ possibili bigezioni insiemistiche tra $D$ e $D'$. Supponiamo per assurdo che nessuna di queste sia un isomorfismo, allora per ciascuna $g : D \bij D'$, definita una valutazione $v : \Var \to D$ e la corrispondente $w : \Var \to D'$ tali che $v(x_i) = a_i$ e $w(x_i) = g(a_i)$ (ovvero $w = g \circ v = v_*$),
+    abbiamo una $L$-formula $\alpha_g(x_{i_1},\ldots,x_{i_g})$ (che è atomica o negazione di atomica) tale che:
+    \[ M \models\{v\} \alpha_g(x_{i_1},\ldots,x_{i_g}) \quad\text{e}\quad M' \models\{w\} \neg \alpha_g(x_{i_1},\ldots,x_{i_g}) 
     \]
-    che corrispondono necessariamente a una violazione o di (i) o di (ii) nella definizione di morfismo di strutture\footnote{Per fare un esempio: se non vale la (i) per un simbolo di relazione binaria $r$, allora $\alpha_g(x_1,\ldots,x_n) := r(x_1,x_2)$, e si ha che $M \models\{v\} r(x_1,x_2) \iff (a_1,a_2) \in r_M$, mentre $M' \models\{w\} \neg r(x_1,x_2)$, dunque $(g(a_1),g(a_2)) = (b_1,b_2)\not \in r_{M'}$, poiché $g$ non è un isomorfismo.
-    Analogamente se $f$ è un simbolo di funzione binaria e non vale la (ii), allora esiste un indice $j \in \{1,\ldots,n\}$ tale che $f_M(a_1,a_2) = a_j$ ma $f_{M'}(b_1,b_2) \ne b_j$; fissato tale $j$, poniamo $\alpha_g(x_1,\ldots,x_n) := (f(x_1,x_2) = x_j)$, e quindi $M \models\{v\} (f(x_1,x_2) = x_j)$ mentre $M' \models\{w\} \neg (f(x_1,x_2) = x_j)$.\\
-    In generale quindi, se la violazione è di tipo (i), con simbolo di relazione $r$ e indici $i_1,\ldots,i_m$ (dove $m = \ar(r)$), poniamo $\alpha_g(x_1,\ldots,x_n) := r(x_{i_1},\ldots,x_{i_m})$; se la violazione è di tipo (ii), con simbolo di funzione $f$ e indici $i_1,\ldots,i_m,j$ (dove $m = \ar(f)$), poniamo $\alpha_g(x_1,\ldots,x_n) := (f(x_{i_1},\ldots,x_{i_m}) = x_j)$.}. Definiamo ora la seguente formula:
-    \[ \Phi := \exists x_1 \; \ldots \; \exists x_n \; \left(\bigwedge_{1 \le i < j \le n} \neg(x_i = x_j) \land \bigwedge_{g : D \bij D'} \alpha_g(x_1,\ldots,x_n)\right)\footnote{Formalmente l'indicizzazione $g : D \bij D'$ non è al primo ordine, ma la possiamo considerare come un'abbreviazione metalinguistica per una congiunzione finita: se $g_1,\ldots,g_{n!}$ sono tutte le bigezioni $D \to D'$, allora scriviamo $\bigwedge_{g : D \bij D'} \alpha_g$ per $\alpha_{g_1} \land \cdots \land \alpha_{g_{n!}}$.} \]
-    che esprime: ``esistono $n$ elementi distinti che impediscono a tutte le bigezioni tra $D$ e $D'$ di essere isomorfismi". Si ha che $M \models \Phi$ (per quanto detto soddisfa sia $\mathsf{Size}_n$ che tutte le $\alpha_g$ per ipotesi assurda), dunque $T \models \Phi$, e per completezza $M' \models \Phi$. A
+    che corrispondono necessariamente a una violazione o di (i) o di (ii) nella definizione di morfismo di strutture\footnote{Per fare un esempio: se non vale la (i) per un simbolo di relazione binaria $r$, allora $\alpha_g(x_{i_1},\ldots,x_{i_g}) := r(x_{i_1},x_{i_2})$, e si ha che $M \models\{v\} r(x_{i_1},x_{i_2}) \iff (a_{i_1},a_{i_2}) \in r_M$, mentre $M' \models\{w\} \neg r(x_{i_1},x_{i_2})$, dunque $(g(a_{i_1}),g(a_{i_2})) = (b_{i_1},b_{i_2})\not \in r_{M'}$, poiché $g$ non è un isomorfismo.
+    Analogamente se $f$ è un simbolo di funzione binaria e non vale la (ii), allora esiste un indice $j \in \{1,\ldots,n\}$ tale che $f_M(a_{i_1},a_{i_2}) = a_j$ ma $f_{M'}(b_{i_1},b_{i_2}) \ne b_j$; fissato tale $j$, poniamo $\alpha_g(x_{i_1},\ldots,x_{i_g}) := (f(x_{i_1},x_{i_2}) = x_j)$, e quindi $M \models\{v\} (f(x_{i_1},x_{i_2}) = x_j)$ mentre $M' \models\{w\} \neg (f(x_{i_1},x_{i_2}) = x_j)$.\\
+    In generale quindi, se la violazione è di tipo (i), con simbolo di relazione $r$ e indici $i_1,\ldots,i_g$ (dove $g = \ar(r)$), poniamo $\alpha_g(x_{i_1},\ldots,x_{i_g}) := r(x_{i_1},\ldots,x_{i_g})$; se la violazione è di tipo (ii), con simbolo di funzione $f$ e indici $i_1,\ldots,i_g,j$ (dove $g = \ar(f)$), poniamo $\alpha_g(x_{i_1},\ldots,x_{i_g}) := (f(x_{i_1},\ldots,x_{i_g}) = x_j)$.}. Definiamo ora la seguente formula:
+    \[ \Phi := \exists x_1 \; \ldots \; \exists x_n \; \left(\bigwedge_{1 \le i < j \le n} \neg(x_i = x_j) \land \bigwedge_{g : D \bij D'} \alpha_g(x_1,\ldots,x_n)\right)\footnote{Formalmente l'indicizzazione $g : D \bij D'$ non è al primo ordine, ma la possiamo considerare come un'abbreviazione metalinguistica per una congiunzione finita: se $g_1,\ldots,g_{n!}$ sono tutte le bigezioni $D \to D'$, allora scriviamo $\bigwedge_{g : D \bij D'} \alpha_g$ per $\alpha_{g_1} \land \cdots \land \alpha_{g_{n!}}$. Analogamente l'indicizzazione delle variabili delle formule $\alpha_g$ sono solo un'abbreviazione metalinguistica.} \]
+    che esprime: ``esistono $n$ elementi distinti che impediscono a tutte le bigezioni tra $D$ e $D'$ di essere isomorfismi". Si ha che $M \models \Phi$ (per quanto detto soddisfa sia $\mathsf{Size}_n$ che tutte le $\alpha_g$ per ipotesi assurda), dunque $T \models \Phi$, e per completezza $M' \models \Phi$.
     
     Abbiamo allora un assurdo, infatti se $M' \models \Phi$, allora esistono $c_1,\ldots,c_n$ distinti in $D'$ tali che,
     definendo la valutazione $\widetilde{w}$ data da $\widetilde{w}(x_j) = c_j$, vale:
-    $M' \models \{\widetilde{w}\}\alpha_g(x_{i_1},\ldots,x_{i_g})$ %(dove la scrittura a destra è un'abbreviazione per dire che stiamo considerando la valutazione delle variabili che sostituisce $x_{i_j}$ con $c_{i_j}$) 
+    $M' \models \{\widetilde{w}\}\alpha_g(x_{i_1},\ldots,x_{i_g})$
     per ogni bigezione $g$. Allora posso definire:
     \[ \widetilde{g} : D \to D' : a_i \mapsto c_i \]
     che è una bigezione perché sono elementi distinti (quindi la mappa è iniettiva e il codominio finito). Ricapitolando, accade che: 
     \begin{itemize}
-        \item per definizione di $\widetilde{w}$ e dei $c_j$ vale $M' \models\{\widetilde{w}\} \alpha_{\widetilde{g}}(x_{i_1},\ldots,x_{i_{\widetilde{g}}})$;
-        \item per definizione di $\alpha_{\widetilde{g}}$ vale $M' \models\{\widetilde{g} \circ v\} \neg \alpha_{\widetilde{g}}(x_{i_1},\ldots,x_{i_{\widetilde{g}}})$;
+        \item per definizione di $\widetilde{w}$ e dei $c_j$ vale $M' \models\{\widetilde{w}\} \alpha_{\widetilde{g}}(x_{i_1},\ldots,x_{i_g})$;
+        \item per definizione di $\alpha_{\widetilde{g}}$ vale $M' \models\{\widetilde{g} \circ v\} \neg \alpha_{\widetilde{g}}(x_{i_1},\ldots,x_{i_g})$;
         \item per definizione di $\widetilde{g}$ vale $\widetilde{w}(x_j) = c_j = \widetilde{g}(a_j)$, ovvero $\widetilde{w} = \widetilde{g} \circ v$.
     \end{itemize}
     Mettendo insieme queste osservazioni, si ha chiaramente un assurdo. 
-    %Ma ciò è in contraddizione con il fatto che, per definizione di  dovrei anche avere $M' \models\{\widetilde{w}\} \neg \alpha_g(x_{i_1},\ldots,x_{i_g})$
-    %poiché i $c_i$ che andrei a sostituire sono stati scelti apposta per soddisfare anche $\alpha_{\widetilde{g}}$, ma per definizione di $\alpha_{\widetilde{g}}$ dovrei anche avere $M' \models\{w^*\} \neg \alpha_g(x_{i_1},\ldots,x_{i_g})$,
-    %da cui l'assurdo.
 \end{soln}
 
 Dimostreremo invece più avanti che, se $T$ ha un modello infinito, allora ne ha almeno uno per ogni cardinalità maggiore o uguale a $|L|$. 
