@@ -484,14 +484,14 @@ Vediamo ora il \textcolor{MidnightBlue}{caso generale} del teorema di compattezz
     Sia $F$ il sottoinsieme di $\ps(\psf(T))$ definito da:
     \[ X \in F \iff \exists A \in \psf(T) \; \{B \in \psf(T) | A \subseteq B\} \subseteq X
     \]
-    verifichiamo che $F$ è un filtro su $\ps(\psf(T))$. Infatti:
+    \textcolor{MidnightBlue}{cioè un insieme sta nel filtro se contiene una famiglia di sovrainsiemi di un qualche insieme -} verifichiamo che $F$ è un filtro su $\ps(\psf(T))$.
     \begin{itemize}
-        \item $\varnothing \notin F$ perché il vuoto ha come sottoinsieme solo se stesso, mentre c'è almeno un sottoinsieme non banale finito di $T$ che contiene il vuoto, per cui si ha un assurdo; invece $\psf(T) \in F$ per un qualsiasi $A \in \psf(T)$;
-        \item se $X,Y \in F$ allora esistono $A,A' \in \psf(T)$ tali che $\{B \in \psf(T) | A \subseteq B\} \subseteq X$ e $\{B' \in \psf(T) | A' \subseteq B'\} \subseteq Y$; quindi, se uso $A \cup A' \in \psf(T)$, si ha che $\{C \in \psf(T) | A \cup A' \subseteq C\} \subseteq \{B | A \subseteq B\} \cap \{B' | A' \subseteq B'\} \subseteq X \cap Y$, per cui $X \cap Y \in F$;
-        \item se $X \in F$ e $X \subseteq Y \subseteq \psf(T)$, allora esiste $A \in \psf(T)$ tale che $\{B \in \psf(T) | A \subseteq B\} \subseteq X$, per cui $\{B \in \psf(T) | A \subseteq B\} \subseteq Y$, e quindi $Y \in F$.
+        \item $\varnothing \notin F$ perché il vuoto ha come sottoinsieme solo se stesso, mentre c'è almeno un sottoinsieme non banale finito di $T$ che contiene il vuoto, per cui si ha un assurdo; invece $\psf(T) \in F$ per un qualsiasi $A \in \psf(T)$.
+        \item Se $X,Y \in F$ allora esistono $A,A' \in \psf(T)$ tali che $\{B \in \psf(T) | A \subseteq B\} \subseteq X$ e $\{B' \in \psf(T) | A' \subseteq B'\} \subseteq Y$; quindi, se uso $A \cup A' \in \psf(T)$, si ha che $\{C \in \psf(T) | A \cup A' \subseteq C\} \subseteq \{B | A \subseteq B\} \cap \{B' | A' \subseteq B'\} \subseteq X \cap Y$, per cui $X \cap Y \in F$.
+        \item Se $X \in F$ e $X \subseteq Y \subseteq \psf(T)$, allora esiste $A \in \psf(T)$ tale che $\{B \in \psf(T) | A \subseteq B\} \subseteq X$, per cui $\{B \in \psf(T) | A \subseteq B\} \subseteq Y$, e quindi $Y \in F$.
     \end{itemize}
     Sia ora $U$ un ultrafiltro che estende $F$, supponiamo per assurdo che $\forall T' \in \psf(T)$ si abbia $T' \not \models \varphi$, per cui $\forall T' \in \psf(T)$ esiste $M_{T'}$ tale che $M_{T'} \models T'$ e $M_{T'} \not \models \varphi$, e consideriamo $M := \faktor{\prod_{T' \in \psf(T)} M_{T'}}{U}$.
-    Per il corollario al teorema di Łoś, si ha che $M \not\models \varphi$.\footnote{Nella dim di Mamino secondo me c'è confusione tra $\not \models$ e $\models \neg$, andrebbe rivisto.}\\
+    Per il corollario al teorema di Łoś, si ha che $M \not\models \varphi$.
     Se verifichiamo che $M \models T$ otteniamo un assurdo; ora $M \models T \iff \forall \psi \in T \; M \models \psi$, inoltre per il teorema di Łoś ciò equivale a $\{T' \in \psf(T) | M_{T'} \models \psi\} \in U$.\\
     Verifichiamo che si ha addirittura appartenenza al filtro, usando $A = \{\psi\} \in \psf(T)$ si ottiene $\{B \in \psf(T) | A = \{\psi\} \subseteq B\} \subseteq \{T' \in \psf(T) | M_{T'} \models \psi\}$ (il contenimento è ovvio perché se $B \in$ LHS, allora $\psi \in B$, per cui $M_B \models B$, ed in particolare $M_B \models \psi$), per cui $\{T' \in \psf(T) | M_{T'} \models \psi\} \in F \subseteq U$ e si conclude.
 \end{proof}
