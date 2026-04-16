@@ -124,7 +124,7 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
 \end{remark}
 
 \begin{proof}
-    Dati $P, Q \subseteq \NN^k$ predicati PR devo verificare che i seguenti sono predicati PR: $P^\complement$, $P \cup Q$, $\NN^k$\footnote{In questo modo ottengo che gli insiemi formano un'algebra sulle parti in senso classico, che corrisponde ad una $\mathbb F_2$-algebra sulle parti, detta anche algebra booleana.}.
+    Dati $P, Q \subseteq \NN^k$ predicati PR devo verificare che i seguenti sono predicati PR: $P^\complement$, $P \cup Q$, $\NN^k$.
     \begin{itemize}
         \item[$\boxed{\NN^k}$] È un predicato prendendo la funzione PR data da $0_k$.
         \item[$\boxed{P^\complement}$] Sia $f$ la funzione PR che definisce $P$, allora $P^\complement$ è definito dalla funzione PR $1 \dotminus f$.
@@ -136,14 +136,15 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
     Gli insiemi $\{x \leq y\}$, $\{x < y\}$, $\{x = y\}$, $\{x \neq y\}$\footnote{Nel senso di $\{(x,y) \in \NN^2 |\ldots\}$.} sono predicati PR.
     Per $\{x = y\}$ è sufficiente usare:
     \[ f(x,y) := 1 \dotminus (1 \dotminus (y \dotminus x + x \dotminus y)) \]
-    Per $\{x \leq y\}$ si usa:
-    \[ g(x,y) := 1 \dotminus (1 \dotminus (x \dotminus y)) \]
-    e $g(x,y)=0$ se e solo se $x \leq y$. Mettendo assieme queste due cose si ottiene
-    \[ \{x < y\} = \{x \leq y\} \cap \{x \neq y\}. \]
-    Simmetricamente per $\geq$ e $>$.
+    da cui si ha subito anche che $\{x \ne y\}$ è un predicato PR, infatti $\{x \ne y\} = \{x = y\}^\complement$. Per $\{x \leq y\}$ si usa:
+    \[ g(x,y) := x \dotminus y \]
+    Mettendo assieme queste due cose si ottiene:
+    \[ \{x < y\} = \{x \leq y\} \cap \{x \neq y\} \]
+    simmetricamente per $\geq$ e $>$. Osservare, infine, che se al posto di $x$ e $y$ ci fossero $f(\mathbf x)$ e $g(\mathbf y)$ allora tutto funzionerebbe allo stesso modo, per le proprietà delle funzioni PR;
+    pertanto gli insiemi di confronto sono predicati PR anche quando ci sono delle funzioni PR a definirli.
 \end{example}
 
-\begin{remark}[Definizione per casi]
+\begin{remark}[Definizione per casi di funzioni PR]
     Se $P \subseteq \NN^k$ è un predicato PR, e $f, g : \NN^k \to \NN$ sono funzioni PR, allora la funzione definita per casi da:
     \[ h(\mathbf x) := \begin{cases}
         f(\mathbf x) & \text{se $\mathbf x \in P$} \\
@@ -163,17 +164,24 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
         \end{cases}
     \end{cases} \]
     cioè, visto che $x = qy + x \mod y$, allora $x+1 = qy + (x \mod y + 1)$, per cui se $x \mod y + 1 = y$ allora $x+1 = (q+1)y + 0$, altrimenti $x+1 = qy + (x \mod y + 1)$.
-    Osservare inoltre che nella definizione per casi abbiamo usato il predicato PR $P(a,b) := \{a + 1 = b\}$, e la $h$ per la ricorsione:
+    Osservare inoltre che nella definizione per casi abbiamo usato il predicato PR $P(b,c) := \{b + 1 = c\}$, e la $h$ per la ricorsione:
     \[ h(a,b,c) := \begin{cases}
-        0 & \text{se $a + 1 = b$} \\
-        a + 1 & \text{se $a + 1 \ne b$}
+        0 & \text{se $b + 1 = c$} \\
+        b + 1 & \text{se $b + 1 \ne c$}
     \end{cases} \]
     che è una funzione PR per definizione per casi.
 \end{example}
 \pagebreak
+\begingroup
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 2pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 2pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\jot}{2pt}
 \begin{remark}[Somma dei valori di una funzione PR sotto un certo punto]
-    Sia $f : \NN^{k+1} \to \NN$ una funzione PR, allora la funzione $(y_1, \dots, y_k,x) \mapsto \sum_{i < x} f(y_1, \dots, y_k, i)$ è PR,
-    infatti è definita per ricorsione a partire da $h(y_1, \dots, y_k) := 0$ e $g(a,b,c,d_1, \dots, d_k) := b + f(d_1, \dots, d_k, a)$:
+    Sia $f : \NN^{k+1} \to \NN$ una funzione PR, allora la funzione:
+    \[ (y_1, \dots, y_k,x) \mapsto \sum_{i < x} f(y_1, \dots, y_k, i) \]
+    è PR, infatti è definita per ricorsione a partire dalle funzioni PR $h(y_1, \dots, y_k) := 0$ e $g(a,b,d_1, \dots, d_k) := b + f(d_1, \dots, d_k, a)$:
     \[ \sum_{i < x} f(y_1, \dots, y_k, i) := \begin{cases}
         \sum_{i < 0} f(y_1, \dots, y_k, i) &= h(y_1, \dots, y_k) = 0 \\
         \sum_{i < x+1} f(y_1, \dots, y_k, i) &= \sum_{i < x} f(y_1, \dots, y_k, i) \\ &+ f(y_1, \dots, y_k,x) 
@@ -191,36 +199,36 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
 \begin{example}[Appartenenza ad un altro predicato sotto un certo punto]
     Definiamo il predicato $Q \subseteq \NN^{k+1}$ come:
     \[ (y_1, \dots, y_k,x) \in Q \iff \exists i < x \; (y_1, \dots, y_k,i) \in P\]
-    con $P \subseteq \NN^{k+1}$ predicato PR. Tale sottoinsieme è un predicato PR in quanto è possibile definirlo come:
+    con $P \subseteq \NN^{k+1}$ predicato PR. Tale sottoinsieme è un predicato PR in quanto è possibile definirlo come insieme di confronto:
     \[ Q(y_1, \dots, y_k,x) = \{g(y_1, \dots, y_k,x) > 0\} \]
-    dove $g(y_1, \dots, y_k,x) = \#\{(y_1, \dots, y_k, i) \in P : i < x\}$ è la funzione PR (serve affinché l'insieme di confronto sia un predicato PR) che conta gli elementi del predicato $P$ sotto $x$.
+    dove $g(y_1, \dots, y_k,x) = \#\{(y_1, \dots, y_k, i) \in P : i < x\}$ è la funzione PR che conta gli elementi del predicato $P$ sotto $x$.
 \end{example}
 
-\enlargethispage{2\baselineskip}
 \begin{example}[Funzione quoziente intero]
     Definiamo $x \div y := \floor{\displaystyle\frac{x}{y}}$, con la convenzione $x \div 0 := 0$.
-    La funzione $x \div y$ è PR, ad esempio per ricorsione su $x$ (con parametro $y$) e per casi:
+    La funzione $x \div y$ è PR, può essere definita per ricorsione primitiva:
     \[ \begin{cases}
-        0 \div y = 0 \\
+        0 \div y := 0 \\
         (x+1) \div y := \begin{cases}
             0 & \text{se $y = 0$} \\
             (x \div y) + 1 & \text{se $y \neq 0$ e $x \bmod y + 1 = y$} \\
             x \div y & \text{se $y \neq 0$ e $x \bmod y + 1 \ne y$}
         \end{cases}
     \end{cases} \]
-    il predicato e la funzione usati per la ricorsione sono quasi gli stessi di quelli usati per definire il modulo, anche in questo caso vale che se $x = (x \div y)y + r$,
+    il predicato e la funzione usati per la ricorsione sono simili a quelli usati per definire il modulo, anche in questo caso vale che se $x = (x \div y)y + r$,
     allora $x+1 = (x \div y)y + (r+1)$, per cui se $r+1 = y$ allora $x+1 = (x \div y + 1)y + 0$, altrimenti $x+1 = (x \div y)y + (r+1)$.
 \end{example}
+\endgroup
 
 \subsection{Codifica delle liste}
 
 \begin{definition}[Pairing function]
-    Definiamo la funzione \vocab{pairing function} (o funzione di accoppiamento):
+    Definiamo la funzione \vocab{pairing function} - o funzione di accoppiamento, come:
     \[ \cons : \NN^2 \to \NN : (x,y) \mapsto \frac{(x+y)(x+y+1)}{2} + x + 1\]
 \end{definition}
 
-Tale funzione è biunivoca tra le coppie $(x,y) \in \NN^2$ e i numeri naturali maggiori di 1 (voglio avere un null point, e quindi non voglio che $(0,0)$ venga codificato da $0$).
-La funzione di pairing ha il seguente grafico.
+Tale funzione è biunivoca tra le coppie $(x,y) \in \NN^2$ e i numeri naturali maggiori di 1 - fa comodo avere un null point, e quindi non vogliamo che $(0,0)$ venga codificato da $0$.
+La funzione di pairing si può pensare nel modo seguente:
 \begin{figure}[htbp]
     \centering
     \begin{tikzpicture}[x=0.5cm, y=0.5cm, >=stealth]
@@ -277,7 +285,7 @@ La funzione di pairing ha il seguente grafico.
         \car(\cons(x,y)) & := x \\
         \cdr(\cons(x,y)) & := y
     \end{align*}
-    che sono funzioni PR. Un modo per verificare che sono PR è osservare che possono essere scritte come:
+    tali funzioni sono PR, un modo per verificarlo è osservare che possono essere scritte come:
     \begin{align*}
         \car(z) = \sum_{i < z} \sum_{j < z} i \cdot (1 \dotminus \{z = \cons(i,j)\}) \\
         \cdr(z) = \sum_{i < z} \sum_{j < z} j \cdot (1 \dotminus \{z = \cons(i,j)\})
@@ -303,7 +311,7 @@ La funzione di pairing ha il seguente grafico.
 \begin{remark}[Le sezioni $n \mapsto A(m,n)$ sono PR]
     Per ogni $m \in \NN$, la funzione $A_m : \NN \to \NN$ definita da $A_m(n) := A(m,n)$ è PR.
     Si dimostra per induzione su $m$: $A_0(n)=n+1$ è il successore, e se $A_m$ è PR allora anche $A_{m+1}$ è PR, perché è definita per ricorsione da:
-    \[ A_{m+1}(0) = A_m(1), \qquad A_{m+1}(n+1) = A_m(A_{m+1}(n)). \]
+    \[ A_{m+1}(0) = A_m(1), \qquad A_{m+1}(n+1) = A_m(A_{m+1}(n)) \]
 \end{remark}
 
 L'idea che abbiamo voluto catturare, mediante le funzioni primitive ricorsive, è quella di una classe di funzioni che può essere implementata
@@ -362,7 +370,7 @@ Definiamo inizialmente della notazione per rappresentare funzioni che non conver
 \begin{proof}
     Si procede per induzione sulla costruzione di $f$. I casi delle 3 funzioni di base sono banali per la definizione stessa.
     \begin{itemize}
-        \item Per la composizione, se $f = h \circ (g_1, \dots, g_m)$, e uno degli input di $f$ è $\bot$, allora anche uno dei $g_i$ è $\bot$, per cui $h$ produce $\bot$ per ipotesi induttiva, e quindi $f$ è $\bot$.
+        \item Per la composizione, se $f = h \circ (g_1, \dots, g_m)$, e uno degli input di $f$ è $\bot$, allora anche almeno uno dei $g_i$ dà $\bot$ per ipotesi induttiva, per cui $h$ produce $\bot$, ancora per ipotesi induttiva, e quindi $f$ è $\bot$.
         \item Per la ricorsione primitiva, se $f$ è definita per ricorsione da $h$ e $g$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $h$ o di $g$ è $\bot$, per cui $h$ o $g$ producono $\bot$ per ipotesi induttiva, e quindi anche $f$ dà $\bot$.
         \item Per la minimizzazione, se $f = \mu_kf'$, e uno degli input di $f$ è $\bot$, allora anche uno degli input di $f'$ è $\bot$, per cui $f'$ produce $\bot$ a prescindere dalla variabile per cui si minimizza, e non fornendo mai un valore in $\NN\setminus\{0\}$, il minimo 
         non esiste, e quindi anche $f$ è $\bot$ per definizione.
@@ -376,7 +384,8 @@ Definiamo inizialmente della notazione per rappresentare funzioni che non conver
 
 \begin{proof}
     I contenimenti sono tutti banali per le definizioni date, vediamo solo i controesempi per mostrare che sono stretti.
-    Per il secondo contenimento si osserva che $\mu_0 s \equiv \textcolor{purple}{\bot}$, perché l'equazione $s(x)=0$ non ha soluzioni. Per il primo è sufficiente considerare la funzione di Ackermann.
+    Per il secondo contenimento si osserva che $\mu_x s \equiv \textcolor{purple}{\bot}$, perché l'equazione $s(x)=0$ non ha soluzioni.
+    Per il primo è sufficiente considerare la funzione di Ackermann - che termina sempre per come è definita.
 \end{proof}
 \pagebreak
 \subsection{Macchine di Turing}
@@ -424,8 +433,7 @@ Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono i
 \subsection{Funzioni Turing-computabili}
 
 \begin{definition}[Turing-computabilità]
-    Sia $f : \NN^k \to \NN_\bot$\footnote{Non mettiamo $\bot$ perché, avendo visto che se uno degli input è $\bot$ allora anche l'output è $\bot$, non ci interessa studiare funzioni di questo tipo.} una funzione ricorsiva \vocab{parziale} - nel senso di non necessariamente totale,
-    quindi ricorsiva generica, diciamo che $f$ è \vocab{Turing-computabile} se esiste una TM $M$, con:
+    Sia $f : \NN^k \to \NN_\bot$ una funzione, diciamo che è \vocab{Turing-computabile} se esiste una TM $M$, con:
     \begin{itemize}
         \item $\Sigma \supseteq \{0,1,\blacktriangleright\}$,
         \item $Q \supseteq \{0,1\}$, con 0 \vocab{stop} e 1 \vocab{start},
@@ -548,7 +556,7 @@ Dobbiamo anche definire macchine di Turing che implementino le funzioni: success
         con $3 \blacktriangleright x_1 \ldots x_h g_1(x_1, \dots, x_h)$. Ripetendo queste operazioni $k$ volte, e otteniamo lo stato $4 \blacktriangleright x_1 \ldots x_h g_1(x_1, \dots, x_h) \ldots g_k(x_1, \dots, x_h)$. A questo punto cancelliamo i primi $h$ numeri e calcoliamo $f$:
         \[ 4 \to \rem_{h+k,1} \to \rem_{h+k-1,1} \to \ldots \to \rem_{k+1,1} \to \exec_{k,k}f \to 5 \]
         con $5 \blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$, infine vado da $5$ a $0$ per stoppare la macchina. Restano i casi in cui $g_i(x_1, \dots, x_h) = \bot$ per qualche $i$, oppure $f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h)) = \bot$,
-        in ambo i casi, per ipotesi, le macchine che implementano $g_i$ o $f$ non terminano, e quindi anche $\exec g_i$ o $\exec f$ non termina, per cui la macchina che abbiamo costruito non termina, e quindi è coerente con $f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h)) = \bot$.
+        in ambo i casi, per ipotesi, le macchine che implementano $g_i$ o $f$ non terminano, e quindi anche $\exec\, g_i$ o $\exec\, f$ non termina, per cui la macchina che abbiamo costruito non termina, e quindi è coerente con $f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h)) = \bot$.
         \item[$\boxed{\text{ricorsione primitiva}}$] Siano $h : \NN^k \to \NN_\bot$ e $g : \NN^{k+2} \to \NN_\bot$, Turing computabili, e vogliamo implementare $f : \NN^{k+1} \to \NN_\bot$, definita via ricorsione primitiva a partire da $h$ e $g$:
         \[ f(x,y_1,\dots,y_k) := \begin{cases}
             f(0, y_1, \dots, y_k) := h(y_1, \dots, y_k) \\
@@ -563,21 +571,31 @@ Dobbiamo anche definire macchine di Turing che implementino le funzioni: success
             4 & \text{se $x \ne 0$}
         \end{cases} \]
         per cui $3 \blacktriangleright 0 y_1 \ldots y_k 0 h(y_1, \dots, y_k)$, e siamo arrivati in questo caso, è sufficiente applicare $k+2$ volte $\rem$ e poi andare a $0$ per ottenere $0 \blacktriangleright f(0, y_1, \dots, y_k)$.\\
-        Dimostriamo preliminarmente, per induzione - il caso 0 è quello sopra, che, assumendo $x - t \ne 0$, che da $\blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k)$, riusciamo a passare alla 
-        configurazione $\blacktriangleright x - (t+1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$, in tal modo avremo dimostrato per induzione che se $x - t \ne 0$, allora possiamo passare alla configurazione con $t+1$;
-        fatto questo si applica $\ttif x - (t+1) = 0$ per verificare se siamo arrivati al caso base, ed in tal caso, a meno di cancellare i primi simboli abbiamo concluso, altrimenti si continua, in un altro stato, col passo ricorsivo.
-        Osserviamo inoltre che, essendo $x \in \NN$, si avrà necessariamente $x - t = 0$, per $t$ sufficientemente grande e questo ci permette di passare dallo stato 4 alla terminazione.\\
-        Resta da verificare, per induzione, che si può passare da $\blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k)$ a $\blacktriangleright x - (t+1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$: ricopiamo la stringa e cambiamola nel mentre.
-        \[ 4 \to \push_{k+3,1} \to \exec_{k+4,1}\dotminus 1 \to 5 \]
-        con $5 \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t+1)$, copiamo ora gli input $y_1,\dots,y_k$:
-        \[ 5 \to \push_{k+4,2} \to \push_{k+5,3} \to \ldots \to \push_{2k+3,k+1} \to 6 \]
-        con $6 \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t + 1) y_1 \ldots y_k$, ora ricopiamo di nuovo tutta la stringa (includendo nel mezzo $f(t, y_1, \dots, y_k)$ e $t$ a cui applicare subito dopo $\exec +1$), cancelliamo quello che non serve e calcoliamo $\exec g$.
-        Cancellando con $\rem$ anche $f(t, y_1, \dots, y_k)$, otteniamo $\blacktriangleright x - (t + 1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$, e da qui si arriva allo stato terminale.\\
-        Rimane il caso in cui $h(y_1, \dots, y_k) = \bot$ o $g(x, f(x, y_1, \dots, y_k), y_1, \dots, y_k) = \bot$, in tal caso, per ipotesi, le macchine associate a $h$ e $g$ non terminano e di conseguenza non terminano $\exec h$ o $\exec g$,
+        Prima di procedere con 4, dimostriamo un lemma.
+        \begin{lemma}
+            Dalla configurazione:
+            \[ \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) \]
+            e $t \in \NN$, si può passare alla configurazione, in un altro stato:
+            \[ \blacktriangleright x - (t+1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k) \]
+        \end{lemma}
+        Una volta dimostrato questo lemma, avremo dimostrato per induzione - il caso base è quello sopra - che se $x - t \ne 0$, allora possiamo passare alla configurazione con $t+1$;
+        fatto questo si applica $\ttif x - (t+1) = 0$ per verificare se siamo arrivati allo stato 3, ed in tal caso, a meno di cancellare i primi simboli abbiamo concluso.
+        Altrimenti si continua, in un altro stato, col passo ricorsivo, per cui da 4 si continua per $x$ passi, e poi si arriva alla terminazione,
+        e questo accade necessariamente perché $x \in \NN$ e $x - t = 0$ per $t$ sufficientemente grande.
+        \begin{proof}
+            Chiamiamo $a$ lo stato iniziale, allora, in primis ricopiamo in fondo $x-t$ e sottraiamo 1:
+            \[ a \to \push_{k+3,1} \to \exec_{k+4,1}\dotminus 1 \to b \]
+            con $b \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t+1)$, copiamo ora gli input $y_1,\dots,y_k$ in fondo:
+            \[ b \to \push_{k+4,2} \to \push_{k+5,3} \to \ldots \to \push_{2k+3,k+1} \to c \]
+            con $c \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t + 1) y_1 \ldots y_k$, ora copiamo $t$ in fondo e applichiamo $s$, per ottenere $t+1$, fatto questo ricopiamo $t+1$ e $y_1,\dots,y_k$ in fondo alla lista, e poi applichiamo $f$:
+            \begin{multline*} c \to \push_{2k+3,k+2} \to \exec_{2k+4,k+2}s \to \push_{2k+4,k+3} \to \\ \to \push_{2k+5,k+4} \to \ldots \to \push_{3k+4,2k+3} \to \to \exec_{3k+5,2k+3}f \to d \end{multline*}
+            Cancellando con $\rem$ tutti i simboli iniziali otteniamo $\blacktriangleright x - (t + 1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$, e da qui si arriva allo stato terminale.\\
+        \end{proof}
+        Rimane il caso in cui $h(y_1, \dots, y_k) = \bot$ o $g(i, f(x, y_1, \dots, y_k), y_1, \dots, y_k) = \bot$, per qualche $i \leq x$, in tal caso, per ipotesi, le macchine associate a $h$ e $g$ non terminano e di conseguenza non terminano $\exec\, h$ o $\exec\, g$,
         per cui non termina la macchina che implementa $f$, coerentemente col fatto che $f(x,y_1,\dots,y_k) = \bot$ come funzione ricorsiva.
         \item[$\boxed{\text{minimizzazione}}$] Sia $g : \NN^{k+1} \to \NN_\bot$ Turing computabile, e vogliamo implementare $f : \NN^k \to \NN_\bot$, definita via minimizzazione a partire da $g$:
         \[ f(y_1, \dots, y_k) := \mu_x g(x, y_1, \dots, y_k) \]
-        Partiamo da $1 \blacktriangleright 0 y_1 \ldots y_k$, dove usiamo lo 0 come base del contatore che cis serve.
+        Partiamo da $1 \blacktriangleright 0 y_1 \ldots y_k$, dove usiamo lo 0 come base del contatore che ci serve.
         Dimostriamo che, partendo dallo stato $2 \blacktriangleright t y_1 \ldots y_k$, con $t \in \NN$, o si ottiene l'output voluto, oppure si ritorna nello stesso stato ma con $t+1$.
         Copiamo in fondo i valori $t,y_1,\dots,y_k$ e calcoliamo $g(t,y_1,\dots,y_k)$:
         \[2 \to \push_{k+1,1} \to \push_{k+2,2} \to \ldots \to \push_{2k+1,k+1} \to \exec_{2k+2,k+1}g \to 3\]
@@ -597,6 +615,8 @@ Dobbiamo anche definire macchine di Turing che implementino le funzioni: success
 \end{proof}
 
 Rimane ora da costruire le macchine elementari, e le macchine che implementano le funzioni $s$, $0_k$, $\pi_{k,i}$ e $\dotminus 1$.
+
+\enlargethispage{1\baselineskip}
 
 \begin{remark}[TM che implementano $\pi_{k,i}$ e $0_k$]
     Osservare che $\pi_{k,i}$ è implementabile con una sequenza di $\rem$ che cancella tutti i numeri tranne l'$i$-esimo, ricordando che lavoriamo in notazione unaria si lascia solo il blocco di uni relativo all'$i$-esimo numero;
@@ -626,7 +646,7 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
 \end{exercise}
 
 \begin{soln}
-    Per tutte le macchine elementari usiamo $\Sigma = \{0,1,\blacktriangleright\}$ e $Q \supseteq \{0,1\}$, ma che dipende da quale macchina stiamo costruendo.\\
+    Per tutte le macchine elementari usiamo $\Sigma = \{0,1,\blacktriangleright\}$ e $Q \supseteq \{0,1\}$.\\
     $\boxed{\ttif x_i = 0}$\\
     Vogliamo costruire una macchina che vada da $1 \blacktriangleright x_1 \ldots x_n$ a $2 \blacktriangleright x_1 \ldots x_n$ se $x_i = 0$, e a $3 \blacktriangleright x_1 \ldots x_n$ se $x_i \ne 0$.
     Quindi la tabella della funzione di transizione sarà composta da $4+i$ righe che mi servono per arrivare a $x_i$ e poi decidere se andare in 2 o 3, da cui $Q = \{0,1,2,3,\alpha_1,\ldots,\alpha_i\}$ e:
