@@ -1,7 +1,7 @@
 \section{Eliminazione dei quantificatori, forme normali ed ultrafiltri}
 \subsection{Eliminazione dei quantificatori}
 \begin{definition}[Formule equivalenti per una teoria]
-    Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalenti} per $T$ (o $T$-\vocab{equivalenti}),
+    Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalente} per $T$ (o $T$-\vocab{equivalenti}),
     denotato con $T \models (\varphi \,\purple{\leftrightarrow}\, \psi)$\footnote{Come già osservato nella semantica di Tarski, fare attenzione perché di fatto il $\leftrightarrow$ 
     interpretato è l'equivalenza logica nella metateoria, ovvero $\iff$ in $\mathsf{ZFC}$.} se $T \models \purple{(} \varphi \rightarrow \psi \purple{)} \land \purple{(} \psi \rightarrow \varphi \purple{)}$,
     ossia (via semantica di Tarski) $T,\varphi \models \psi$ e $T,\psi \models \varphi$.
@@ -91,7 +91,7 @@ Vediamo la soluzione dell'esercizio nell'osservazione.
 
 \subsection{CNF e DNF}
 
-Introduciamo due nozioni di logica proposizionali che sono elementari ma spesso utili.
+Introduciamo due nozioni di logica proposizionale che sono elementari ma spesso utili.
 
 \begin{definition}
     [CNF e DNF]
@@ -437,13 +437,13 @@ Passiamo ora alla dimostrazione del teorema di Ax-Grothendieck.
             \forall y_1,\ldots,y_n \; \exists x_1,\ldots,x_n \, \text{tali che} \\
             y_1 = p_1(z_1,\ldots,z_N,x_1,\ldots,x_n) \land \ldots \land y_n = p_n(z_1,\ldots,z_N,x_1,\ldots,x_n)
     \end{multline*}
-    o in notazione vettoriale, con $\mathbf{z} = z_1,\ldots,z_N$ (coefficienti), $\mathbf{y} = y_1,\ldots,y_n$ (valori che voglio ottenere) e $\mathbf{x} = x_1,\ldots,x_n$ (valori che sto sostituendo alle indeterminate), come $\mathsf{Surj}(\mathbf z) = \forall \mathbf{y} \; \exists \mathbf{x} \; \mathbf{y} = \mathbf{p}(\mathbf{z},\mathbf{x})$ (e $\mathsf{Inj}(\mathbf z) = \forall \mathbf{x} \forall \mathbf{x}' (\bf p(\mathbf{z},\mathbf{x}) = \mathbf{p}(\mathbf{z},\mathbf{x}') \to \mathbf{x} = \mathbf{x}')$).\\
+    o in notazione vettoriale, con $\mathbf{z} = z_1,\ldots,z_N$ (coefficienti), $\mathbf{y} = y_1,\ldots,y_n$ (valori che voglio ottenere) e $\mathbf{x} = x_1,\ldots,x_n$ (valori che sto sostituendo alle indeterminate), come $\mathsf{Surj}(\mathbf z) = \forall \mathbf{y} \; \exists \mathbf{x} \; \mathbf{y} = \mathbf{p}(\mathbf{z},\mathbf{x})$ (e $\mathsf{Inj}(\mathbf z) = \forall \mathbf{x} \forall \mathbf{x}' (\mathbf p(\mathbf{z},\mathbf{x}) = \mathbf{p}(\mathbf{z},\mathbf{x}') \to \mathbf{x} = \mathbf{x}')$).\\
     Per la costruzione di $F$, per il teorema di Łoś, è sufficiente dimostrare che $\overline{\FF_{p_i}} \models \varphi_{d,n}$. Fissiamo un $p_i$ primo, $\mathbf c = c_1,\ldots,c_N \in \overline{\FF_{p_i}}$ e supponiamo che $\overline{\FF_{p_i}} \models \mathsf{Inj}(c_1,\ldots,c_N)$,
     vogliamo dimostrare che $\overline{\FF_{p_i}} \models \purple{\forall \mathbf{y} \; \exists \mathbf{x} \; \mathbf{y} = \mathbf{p}(\mathbf{c},\mathbf{x})}$.\\
     Fissiamo $\mathbf y = y_1,\ldots,y_n \in \overline{\FF_{p_i}}$ e cerchiamo $\mathbf x = x_1,\ldots,x_n \in \overline{\FF_{p_i}}$ tali che
-    risolvano il sistema $\mathbf{y} = \mathbf{p}(\mathbf c, \mathbf x)$. Ora sfruttiamo il fatto che $\overline{\FF_{i}} = \bigcup_{j \in \NN} \FF_{p_i^{j!}}$ per dire che esiste $j_0 \in \NN$ tale che $c_1,\ldots,c_N,y_1,\ldots,y_n \in \FF_{p_i^{j_0!}}$.
+    risolvano il sistema $\mathbf{y} = \mathbf{p}(\mathbf c, \mathbf x)$. Ora sfruttiamo il fatto che $\overline{\FF_{p_i}} = \bigcup_{j \in \NN} \FF_{p_i^{j!}}$ per dire che esiste $j_0 \in \NN$ tale che $c_1,\ldots,c_N,y_1,\ldots,y_n \in \FF_{p_i^{j_0!}}$.
     La funzione $f : \mathbf{x} \mapsto \mathbf{p}(\mathbf{c},\mathbf{x})$, definita da $\overline{\FF_{p_i}}^n \to \overline{\FF_{p_i}}^n$ si restringe a una funzione iniettiva $g : \FF_{p_i^{j_0!}}^n \to \FF_{p_i^{j_0!}}^n$ (l'insieme di arrivo è sempre lo stesso perché sto facendo operazioni nel campo).
-    Sostengo che l'$\mathbf{x}$ cercato è in $\FF_{p_i^{j_0!}}^n$, infatti,siccome $\FF_{p_i^{j_0!}}^n$ è finito, allora $g$ è anche surgettiva per il principio dei cassetti, per cui esiste $\mathbf{x} = x_1,\ldots,x_n \in \FF_{p_i^{j_0!}}^n$ tale che $\mathbf{y} = g(\mathbf{x}) = \mathbf{p}(\mathbf{c},\mathbf{x})$.
+    Sostengo che l'$\mathbf{x}$ cercato è in $\FF_{p_i^{j_0!}}^n$, infatti, siccome $\FF_{p_i^{j_0!}}^n$ è finito, allora $g$ è anche surgettiva per il principio dei cassetti, per cui esiste $\mathbf{x} = x_1,\ldots,x_n \in \FF_{p_i^{j_0!}}^n$ tale che $\mathbf{y} = g(\mathbf{x}) = \mathbf{p}(\mathbf{c},\mathbf{x})$.
 \end{proof}
 
 \begin{exercise}[Controesempio alla freccia inversa di Ax-Grothendieck]
@@ -542,7 +542,7 @@ Concludiamo infine questa sezione con la dimostrazione del teorema di Łoś di c
             \iff& \{i \in I | M_i \models r(t_1,\ldots,t_m)(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
         \end{align*}
         dove in $(\spadesuit)$ stiamo usando che il simbolo di relazione $r$ è interpretato come l'insieme definito per separazione dall'appartenenza alla riga successiva.\\
-        Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = (t_1(\purple{x_1},\ldots,\purple{x_k}) = t_2(\purple{x_1},\ldots,\purple{x_k})$), con $t_1,t_2$ $L$-termini, allora:
+        Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = (t_1(\purple{x_1},\ldots,\purple{x_k}) = t_2(\purple{x_1},\ldots,\purple{x_k}))$, con $t_1,t_2$ $L$-termini, allora:
         \begin{align*}
             &\faktor{\prod_{i \in I} M_i}{U} \models t_1([\mathbf a_1],\ldots,[\mathbf a_k]) = t_2([\mathbf a_1],\ldots,[\mathbf a_k]) \\
             \iff& [t_1([\mathbf a_1],\ldots,[\mathbf a_k])] = [t_2([\mathbf a_1],\ldots,[\mathbf a_k])] && (\spadesuit\spadesuit)\\
