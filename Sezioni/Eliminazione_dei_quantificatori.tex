@@ -51,11 +51,11 @@ rispettivamente, la teoria dei campi algebricamente chiusi e la teoria dei campi
 Vediamo la soluzione dell'esercizio nell'osservazione.
 
 \begin{soln}
-    Sia $\varphi(x) := \exists y (x = y \cdot y)$ e supponiamo che esista $\psi$, senza quantificatori, $\Th(\RR;0,1,+,\cdot)$-equivalente a $\varphi$ nel linguaggio $L = \{0,1,+,\cdot\}$.
+    Sia $\varphi(x) := \exists y (x = y \cdot y)$, ovvero "$x$ è un quadrato", e supponiamo che esista $\psi$, senza quantificatori, $\Th(\RR;0,1,+,\cdot)$-equivalente a $\varphi$ nel linguaggio $L = \{0,1,+,\cdot\}$.
     Una tale $\psi$, essendo senza quantificatori e con una sola variabile libera, può essere scritta in DNF come una disgiunzione di congiunzioni di formule atomiche del tipo $p(x) = 0$ o loro negazioni $p(x) \ne 0$, dove $p(x) \in \RR[x]$ è l'unico tipo di formule atomiche con una sola variabile libera che si possono costruire con i simboli di $L$\footnote{Non ci sono simboli di relazione, per cui rimangono solo uguaglianze di $L$-termini, che equivalgono a $L$-termine = 0, e gli unici $L$-termini in questo linguaggio sono i polinomi a coefficienti in $\RR$.
     Quindi $\psi$ potrebbe essere per esempio: $\psi(x) = ((p_1(x) = 0) \land (p_2(x) \ne 0) \land (p_3(x) = 0))\lor \ldots$}.\\
     Ora $\RR$ è chiaramente un modello di $\Th(\RR;0,1,+,\cdot)$, per cui se $\psi$ e $\varphi$ sono equivalenti, allora devono essere soddisfatte dagli stessi valori in $\RR$, in particolare $\varphi$ è soddisfatta da tutti i reali in $[0,+\infty)$,
-    mentre l'insieme $\{x \in \RR \mid \psi(x)\}$ corrisponde ad un'unione finita di intersezioni di chiusi e aperti di Zariski (ovvero insiemi finiti e cofiniti); ora se tra i termini dell'unione c'è almeno un insieme cofinito allora l'unione sarà $\RR$
+    mentre l'insieme $\{x \in \RR \mid \psi(x)\}$ corrisponde ad un'unione finita di intersezioni di chiusi e aperti di Zariski - ovvero insiemi finiti e cofiniti. Se tra i termini dell'unione c'è almeno un insieme cofinito allora l'unione sarà $\RR$
     meno un numero finito di elementi, quindi $\psi$ è soddisfatta da tutti i reali tranne un numero finito, che non potrà essere $[0,+\infty)$. Se invece tra i termini dell'unione non c'è nessun insieme cofinito, allora l'unione è un insieme finito, ancora assurdo.
 \end{soln}
 
@@ -85,7 +85,7 @@ Vediamo la soluzione dell'esercizio nell'osservazione.
                                                      &\iff \forall a \in D \, M \models \{v[a/x_k]\} \varphi_2 &&(\star)\\
                                                      &\iff M \models \{v\} \forall x_k \, \varphi_2
         \end{align*} 
-        Vista l'arbitrarietà di modello e valutazione, segue che $T \models \psi_1 \leftrightarrow \psi_2$. Il caso $\psi_1 = \exists x_k \, \varphi_1$ è identico.
+        dove $(\star)$ è il fatto che l'equivalenza vale per ogni modello e valutazione, segue che $T \models \psi_1 \leftrightarrow \psi_2$. Il caso $\psi_1 = \exists x_k \, \varphi_1$ è identico.
     \end{itemize}
 \end{proof}
 
@@ -95,18 +95,18 @@ Introduciamo due nozioni di logica proposizionali che sono elementari ma spesso 
 
 \begin{definition}
     [CNF e DNF]
-    Una formula \underline{senza quantificatori} $\varphi$ è in \vocab{forma normale congiuntiva} (\vocab{CNF}) se:
+    Una formula \textcolor{green!50!black}{senza quantificatori} $\varphi$ è in \vocab{forma normale congiuntiva} (\vocab{CNF}) se:
     \[ \varphi = \purple{(}\, \alpha_{11} \, \purple{\lor} \, \alpha_{12} \, \purple{\lor} \, \dots \, \purple{\lor} \, \alpha_{1n_1} \, \purple{)} \, \purple{\land} \, \dots \, \purple{\land} \, \purple{(}\, \alpha_{m1} \, \purple{\lor} \, \alpha_{m2} \, \purple{\lor} \, \dots \, \purple{\lor} \, \alpha_{mn_m} \, \purple{)}
     \]
     ovvero $\varphi$ una congiunzione di disgiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche. Simmetricamente,
-    $\varphi$, formula \underline{senza quantificatori}, è in \vocab{forma normale disgiuntiva} (\vocab{DNF}) se:
+    $\varphi$, formula \textcolor{green!50!black}{senza quantificatori}, è in \vocab{forma normale disgiuntiva} (\vocab{DNF}) se:
     \[ \varphi = \textcolor{purple}{(}\, \alpha_{11} \, \textcolor{purple}{\land} \, \alpha_{12} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \alpha_{1n_1} \, \textcolor{purple}{)} \, \textcolor{purple}{\lor} \, \dots \, \textcolor{purple}{\lor} \, \textcolor{purple}{(}\, \alpha_{m1} \, \textcolor{purple}{\land} \, \alpha_{m2} \, \textcolor{purple}{\land} \, \dots \, \textcolor{purple}{\land} \, \alpha_{mn_m} \, \textcolor{purple}{)}
     \]
     ovvero $\varphi$ una disgiunzione di congiunzioni di formule $\alpha_{ij}$ che possono essere formule atomiche o negazioni di formule atomiche.
 \end{definition}
 
 \begin{lemma}[Ogni formula senza quantificatori è equivalente ad una in CNF e DNF]
-    Data una formula $\varphi$ \underline{senza quantificatori}, esistono $\psi_1$ in CNF e $\psi_2$ in DNF equivalenti a $\varphi$ per la teoria vuota (e quindi per ogni teoria).
+    Data una formula $\varphi$ \textcolor{green!50!black}{senza quantificatori}, esistono $\psi_1$ in CNF e $\psi_2$ in DNF equivalenti a $\varphi$ per la teoria vuota (e quindi per ogni teoria).
 \end{lemma}
 
 \begin{proof}
@@ -122,19 +122,19 @@ Introduciamo due nozioni di logica proposizionali che sono elementari ma spesso 
 Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantificatori.
 
 \begin{proof}
-    \textcolor{MidnightBlue}{Procediamo per induzione strutturale, supponiamo (WLOG, a meno di $T_{\text{oldse}}$-equivalenza) $\varphi$ libera dai quantificatori e verifichiamo che $\exists x_k \, \varphi$ è $T_{\text{oldse}}$-equivalente ad una formula senza quantificatori. Non sarà necessario fare lo stesso anche con il quantificatore universale in quanto
-    $\models \forall x_k \varphi \leftrightarrow \neg(\exists x_k \, \neg \varphi)$ per cui ci basta poter eliminare $\exists$.} Per ipotesi induttiva, usando il lemma sopra, posso scrivere $\varphi$ in DNF: 
-    \[ \varphi = \varphi_1 \lor \ldots \lor \varphi_m
+    Procediamo per induzione strutturale, supponiamo (WLOG, a meno di $T_{\text{oldse}}$-equivalenza) $\varphi$ libera dai quantificatori e verifichiamo che $\exists x_k \, \varphi$ è $T_{\text{oldse}}$-equivalente ad una formula senza quantificatori. Non sarà necessario fare lo stesso anche con il quantificatore universale in quanto
+    $\models \forall x_k \varphi \leftrightarrow \neg(\exists x_k \, \neg \varphi)$ per cui ci basta poter eliminare $\exists$. Per ipotesi induttiva, usando il lemma sopra, posso scrivere $\varphi$ in DNF: 
+    \[ \varphi = \varphi_1 \lor \ldots \lor \varphi_l
     \]
-    dove ogni $\varphi_i$ è un implicante primo (congiunzione di formule atomiche o negazioni di esse). Si osserva che $\models \exists x_k \, \varphi \leftrightarrow (\exists x_k \, \varphi_1) \lor \ldots \lor (\exists x_k \, \varphi_m)$, per cui basta eliminare $\exists$ da $\exists x_k \, \varphi_i$.
-    Posso assumere che in $\varphi_i$ non ci siano formule chiuse, perché posso portarle fuori dall'esistenziale, ora le formule non chiuse atomiche sono solo del tipo $x_j < x_k$ o $\neg (x_j < x_k)$\footnote{Le formule con uguaglianza di termini, $x_j = x_k$, sono $T_{\text{oldse}}$-equivalenti, per via del
+    dove ogni $\varphi_i$ è un implicante primo. Si osserva che, banalmente, vale $\models \exists x_k \, \varphi \leftrightarrow (\exists x_k \, \varphi_1) \lor \ldots \lor (\exists x_k \, \varphi_l)$, per cui possiamo ridurci ad eliminare $\exists$ da $\exists x_k \, \varphi_i$.
+    Possiamo assumere che in $\varphi_i$ non ci siano formule chiuse, altrimenti possono essere portate fuori dall'esistenziale; le formule non chiuse atomiche sono quindi solo del tipo $x_j < x_k$ o $\neg (x_j < x_k)$\footnote{Le formule con uguaglianza di termini, $x_j = x_k$, sono $T_{\text{oldse}}$-equivalenti, per via del
     fatto che l'ordinamento è totale, a formule del tipo $\neg(x_j < x_k) \land \neg (x_k < x_j)$, pertanto questi casi sono riassorbiti già nella dimostrazione.} che posso abbreviare con $x_j \geq x_k$, in quanto $T_{\text{oldse}} \models \neg (x_j < x_k) \leftrightarrow x_j \geq x_k$.\\
     Infine scrivo $\varphi_i = \varphi_{\text{dx}} \land \varphi_{\text{sx}}$, dove metto in $\varphi_{\text{dx}}$ tutte le formule in cui $x_k$ compare a destra, e in $\varphi_{\text{sx}}$ tutte le formule in cui $x_k$ compare a sinistra:
     \begin{align*}
             &\varphi_{\text{dx}} = \underbrace{v_1 \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{11}}\, \land \ldots \land \,\underbrace{v_m \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{1m}} &&\text{con $v_i$ variabili diverse da $x_k$}\\
             &\varphi_{\text{sx}} = \underbrace{x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, w_1}}_{\alpha_{21}}\, \land \ldots \land \,\underbrace{x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, w_n}}_{\alpha_{2n}} &&\text{con $w_i$ variabili diverse da $x_k$}
     \end{align*}
-    A questo punto, per eliminare $x_k$ da $\varphi_i$, definisco $\psi := \bigwedge_{\substack{i=1 \ldots m \\ j=1 \ldots n}} \psi_{i,j}$, dove:
+    A questo punto, per eliminare $x_k$ da $\varphi_i$, definisco $\psi := \bigwedge_{\substack{i=1, \ldots, m \\ j=1, \ldots, n}} \psi_{i,j}$, dove:
     \[ \psi_{i,j} := \begin{cases}
         v_i \leq w_j & \text{se $\alpha_{1i} = v_i \leq x_k$ e $\alpha_{2j} = x_k \leq w_j$}\\
         v_i < w_j & \text{se almeno uno dei segni di $\alpha_{1i}$ e $\alpha_{2j}$ è $<$}
@@ -142,60 +142,76 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
     \]
     Se uno tra $m$ o $n$ è 0, poniamo $\psi := \purple{\top}$. Claimmiamo ora che $T_{\text{oldse}} \models (\exists x_k \, \varphi_i) \leftrightarrow \psi$. Vediamo le due implicazioni.
     \begin{itemize}
-        \item[$\boxed{\implies}$] Sia $M$ un modello di $T_{\text{oldse}}$ e sia $v$ una valutazione tali che $M \models \{v\} \exists x_k \, \varphi_i$, allora per gli assiomi di $T_{\text{oldse}}$, ovvero la transitività, segue subito che tutte le $\psi_{i,j}$ valgono in $M$, e quindi per la semantica di Tarski anche $\psi$ vale in $M$.
-        \item[$\boxed{\impliedby}$] Sia $M$ un modello di $T_{\text{oldse}}$ e $v$ una valutazione delle variabili in cui vale $\psi$. Se $m \ne 0$ esiste una $\alpha_{1\overline i}$ più restrittiva delle altre (ovvero quella con $v(v_i)$ più grande, e posso sceglierlo nel mio modello), chiamo $\overline \varphi_1 := v_{\overline i} \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}$ questa condizione,
+        \item[$\boxed{\to}$] Sia $M$ un modello di $T_{\text{oldse}}$ e sia $v$ una valutazione tali che $M \models \{v\} \exists x_k \, \varphi_i$, allora per gli assiomi di $T_{\text{oldse}}$, ovvero la transitività, segue subito che tutte le $\psi_{i,j}$ valgono in $M$, e quindi per la semantica di Tarski anche $\psi$ vale in $M$.
+        \item[$\boxed{\leftarrow}$] Sia $M$ un modello di $T_{\text{oldse}}$ e $v$ una valutazione delle variabili in cui vale $\psi$. Se $m \ne 0$ esiste una $\alpha_{1\overline i}$ più restrittiva delle altre (ovvero quella con $v(v_i)$ più grande, e posso sceglierlo nel mio modello), chiamo $\overline \varphi_1 := v_{\overline i} \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}$ questa condizione,
         se $m = 0$ pongo $\overline \varphi_1 := \purple{\top}$. Similmente, se $n \ne 0$ esiste una $\alpha_{2\overline j}$ più restrittiva delle altre (ovvero quella con $v(w_j)$ più piccola rispetto a $<_M$, e posso sceglierlo nel mio modello perché soddisfa gli assiomi di ordine totale), chiamo $\overline \varphi_2 := x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, w_{\overline j}}$ questa condizione,
         se $n = 0$ pongo $\overline \varphi_2 := \purple{\top}$. Segue immediatamente che:
-        \[ M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_1 \to \varphi _1 \quad \text{e} \quad M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_2 \to \varphi_2
+        \[ M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_1 \to \varphi_{\text{dx}} \quad \text{e} \quad M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_2 \to \varphi_{\text{sx}}
         \]
         di conseguenza $M \models \{v\} \purple{\forall x_k} (\overline{\varphi}_1 \land \overline{\varphi}_2) \to \varphi_i$, quindi per verificare che $M \models \{v\} \exists x_k \, \varphi_i$, è sufficiente vedere che:
         \[ M \models \{v\}( \psi \to \purple{\exists x_k} \, \overline{\varphi}_1 \land \overline{\varphi}_2)
         \]
         Distinguiamo due casi:
         \begin{itemize}
-            \item Se almeno uno tra $m$ o $n$ è 0, allora rimane solo una delle due condizioni, quindi solo una disuguaglianza da soddisfare almeno una volta, e questo è vero in $M$ perché è un ordine senza estremi.
-            \item Se sia $m$ che $n$ sono diversi da 0, allora, dall'ipotesi, so che $M \models \{v\} \psi_{\overline i, \overline j}$, con $\psi_{\overline i, \overline j} = v_{\overline i} \,\purple{\underset{\leq}{\overset{<}{\bullet}}\,} w_{\overline j}$, restano due sottocasi.
+            \item Se almeno uno tra $m$ o $n$ è 0, allora $\psi = \top$ e rimane solo una delle due condizioni $\ol \psi_i$, quindi solo una disuguaglianza da soddisfare almeno una volta, e questo è vero in $M$ perché è un ordine senza estremi, quindi l'implicazione è soddisfatta.
+            \item Se sia $m$ che $n$ sono diversi da 0, allora, dall'ipotesi, so che $M \models \{v\} \psi_{\overline i, \overline j}$, con $\psi_{\overline i, \overline j} = v_{\overline i} \,\purple{\underset{\leq}{\overset{<}{\bullet}}\,} w_{\overline j}$, per cui vale $v(v_{\overline i}) \,\purple{\underset{\leq}{\overset{<}{\bullet}}\,} v(w_{\overline j})$ e ci sono due sottocasi.
                   \begin{itemize}
-                    \item[$\bullet$] Se sia $\overline \varphi_1$ che $\overline \varphi_2$ usano $\leq$, allora posso scegliere come $x_k$ uno tra $v(v_{\overline i})$ e $v(w_{\overline j})$.
-                    \item[$\bullet$] Se almeno una tra $\overline \varphi_1$ e $\overline \varphi_2$ usa $<$, allora $\psi_{\overline i, \overline j}$ usa $<$, per densità dell'ordinamento scelgo un valore per $x_k$ compreso strettamente tra $v(v_{\overline i})$ e $v(w_{\overline j})$.
+                    \item[$\bullet$] Se sia $\overline \varphi_1$ che $\overline \varphi_2$ usano $\leq$, allora posso scegliere come $x_k$ uno qualsiasi tra $v(v_{\overline i})$ e $v(w_{\overline j})$.
+                    \item[$\bullet$] Se almeno una tra $\overline \varphi_1$ e $\overline \varphi_2$ usa $<$, allora $\psi_{\overline i, \overline j}$ usa $<$, per densità dell'ordinamento, scelgo un valore per $x_k$ compreso strettamente tra $v(v_{\overline i})$ e $v(w_{\overline j})$.
                   \end{itemize}
                     \end{itemize}
     \end{itemize}
 \end{proof}
 
-\begin{exercise} %TODO: è bucato
-    La struttura $(D;<)$ è un ordine totale discreto tale che\footnote{Typo di Mamino.} $<$ è una relazione d'ordine totale su $D$ tale che ogni elemento di $D$ ha un predecessore ed un successore.
+\begin{exercise}
+    La struttura $(D;<)$ è un ordine \emph{totale discreto} se $<$ è una relazione d'ordine totale su $D$, e vale che ogni elemento di $D$ ha un predecessore ed un successore.
     $\Th(D;<)$ non elimina i quantificatori, mentre $\Th(D;<,s)$ sì.
 \end{exercise}
 
 \begin{soln}
-    Il caso di $\Th(D;<,s)$ è identico a quello della dimostrazione precedente, con l'unica osservazione da fare, che nel caso in cui una tra $\overline \varphi_1$ o $\overline \varphi_2$ usi $<$,
-    allora posso scegliere $x_k$ come successore di $v(v_{\overline i})$ o come predecessore di $v(w_{\overline j})$.\\
     Per quanto riguarda $\Th(D;<)$, consideriamo la formula:
-    \[\varphi := x < y \land \neg ( \exists z \, x < z \land z < y )\]
+    \[\varphi(x,y) := x < y \land \neg ( \exists z \, x < z \land z < y )\]
     che esprime: ``che $y$ è il successore immediato di $x$".
-    Supponiamo per assurdo che esista una formula $\psi(x,y)$ senza quantificatori, $\Th(D;<)$-equivalente a $\varphi$.
-    \begin{claim}
-        Per ogni formula senza quantificatori $\theta(x,y)$, il suo valore di verità in un modello di $\Th(D;<)$ dipende solo da quale dei tre casi esclusivi ed esaustivi vale: $x<y$, $x=y$, $y<x$.
-    \end{claim}
-    \begin{proof}
-        Nel linguaggio $L=\{<\}$ (con uguaglianza), se le variabili libere sono solo $x,y$, le atomiche possibili sono:
-        \[x<y,\ y<x,\ x=y,\ y=x,\ x<x,\ y<y.\]
-        In ogni modello di $\Th(D;<)$ valgono:
-        \[y=x \leftrightarrow x=y,\qquad x<x \leftrightarrow \bot,\qquad y<y \leftrightarrow \bot,\]
-        e, per tricotomia,
-        \[y<x \leftrightarrow \neg(x<y)\land\neg(x=y).\]
-        Dunque ogni atomica (o negazione di atomica) è riducibile a una combinazione booleana di $x<y$ e $x=y$; quindi anche ogni formula senza quantificatori $\theta(x,y)$ lo è.
-        Equivalentemente, il valore di verità di $\theta(x,y)$ dipende solo da quale dei tre casi $x<y$, $x=y$, $y<x$ si verifica.
-    \end{proof}
-
-    Sia ora $M \models \Th(D;<)$ e sia $a \in M$. Per ipotesi ``ogni elemento ha un successore'', esiste $b$ tale che
-    \[a<b \land \neg\exists z\,(a<z\land z<b),\]
-    quindi $M\models \varphi(a,b)$. Inoltre, applicando ancora l'assioma al punto $b$, esiste un suo successore $c$; allora $a<c$ e $b$ sta strettamente tra $a$ e $c$, dunque
-    \[M\models \neg\varphi(a,c).\]
-    Tuttavia le coppie $(a,b)$ e $(a,c)$ hanno lo stesso tipo atomico in $L$ rispetto a $(x,y)$: in entrambi i casi vale $x<y$, e sono false $y<x$ e $x=y$.
-    Quindi ogni formula senza quantificatori $\psi(x,y)$ ha lo stesso valore su $(a,b)$ e su $(a,c)$, impossibile se $\psi$ fosse equivalente a $\varphi$.
-    Contraddizione: $\Th(D;<)$ non elimina i quantificatori.
+    Supponiamo per assurdo che esista una formula $\psi(x,y)$ senza quantificatori, $\Th(D;<)$-equivalente a $\varphi$. In ogni 
+    modello di $\Th(D;<)$ dovrebbe valere che $\psi$ è vera esattamente sulle coppie di elementi in cui vale $\varphi$, in particolare,
+    se $x = a$, con $a$ elemento di un modello, presi $z = b$, con $b$ successore di $a$ nel modello, e $y = c$, con $c$ successore di $b$ nel modello, allora $a < b < c$ e quindi $\varphi(a,c)$ è falsa a causa di $b$, mentre $\varphi(a,b)$ è vera.
+    Di conseguenza, $\psi(a,c)$ dovrebbe essere falsa, mentre $\psi(a,b)$ essere vera.\\
+    Le formule atomiche possibili, con variabili libere $x$ e $y$, si riducono alle sole condizioni $x < y$ e $x = y$
+    (in particolare $y < x \leftrightarrow \neg(x<y) \land \neg(x=y)$). Per cui $\psi$, messa in DNF è una disgiunzione di implicanti
+    primi che corrispondono ai tre casi $x < y$, $x = y$ e $y < x$ - si intende come abbreviazione per la cosa prima, oltre a $\bot$e $\top$, quindi il valore di verità
+    di $\psi(x,y)$ dipende solo da quale dei tre casi vale. Ma sia $(a,b)$ sia $(a,c)$ soddisfano $x < y$, dunque
+    $\psi(a,b) \leftrightarrow \psi(a,c)$ e quindi assurdo.\\
+    \iffalse
+    Per dimostrare che $\Th(D;<,s)$ ha l'eliminazione dei quantificatori, ripetiamo in modo identico lo schema usato per $T_{\text{oldse}}$,
+    con la differenza che dobbiamo usare $s$ per esprimere la condizione di esistenza del successore immediato, che è necessaria per eliminare i quantificatori.
+    Pertanto cambiamo la definizione di $\psi_{i,j}$, che ora diventa:
+    \[\psi_{i,j}:=\begin{cases}
+        v_i\leq w_j & \text{se $\alpha_{1i}=v_i\leq x_k$ e $\alpha_{2j}=x_k\leq w_j$}\\
+        v_i<w_j & \text{se $\alpha_{1i}=v_i\leq x_k$ e $\alpha_{2j}=x_k<w_j$}\\
+        s(v_i)\leq w_j & \text{se $\alpha_{1i}=v_i<x_k$ e $\alpha_{2j}=x_k\leq w_j$}\\
+        s(v_i)<w_j & \text{se $\alpha_{1i}=v_i<x_k$ e $\alpha_{2j}=x_k<w_j$}
+    \end{cases}
+    \]
+    (se uno tra $m$ o $n$ è 0, poniamo ancora $\psi:=\purple{\top}$). Di nuovo, dimostriamo che $\Th(D;<,s) \models (\exists x_k \, \varphi_i) \leftrightarrow \psi$,
+    e $\rightarrow$ è ancora immediata per transitività, per cui vediamo $\leftarrow$.
+    \begin{itemize}
+        \item[$\boxed{\leftarrow}$] Sia $M\models\Th(D;<,s)$ e $v$ tale che $M\models\{v\}\psi$. Come nel caso di $T_{\text{oldse}}$, scegliamo una condizione inferiore più restrittiva $\overline\varphi_1$ (oppure $\top$ se $m=0$) e una superiore più restrittiva $\overline\varphi_2$ (oppure $\top$ se $n=0$), ottenendo ancora
+        \[M\models\{v\}\forall x_k\,(\overline\varphi_1\land\overline\varphi_2)\to\varphi_i.
+        \]
+        Dunque basta produrre un testimone per $\overline\varphi_1\land\overline\varphi_2$.
+        \begin{itemize}
+            \item Se almeno uno tra $m$ o $n$ è 0, resta solo un vincolo unilatero, e il testimone esiste perché in un ordine discreto con predecessore e successore non ci sono estremi.
+            \item Se $m,n\neq 0$, dalla $\psi_{\overline i,\overline j}$ corrispondente ai due vincoli più restrittivi otteniamo esattamente la condizione di esistenza del testimone:
+            \begin{itemize}
+                \item[$\bullet$] se i due vincoli sono $\leq,\leq$, basta scegliere $x_k=v(v_{\overline i})$;
+                \item[$\bullet$] se sono $\leq,<$, da $v_{\overline i}<w_{\overline j}$ scegliamo ancora $x_k=v(v_{\overline i})$;
+                \item[$\bullet$] se sono $<,\leq$, da $s(v_{\overline i})\leq w_{\overline j}$ scegliamo $x_k=s(v(v_{\overline i}))$;
+                \item[$\bullet$] se sono $<,<$, da $s(v_{\overline i})<w_{\overline j}$ scegliamo $x_k=s(v(v_{\overline i}))$.
+            \end{itemize}
+        \end{itemize}
+        In ogni caso otteniamo $M\models\{v\}\exists x_k\,\varphi_i$.
+    \end{itemize}
+    \fi
 \end{soln}
 
 \subsection{Ultraprodotti}
@@ -255,7 +271,7 @@ Bando alle ciance.
 \begin{proof}
     Si verifica usando Zorn, e passando per il fatto che l'unione di filtri in catena è un filtro, che ogni filtro $F$ è contenuto in un filtro massimale $U$.
     Se questo filtro $U$ non fosse un ultrafiltro, esisterebbero $A,B \subseteq I$ tali che $A \cup B = I$ ma $A, B \notin U$. Consideriamo:
-    \[ G := \{ X \subseteq I | X \cup B \in U\}
+    \[ G := \{ X \in \ps(I) : X \cup B \,\textcolor{purple}{\in}\, U\}
     \]
     è facile verificare che $G$ è un filtro. Inoltre $F \subsetneq G$ perché $A \in G$, ma $A \notin U$. Questo contraddice la massimalità di $U$, dato che $F \subseteq U \subsetneq G$.
 \end{proof}
@@ -268,14 +284,14 @@ Bando alle ciance.
 
 \begin{definition}
     [Ultraprodotto]
-    Fissiamo un linguaggio $L = (R,F)$ e una famiglia di $L$-strutture $M_i = (D_i;\ldots)$ indicizzata da $i \in I$. Sia $U$ un ultrafiltro su $\ps(I)$, definiamo l'\vocab{ultraprodotto} $\faktor{\prod_{i \in I} M_i}{U}$
+    Fissiamo un linguaggio $L = (R,F,\ar)$ e una famiglia di $L$-strutture $M_i = (D_i;\ldots)$ indicizzata da $i \in I$. Sia $U$ un ultrafiltro su $\ps(I)$, definiamo l'\vocab{ultraprodotto} $\faktor{\prod_{i \in I} M_i}{U}$
     come la $L$-struttura avente per dominio $\prod_{i \in I}D_i$ modulo la relazione di equivalenza $\sim_U$ definita come:
     \[ \mathbf a,\mathbf b \in \prod_{i \in I} D_i \quad \mathbf a \sim_U \mathbf b \defiff \{ i \in I : a_i = b_i \} \in U
     \]
     inoltre possiamo definire l'interpretazione dei simboli di relazione $r \in R$, con $\ar(r) = k$, come il sottoinsieme del dominio all'arietà $k$ definito da:
     \[ \left(\prod_{i \in I}D_i \Big/\sim_U\right)^k\ni \purple{([\mathbf a_1],\ldots,[\mathbf a_{k}]) \in \faktor{r}{U}} \defiff \{i \in I | (a_{1i},\ldots,a_{ki}) \in r_{M_i}\} \in U
     \]
-    mentre l'interpretazione di $f \in F$, con $ar f = k$, è la funzione:
+    mentre l'interpretazione di $f \in F$, con $\ar f = k$, è la funzione:
     \[ \faktor fU : \left(\prod_{i \in I}D_i \Big/\sim_U\right)^k \to \left(\prod_{i \in I}D_i \Big/\sim_U\right) : \purple{\faktor{f}{U}([\mathbf a_1],\ldots,[\mathbf a_k])} \overset{\text{def}}{=} [(f_{M_i}(a_{1i},\ldots,a_{ki}))_{i \in I}]
     \]
 \end{definition}
@@ -285,15 +301,15 @@ Bando alle ciance.
     ossia che se $\mathbf a_1 \sim_U \mathbf a_1',\ldots \mathbf a_k \sim_U \mathbf a_k'$ allora:
     \[ ([\mathbf a_1],\ldots,[\mathbf a_k]) \in \faktor{r}{U} \iff ([\mathbf a_1'],\ldots,[\mathbf a_k']) \in \faktor{r}{U}
     \]
-    per ipotesi $([\mathbf a_1],\ldots,[\mathbf a_k]) \in \faktor{r}{U}$ significa che $A = \{ i \in I | (a_{1i},\ldots,a_{ki}) \in r_{M_i}\} \in U$, inoltre, sempre per ipotesi,
+    vediamo una sola direzione per simmetria. Dalle ipotesi $([\mathbf a_1],\ldots,[\mathbf a_k]) \in \faktor{r}{U}$ significa che $A = \{ i \in I | (a_{1i},\ldots,a_{ki}) \in r_{M_i}\} \in U$, inoltre, sempre per ipotesi,
     detto $B_\iota := \{ i \in I | a_{\iota i} = a_{\iota i}'\} \in U$, $\forall \iota = 1,\ldots,k$. Posso quindi considerare:
     \[ C := A \cap B_1 \cap \ldots \cap B_k \in U
     \]
-    Se $i \in C$, allora $a_{1i} = a_{1i}',\ldots,a_{ki} = a_{ki}'$, e quindi $(a_{1i},\ldots,a_{ki}) \in r_{M_i}$, segue che $C \subseteq \{ i \in I | (a_{1i}',\ldots,a_{ki}') \in r_{M_i}\}$, e quindi quest'ultimo insieme sta nell'ultrafiltro.\\
+    Se $i \in C$, allora $a_{1i} = a_{1i}',\ldots,a_{ki} = a_{ki}'$, e quindi $(a_{1i}',\ldots,a_{ki}') \in r_{M_i}$, segue che $C \subseteq \{ i \in I | (a_{1i}',\ldots,a_{ki}') \in r_{M_i}\}$, e quindi quest'ultimo insieme sta nell'ultrafiltro.\\
     Per la buona definizione sui simboli di funzione occorre verificare che se $\mathbf a_1 \sim_U \mathbf a_1',\ldots \mathbf a_k \sim_U \mathbf a_k'$ allora:
     \[ \faktor{f}{U}([\mathbf a_1],\ldots,[\mathbf a_k]) = \faktor{f}{U}([\mathbf a_1'],\ldots,[\mathbf a_k']) \]
     dove l'uguaglianza è in $\faktor{\prod_{i \in I} M_i}{U}$, per cui bisogna verificare che l'insieme degli indici su cui quelle due sequenze sono uguali stia nell'ultrafiltro.
-    Siano $B_1,\ldots B_k$ gli stessi insiemi di sopra, allora $\{ i \in I | (f_{M_i}(a_{1i},\ldots,a_{ki})) = f_{M_i}(a_{1i}',\ldots,a_{ki}')\}$ contiene l'insieme $B_1 \cap \ldots \cap B_k \in U$, e quindi sta nell'ultrafiltro.    
+    Siano $B_1,\ldots B_k$ gli stessi insiemi di sopra, allora $\{ i \in I | f_{M_i}(a_{1i},\ldots,a_{ki}) = f_{M_i}(a_{1i}',\ldots,a_{ki}')\}$ contiene l'insieme $B_1 \cap \ldots \cap B_k \in U$, e quindi sta nell'ultrafiltro.    
 \end{remark}
 
 Il seguente teorema caratterizza la soddisfacibilità di una formula in un ultraprodotto in termini della soddisfacibilità della formula nei modelli che compongono l'ultraprodotto.
@@ -368,7 +384,7 @@ Torniamo all'esempio degli ipernaturali, ed esibiamo un modello non standard del
     questa cosa non vale solo per i primi due indici, e per concludere sul fatto che l'assioma di Archimede non vale in ${}^*\RR$, suppongo per assurdo che esista un $n \in \NN$ tale che:
     \[ [(i)_{i \in \NN}] <_{{}^*\RR} \underbrace{[\mathbf{c}_1] +_{{}^*\RR} \ldots +_{{}^*\RR} [\mathbf{c}_1]}_{\text{$n$ volte}} = [\mathbf{c}_n]
     \]
-    dove la somma nell'ultraprodotto è stata calcolata componente per componente, per definizione di interpretazione dei simboli di funzione. Ma questo non è possibile perché l'insieme degli indici per cui vale questa disuguaglianza è $\{0,1,\ldots,n\}$ che è finito e quindi non appartiene all'ultrafiltro.
+    dove la somma nell'ultraprodotto è stata calcolata componente per componente, per definizione di interpretazione dei simboli di funzione. Ma questo non è possibile perché l'insieme degli indici per cui vale questa disuguaglianza è $\{0,1,\ldots,n-1\}$ che è finito e quindi non appartiene all'ultrafiltro.
 \end{soln}
 
 \subsection{Teorema di Ax-Grothendieck}
@@ -395,17 +411,17 @@ Per dimostrare il teorema di Ax-Grothendieck, ci serviranno i seguenti fatti.
     \]
     Dove \purple{$x^n$} è un'abbreviazione per \purple{$x \cdot x \ldots x$} $n$ volte. Quindi, siccome i fattori dell'ultraprodotto sono campi algebricamente chiusi, anche $F$ lo è.
     Inoltre $F$ ha caratteristica 0 , infatti, fissato un primo $p_k$:
-    \[ \{i \in \NN : \overline{\FF_{p_i}} \models \underbrace{\textcolor{purple}{1 + \ldots + 1 = 0}}_{\text{$p_k$ volte}}\} = \{i \in \NN : i = k\} = \{k\} \notin U\footnote{Osservare che se un insieme singoletto appartenesse a un ultrafiltro, allora l'ultrafiltro sarebbe principale.}
+    \[ \{i \in \NN : \overline{\FF_{p_i}} \models \underbrace{\textcolor{purple}{1 + \ldots + 1 = 0}}_{\text{$p_k$ volte}}\} = \{i \in \NN : i = k\} = \{k\} \notin U\footnote{Osservare che se un singoletto appartenesse a un ultrafiltro, allora l'ultrafiltro sarebbe principale.}
     \]
     per cui $F$ è un campo tale che $F \not\models \overbrace{\purple{1 + \ldots + 1 = 0}}^{\text{$p_k$ volte}}$, per ogni $k \in \NN$; quindi $F$ ha necessariamente caratteristica 0 per il teorema di Łoś.\\
     Resta da dimostrare che $|F| = 2^{\aleph_0}$. Intanto è banale notare che $|F| \leq \left|\prod_{i \in \NN}\overline{\FF_{p_i}}\right| = 2^{\aleph_0}$; per la disuguaglianza opposta immergiamo i numeri $0,1,2,\ldots,i$ in $\overline{\FF_{p_i}}$ nel modo
-    naturale $i \mapsto 1 + \ldots + 1$ $i$ volte, questa mappa è iniettiva perché $i < p_i$. Definiamo ora la funzione:
+    naturale $\underbrace{i \mapsto 1 + \ldots + 1}_{\text{$i$ volte}}$ , questa mappa è iniettiva perché $i < p_i$. Definiamo ora la funzione:
     \[ f : [0,1] \to F : x \mapsto [(\floor{x \cdot i})_{i \in \NN}]
     \]
     e verifico che è iniettiva per concludere. Osserviamo infatti che, per $x < y$, allora esiste $i \in \NN$ tale che $\frac{1}{y-x} \leq i$, da cui si ricava $x \cdot i + 1 \leq y \cdot i$, quindi $\floor{x \cdot i} + 1 \leq \floor{y \cdot i}$, ossia $\floor{x \cdot i} < \floor{y \cdot i}$; ne segue che:
     \[ \{i \in \NN : \floor{x \cdot i} \ne \floor{y \cdot i}\} \supseteq \left\{i \in \NN : \frac{1}{y-x} \leq i\right\} \in U
     \]
-    e l'insieme a destra è cofinito in quanto il suo complementare è finito (e contiene tutti gli interi strettamente minori di $\frac{1}{y-x}$).
+    e l'insieme a destra, che contiene tutti gli interi maggiori o uguali ad $\frac{1}{y-x}$, è cofinito.
 \end{proof}
 
 Passiamo ora alla dimostrazione del teorema di Ax-Grothendieck.
@@ -514,16 +530,16 @@ Concludiamo infine questa sezione con la dimostrazione del teorema di Łoś di c
             \iff& \{i \in I | \exists c_i \in M_i \;\text{t.c.}\; M_i \models \psi(a_{1i},\ldots,a_{ki},c_i)\} \in U && (\star\star)\\
             \iff& \{i \in I | M_i \models \exists  \purple{y} \; \psi(a_{1i},\ldots,a_{ki},\purple{y})\} \in U && \text{(Tarski)}
         \end{align*}
-        dove in $(\star\star)$ l'implicazione dall'alto verso il basso è sempre la proprietà 2. della definizione di filtro (chiusura per sovrainsieme), infatti se $i$ è un indice per cui $M_i \models \psi(a_{1i},\ldots,a_{ki},b_i)$, allora $i$ è un indice per cui $M_i \models \exists y \; \psi(a_{1i},\ldots,a_{ki},y)$, ovvero $\exists c_i \in M_i \;\text{t.c.}\; M_i \models \psi(a_{1i},\ldots,a_{ki},c_i)$;\\
-        mentre l'implicazione dal basso verso l'alto è $\mathsf{AC}$ in quanto posso costruire $\mathbf{b}$ scegliendo per ogni $i \in I$ un $c_i$ tale che $M_i \models \psi(a_{1i},\ldots,a_{ki},c_i)$, che esiste per ipotesi.\\
+        dove in $(\star\star)$ l'implicazione dall'alto verso il basso è sempre la proprietà 2. della definizione di filtro (chiusura per sovrainsieme), infatti se $i$ è un indice per cui $M_i \models \psi(a_{1i},\ldots,a_{ki},b_i)$, allora $i$ è un indice per cui $M_i \models \exists y \; \psi(a_{1i},\ldots,a_{ki},y)$, ovvero $\exists c_i \in M_i \;\text{t.c.}\; M_i \models \psi(a_{1i},\ldots,a_{ki},c_i)$.
+        L'implicazione dal basso verso l'alto è $\mathsf{AC}$ in quanto posso costruire $\mathbf{b}$ scegliendo per ogni $i$ nell'insieme un $c_i$ tale che $M_i \models \psi(a_{1i},\ldots,a_{ki},c_i)$, che esiste per ipotesi, e mettendo nelle posizioni degli indici che non appartengono all'insieme un elemento a caso.\\
         Per completezza vediamo anche i casi in cui $\varphi$ è una $L$-formula atomica.\\
         Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = \top, \bot$, allora entrambe le implicazioni sono banali, infatti $\{i \in I | M_i \models \top\} = I \in U$, e per definizione di ultrafiltro $\{i \in I | M_i \models \bot\} = \varnothing \notin U$, per cui ho un $\iff$ o con entrambe le cose sempre vere o sempre false.\\
-        Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = r(t_1(x_1,\ldots,x_k),\ldots,t_m(x_1,\ldots,x_k))$, con $r$ simbolo di relazione di arietà $m$, allora:
+        Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = r(t_1,\ldots,t_m)(x_1,\ldots,x_k)$, con $r$ simbolo di relazione di arietà $m$, allora:
         \begin{align*}
             &\faktor{\prod_{i \in I} M_i}{U} \models r(t_1([\mathbf a_1],\ldots,[\mathbf a_k]),\ldots,t_m([\mathbf a_1],\ldots,[\mathbf a_k])) \\
             \iff& (t_1([\mathbf a_1],\ldots,[\mathbf a_k]),\ldots,t_m([\mathbf a_1],\ldots,[\mathbf a_k])) \in \faktor{r}{U} && \text{(Tarski)}\\
             \iff& \{i \in I | (t_1(a_{1i},\ldots,a_{ki}),\ldots,t_m(a_{1i},\ldots,a_{ki})) \in r_{M_i}\} \in U && (\spadesuit) \\
-            \iff& \{i \in I | M_i \models r(t_1(a_{1i},\ldots,a_{ki}),\ldots,t_m(a_{1i},\ldots,a_{ki}))\} \in U && \text{(Tarski)}
+            \iff& \{i \in I | M_i \models r(t_1,\ldots,t_m)(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
         \end{align*}
         dove in $(\spadesuit)$ stiamo usando che il simbolo di relazione $r$ è interpretato come l'insieme definito per separazione dall'appartenenza alla riga successiva.\\
         Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = (t_1(\purple{x_1},\ldots,\purple{x_k}) = t_2(\purple{x_1},\ldots,\purple{x_k})$), con $t_1,t_2$ $L$-termini, allora:
@@ -531,9 +547,9 @@ Concludiamo infine questa sezione con la dimostrazione del teorema di Łoś di c
             &\faktor{\prod_{i \in I} M_i}{U} \models t_1([\mathbf a_1],\ldots,[\mathbf a_k]) = t_2([\mathbf a_1],\ldots,[\mathbf a_k]) \\
             \iff& [t_1([\mathbf a_1],\ldots,[\mathbf a_k])] = [t_2([\mathbf a_1],\ldots,[\mathbf a_k])] && (\spadesuit\spadesuit)\\
             \iff& \{i \in I | t_1(a_{1i},\ldots,a_{ki}) = t_2(a_{1i},\ldots,a_{ki})\} \in U && \text{(def. ultraprodotto)}\\
-            \iff& \{i \in I | M_i \models (t_1(a_{1i},\ldots,a_{ki}) = t_2(a_{1i},\ldots,a_{ki}))\} \in U && \text{(Tarski)}
+            \iff& \{i \in I | M_i \models (t_1 = t_2)(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
         \end{align*}
-        dove in $(\spadesuit\spadesuit)$ stiamo usando la semantica di Tarski ed otteniamo un'uguaglianza di $L$-termini nel modello (l'ultraprodotto), quindi un'uguaglianza di classi di equivalenza di successioni.
+        dove in $(\spadesuit\spadesuit)$ stiamo usando la semantica di Tarski per dire che i termini vengono interpretati con le stesse classi di equivalenza di successioni nel modello.
 \end{proof}
 
 \subsection{Applicazioni del teorema di compattezza}
