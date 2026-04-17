@@ -176,42 +176,55 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
     modello di $\Th(D;<)$ dovrebbe valere che $\psi$ è vera esattamente sulle coppie di elementi in cui vale $\varphi$, in particolare,
     se $x = a$, con $a$ elemento di un modello, presi $z = b$, con $b$ successore di $a$ nel modello, e $y = c$, con $c$ successore di $b$ nel modello, allora $a < b < c$ e quindi $\varphi(a,c)$ è falsa a causa di $b$, mentre $\varphi(a,b)$ è vera.
     Di conseguenza, $\psi(a,c)$ dovrebbe essere falsa, mentre $\psi(a,b)$ essere vera.\\
-    Le formule atomiche possibili, con variabili libere $x$ e $y$, si riducono alle sole condizioni $x < y$ e $x = y$
-    (in particolare $y < x \leftrightarrow \neg(x<y) \land \neg(x=y)$). Per cui $\psi$, messa in DNF è una disgiunzione di implicanti
-    primi che corrispondono ai tre casi $x < y$, $x = y$ e $y < x$ - si intende come abbreviazione per la cosa prima, oltre a $\bot$e $\top$, quindi il valore di verità
-    di $\psi(x,y)$ dipende solo da quale dei tre casi vale. Ma sia $(a,b)$ sia $(a,c)$ soddisfano $x < y$, dunque
-    $\psi(a,b) \leftrightarrow \psi(a,c)$ e quindi assurdo.\\
-    \iffalse
-    Per dimostrare che $\Th(D;<,s)$ ha l'eliminazione dei quantificatori, ripetiamo in modo identico lo schema usato per $T_{\text{oldse}}$,
-    con la differenza che dobbiamo usare $s$ per esprimere la condizione di esistenza del successore immediato, che è necessaria per eliminare i quantificatori.
-    Pertanto cambiamo la definizione di $\psi_{i,j}$, che ora diventa:
-    \[\psi_{i,j}:=\begin{cases}
-        v_i\leq w_j & \text{se $\alpha_{1i}=v_i\leq x_k$ e $\alpha_{2j}=x_k\leq w_j$}\\
-        v_i<w_j & \text{se $\alpha_{1i}=v_i\leq x_k$ e $\alpha_{2j}=x_k<w_j$}\\
-        s(v_i)\leq w_j & \text{se $\alpha_{1i}=v_i<x_k$ e $\alpha_{2j}=x_k\leq w_j$}\\
-        s(v_i)<w_j & \text{se $\alpha_{1i}=v_i<x_k$ e $\alpha_{2j}=x_k<w_j$}
+    Le formule atomiche possibili, con variabili libere $x$ e $y$, si riducono alle sole condizioni $x < y$, $x = y$ e $y < x$,
+    per cui, $\psi(x,y)$, messa in DNF è fatta da implicanti primi che corrispondono ai tre casi $x < y$, $x = y$ e $y < x$.
+    Quindi il valore di verità di $\psi(x,y)$ dipende solo da quale dei tre casi vale - escludendo i casi banali $\top,\bot$.
+    Ma sia $(a,b)$ sia $(a,c)$ soddisfano $x < y$, dunque $\psi(a,b) \leftrightarrow \psi(a,c)$ e quindi assurdo.
+    \begin{remark}
+        Si può essere più precisi nell'argomento precedente e dire che ogni modello di $\Th(D;<)$ è un ordine totale discreto, per cui vale la tricotomia 
+        tra $x < y$, $x = y$ e $y < x$; pertanto, qualsiasi congiunzione di due di questi casi dà $\bot$, mentre una disgiunzione dei tre casi dà $\top$.
+        Ne segue che in ogni modello di $\Th(D;<)$, $\psi(x,y)$ è vera esattamente quando almeno uno dei tre casi, e di conseguenza non riesce a distinguere tra $a < b < c$ e $a < b$.
+    \end{remark}
+    Per dimostrare invece che $\Th(D;<,s)$ ha l'eliminazione dei quantificatori si procede come per $T_{\text{oldse}}$, quindi si arriva a voler eliminare il quantificatore esistenziale 
+    in $\exists x_k \, \varphi_i$, con $\varphi_i$ congiunzione di formule atomiche e loro negazioni.\\
+    Come nel caso di $T_{\text{oldse}}$, si scrive $\varphi_i = \varphi_{\text{dx}} \land \varphi_{\text{sx}}$, tuttavia, a differenza di prima, ora i termini del linguaggio contengono anche il simbolo di funzione $s$,
+    per cui ci conviene ragionare con i termini anziché le variabili, ovvero:
+    \begin{align*}
+            &\varphi_{\text{dx}} = \underbrace{t_1 \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{11}}\, \land \ldots \land \,\underbrace{t_n \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{1n}} &&\text{con $x_k \not \in \var(t_i)$}\\
+            &\varphi_{\text{sx}} = \underbrace{x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, s_{1}}}_{\alpha_{21}}\, \land \ldots \land \,\underbrace{x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, s_{m}}}_{\alpha_{2m}} &&\text{con $x_k \not \in \var(s_j)$}
+    \end{align*}
+    come nel caso di $T_{\text{oldse}}$ stiamo considerando come uniche formule atomiche $x < y$ e $x \leq y$ - eliminando $=$ come prima - ed usando termini generici al posto di $x$ e $y$; inoltre possiamo supporre che $x_k \not \in \var(t_i),\var(s_j)$,
+    a meno di aggiungere variabili e formule per le definizioni dei termini, come ad esempio $x_p = s(x_q)$.\\
+    A questo punto possiamo definire $\psi := \bigwedge_{\substack{i=1, \ldots, n \\ j=1, \ldots, m}} \psi_{i,j}$, dove:
+    \[ \psi_{i,j} := \begin{cases}
+        t_i \leq s_j & \text{se $\alpha_{1i} = t_i \leq x_k$ e $\alpha_{2j} = x_k \leq s_j$ usano $\leq$}\\
+        t_i < s_j & \text{c'è esattamente un $<$ tra $\alpha_{1i}$ e $\alpha_{2j}$ è $<$}\\
+        s(t_i) < s_j & \text{se c'è $<$ sia in $\alpha_{1i}$ che in $\alpha_{2j}$}\footnote{Questo caso serve, altrimenti potremmo incorrere in situazioni come $\exists x (a < x \land x < s(a))$, in cui non è possibile scegliere un successore immediato.}
     \end{cases}
     \]
-    (se uno tra $m$ o $n$ è 0, poniamo ancora $\psi:=\purple{\top}$). Di nuovo, dimostriamo che $\Th(D;<,s) \models (\exists x_k \, \varphi_i) \leftrightarrow \psi$,
-    e $\rightarrow$ è ancora immediata per transitività, per cui vediamo $\leftarrow$.
+    se almeno uno tra $n$ o $m$ è 0, poniamo $\psi := \top$. Verifichiamo infine che $\Th(D;<,s) \models (\exists x_k \, \varphi_i) \leftrightarrow \psi$.
     \begin{itemize}
-        \item[$\boxed{\leftarrow}$] Sia $M\models\Th(D;<,s)$ e $v$ tale che $M\models\{v\}\psi$. Come nel caso di $T_{\text{oldse}}$, scegliamo una condizione inferiore più restrittiva $\overline\varphi_1$ (oppure $\top$ se $m=0$) e una superiore più restrittiva $\overline\varphi_2$ (oppure $\top$ se $n=0$), ottenendo ancora
-        \[M\models\{v\}\forall x_k\,(\overline\varphi_1\land\overline\varphi_2)\to\varphi_i.
+        \item[$\boxed{\to}$] Siano $M$ e $v$ tali che $M \models \{v\} \Th(D;<,s)$ e $M \models \{v\} \exists x_k \, \varphi_i$, allora per gli assiomi di $\Th(D;<,s)$, per transitività, e per il fatto che $a < b \to s(a) \leq b$, segue subito che tutte le $\psi_{i,j}$ valgono in $M$, e quindi vale $\psi$. In particolare, per avere il terzo caso, se $t_i < x_k < s_j$, allora $v(t_i) < v(x_k) < v(s_j)$, per cui:
+        \[ s(v(t_i)) < s(v(x_k)) \leq v(s_j) \implies s(v(t_i)) < v(s_j) \]
+        \item[$\boxed{\leftarrow}$] Siano $M$ e $v$ tali che $M \models \{v\} \Th(D;<,s)$ e $M \models \{v\} \psi$. Se $n \ne 0$ esiste una $\alpha_{1\overline i}$ più restrittiva delle altre (ovvero quella con $v(t_i)$ più grande), per cui chiamo $\overline \varphi_1 := t_{\overline i} \bullet x_k$; se $n = 0$ pongo $\overline \varphi_1 := \top$.
+        Similmente, se $m \ne 0$ esiste una $\alpha_{2\overline j}$ più restrittiva delle altre (ovvero quella con $v(s_j)$ più piccola), per cui chiamo $\overline \varphi_2 := x_k \bullet s_{\overline j}$; se $m = 0$ pongo $\overline \varphi_2 := \top$. Segue immediatamente che:
+        \[ M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_1 \to \varphi_{\text{dx}} \quad \text{e} \quad M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_2 \to \varphi_{\text{sx}}
         \]
-        Dunque basta produrre un testimone per $\overline\varphi_1\land\overline\varphi_2$.
+        di conseguenza $M \models \{v\} \purple{\forall x_k} (\overline{\varphi}_1 \land \overline{\varphi}_2) \to \varphi_i$, quindi per verificare che $M \models \{v\} \exists x_k \, \varphi_i$, è sufficiente vedere che:
+        \[ M \models \{v\}( \psi \to \purple{\exists x_k} \, \overline{\varphi}_1 \land \overline{\varphi}_2)
+        \]
+        Distinguiamo due casi:
         \begin{itemize}
-            \item Se almeno uno tra $m$ o $n$ è 0, resta solo un vincolo unilatero, e il testimone esiste perché in un ordine discreto con predecessore e successore non ci sono estremi.
-            \item Se $m,n\neq 0$, dalla $\psi_{\overline i,\overline j}$ corrispondente ai due vincoli più restrittivi otteniamo esattamente la condizione di esistenza del testimone:
-            \begin{itemize}
-                \item[$\bullet$] se i due vincoli sono $\leq,\leq$, basta scegliere $x_k=v(v_{\overline i})$;
-                \item[$\bullet$] se sono $\leq,<$, da $v_{\overline i}<w_{\overline j}$ scegliamo ancora $x_k=v(v_{\overline i})$;
-                \item[$\bullet$] se sono $<,\leq$, da $s(v_{\overline i})\leq w_{\overline j}$ scegliamo $x_k=s(v(v_{\overline i}))$;
-                \item[$\bullet$] se sono $<,<$, da $s(v_{\overline i})<w_{\overline j}$ scegliamo $x_k=s(v(v_{\overline i}))$.
-            \end{itemize}
+            \item Se almeno uno tra $n$ o $m$ è 0, allora $\psi = \top$ e rimane solo una delle due condizioni $\ol \psi_i$, quindi solo una disuguaglianza da soddisfare almeno una volta, e questo è vero in $M$ perché è un ordine senza estremi, quindi l'implicazione è soddisfatta.
+            \item Se sia $n$ che $m$ sono diversi da 0, allora, dall'ipotesi, so che $M \models \{v\} \psi_{\overline i, \overline j}$, con $\psi_{\overline i, \overline j} = t_{\overline i} \bullet s_{\overline j}$, per cui vale $v(t_{\overline i}) \bullet v(s_{\overline j})$ e ci sono tre sottocasi.
+                  \begin{itemize}[$*$]
+                    \item Se sia $\overline \varphi_1$ che $\overline \varphi_2$ usano $\leq$, allora posso scegliere come $x_k$ uno qualsiasi tra $v(t_{\overline i})$ e $v(s_{\overline j})$.
+                    \item Se una tra $\overline \varphi_1$ e $\overline \varphi_2$ usa $<$, allora, se $\alpha_{1\overline i}$ usa $<$, prendo $x_k$ come il successore di $v(t_{\overline i})$, per cui vale $x_k > v(t_{\overline i})$ e $x_k \leq v(s_{\overline j})$; se invece $\alpha_{2\overline j}$ usa $<$, prendo $x_k$ come il predecessore di $v(s_{\overline j})$, per cui vale $x_k < v(s_{\overline j})$ e $x_k \geq v(t_{\overline i})$.
+                    È importante osservare che, a differenza di $\Th(D;<)$, in $\Th(D;<,s)$ ho un simbolo per il successore $s$, e tramite questo posso anche definire il predecessore, quindi questo è quello che funziona a differenza del caso precedente.
+                    \item Se c'è $<$ sia in $\overline \varphi_1$ che in $\overline \varphi_2$, allora, per il terzo caso di $\psi_{i,j}$, so che $s(v(t_{\ol i})) < v(s_{\ol j})$, per cui posso scegliere $x_k = s(v(t_{\ol i}))$, per cui vale anche $x_k > v(t_{\ol i})$.
+                  \end{itemize} 
         \end{itemize}
-        In ogni caso otteniamo $M\models\{v\}\exists x_k\,\varphi_i$.
     \end{itemize}
-    \fi
 \end{soln}
 
 \subsection{Ultraprodotti}
