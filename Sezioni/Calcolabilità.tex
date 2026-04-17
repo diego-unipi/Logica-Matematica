@@ -44,8 +44,8 @@ l'intenzione originaria di chi le aveva date. Le principali definizioni che vedi
 Vediamo alcuni esempi di funzioni primitive ricorsive.
 
 \begin{example}[Funzioni costanti]
-    Qualsiasi funzione costante $c_k : \NN^k \to \NN$ è primitiva ricorsiva, infatti $c_k$ si ottiene da $0_k$ componendo con la funzione successore $s$ un numero finito di volte:
-    \[ c_k(x_1, \dots, x_k) = s^k \circ 0_k(x_1, \dots, x_k) \]
+    Qualsiasi funzione costante $c_m : \NN^k \to \NN$ è primitiva ricorsiva, infatti $c_m$ si ottiene da $0_k$ componendo con la funzione successore $s$ un numero finito di volte:
+    \[ c_m(x_1, \dots, x_k) = s^m \circ 0_k(x_1, \dots, x_k) \]
 \end{example}
 
 \begin{example}[Funzione somma]
@@ -487,7 +487,7 @@ Posso costruire per bene una macchina $H$ che implementa le operazioni fatte a m
                                                                                                                                      \delta_F(1_F,\sigma) & \text{se $q = 0_G$} \\
                                                                                                                                      \delta_F(q,\sigma) & \text{se $q \in Q_F$}
     \end{cases}\]
-    cioè se sono nello stato iniziale di $G$, mi comporto come se fossi in $F$ - questo corrisponderebbe al nostro intervento manuale, altrimenti mi comporto come la macchina dello stato a cui appartengo.                                                                                 
+    cioè se sono nello stato finale di $G$, mi comporto come se fossi in quello iniziale di $F$ - questo corrisponderebbe al nostro intervento manuale, altrimenti mi comporto come la macchina dello stato a cui appartengo.                                                                                 
 \end{proof}
 
 Ora si pone il problema di generalizzare questo argomento alla composizione arbitraria. Costruiamo delle macchine che calcolino $f$, ma con qualche vincolo in più
@@ -628,17 +628,29 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
 \end{exercise}
 
 \begin{soln}
-    Per implementare $s$, partendo da $1 \blacktriangleright 1\ldots1$, con $x$ simboli 1, basta aggiungere un altro simbolo 1 alla fine della stringa:
-    \[ 1 \to \push_{x,1} \to 0 \]
-    Per implementare $\dotminus 1$, partendo da $1 \blacktriangleright x$, con $x$ simboli 1, in primis controllo se $x = 0$, e poi decido se restituire 0 o fare la sottrazione:
-    \[ 1 \to \ttif x = 0 \to \begin{cases}
-        2 & \text{se $x = 0$} \\
-        3 & \text{se $x \ne 0$}
-    \end{cases} \]
-    con $2 \blacktriangleright 0$ e $3 \blacktriangleright x$, ora riscrivo $x$ in notazione unaria per comodità, $3 \blacktriangleright 1\ldots1$, con $x$ simboli 1, e poi cancello un simbolo 1:
-    \[ 3 \to \rem_{x,1} \to 0 \]
-    In ambo i casi le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta - e unendo le funzioni di transizione in modo che lo stato di stop di quella applicata prima
-    si comporti come se fosse lo stato iniziale di quella applicata dopo.
+    Per implementare $s$, partendo da $1 \blacktriangleright 1\ldots1$, con $x$ simboli 1, basta aggiungere un altro simbolo 1 alla fine della stringa, per cui possiamo definire la funzione di transizione della macchina di Turing come segue:
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{c|ccc}
+        & $\blacktriangleright$ & $0$ & $1$ \\ \hline
+        $0$   & $0$ $\blacktriangleright$ $\downarrow$    & $0$ $0$ $\downarrow$    & $0$ $1$ $\downarrow$ \\ 
+        $1$   & $1$ $\blacktriangleright$ $\rightarrow$   & $2$ $1$ $\downarrow$   & $1$ $1$ $\rightarrow$ \\
+        $2$   & $0$ $\blacktriangleright$ $\downarrow$   & $2$ $0$ $\leftarrow$    & $2$ $1$ $\leftarrow$ \\
+    \end{tabular}
+    \end{table}
+    Prendendo $\Sigma = \{0,1,\blacktriangleright\}$ e $Q = \{0,1,2\}$, abbiamo definito la macchina che implementa la funzione successore $s$.\\
+    Per implementare $\dotminus 1$, partendo da $1 \blacktriangleright 1\ldots1$, con $x$ simboli 1, basta cancellare l'ultimo simbolo 1 della stringa, per cui possiamo definire:
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{c|ccc}
+        & $\blacktriangleright$ & $0$ & $1$ \\ \hline
+        $0$   & $0$ $\blacktriangleright$ $\downarrow$    & $0$ $0$ $\downarrow$    & $0$ $1$ $\downarrow$ \\ 
+        $1$   & $1$ $\blacktriangleright$ $\rightarrow$   & $2$ $0$ $\leftarrow$   & $1$ $1$ $\rightarrow$ \\
+        $2$   & $0$ $\blacktriangleright$ $\downarrow$   & $2$ $0$ $\leftarrow$    & $3$ $0$ $\rightarrow$ \\
+        $3$   & $0$ $\blacktriangleright$ $\downarrow$   & $3$ $0$ $\leftarrow$    & $3$ $1$ $\leftarrow$ \\
+    \end{tabular}
+    \end{table}
+    Prendendo $\Sigma = \{0,1,\blacktriangleright\}$ e $Q = \{0,1,2,3\}$, abbiamo definito anche la macchina che implementa la funzione PR $\dotminus 1$.
 \end{soln}
 
 \begin{exercise}
@@ -654,12 +666,12 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
     \centering
     \begin{tabular}{c|ccc}
         & $\blacktriangleright$ & $0$ & $1$ \\ \hline
-        $0$   & $\blacktriangleright$ $0$ $\downarrow$    & $0$ $0$ $\leftarrow$    & $1$ $0$ $\leftarrow$ \\ 
-        $1$   & $\blacktriangleright$ $\alpha_1$ $\rightarrow$   & $0$ $\alpha_1$ $\rightarrow$   & $1$ $\alpha_1$ $\rightarrow$ \\
-        $\alpha_j$ ($1 \leq j \leq i-1$)  & $\blacktriangleright$ $\alpha_j$ $\rightarrow$    & $0$ $\alpha_{j+1}$ $\rightarrow$  & $1$ $\alpha_j$ $\rightarrow$ \\
-        $\alpha_i$ & $\blacktriangleright$ $\alpha_i$ $\rightarrow$    & $0$ $2$ $\rightarrow$   & $1$ $3$ $\rightarrow$ \\
-        $2$   & $\blacktriangleright$ $2$ $\downarrow$   & $0$ $2$ $\leftarrow$    & $1$ $2$ $\leftarrow$ \\
-        $3$   & $\blacktriangleright$ $3$ $\downarrow$    & $0$ $3$ $\leftarrow$    & $1$ $3$ $\leftarrow$
+        $0$   & $0$ $\blacktriangleright$ $\downarrow$    & $0$ $0$ $\downarrow$    & $0$ $1$ $\downarrow$ \\ 
+        $1$   & $\alpha_1$ $\blacktriangleright$ $\rightarrow$   & $\alpha_1$ $0$ $\rightarrow$   & $\alpha_1$ $1$ $\rightarrow$ \\
+        $\alpha_j$ ($1 \leq j \leq i-1$)  & $\alpha_j$ $\blacktriangleright$ $\rightarrow$    & $\alpha_{j+1}$ $0$ $\rightarrow$  & $\alpha_j$ $1$ $\rightarrow$ \\
+        $\alpha_i$ & $\alpha_i$ $\blacktriangleright$ $\rightarrow$    & $2$ $0$ $\rightarrow$   & $3$ $1$ $\rightarrow$ \\
+        $2$   & $2$ $\blacktriangleright$ $\downarrow$   & $2$ $0$ $\leftarrow$    & $2$ $1$ $\leftarrow$ \\
+        $3$   & $3$ $\blacktriangleright$ $\downarrow$    & $3$ $0$ $\leftarrow$    & $3$ $1$ $\leftarrow$
     \end{tabular}
     \end{table}
     avendo definito $\Sigma, Q$ e $\delta$, abbiamo costruito la macchina che implementa $\ttif x_i = 0$.\\
@@ -678,15 +690,15 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
     \centering
     \begin{tabular}{c|ccc}
         & $\blacktriangleright$ & $0$ & $1$ \\ \hline
-        $0$ & $\blacktriangleright$ $0$ $\downarrow$ & $0$ $0$ $\leftarrow$ & $1$ $0$ $\leftarrow$ \\
-        $1$ & $\blacktriangleright$ $\alpha_1$ $\rightarrow$ & $0$ $\alpha_1$ $\rightarrow$ & $1$ $\alpha_1$ $\rightarrow$ \\
-        $\alpha_j$ ($1 \leq j \leq n-k-1$) & $\blacktriangleright$ $\alpha_j$ $\rightarrow$ & $0$ $\alpha_{j+1}$ $\rightarrow$ & $1$ $\alpha_j$ $\rightarrow$ \\
-        $\alpha_{n-k}$ & $\blacktriangleright$ $\alpha_{n-k}$ $\rightarrow$ & $\blacktriangleright$ $1_F$ $\downarrow$ & $1$ $\alpha_{n-k}$ $\rightarrow$ \\
+        $0$ & $0$ $\blacktriangleright$ $\downarrow$ & $0$ $0$ $\downarrow$ & $0$ $1$ $\downarrow$ \\
+        $1$ & $\alpha_1$ $\blacktriangleright$ $\rightarrow$ & $\alpha_1$ $0$ $\rightarrow$ & $\alpha_1$ $1$ $\rightarrow$ \\
+        $\alpha_j$ ($1 \leq j \leq n-k-1$) & $\alpha_j$ $\blacktriangleright$ $\rightarrow$ & $\alpha_{j+1}$ $0$ $\rightarrow$ & $\alpha_j$ $1$ $\rightarrow$ \\
+        $\alpha_{n-k}$ & $\alpha_{n-k}$ $\blacktriangleright$ $\rightarrow$ & $1_F$ $\blacktriangleright$ $\downarrow$ & $\alpha_{n-k}$ $1$ $\rightarrow$ \\
         \hline
         \multicolumn{4}{c}{tabella di $F \setminus \{0_F\}$} \\
         \hline
-        $0_F$ & $0$ $2$ $\leftarrow$ & $0$ $2$ $\leftarrow$ & $1$ $2$ $\leftarrow$ \\
-        $2$ & $\blacktriangleright$ $0$ $\downarrow$ & $0$ $2$ $\leftarrow$ & $1$ $2$ $\leftarrow$
+        $0_F$ & $2$ $0$ $\leftarrow$ & $2$ $0$ $\leftarrow$ & $2$ $1$ $\leftarrow$ \\
+        $2$ & $0$ $\blacktriangleright$ $\downarrow$ & $2$ $0$ $\leftarrow$ & $2$ $1$ $\leftarrow$
     \end{tabular}
     \end{table}
 \end{soln}
@@ -707,7 +719,7 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
         \item $\langle \rangle := 0$,
         \item $\langle a_1, \ldots, a_n \rangle := \cons(a_1, \langle a_2, \ldots, a_n \rangle)$.
     \end{itemize}
-    - osservare che questa è compatibile con la prima definizione, in quanto $\langle a \rangle = \cons(a, \langle \rangle) = \cons(a, 0)$.
+    - questa è compatibile con la prima definizione, poiché $\langle a \rangle = \cons(a, \langle \rangle) = \cons(a, 0)$.
 \end{definition}
 
 \begin{remark}[Iniettività della codifica di una lista]
