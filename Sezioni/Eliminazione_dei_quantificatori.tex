@@ -341,7 +341,7 @@ Usiamo la notazione appena introdotta per enunciare il teorema di Łoś.
 \end{theorem}
 
 \begin{corollary}[Un ultraprodotto di modelli è un modello della stessa teoria]
-    Se per ogni $i \in I$, vale $M_i \models \varphi$, allora $\faktor{\prod_{i \in I} M_i}{U} \models \varphi$.
+w    Se per ogni $i \in I$, vale $M_i \models \varphi$, allora $\faktor{\prod_{i \in I} M_i}{U} \models \varphi$.
     Quindi un ultraprodotto di modelli di una $L$-teoria $T$ è anch'esso un modello di $T$. Inoltre, per \purple{$U$ non principale},
     se per ogni $i \in I$, \purple{eccetto al più un numero finito di indici}, vale $M_i \models \varphi$, allora $\faktor{\prod_{i \in I} M_i}{U} \models \varphi$.
 \end{corollary}
@@ -646,6 +646,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \item insiemi finiti nel linguaggio $\varnothing$;
         \item grafi connessi - con il linguaggio $L = \{\purple{e(\cdot,\cdot)}\}$ (simbolo di relazione binaria) \textcolor{MidnightBlue}{- per ogni coppia di vertici è collegata esiste un cammino che li connette};
         \item campi di caratteristica finita;
+        \item gruppi abeliani non divisibili \textcolor{MidnightBlue}{- per ogni $x$ esiste $n \in \NN$ tale che $\forall y \; x \ne \underbrace{y+\ldots + y}_{n\text{ volte}}$};
         \item $\purple{{}^*}$gruppi liberi \textcolor{MidnightBlue}{- esistono un insieme di generatori liberi, ossia senza relazioni non banali tra di loro};
         \item $\purple{{}^*}$gruppi semplici \textcolor{MidnightBlue}{- ossia senza sottogruppi normali non banali}.
     \end{enumerate}
@@ -657,7 +658,8 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \item Supponiamo, per assurdo, che esista una teoria $T$ che assiomatizza la classe degli insiemi finiti nel linguaggio vuoto $L_\varnothing = \varnothing$. Allora:
         \[ T' = T \cup \{\mathsf{AtLeast}_2, \mathsf{AtLeast}_3, \ldots\} 
         \]
-        dove $\mathsf{AtLeast}_n := \exists x_1 \ldots \exists x_n \bigwedge_{1 \leq i < j \leq n} \neg (x_i = x_j)$ è la formula che dice che ci sono almeno $n$ elementi distinti; quella ottenuta è una $L$-teoria nel linguaggio espanso $L := L_\varnothing \cup \{\purple{c_1}, \purple{c_2}, \ldots\}$\footnote{Tecnicamente in questo caso non è davvero necessario espandere il linguaggio.}. Osserviamo che $T'$ è finitamente coerente perché data una qualsiasi sottoteoria finita 
+        dove $\mathsf{AtLeast}_n := \exists x_1 \ldots \exists x_n \bigwedge_{1 \leq i < j \leq n} \neg (x_i = x_j)$ è la formula che dice che ci sono almeno $n$ elementi distinti; quella ottenuta è una $L$-teoria nel linguaggio espanso $L := L_\varnothing \cup \{\purple{c_1}, \purple{c_2}, \ldots\}$\footnote{Tecnicamente in questo caso non è davvero necessario espandere il linguaggio, lo diventa quando non possiamo scrivere 
+        una formula del linguaggio che testimonia l'esistenza di infiniti elementi.}. Osserviamo che $T'$ è finitamente coerente perché data una qualsiasi sottoteoria finita 
         questa conterrà un numero finito di nuovi assiomi, per cui un sottoinsieme sufficientemente grande di $\NN$ è un modello di tale sottoteoria. Per la proposizione precedente, $T'$ è coerente, quindi ha un modello $M$. 
         A questo punto consideriamo la struttura ridotta $M|_{L_\varnothing}$, che è ovviamente \textbf{ancora un modello di $T$}, ma non è finita perché le interpretazioni delle costanti $\purple{c_1}, \purple{c_2}, \ldots$ in $M$, che sono
         infinite e distinte, appartengono al dominio di $M|_{L_\varnothing}$, per cui si ha un assurdo.
@@ -671,8 +673,10 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \[ T' = T \cup \{\neg\,\mathsf{Path}_1(a,b),\neg\,\mathsf{Path}_2(a,b),\ldots\}
         \]
         dove:
-        \[  \mathsf{Path}_1(a,b) := e(a,b), \qquad
-            \mathsf{Path}_n(a,b) := \exists x_1\ldots\exists x_{n-1}\;\bigl(e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-1},b)\bigr),\; n\geq 2 \]
+        \begin{align*}
+                \mathsf{Path}_1(a,b) &:= e(a,b), \\
+                \mathsf{Path}_n(a,b) &:= \exists x_1\ldots\exists x_{n-1}\;\bigl(e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-1},b)\bigr),\; n\geq 2
+        \end{align*}
         Quella ottenuta è una $L' := L \cup \{\textcolor{purple}{a}, \textcolor{purple}{b}\}$-teoria.
         Mostriamo che è finitamente coerente. Sia $T'' \subseteq T'$ finita. Se $T''$ non contiene formule del tipo $\neg\,\mathsf{Path}_k(a,b)$, allora basta un qualsiasi grafo connesso. Altrimenti, sia $m$ il massimo indice che compare in tali formule e poniamo $n:=m+1$.
         In questo caso $T''$ è soddisfatta da un grafo connesso del tipo:
@@ -700,6 +704,11 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \[ \CC = \faktor{\prod_{p \text{ primo}} \overline{\mathbb{F}_p}}{U}
         \]
         con $U$ ultrafiltro non principale. Ora se $F$ è un campo di caratteristica finita se e solo se $F \models T$, per il teorema di Łoś si ha che $\CC \models T$, ma questo è assurdo perché $\CC$ ha caratteristica 0.
+        \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi abeliani non divisibili nel linguaggio dei gruppi $L_\text{gr}$, allora un gruppo $G$ è abeliano e non divisibile se e solo se $G \models T$.
+        Poiché $\ol{F_p}$ è un gruppo abeliano non divisibile, prendendo $x$ qualsiasi diverso da 0 e $n = p$, segue che:
+        \[ \faktor{\prod_{p \text{ primo}} \overline{\mathbb{F}_p}}{U} \models T
+        \]
+        ma questo è assurdo perché l'ultraprodotto è $\CC$, che è un gruppo abeliano divisibile.
         \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi liberi nel linguaggio dei gruppi $L_\text{gr} = \{\textcolor{purple}{\cdot}, \textcolor{purple}{^{-1}}, \textcolor{purple}{e}\}$.
         Allora, preso $U$ ultrafiltro non principale su $\mathcal{P}(\NN)$, possiamo considerare l'ultraprodotto:
         \[ G = \faktor{\prod_{n \in \NN} \ZZ}{U}
@@ -714,10 +723,19 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         dove l'ultima appartenenza vale perché $U$ è un ultrafiltro non principale e quell'insieme è cofinito.
         \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi semplici nel linguaggio dei gruppi $L_\text{gr} = \{\purple{\cdot}, \purple{^{-1}}, \purple{e}\}$.
         Per cui un gruppo $G$ è semplice se e solo se $G \models T$. Osserviamo che (per il teorema di Lagrange) $\FF_p$ è semplice per ogni $p$ primo. Consideriamo quindi l'ultraprodotto:
-        \[ \CC \cong \faktor{\prod_{p \text{ primo}} \FF_p}{U}
+        \[ G := \faktor{\prod_{p \text{ primo}} \FF_p}{U}
         \]
-        con $U$ ultrafiltro non principale; per il teorema di Łoś si avrebbe che $\CC \models T$, ma questo è assurdo perché $\CC$ non è semplice in quanto ha sottogruppi normali non banali (ad esempio $\ZZ$).
-\end{enumerate}
+        con $U$ ultrafiltro non principale; per il teorema di Łoś si avrebbe che $G \models T$, ovvero $G$ è semplice, ed al contempo è abeliano.
+        Ora un gruppo abeliano semplice è necessariamente ciclico, preso un qualunque $g \ne 0$ deve valere $\langle g \rangle = G$, assumendo che $G$ sia infinito, allora $G \cong \ZZ$,
+        ma questo è assurdo perché $2\ZZ \trianglelefteq \ZZ$ è un sottogruppo normale non banale. Per vedere che $G$ è infinito usiamo la mappa:
+        \[ f : [0,1) \to G : x \mapsto [(\overline{\floor{x \cdot p}})_{p \text{ primo}}] \]
+        dove escludiamo $1$ perché verrebbe $\ol p = \ol 0$ in ciascuna componente. Come per la mappa standard si osserva che se $x < y$ in $[0,1)$, allora $\frac{1}{y-x} \leq p$ definitivamente, e da questo
+        segue che $\floor{x \cdot p} < \floor{y \cdot p}$, per cui:
+        \[ \{p \text{ primo} | \overline{\floor{x \cdot p}} \neq \overline{\floor{y \cdot p}}\} \supseteq \left\{p \text{ primo} \middle| p \geq \frac{1}{y-x}\right\} \in U
+        \]
+        dove l'ultima appartenenza vale perché $U$ è un ultrafiltro non principale e quell'insieme è cofinito. In particolare abbiamo dimostrato che $|G| = 2^{\aleph_0}$,
+        dunque $G$ non può essere nemmeno ciclico.
+    \end{enumerate}
 \end{soln}
 
 \begin{example}[Assiomatizzabilità della classe degli insiemi infiniti]
@@ -781,16 +799,68 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \[ T := \{\text{assiomi dei gruppi + abelianità}\} \cup \{\psi_n | n \in \NN, n \geq 1\}
         \]
         dove $\psi_n$ è la $L_{\text{gr}}$-formula: $\forall x \; \exists y \; x = ny$, che esprime la divisibilità per $n$. È chiaro che un gruppo $G$ è abeliano divisibile se e solo se $G \models T$. Supponiamo ora per assurdo che esista $T'$ finita che assiomatizza la classe dei gruppi abeliani divisibili, come prima si ha $T \models T'$, e per compattezza semantica 
-        si ha $T'' \subseteq T$ finita tale che $T'' \models T'$. Possiamo assumere, WLOG, che $T'' = T_{\text{grab}} \cup \{\psi_1, \ldots, \psi_n\}$, dove $T_{\text{grab}}$ è la teoria dei gruppi abeliani; come nei casi precedenti un gruppo $G$ è abeliano divisibile se e solo se $G \models T''$, ma questo è assurdo perché, considerando $S^{-1}\ZZ$, con $S = \{p_1^{e_1}\cdot\ldots\cdot p_{k_n}^{e_{k_n}} | e_i \in \NN, p_i \text{ primo}, p_i \leq n\}$, si ha che $S^{-1}\ZZ \models T''$ (perché ho sufficienti denominatori per dividere ogni intero fino ad $n$ volte),
-        ma $S^{-1}\ZZ$ non è divisibile per $q$ con $q$ primo e $q > n$, per cui $S^{-1}\ZZ \not\models T$ $\lightning$.
-        \item Sia $L = \{\purple{e(\cdot,\cdot)}\}$ il linguaggio dei grafi, un'assiomatizzazione della classe dei grafi 3-colorabili è data da:
-        \[ T := \{\text{assiomi dei grafi}\} \cup \{\theta_n | n \in \NN, n \geq 1\}
-        \]
-        dove $\theta_n$ è la formula che dice che non esiste una catena di lunghezza $n$ di vertici adiacenti tutti dello stesso colore, formalmente:
-        \[ \theta_n := \neg \, \exists x_1 \ldots \exists x_n \; \bigwedge_{1 \leq i < j \leq n} (e(x_i,x_j) \lor x_i = x_j)
-        \]
-        È chiaro che un grafo $G$ è 3-colorabile se e solo se $G \models T$. Supponiamo ora per assurdo che esista $T'$ finita che assiomatizza la classe dei grafi 3-colorabili, allora come prima esiste $n \in \NN$ sufficientemente grande tale che $T'' := \{\text{assiomi dei grafi}\} \cup \{\theta_1, \ldots, \theta_n\} \models T'$. Osserviamo ora che anche $T''$ assiomatizza la classe dei grafi 3-colorabili, infatti: se $G$ è un grafo 3-colorabile, allora banalmente $G \models T''$; viceversa, se $G \models T''$, allora $G \models T'$, per cui $G$ è 3-colorabile.
-        Siamo dunque arrivati ad un assurdo perché il ciclo di lunghezza $n+1$ non è 3-colorabile ma soddisfa tutte le $\theta_i$ con $i \leq n$.
+        si ha $T'' \subseteq T$ finita tale che $T'' \models T'$. Possiamo assumere, WLOG, che $T'' = T_{\text{grab}} \cup \{\psi_1, \ldots, \psi_n\}$, dove $T_{\text{grab}}$ è la teoria dei gruppi abeliani; come nei casi precedenti un gruppo $G$ è abeliano divisibile se e solo se $G \models T''$, ma questo è assurdo perché,
+        considerando $S^{-1}\ZZ$, con $S = \{p_1^{e_1}\cdot\ldots\cdot p_{k_n}^{e_{k_n}} | e_i \in \NN, p_i \text{ primo}, p_i \leq n\}$, si ha che $S^{-1}\ZZ \models T''$ (perché ho sufficienti denominatori per dividere ogni intero con un naturale fino ad $n$),
+        ma $S^{-1}\ZZ$ non è divisibile per $q$ con $q$ primo e $q > n$ - per cui non ho $1/q$ in $S^{-1}\ZZ$, quindi $S^{-1}\ZZ \not\models T$ $\lightning$.
+        \item Nel linguaggio dei grafi $L = \{e(\cdot,\cdot)\}$, per il teorema di de Bruijn-Erdős [REF], un grafo è 3-colorabile se e solo se ogni suo sottografo finito lo è. Sia $F$ un insieme di rappresentanti, a meno di isomorfismo, di tutti i grafi finiti \emph{non} 3-colorabili, $F$ è definibile in $\mathsf{ZFC}$ come quoziente di un opportuno insieme definito per separazione.
+        Per ogni $H \in F$ con vertici $v_1, \dots, v_n$, definiamo la formula $\phi_H$:
+        \[ \phi_H := \forall x_1 \dots \forall x_n \, \neg \left( \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
+        che esprime il fatto che $H$ non è un sottografo della struttura che la soddisfa, e che quindi non ci sono sottografi finiti non 3-colorabili - nella stessa classe di equivalenza di $H$.
+        Possiamo quindi assiomatizzare la classe dei grafi 3-colorabili con la teoria:
+        \[ T_{\text{3-col}} := T_{\text{grafi}} \cup \{ \phi_H \mid H \in F \} \]
+        È chiaro che un modello $G$ è un grafo 3-colorabile se e solo se $G \models T_{\text{3-col}}$, infatti soddisfare tutte le $\phi_H$ equivale a non avere sottografi finiti non 3-colorabili, che è appunto la condizione per essere 3-colorabile, notiamo infinite che $|F|$ è infinita perché ci sono infiniti grafi finiti non 3-colorabili (ad esempio le ruote dispari $W_{2k+1}$).
+        \begin{center}
+            \begin{tikzpicture}[every node/.style={circle, draw, minimum size=4.55mm, inner sep=0pt}]
+                \begin{scope}[shift={(-4.8,0)}]
+                    \foreach \i/\ang/\col in {1/90/red,2/210/green,3/330/red}{
+                        \node[fill=\col] (wThreeR\i) at (\ang:1.25) {};
+                    }
+                    \node[fill=blue] (wThreeC) at (0,0) {};
+                    \draw (wThreeR1) -- (wThreeR2) -- (wThreeR3) -- (wThreeR1);
+                    \foreach \i in {1,2,3}{
+                        \draw (wThreeC) -- (wThreeR\i);
+                    }
+                    \node[draw=none] at (0,-2.05) {$W_3$};
+                \end{scope}
+
+                \begin{scope}[shift={(0,0)}]
+                    \foreach \i/\col in {1/red,2/green,3/red,4/green,5/red}{
+                        \node[fill=\col] (wFiveR\i) at ({90 - 72*(\i-1)}:1.25) {};
+                    }
+                    \node[fill=blue] (wFiveC) at (0,0) {};
+                    \foreach \i/\j in {1/2,2/3,3/4,4/5,5/1}{
+                        \draw (wFiveR\i) -- (wFiveR\j);
+                    }
+                    \foreach \i in {1,2,3,4,5}{
+                        \draw (wFiveC) -- (wFiveR\i);
+                    }
+                    \node[draw=none] at (0,-2.05) {$W_5$};
+                \end{scope}
+
+                \begin{scope}[shift={(4.8,0)}]
+                    \foreach \i/\col in {1/red,2/green,3/red,4/green,5/red,6/green,7/red}{
+                        \node[fill=\col] (wSevenR\i) at ({90 - 360/7*(\i-1)}:1.25) {};
+                    }
+                    \node[fill=blue] (wSevenC) at (0,0) {};
+                    \foreach \i/\j in {1/2,2/3,3/4,4/5,5/6,6/7,7/1}{
+                        \draw (wSevenR\i) -- (wSevenR\j);
+                    }
+                    \foreach \i in {1,2,3,4,5,6,7}{
+                        \draw (wSevenC) -- (wSevenR\i);
+                    }
+                    \node[draw=none] at (0,-2.05) {$W_7$};
+                \end{scope}
+            \end{tikzpicture}
+        \end{center}
+        Supponiamo ora per assurdo che esista $T'$ finita che assiomatizza la classe dei grafi 3-colorabili, allora $T_{\text{3-col}} \models T'$, e per il teorema di compattezza esiste $T'' \subseteq T_{\text{3-col}}$ finita tale che $T'' \models T'$, e ovviamente anche $T' \models T_{\text{3-col}}$, per cui $T'' \models T'$.
+        Possiamo assumere (WLOG) che $T'' = T_{\text{grafi}} \cup \{\phi_{H_1}, \ldots, \phi_{H_m}\}$, ovvero che escluda solo la presenza di $m$ grafi finiti non 3-colorabili, $H_1, \ldots, H_m$.\\
+        Sia $N$ il massimo numero di vertici tra tutti i grafi proibiti $H_1, \ldots, H_m$. Scegliamo $k$ tale che $2k+2 > N$, e consideriamo la ruota dispari $W_{2k+1}$, essa è un modello di $T''$, in quanto:
+        \begin{itemize}
+            \item $W_{2k+1}$ è un grafo, dunque soddisfa $T_{\text{grafi}}$;
+            \item $W_{2k+1}$ non contiene alcun $H_i$ come sottografo, perché ogni $H_i$ ha al massimo $N$ vertici, mentre $W_{2k+1}$ ha $2k+2 > N$ vertici, dunque se $W_{2k+1}$ contenesse un $H_i$, questo dovrebbe essere un \emph{sottografo proprio},
+            ma ogni sottografo proprio di $W_{2k+1}$ è 3-colorabile, infatti togliendo un vertice da una ruota dispari si ottiene sempre un ciclo chiuso che è 3-colorabile, per cui anche i sottografi devono esserlo mentre $H_i$ per definizione non lo è, dunque $W_{2k+1}$ non può contenere alcun $H_i$.
+        \end{itemize}
+        Quindi $W_{2k+1} \models T''$, per cui $W_{2k+1} \models T_{\text{3-col}}$, ma $W_{2k+1}$ non è 3-colorabile, dunque assurdo.
     \end{enumerate}
 \end{soln}
 
@@ -850,10 +920,10 @@ La seconda applicazione ci dà il pretesto per introdurre le seguenti definizion
 \end{definition}
 
 \begin{definition}[Sottostruttura elementare]
-    Se $M = (C;i|_C)$ è una sottostruttura di $N = (D;i)$ e per ogni $L$-formula $\varphi(x_1,\ldots,x_k)$ vale:
+    Se $M = (C;i|_C)$ è una sottostruttura di $N = (D;i)$ e per ogni $L$-formula $\varphi(x_1,\ldots,x_k)$ vale una \purple{condizione di compatibilità}:
     \[ \forall a_1,\ldots,a_k \in C \; M \models \varphi(a_1,\ldots,a_k) \iff N \models \varphi(a_1,\ldots,a_k)
     \]
-    \textcolor{MidnightBlue}{- cioè la validità di una formula, quando si usano parametri nella sottostruttura, non cambia se la si valuta in $M$ o in $N$} - allora $M$ si dice \vocab{sottostruttura elementare} di $N$, e si denota \vocab{$M \preceq N$}.
+    \textcolor{MidnightBlue}{- cioè la validità di una formula, quando si usano gli stessi parametri, presi nella sottostruttura, è compatibile in $M$ e $N$} - allora $M$ si dice \vocab{sottostruttura elementare} di $N$, e si denota \vocab{$M \preceq N$}.
 \end{definition}
 
 \begin{definition}[Estensione/Estensione elementare]
@@ -863,6 +933,11 @@ La seconda applicazione ci dà il pretesto per introdurre le seguenti definizion
 \begin{remark}[Utilità delle sottostrutture elementari]
     Siano $M,N$ due $L$-strutture, se $M \preceq N$ e $N \models T$, con $T$ una $L$-teoria, allora $M \models T$. 
 \end{remark}
+
+Quindi le sottostrutture elementari ereditano tutte le proprietà espresse da formule che sono vere nella struttura più grande. Possiamo inoltre caratterizzare le sottostrutture e le sottostrutture elementari tramite i diagrammi
+che abbiamo definito, nella maniera seguente.
+
+\pagebreak
 
 \begin{remark}[Caratterizzazione delle sottostrutture tramite i diagrammi]
     Siano $M = (C;\ldots)$ e $N = (D;\ldots)$ con $C \subseteq D$. La $L$-struttura $N$ può essere vista come una $L(M)$-struttura $N_M$, interpretando ogni simbolo di costante di $L(M)$ come in $M_M$. Vale allora che:
