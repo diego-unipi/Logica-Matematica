@@ -808,7 +808,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         che esprime il fatto che $H$ non è un sottografo della struttura che la soddisfa, e che quindi non ci sono sottografi finiti non 3-colorabili - nella stessa classe di equivalenza di $H$.
         Possiamo quindi assiomatizzare la classe dei grafi 3-colorabili con la teoria:
         \[ T_{\text{3-col}} := T_{\text{grafi}} \cup \{ \phi_H \mid H \in F \} \]
-        È chiaro che un modello $G$ è un grafo 3-colorabile se e solo se $G \models T_{\text{3-col}}$, infatti soddisfare tutte le $\phi_H$ equivale a non avere sottografi finiti non 3-colorabili, che è appunto la condizione per essere 3-colorabile, notiamo infinite che $|F|$ è infinita perché ci sono infiniti grafi finiti non 3-colorabili (ad esempio le ruote dispari $W_{2k+1}$).
+        È chiaro che un modello $G$ è un grafo 3-colorabile se e solo se $G \models T_{\text{3-col}}$, infatti soddisfare tutte le $\phi_H$ equivale a non avere sottografi finiti non 3-colorabili, che è appunto la condizione per essere 3-colorabile, notiamo infinite che $|F|$ è infinita perché ci sono infiniti grafi finiti non 3-colorabili (ad esempio i grafi a ruota dispari [REF] $W_{2k+1}$).
         \begin{center}
             \begin{tikzpicture}[every node/.style={circle, draw, minimum size=4.55mm, inner sep=0pt}]
                 \begin{scope}[shift={(-4.8,0)}]
@@ -854,11 +854,11 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \end{center}
         Supponiamo ora per assurdo che esista $T'$ finita che assiomatizza la classe dei grafi 3-colorabili, allora $T_{\text{3-col}} \models T'$, e per il teorema di compattezza esiste $T'' \subseteq T_{\text{3-col}}$ finita tale che $T'' \models T'$, e ovviamente anche $T' \models T_{\text{3-col}}$, per cui $T'' \models T'$.
         Possiamo assumere (WLOG) che $T'' = T_{\text{grafi}} \cup \{\phi_{H_1}, \ldots, \phi_{H_m}\}$, ovvero che escluda solo la presenza di $m$ grafi finiti non 3-colorabili, $H_1, \ldots, H_m$.\\
-        Sia $N$ il massimo numero di vertici tra tutti i grafi proibiti $H_1, \ldots, H_m$. Scegliamo $k$ tale che $2k+2 > N$, e consideriamo la ruota dispari $W_{2k+1}$, essa è un modello di $T''$, in quanto:
+        Sia $N$ il massimo numero di vertici tra tutti i grafi proibiti $H_1, \ldots, H_m$. Scegliamo $k$ tale che $2k+2 > N$, e consideriamo il grafo a ruota dispari $W_{2k+1}$, essa è un modello di $T''$, in quanto:
         \begin{itemize}
             \item $W_{2k+1}$ è un grafo, dunque soddisfa $T_{\text{grafi}}$;
             \item $W_{2k+1}$ non contiene alcun $H_i$ come sottografo, perché ogni $H_i$ ha al massimo $N$ vertici, mentre $W_{2k+1}$ ha $2k+2 > N$ vertici, dunque se $W_{2k+1}$ contenesse un $H_i$, questo dovrebbe essere un \emph{sottografo proprio},
-            ma ogni sottografo proprio di $W_{2k+1}$ è 3-colorabile, infatti togliendo un vertice da una ruota dispari si ottiene sempre un ciclo chiuso che è 3-colorabile, per cui anche i sottografi devono esserlo mentre $H_i$ per definizione non lo è, dunque $W_{2k+1}$ non può contenere alcun $H_i$.
+            ma ogni sottografo proprio di $W_{2k+1}$ è 3-colorabile, infatti togliendo un vertice di un grafo a ruota dispari si ottiene sempre un ciclo chiuso che è 3-colorabile, per cui anche i sottografi devono esserlo mentre $H_i$ per definizione non lo è, dunque $W_{2k+1}$ non può contenere alcun $H_i$.
         \end{itemize}
         Quindi $W_{2k+1} \models T''$, per cui $W_{2k+1} \models T_{\text{3-col}}$, ma $W_{2k+1}$ non è 3-colorabile, dunque assurdo.
     \end{enumerate}
