@@ -227,7 +227,7 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
     \[ \cons : \NN^2 \to \NN : (x,y) \mapsto \frac{(x+y)(x+y+1)}{2} + x + 1\]
 \end{definition}
 
-Tale funzione è biunivoca tra le coppie $(x,y) \in \NN^2$ e i numeri naturali maggiori di 1 - fa comodo avere un null point, e quindi non vogliamo che $(0,0)$ venga codificato da $0$.
+Tale funzione è biunivoca tra le coppie $(x,y) \in \NN^2$ e i numeri naturali maggiori o uguali a 1 - fa comodo avere un null point, e quindi non vogliamo che $(0,0)$ venga codificato da $0$.
 La funzione di pairing si può pensare nel modo seguente:
 \begin{figure}[htbp]
     \centering
@@ -587,8 +587,10 @@ Dobbiamo anche definire macchine di Turing che implementino le funzioni: success
             \[ a \to \push_{k+3,1} \to \exec_{k+4,1}\dotminus 1 \to b \]
             con $b \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t+1)$, copiamo ora gli input $y_1,\dots,y_k$ in fondo:
             \[ b \to \push_{k+4,2} \to \push_{k+5,3} \to \ldots \to \push_{2k+3,k+1} \to c \]
-            con $c \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t + 1) y_1 \ldots y_k$, ora copiamo $t$ in fondo e applichiamo $s$, per ottenere $t+1$, fatto questo ricopiamo $t+1$ e $y_1,\dots,y_k$ in fondo alla lista, e poi applichiamo $f$:
-            \begin{multline*} c \to \push_{2k+3,k+2} \to \exec_{2k+4,k+2}s \to \push_{2k+4,k+3} \to \\ \to \push_{2k+5,k+4} \to \ldots \to \push_{3k+4,2k+3} \to \to \exec_{3k+5,2k+3}f \to d \end{multline*}
+            con $c \blacktriangleright x - t y_1 \ldots y_k t f(t, y_1, \dots, y_k) x - (t + 1) y_1 \ldots y_k$, ora copiamo in fondo gli argomenti necessari per il passo ricorsivo, cioè $t$, $f(t,y_1,\dots,y_k)$ e $y_1,\dots,y_k$, e poi applichiamo $g$:
+            \begin{multline*}
+                c \to \push_{2k+3,k+2} \to \push_{2k+4,k+3} \to \\ \to \push_{2k+5,2} \to \ldots \to \push_{3k+4,k+1} \to \exec_{3k+5,k+2}g \to d
+            \end{multline*}
             Cancellando con $\rem$ tutti i simboli iniziali otteniamo $\blacktriangleright x - (t + 1) y_1 \ldots y_k (t+1) f(t+1, y_1, \dots, y_k)$, e da qui si arriva allo stato terminale.\\
         \end{proof}
         Rimane il caso in cui $h(y_1, \dots, y_k) = \bot$ o $g(i, f(x, y_1, \dots, y_k), y_1, \dots, y_k) = \bot$, per qualche $i \leq x$, in tal caso, per ipotesi, le macchine associate a $h$ e $g$ non terminano e di conseguenza non terminano $\exec\, h$ o $\exec\, g$,
@@ -738,9 +740,9 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
     Definiamo le seguenti funzioni PR sulle liste:
     \begin{itemize}
         \item $\nth(\langle a_0, \ldots, a_n \rangle, k) := a_k$ se $k \leq n$, e 0 altrimenti,
-        \item $\length(\langle a_1, \ldots, a_n \rangle) := n$,
-        \item $\cat(\langle a_1, \ldots, a_m \rangle, \langle b_1, \ldots, b_n \rangle) := \langle a_1, \ldots, a_m, b_1, \ldots, b_n \rangle$,
-        \item $\head(\langle a_1, \ldots, a_n \rangle,k) := \langle a_1, \ldots, a_k \rangle$ se $k \leq n$, e $\langle a_1, \ldots, a_n \rangle$ altrimenti,
+        \item $\length(\langle a_0, \ldots, a_n \rangle) := n+1$,
+        \item $\cat(\langle a_0, \ldots, a_m \rangle, \langle b_0, \ldots, b_n \rangle) := \langle a_0, \ldots, a_m, b_0, \ldots, b_n \rangle$,
+        \item $\head(\langle a_0, \ldots, a_n \rangle,k) := \langle a_0, \ldots, a_{k-1} \rangle$ se $k \leq n+1$, e $\langle a_0, \ldots, a_n \rangle$ altrimenti,
     \end{itemize}
 \end{definition}
 
@@ -756,16 +758,18 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
         g(l,k+1) := \cdr(g(l,k))
     \end{cases} \]
     ora $g(l,k)$ coincide con $\cdr^k$, infatti il passo ricorsivo fatto $k$ volte corrisponde a $\cdr^k$; 
-    inoltre $\nth(l,k) = \car(g(l,k))$, infatti, se $l = \langle a_0, \ldots, a_n \rangle$, allora $g(l,k) = \langle a_k, \ldots, a_n \rangle$, e prendendo $\car$ si ottiene $a_k$ se $k \leq n$,
-    mentre $g(l,k)=0$ se $k>n$, in quanto arriviamo con $\cdr$ a 0 e $\car(0)=0$. Pertanto $\nth(l,k) = \car(g(l,k)) = \car \circ \cdr^k(l)$.\\
-    Per $\length$ basterà osservare che $\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}$, infatti $\{\cdr^i(l) \ne 0\}$ è un predicato PR - il fatto che $\cdr^i$ sia PR deriva dalla stessa definizione ricorsiva che se ne può dare come fatto sopra,
-    e $l \mapsto \#\{i < l| \cdr^i(l) \ne 0\}$ è una funzione che conta gli elementi di un predicato PR fino a $l$, che è quindi PR per un esempio precedente.\\
-    Per $\cat$ è sufficiente definire una funzione PR ausiliaria:
+    inoltre $\boxed{\nth(l,k) = \car \circ g(l,k)}$, infatti, se $l = \langle a_0, \ldots, a_n \rangle$, allora $g(l,k) = \langle a_k, \ldots, a_n \rangle$, e prendendo $\car$ si ottiene $a_k$ se $k \leq n$;
+    mentre se $k>n$, allora $g(l,k)=0$, in quanto arriviamo con $\cdr$ a 0 e $\car(0)=0$.\\
+    Per $\length$ basterà osservare che $\boxed{\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}}$, cioè quante volte si può fare $\cdr$ prima di arrivare a 0;
+    tale funzione è PR, perché per ogni $i \in \NN$ $\{\cdr^i(l) \ne 0\}$ è un predicato PR, e $l \mapsto \#\{i < l| \cdr^i(l) \ne 0\}$ è una funzione che conta gli elementi di un predicato PR fino a $l$, che è quindi PR per un esempio precedente.
+    Infine è facile osservare che $n+1 = \length(l)$ se e solo se $\cdr^{n+1}(l) = 0$ - sto indicizzando da $a_0$, quindi il numero di applicazioni di $\cdr$ necessarie per arrivare a 0 coincide con la lunghezza della lista - da cui la definizione di $\length$ data sopra funziona.\\
+    Per $\cat$ è sufficiente mettere la seconda codifica più interna e poi aggiungere in testa gli elementi della prima lista partendo dall'ultimo, così da preservarne l'ordine finale; questo può essere fatto definendo la seguente funzione PR:
     \[ f(a,b,k) := \begin{cases}
         f(a,b,0) := b \\
-        f(a,b,k+1) := \cons(\nth(a,k), f(a,b,k))
+        f(a,b,k+1) := \cons(\nth(a,\length(a)\dotminus(k+1)), f(a,b,k))
     \end{cases} \]
-    dove $\nth(a,k)$ è l'elemento $a_k$ della lista $a$, e $f(a,b,k)$ è la concatenazione di $b$ con gli ultimi $k$ elementi di $a$; da questa si ha che $\cat(a,b) = f(a,b,\length(b))$.
+    in pratica per calcolare $f(a,b,k)$ si parte da $b$ e si aggiungono in testa prima l'ultimo elemento di $a$, poi il penultimo, e così via fino al primo; ne segue
+    quindi che vale $\boxed{\cat(a,b) = f(a,b,\length(a))}$.
 \end{soln}
 
 Per dimostrare che anche $\head$ è PR ci serve un lemma.
@@ -773,8 +777,7 @@ Per dimostrare che anche $\head$ è PR ci serve un lemma.
 \begin{lemma}[Ricorsione sul (de)corso dei valori]
     Sia $f : \NN^{n+1} \to \NN$ una funzione e $g : \NN^{n+1} \to \NN$ PR, tali che:
     \[ f(x_1, \ldots, x_n,y) = g(x_1, \ldots, x_n, \langle f(\mathbf x,y-1), f(\mathbf x,y-2), \ldots, f(\mathbf x,0) \rangle) \]
-    ovvero $f$ è definita in modo ricorsivo a partire da $g$, dove il parametro su cui ricorriamo è $y$, e la dipendenza è dalla lista dei valori assunta da $f$ per tutti
-    i valori più piccoli di $y$; in questo caso si ha che $f$ è PR.
+    allora $f$ è PR.
 \end{lemma}
 
 \begin{proof}
