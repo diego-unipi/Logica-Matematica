@@ -515,7 +515,7 @@ tabella delle funzioni di transizione della macchina che calcola $f$, lo facciam
 Quindi con questa notazione possiamo facilmente descrivere il comportamento di pezzi di macchine, e poi comporli per ottenere macchine più complesse.
 
 \begin{definition}[Macchine elementari]
-    Definiamo le seguenti macchine elementari.
+    Definiamo le seguenti macchine elementari:
     \begin{itemize}
         \item $\textcolor{purple}{s_1 \to \push_{n,i} s_2}(s_1 \blacktriangleright x_1 x_2 \ldots x_n) = s_2 \blacktriangleright x_1 x_2 \ldots x_n x_i$, dove la nuova configurazione ha $n+1$ numeri, ha copiato l'$i$-esimo numero in fondo alla fila;
         \item $\textcolor{purple}{s_1 \to \rem_{n,i} s_2}(s_1 \blacktriangleright x_1 x_2 \ldots x_n) = s_2 \blacktriangleright x_1 x_2 \ldots x_{i-1} x_{i+1} \ldots x_n$, dove la nuova configurazione ha $n-1$ numeri, ha rimosso l'$i$-esimo numero;
@@ -534,21 +534,10 @@ macchine di Turing che hanno come alfabeto $\Sigma = \{0,1,\blacktriangleright\}
 Dobbiamo anche definire macchine di Turing che implementino le funzioni: successore, sottrazione troncata per 1, costante 0 e proiezione. Infine vediamo come implementare le macchine elementari e con questo abbiamo dimostrato che ogni funzione ricorsiva è Turing-computabile.
 
 \begin{proof}
-    Vediamo che la classe delle funzioni Turing-computabili è chiusa per composizione, ricorsione primitiva e minimizzazione. In tutti i casi faremo la seguente cosa: assumiamo di avere le macchine elementari che implementano le operazioni di \texttt{push}, \texttt{rem} e \texttt{exec}, e vediamo come usarle per costruire macchine che implementano le funzioni ottenute per composizione, ricorsione primitiva e minimizzazione.
-    In particolare le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta per evitare problemi - e incollando le funzioni di transizione (come nell'esempio precedente), ci limiteremo pertanto a descrivere soltanto come sono fatte queste ultime, componendo quelle delle macchine elementari, e non descrivendo per intero le macchine che implementano le funzioni.
+    Vediamo che la classe delle funzioni Turing-computabili è chiusa per composizione, ricorsione primitiva e minimizzazione. In tutti i casi faremo la seguente cosa: assumiamo di avere le macchine elementari che implementano le operazioni di \texttt{push}, \texttt{rem}, \texttt{exec}, \texttt{ttif} e vediamo come usarle per costruire macchine che implementano le funzioni ottenute per composizione, ricorsione primitiva e minimizzazione.
+    In particolare le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta per evitare problemi - e incollando le funzioni di transizione (come nell'esempio precedente), ci limiteremo pertanto a descrivere soltanto come sono fatte queste ultime, componendo quelle delle macchine elementari, e non descrivendo per intero le funzioni implementate da queste macchine.
     \begin{itemize}
-        \item[$\boxed{\text{composizione}}$] \underline{Caso particolare}: consideriamo prima il caso $f : \NN^2 \to \NN_\bot$ e $g_1, g_2 : \NN^2 \to \NN_\bot$, e poi generalizziamo. Vogliamo verificare che $f(g_1(x_1,x_2), g_2(x_1,x_2))$ sia Turing computabile. \\
-        Siano $F, G_1, G_2$ le macchine che implementano $f, g_1, g_2$, il nostro obiettivo è costruire una macchina che parta da $\blacktriangleright x_1 x_2$ e arrivi a $\blacktriangleright f(g_1(x_1,x_2), g_2(x_1,x_2))$ - cioè a $\blacktriangleright y$ con $y = f(g_1(x_1,x_2), g_2(x_1,x_2))$, come da definizione.\\
-        In primis vogliamo copiare gli input, altrimenti nel calcolo usando $\exec_{2,2}g_1$ scompaiono e non posso riutilizzarli, quindi operiamo due passaggi di $\push$ per copiare $x_1$ e $x_2$ in fondo alla lista:
-        \[ s_1 \to \push_{2,1} \to \push_{3,2} \to s_2 \]
-        per cui $s_2 \blacktriangleright x_1 x_2 x_1 x_2$. Ora, dallo stato $s_2$ applico $\exec_{4,2}g_1$:
-        \[ s_2 \to \exec_{4,2}g_1 \to s_3 \]
-        con $s_3 \blacktriangleright x_1 x_2 g_1(x_1,x_2)$. Ora copio di nuovo $x_1$ e $x_2$ in fondo alla lista (per usare $\exec$ devo usare i numeri in fondo quindi ho necessità di copiarli) e calcolo $g_2$:
-        \[ s_3 \to \push_{3,1} \to \push_{4,2} \to \exec_{5,2}g_2 \to s_4 \]
-        con $s_4 \blacktriangleright x_1 x_2 g_1(x_1,x_2) g_2(x_1,x_2)$. A questo punto posso cancellare i primi due e calcolare $f$:
-        \[ s_4 \to \rem_{4,1} \to \rem_{3,1} \to \exec_{2,2}f \to s_5 \]
-        con $s_5 \blacktriangleright f(g_1(x_1,x_2), g_2(x_1,x_2))$, infine vado da $s_5$ a $0$ per stoppare la macchina.\\
-        \underline{Caso generale}: se $f : \NN^k \to \NN_\bot$ e $g_1, \dots, g_k : \NN^h \to \NN_\bot$, vogliamo costruire una macchina che parta da $\blacktriangleright x_1 \ldots x_h$ e arrivi a $\blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$.\\
+        \item[$\boxed{\text{composizione}}$] Se $f : \NN^k \to \NN_\bot$ e $g_1, \dots, g_k : \NN^h \to \NN_\bot$, vogliamo costruire una macchina che parta da $\blacktriangleright x_1 \ldots x_h$ e arrivi a $\blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$.\\
         Iniziamo copiando tutti gli input in fondo alla lista:
         \[ \footnote{Per comodità, d'ora in poi chiameremo gli stati solo con i numeri.}1 \to \push_{h,1} \to \push_{h+1,2} \to \ldots \to \push_{2h-1,h} \to 2 \]
         con $2 \blacktriangleright x_1 \ldots x_h x_1 \ldots x_h$. Ora usiamo $\exec_{2h,h}g_1$ per calcolare $g_1$:
@@ -809,21 +798,25 @@ A questo punto possiamo anche verificare che $\head$ è PR.
         \head(l,0) := 0 \\
         \head(l,k+1) := \cons(\car(l), \head(\cdr(l),k))
     \end{cases} \]
-    il problema è che nella ricorsione passo a $\cdr(l)$, anziché ad $l$, per prendere la lista restante dopo aver preso il primo elemento, per cui non siamo in una ricorsione primitiva diretta su $k$ e quindi questo approccio non funziona.}\\ 
+    che corrisponde all'idea di:
+    \[ \langle \underbrace{a_0}_{\mathrlap{\mkern-23mu = \car(l)}}, \underbrace{a_1,\ldots,a_k}_{\mathrlap{\mkern-24mu =\head(\cdr(l),k)}},\ldots \rangle \]
+    il problema è che nella ricorsione passo a $\head(\cdr(l),\ldots)$, anziché ad $\head(l,\ldots)$, per prendere la lista restante dopo aver preso il primo elemento, per cui non siamo in una ricorsione primitiva diretta su $k$ e quindi questo approccio non funziona.}\\ 
     Usiamo allora il lemma di ricorsione sul decorso dei valori e definiamo:
-    \[ \head(l,y)=g\left(l,\left\langle \head(l,y-1),\ldots,\head(l,0)\right\rangle\right) \]
+    \[ \boxed{\head(l,y)=g\left(l,\left\langle \head(l,y-1),\ldots,\head(l,0)\right\rangle\right)} \]
     dove $g$ è PR e vale
     \[ g(l,s):=\begin{cases}
-        0 & \text{se }\length(s)=0,\\
-        \car(s) & \text{se }\length(s)>\length(l),\\
-        \cat\!\left(\car(s),\cons\!\left(\nth(l,\length(s)-1),0\right)\right) & \text{altrimenti}
+        0 & \text{se }\length(s)=0\\
+        \car(s) & \text{se }\length(s)>\length(l)\\
+        \cat(\underbrace{\car(s)}_{\mathclap{\langle a_0,\ldots, a_{\length(s)\dotminus 1} \rangle}},\cons(\nth(l,\length(s)\dotminus 1),0)) & \text{altrimenti}
     \end{cases} \]
-    infatti, se $s=\langle \head(l,y-1),\ldots,\head(l,0)\rangle$, allora $\car(s)=\head(l,y-1)$. Quando $\length(s)=0$ siamo nel caso base $y=0$, e quindi il valore corretto è $0$. Quando $\length(s)>\length(l)$ abbiamo già superato la lunghezza di $l$, perciò il prefisso richiesto non cresce più e resta uguale all'ultimo valore calcolato, cioè $\car(s)$. Nel caso rimanente, aggiungiamo a $\head(l,y-1)=\car(s)$ l'elemento successivo di $l$, cioè $\nth(l,\length(s)-1)$, e otteniamo esattamente $\head(l,y)$. 
+    infatti, se $s=\langle \head(l,y-1),\ldots,\head(l,0)\rangle$, allora $\car(s)=\head(l,y-1)$. Quando $\length(s)=0$ siamo nel caso base $y=0$, e quindi il valore corretto è $0$.
+    Quando $\length(s)>\length(l)$ - ovvero se la lunghezza della lista dei valori supera la lunghezza della nostra lista - abbiamo già superato la lunghezza di $l$, perciò abbiamo già il prefisso richiesto e resta uguale all'ultimo valore calcolato nella lista $s$, cioè $\car(s)$.\\
+    Nel caso rimanente, aggiungiamo a $\head(l,y-1)=\car(s)$ l'elemento successivo di $l$, cioè $\nth(l,\length(s)-1)$, e otteniamo esattamente $\head(l,y)$. 
     Quindi siamo esattamente nel caso del lemma, e $\head$ è PR.
 \end{soln}
 
 \begin{theorem}[Funzione ricorsiva universale]
-    Esiste una funzione ricorsiva parziale $u : \NN^2 \to \NN_\bot$ tale che per ogni $f : \NN^k \to \NN_\bot$ Turing-computabile,
+    Esiste una funzione ricorsiva parziale $u : \NN_\bot^2 \to \NN_\bot$ tale che per ogni $f : \NN^k \to \NN_\bot$ Turing-computabile,
     esiste un numero $\ulcorner f \urcorner \in \NN$, detto \vocab{codice} di $f$, tale che:
     \[ \forall x_1, \ldots, x_k \in \NN \; f(x_1, \ldots, x_k) = u(\ulcorner f \urcorner, \langle x_1, \ldots, x_k \rangle) \]
     ovvero esiste una funzione universale $u$ che simula ogni funzione Turing-computabile, e le basta il codice della funzione e la codifica degli input.
@@ -839,7 +832,7 @@ A questo punto possiamo anche verificare che $\head$ è PR.
     $u$ è ricorsiva dal teorema ed è composta con una costante.
 \end{proof}
 
-\begin{corollary}[Esistenza di una funzione ricorsiva universale per ogni arità]
+\begin{corollary}[Esistenza di una funzione ricorsiva universale per ogni arietà]
     $\forall n \in \NN \; \exists u_n : \NN_\bot^{n+1} \to \NN_\bot$ ricorsiva, tale che, data $f : \NN_\bot^n \to \NN_\bot$ ricorsiva,
     esiste un codice $\ulcorner f \urcorner$ tale che:
     \[ \forall x_1, \ldots, x_n \in \NN_\bot \; f(x_1, \ldots, x_n) = u_n(\ulcorner f \urcorner, x_1, \ldots, x_n) \]
@@ -863,7 +856,7 @@ A questo punto possiamo anche verificare che $\head$ è PR.
 Passiamo alla dimostrazione del teorema.
 
 \begin{proof}
-    Sia $f : \NN^k \to \NN_\bot$ Turing-computabile, e sia $M$ una macchina di Turing che implementa $f$. Per definizione sappiamo che $\{0,1,\blacktriangleright\} \subseteq \Sigma$ e 
+    Sia $f : \NN^k \to \NN_\bot$ Turing-computabile - per ora la fissiamo ma a fine dimostrazione sarà noto come il calcolatore universale non dipenda dalla $f$ usata, e sia $M$ una macchina di Turing che implementa $f$. Per definizione sappiamo che $\{0,1,\blacktriangleright\} \subseteq \Sigma$ e 
     $\{0,1\} \subseteq Q$, inoltre, essendo entrambi insiemi finiti, possiamo assumere che $\Sigma, Q \subseteq \NN$ - assumiamo che $\blacktriangleright$ corrisponda a 2, ricordiamo infine che, per le nostre convenzioni, rappresentiamo $\{\leftarrow, \downarrow, \rightarrow\}$ come $\{0,1,2\}$.\\
     Ora codifichiamo con un numero naturale una configurazione e la funzione $\delta$ di transizione di $M$. Per la codifica di una configurazione usiamo semplicemente una lista:
     \[ \NN \ni \textcolor{purple}{\text{configurazione}} := \langle \text{stato, posizione, nastro} \rangle \]
@@ -909,7 +902,7 @@ Passiamo alla dimostrazione del teorema.
         dove $\nth(\texttt{update,1})$ è simbolo$'$; il nuovo stato sarà $\nth(\texttt{update,0})$ e la nuova posizione sarà $(\text{posizione} + \nth(\texttt{update,2})) \dotminus 1$.
         Segue quindi che la nuova configurazione sarà codificata da:
         \[ \langle \nth(\texttt{update,0}), (\nth(c,1) + \nth(\texttt{update,2})) \dotminus 1, \cat(\alpha,\cons(\nth(\texttt{update,1}),\beta)) \rangle \]
-        e chiamiamo questo numero $\texttt{step}(\ulcorner \delta \urcorner, c)$, che è PR per composizione di funzioni PR.
+        e chiamiamo questo numero $\texttt{step}(\ulcorner \delta \urcorner, c)$, ottenuto da una composizione di funzioni PR, per cui $\texttt{step}$ è PR.
     \end{proof}
     Da questa vogliamo scrivere la funzione che, in un certo numero di step, a partire da un certo input e dal codice di $f$, restituisce l'output.\\
     Iniziamo definendo una codifica dell'input:
@@ -917,10 +910,10 @@ Passiamo alla dimostrazione del teorema.
     dove:
     \[ \texttt{nastro}(\langle x_1, \ldots, x_k \rangle) := \langle \texttt{unario}(x_1),\cons(0,\texttt{nastro}(\langle x_2, \ldots, x_k \rangle)) \rangle \]
     e $\texttt{unario}(x) := \langle 1, \ldots, 1 \rangle$ è la codifica unaria di $x$, tutte queste cose sono PR per composizione di funzioni PR, va verificato.\\
-    Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica deve usare il lemma di ricorsione sul decorso dei valori.
+    Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica si fa scrivendo la funzione via ricorsione primitiva.
     A questo punto usiamo l'operatore di minimizzazione per procurarci l'$n$ in cui la macchina termina, consideriamo:
-    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0) = 0) \]
-    ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM termina a partire da input codificato da $c$, tale funzione non è PR in quanto, per un certo input, la macchina potrebbe non terminare, per cui $\texttt n$ è ricorsiva parziale. E siamo alla fine perché ora per 
+    \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0)) \]
+    ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM arriva allo stato 0 - termina - a partire da input codificato da $c$; tale funzione non è PR in quanto, per un certo input, la macchina potrebbe non terminare, per cui $\texttt n$ è \textbf{ricorsiva parziale}. E siamo alla fine perché ora per 
     ottenere l'output basta prendere il nastro della configurazione finale, ovvero, indicando con $\langle\mathbf{x}\rangle = \langle x_1, \ldots, x_k \rangle$:
     \[ \nth(\texttt{step}^{\texttt{n}(\texttt{codifica\_input}(\langle\mathbf{x}\rangle),\ulcorner \delta \urcorner)}(\ulcorner \delta \urcorner, \texttt{codifica\_input}(\langle\mathbf{x}\rangle))), 2) \]
     a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$, posso definire:

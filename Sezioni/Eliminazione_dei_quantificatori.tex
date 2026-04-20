@@ -674,8 +674,8 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \]
         dove:
         \begin{align*}
-                \mathsf{Path}_1(a,b) &:= e(a,b), \\
-                \mathsf{Path}_n(a,b) &:= \exists x_1\ldots\exists x_{n-1}\;\bigl(e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-1},b)\bigr),\; n\geq 2
+                \mathsf{Path}_1(a,b) &:= e(a,b) \\
+                \mathsf{Path}_n(a,b) &:= \exists x_1\ldots\exists x_{n-1}\;\bigl(e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-1},b)\bigr)\; n\geq 2
         \end{align*}
         Quella ottenuta è una $L' := L \cup \{\textcolor{purple}{a}, \textcolor{purple}{b}\}$-teoria.
         Mostriamo che è finitamente coerente. Sia $T'' \subseteq T'$ finita. Se $T''$ non contiene formule del tipo $\neg\,\mathsf{Path}_k(a,b)$, allora basta un qualsiasi grafo connesso. Altrimenti, sia $m$ il massimo indice che compare in tali formule e poniamo $n:=m+1$.
@@ -697,7 +697,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
                 \draw (cnm1) -- (b);
             \end{tikzpicture}
         \end{center}
-        interpretando $a,b$ come gli estremi della catena. Questo grafo è connesso, quindi soddisfa $T$; inoltre la distanza tra $a$ e $b$ è $n=m+1$, dunque per ogni $k\leq m$ non vale $\mathsf{Path}_k(a,b)$, e quindi soddisfa tutte le formule di $T''$.
+        interpretando $a,b$ come gli estremi della catena. Questo grafo è connesso, quindi soddisfa $T$; inoltre la distanza tra $a$ e $b$ è $\purple{n=m+1}$, dunque per ogni $k\leq m$ non vale $\mathsf{Path}_k(a,b)$, e quindi soddisfa tutte le formule di $T''$.
         Per la proposizione precedente, $T'$ è coerente, quindi ha un modello $M \models T'$. Consideriamo il modello ridotto $M|_{L}$: vale $M|_{L} \models T$, dunque $M|_{L}$ è connesso.
         D'altra parte, in $M$ valgono tutte le formule $\neg\,\mathsf{Path}_n(a,b)$, quindi tra $a_M$ e $b_M$ non esiste alcun cammino finito. Contraddizione, perché in un grafo connesso ogni coppia di vertici è collegata da un cammino finito $\lightning$.
         \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei campi di caratteristica finita nel linguaggio dei campi $L = \{\textcolor{purple}{0}, \textcolor{purple}{1}, \textcolor{purple}{+}, \textcolor{purple}{\cdot}\}$, per quanto visto:
@@ -867,7 +867,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
 Vediamo ora due esempi di applicazione al di fuori della logica matematica.
 
 \begin{definition}[Partizione litigiosa]
-    Diciamo che una partizione $V = A \sqcup B$ dei vertici di un grafo $G = (V,E)$ è \vocab{litigiosa} se, per ogni vertice $v \in V$,
+    Diciamo che una partizione $V = A \sqcup B$ dei vertici di un grafo $G = (V,E)$ è \vocab{litigiosa} (o \vocab{unfriendly partition}) se, per ogni vertice $v \in V$,
     il numero di adiacenti a $v$ che appartiene alla medesima parte di $v$ è $\leq$ del numero di adiacenti a $v$ che appartiene all'altra parte.
 \end{definition}
 
@@ -952,17 +952,18 @@ che abbiamo definito, nella maniera seguente.
     \begin{itemize}
         \item Voglio verificare che $M \subseteq N$ se e solo se $N_M \models \diag(M)$.
             \begin{itemize}
-                \item[$\boxed{\impliedby}$] Supponiamo che $N_M \models \diag(M)$, vogliamo mostrare che $M \subseteq N$, ovvero che $C$ è chiuso per tutte le operazioni di $L$ (e che le interpretazioni coincidono). Sia $f \in L \subseteq L(M)$ simbolo di funzione con arietà $\ar(f)$, sia $(m_1, \ldots, m_{\ar(f)}) \in C^{\ar(f)}$. Vale che:
+                \item[$\boxed{\impliedby}$] Supponiamo che $N_M \models \diag(M)$, vogliamo mostrare che $M \subseteq N$, ovvero che $C$ è chiuso per tutte le operazioni $f_N$ di $L$ e che le interpretazioni coincidono.
+                Sia $\textcolor{MidnightBlue}{f \in L \subseteq L(M)}$ simbolo di funzione con arietà $\ar(f)$, sia $(m_1, \ldots, m_{\ar(f)}) \in C^{\ar(f)}$. Vale che:
                 \begin{align*}
-                    f_M(m_1, \ldots, m_{\ar(f)}) = b &\iff f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b \\
+                    f_{\purple M}(m_1, \ldots, m_{\ar(f)}) = b &\iff f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b \\
                                                      &\iff M_M \models f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b \\
                                                      &\iff f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b \in \diag(M) \\
                                                      &\implies N_M \models f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b \\
                                                      &\iff f_{N_M}(m_1, \ldots, m_{\ar(f)}) = b \\
-                                                     &\iff f_N(m_1, \ldots, m_{\ar(f)}) = b
+                                                     &\iff f_{\purple N}(m_1, \ldots, m_{\ar(f)}) = b
                 \end{align*}
-                dove l'ultima equivalenza vale per la definizione di estensione ($f_{N_M} \equiv f_N$). Abbiamo quindi ottenuto che $C$ è chiuso per $f_{N}$ e che $f_N|_C = f_M$, vista l'arbitrarietà di $f$ e della $\ar(f)$-upla otteniamo la chiusura per tutte le operazioni e la compatibilità delle restrizioni.\\
-                Se invece $r \in L \subseteq L(M)$ è un simbolo di relazione con arietà $\ar(r)$, e $(m_1, \ldots, m_{\ar(r)}) \in C^{\ar(r)}$, allora:
+                dove l'ultima equivalenza vale per la definizione di $M$-estensione, $f_{N_M} \equiv f_N$. Abbiamo quindi ottenuto che $C$ è chiuso per $f_{N}$ e che $f_N|_C = f_M$, vista l'arbitrarietà di $f$ e della $\ar(f)$-upla otteniamo la chiusura per tutte le operazioni e la compatibilità delle restrizioni.\\
+                Se invece $\textcolor{MidnightBlue}{r \in L \subseteq L(M)}$ è un simbolo di relazione con arietà $\ar(r)$, e consideriamo $(m_1, \ldots, m_{\ar(r)}) \in C^{\ar(r)}$, dobbiamo solo controllare che $r_M$ e $r_N$ coincidano su $C^{\ar(r)}$:
                 \begin{align*}
                     (m_1, \ldots, m_{\ar(r)}) \in r_M &\iff M \models r(m_1, \ldots, m_{\ar(r)}) \\
                                                       &\iff M_M \models r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \\
@@ -979,41 +980,30 @@ che abbiamo definito, nella maniera seguente.
                                                           &\iff (m_1, \ldots, m_{\ar(r)}) \notin r_{N_M} = r_N
                 \end{align*}
                 ma $r_N|_C = r_N \cap C^{\ar(r)}$, per cui $(m_1, \ldots, m_{\ar(r)}) \notin r_N|_C$, e ho anche l'altro contenimento.
-                \item[$\boxed{\implies}$] Supponiamo che $M \subseteq N$, vogliamo mostrare che $N_M \models \diag(M)$. Sia $\varphi \in \diag(M)$, allora $\varphi$ è una $L(M)$-formula atomica o negazione di atomica chiusa e soddisfatta da $M_M$, per cui i termini di $L(M)$ che compaiono sono o costanti del linguaggio espanso o funzioni di tali costanti.
-                \begin{itemize}
-                    \item Se \textcolor{MidnightBlue}{$\varphi = \top$}, allora è chiaro che $N_M \models \top$.
-                    \item Se \textcolor{MidnightBlue}{$\varphi = r(c_{m_1}, \ldots, c_{m_{\ar(r)}})$} con $r$ simbolo di relazione, allora:
-                    \[ M_M \models r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \iff (m_1, \ldots, m_{\ar(r)}) \in r_{M_M} = r_M \]
-                    ma $M \subseteq N$ implica che $r_M = r_N|_C = r_N \cap C^{\ar(r)}$, per cui $r_M \subseteq r_N = r_{N_M}$, da cui $N_M \models r(c_{m_1}, \ldots, c_{m_{\ar(r)}})$.
-                    \item Se \textcolor{MidnightBlue}{$\varphi = \neg r(c_{m_1}, \ldots, c_{m_{\ar(r)}})$} con $r$ simbolo di relazione, allora:
-                    \[ M_M \models \neg r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \iff (m_1, \ldots, m_{\ar(r)}) \notin r_{M_M} = r_M \]
-                    ma $M \subseteq N$ implica che $r_M = r_N \cap C^{\ar(r)}$, essendo la tupla interpretata fatta di elementi di $C^{\ar(r)}$, segue che $(m_1, \ldots, m_{\ar(r)}) \notin r_N = r_{N_M}$, da cui $N_M \models \neg r(c_{m_1}, \ldots, c_{m_{\ar(r)}})$.
-                    \item Se \textcolor{MidnightBlue}{$\varphi = (t_1 = t_2)$}, con $t_1, t_2$ $L(M)$-termini. Se i termini fossero due costanti, allora sarebbero interpretati allo stesso modo sia da $M_M$ che da $N_M$, per definizione di estensione; se un termine fosse una costante e l'altro fosse una funzione $f$ avremmo:
-                    \begin{align*}
-                        M_M \models f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b &\iff f_{M_M}(m_1, \ldots, m_{\ar(f)}) = b \\
-                                                                            &\iff f_M(m_1, \ldots, m_{\ar(f)}) = b \\
-                                                                            &\iff f_N(m_1, \ldots, m_{\ar(f)}) = b &&(\star) \\
-                                                                            &\iff f_{N_M}(m_1, \ldots, m_{\ar(f)}) = b \\
-                                                                            &\iff N_M \models f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b
+                \item[$\boxed{\implies}$] Supponiamo che $M \subseteq N$, vogliamo mostrare che $N_M \models \diag(M)$. Sia $\varphi \in \diag(M)$,
+                allora $\varphi$ è una $L(M)$-formula atomica o negazione di atomica chiusa e soddisfatta da $M_M$, per cui i termini di $L(M)$ che compaiono sono o costanti del linguaggio espanso o funzioni di tali costanti. Vediamo prima un lemma sui termini.
+                \begin{lemma}[Valutazione dei termini chiusi in $M_M$ e $N_M$]
+                    Se $t$ è un termine chiuso di $L(M)$, allora $t_{M_M} = t_{N_M}$.
+                \end{lemma}
+                \begin{proof}
+                    Per induzione strutturale.
+                    \begin{itemize}[$\bullet$]
+                        \item se $t = c_{m}$ allora viene interpretato come $m$ sia in $M_M$ che in $N_M$ per definizione;
+                        \item se $t = f(t_1, \ldots, t_k)$, allora $t_{M_M} = f_{M_M}((t_1)_{M_M}, \ldots, (t_k)_{M_M})$, e per ipotesi induttiva $(t_i)_{M_M} = (t_i)_{N_M}$, inoltre, per l'ipotesi del caso, $f_{M_M} = f_M = f_N|_C = f_{N_M}|_C$, per cui:
+                        \[ f_{M_M}((t_1)_{M_M}, \ldots, (t_k)_{M_M}) = f_{N_M}((t_1)_{N_M}, \ldots, (t_k)_{N_M}) \]
+                         da cui $t_{M_M} = t_{N_M}$.
+                    \end{itemize}
+                \end{proof}
+                \begin{itemize}                    
+                    \item Se \textcolor{MidnightBlue}{$\varphi = r(t_1, \ldots, t_{\ar(r)})$} con $r$ simbolo di relazione e $t_i$ termini chiusi di $L(M)$, allora:
+                    \[ M_M \models r(t_1, \ldots, t_{\ar(r)}) \iff ((t_1)_{M_M}, \ldots, (t_{\ar(r)})_{M_M}) \in r_{M_M} = r_M \]
+                    per il punto precedente $(t_i)_{M_M} = (t_i)_{N_M}$ per ogni $i$, e inoltre ogni $(t_i)_{M_M} \in C$; quindi la tupla sta in $C^{\ar(r)}$. Poiché $M \subseteq N$, abbiamo $r_M = r_N|_C = r_N \cap C^{\ar(r)}$, dunque la stessa tupla appartiene a $r_N = r_{N_M}$, e quindi $N_M \models r(t_1, \ldots, t_{\ar(r)})$.
+                    Analogamente, se $M_M \models \neg r(t_1, \ldots, t_{\ar(r)})$, allora la tupla non appartiene a $r_M$, per cui non appartiene a $r_N|_C = r_N \cap C^{\ar(r)}$, e poiché ogni $(t_i)_{M_M} \in C$, la tupla non appartiene a $r_N$, e quindi $N_M \models \neg r(t_1, \ldots, t_{\ar(r)})$.
+                    \item Se \textcolor{MidnightBlue}{$\varphi = (t_1 = t_2)$} con $t_1,t_2$ termini chiusi di $L(M)$, il punto precedente sui termini dà subito:
+                    \begin{align*} M_M \models (t_1=t_2) &\iff (t_1)_{M_M}=(t_2)_{M_M} \\
+                                                         &\iff (t_1)_{N_M}=(t_2)_{N_M} \iff N_M \models (t_1=t_2)
                     \end{align*}
-                    dove $(\star)$ vale perché $f_M = f_N|_C$. Il caso di due funzioni è analogo, infatti prese $f$ e $g$ simboli di funzione (con arietà $>$ 0), vale che $f_M = f_N|_C$ e $g_M = g_N|_C$, per cui:
-                    \begin{align*}
-                         M_M \models f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = g(c_{n_1}, \ldots, c_{n_{\ar(g)}}) &\iff \\
-                         f_{M_M}(m_1, \ldots, m_{\ar(f)}) = g_{M_M}(n_1, \ldots, n_{\ar(g)}) &\iff \\
-                         f_M(m_1, \ldots, m_{\ar(f)}) = g_M(n_1, \ldots, n_{\ar(g)}) &\iff \\
-                         f_N(m_1, \ldots, m_{\ar(f)}) = g_N(n_1, \ldots, n_{\ar(g)}) &\iff \\
-                         f_{N_M}(m_1, \ldots, m_{\ar(f)}) = g_{N_M}(n_1, \ldots, n_{\ar(g)}) &\iff\\
-                         N_M \models f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = g(c_{n_1}, \ldots, c_{n_{\ar(g)}})
-                    \end{align*}
-                    \item Se \textcolor{MidnightBlue}{$\varphi = \neg (t_1 = t_2)$}, se gli $L(M)$-termini sono costanti, allora sono interpretati allo stesso modo sia da $M_M$ che da $N_M$, per definizione di estensione; se un termine è una costante l'altro una funzione ho:
-                    \begin{align*}
-                        M_M \models \neg f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b &\iff f_{M_M}(m_1, \ldots, m_{\ar(f)}) \neq b \\
-                                                                            &\iff f_M(m_1, \ldots, m_{\ar(f)}) \neq b \\
-                                                                            &\iff f_N(m_1, \ldots, m_{\ar(f)}) \neq b \\
-                                                                            &\iff f_{N_M}(m_1, \ldots, m_{\ar(f)}) \neq b \\
-                                                                            &\iff N_M \models \neg f(c_{m_1}, \ldots, c_{m_{\ar(f)}}) = c_b
-                    \end{align*}
-                    questo sempre perché $f_M = f_N|_C$. Il caso di due funzioni è analogo.
+                    \item Se \textcolor{MidnightBlue}{$\varphi = \neg\psi$} con $\psi$ atomica chiusa, dai due casi precedenti segue $M_M \models \psi \iff N_M \models \psi$, e dunque anche $M_M \models \neg\psi \iff N_M \models \neg\psi$.
                 \end{itemize}
         \end{itemize}
         \item Verifichiamo che $M \preceq N$ se e solo se $N_M \models \ED(M)$.
@@ -1113,7 +1103,7 @@ L'osservazione è un corollario del seguente esercizio.
 \end{soln}
 
 \begin{remark}
-    È banale verificare che una $L$-struttura $M$ è isomorfa a $M_M$, con un isomorfismo di $L$-strutture dato dall'identità sul dominio.
+    È banale verificare che una $L$-struttura $M$ è isomorfa a $M_M|_L$, con un isomorfismo di $L$-strutture dato dall'identità sul dominio.
 \end{remark}
 
 \begin{remark}[Sottostrutture e immersioni]
@@ -1124,7 +1114,7 @@ L'osservazione è un corollario del seguente esercizio.
     Sia $M = (C;\ldots)$ una $L$-struttura, $N = (D;\ldots)$ una $L(M)$-struttura, allora TFAE:
     \begin{enumerate}
         \item $N \models \diag(M)$.
-        \item La mappa $\iota : C \to D$, definita da $\iota(a) := (c_a)_N$, è un'immersione $\iota : M \hookrightarrow N|_L$.
+        \item La mappa $\iota : C \to D$, definita da $\iota(a) := (c_a)_N$, è un'embedding\footnote{È necessario quindi anche che se $(f(a_1),\ldots, f(a_{\ar(f)})) \in r_N$, allora $(a_1,\ldots,a_{\ar(f)}) \in r_M$.} $\iota : M \hookrightarrow N|_L$.
         \item Esiste una $L(M)$-sottostruttura $M' \subseteq N$ tale che $M' \cong M_M$.
     \end{enumerate}
 \end{remark}
@@ -1133,8 +1123,8 @@ L'osservazione è un corollario del seguente esercizio.
     Sia $M = (C;\ldots)$ una $L$-struttura e $N = (D;\ldots)$ una $L(M)$-struttura, allora TFAE:
     \begin{enumerate}
         \item $N \models \ED(M)$.
-        \item La mappa $\iota : C \to D$, definita da $\iota(a) := (c_a)_N$, è un'\vocab{immersione elementare} $\iota : M \hookrightarrow N|_L$, i.e $\iota[M] \preceq N|_L$.
-        \item Esiste una $L(M)$-sottostruttura $M' \subseteq N$ tale che $M' \cong M_M$ e $M' \preceq N$.
+        \item La mappa $\iota : C \to D$, definita da $\iota(a) := (c_a)_N$, è un'\vocab{embedding elementare} $\iota : M \hookrightarrow N|_L$, i.e $\iota[M] \preceq N|_L$.
+        \item Esiste una $L(M)$-sottostruttura $M' \subseteq N$ tale che $M' \cong M_M|_L$ e $M' \preceq N$.
     \end{enumerate}
 \end{remark}
 
@@ -1164,8 +1154,8 @@ Veniamo ora alla dimostrazione del teorema di Levi.
 \end{theorem}
 
 \begin{remark}[Ipotesi di infinità per il punto 2.]
-    Ovviamente il punto 2. non può valere nel caso di $M$ finita, infatti in tal caso possiamo scrivere una formula che dice quanti elementi ha esattamente $M$ che deve essere soddisfatta da ogni sua possibile estensione elementare, 
-    per cui non posso prendere estensioni elementari di $M$ arbitrariamente grandi.
+    Ovviamente il punto 2. non può valere nel caso di $M$ finita, infatti in tal caso possiamo scrivere una formula che dice quanti elementi ha esattamente $M$ - $\textsf{Size}_n$ - che deve essere soddisfatta da ogni sua possibile estensione elementare, 
+    per cui non posso prendere estensioni elementari di $M$ arbitrariamente grandi, quindi l'ipotesi minima necessaria è che $M$ sia infinita.
 \end{remark}
 
 \begin{proof}
@@ -1179,10 +1169,10 @@ Veniamo ora alla dimostrazione del teorema di Levi.
 Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma seguente, che è spesso utile per costruire sottostrutture elementari.
 
 \begin{lemma}[Criterio di Tarski-Vaught]
-    Sia $M \subseteq \textcolor{MidnightBlue}{N}$ due $L$-strutture. Allora $M \preceq N$ se e solo se, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ vale:
-    \[ \forall b_1,\ldots,b_k \in M \; \textcolor{MidnightBlue}{N} \models \purple{\exists x} \; \varphi(\purple{x},b_1,\ldots,b_k) \implies \purple{\exists a} \in M \; \textcolor{MidnightBlue}{N} \models \varphi(\purple{a},b_1,\ldots,b_k)
+    Sia $\textcolor{orange}{M} \subseteq \textcolor{MidnightBlue}{N}$ due $L$-strutture. Allora $M \preceq N$ se e solo se, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ vale:
+    \[ \forall b_1,\ldots,b_k \in \textcolor{orange}{M} \; \textcolor{MidnightBlue}{N} \models \purple{\exists x} \; \varphi(\purple{x},b_1,\ldots,b_k) \implies \purple{\exists a} \in \textcolor{orange}{M} \; \textcolor{MidnightBlue}{N} \models \varphi(\purple{a},b_1,\ldots,b_k)
     \]
-    cioè è possibile rimpiazzare il testimone della soddisfacibilità in $N$ con un testimone in $M$ che preserva la soddisfacibilità in $N$.
+    cioè è possibile rimpiazzare l'ultimo testimone della soddisfacibilità in $N$ con un testimone in $M$ che preserva la soddisfacibilità in $N$.
 \end{lemma}
 
 \begin{note}[Utilità del criterio di Tarski-Vaught]
@@ -1193,11 +1183,10 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
     Vediamo le due frecce.
     \begin{itemize}
         \item[$\boxed{\implies}$] Se $M \preceq N$, presi $b_1,\ldots,b_k \in M$ e supposto $N \models \exists x\,\varphi(x,b_1,\ldots,b_k)$, per elementarità (essendo la formula chiusa con parametri in $M$) si ha $M \models \exists x\,\varphi(x,b_1,\ldots,b_k)$. Dunque esiste $a \in M$ tale che $M \models \varphi(a,b_1,\ldots,b_k)$,
-        e ancora per elementarità (i nuovi parametri sono sempre in $M$ e la formula valutata è ancora chiusa) segue $N \models \varphi(a,b_1,\ldots,b_k)$.
+        e ancora per elementarità - i nuovi parametri sono sempre in $M$ e la formula valutata è ancora chiusa - segue $N \models \varphi(a,b_1,\ldots,b_k)$.
         \item[$\boxed{\impliedby}$] Supponiamo che la condizione del criterio di Tarski-Vaught sia soddisfatta, vogliamo mostrare che $M \preceq N$, ovvero che per ogni $L$-formula $\varphi(x_1, \ldots, x_h)$ vale:
         \[ \forall a_1, \ldots, a_h \in M \; M \models \varphi(a_1, \ldots, a_h) \iff N \models \varphi(a_1, \ldots, a_h) \]
         Procediamo per induzione strutturale su $\varphi$, assumendo (WLOG) che $\varphi$ sia formata solo dai connettivi $\neg$, $\land$ e dal quantificatore esistenziale $\exists$. Tuttavia, il caso in cui $\varphi$ è una formula senza quantificatori 
-        è banale dall'osservazione vista per cui le formule senza quantificatori sono assolute, cioè, usando valutazioni a valori nella sottostruttura, valgono se e solo se valgono nella sovrastruttura. Quindi resta il caso $\varphi(\purple{y_1},\ldots,\purple{y_k}) = \purple{\exists x} \; \psi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$.
         Fissati $b_1, \ldots, b_k \in M$, si ha che:
         \begin{align*}
             M \models \purple{\exists x} \; \psi(\purple{x},b_1,\ldots,b_k) &\iff \exists a \in M \; M \models \psi(a,b_1,\ldots,b_k) &&(\text{Tarski}) \\
@@ -1208,7 +1197,7 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
     \end{itemize}
 \end{proof}
 
-\begin{remark}[Indebolimento delle ipotesi del criterio di Tarski-Vaught]
+\begin{remark}[Indeboorangento delle ipotesi del criterio di Tarski-Vaught]
     In realtà non serve supporre che $M$ sia già una sottostruttura di $N$, è sufficiente assumere di avere un sottoinsieme di $N$ che, soddisfando il criterio di Tarski-Vaught, è anche in automatico una sottostruttura, infatti la chiusura per l'operazione è gratis dal criterio usando la formula
     $\varphi_f(x) := f(m_1,\ldots,m_{\ar(f)}) = x$ per ogni simbolo di funzione $f$. Questo garantisce la chiusura e quindi dice che il sottoinsieme $M$ di $N$ è anche una $L$-struttura.
 \end{remark}
@@ -1321,8 +1310,12 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
 
 \begin{definition}[Insiemi definibili]
     Sia $M = (D,\ldots)$ una $L$-struttura, sia $X \subseteq D^k$, dico che $X$ è \vocab{definibile} se esiste una $L$-formula $\varphi(x_1,\ldots,x_k)$ tale che:
-    \[ X = \{(a_1,\ldots,a_k) \in D^k | M \models \varphi(a_1,\ldots,a_k)\}
+    \[ X = \{(a_1,\ldots,a_k) \in D^k : M \models \varphi(a_1,\ldots,a_k)\}
     \]
+\end{definition}
+
+\begin{definition}[Elementare equivalenza]
+    Diciamo che due $L$-strutture $M$ e $N$ sono \vocab{elementarmente equivalenti}, e scriviamo $M \equiv N$, se soddisfano le stesse $L$-formule chiuse, ovvero se $\Th(M;L) = \Th(N;L)$.
 \end{definition}
 
 \begin{exercise}
