@@ -1119,7 +1119,7 @@ L'osservazione è un corollario del seguente esercizio.
     Sia $M = (C;\ldots)$ una $L$-struttura, $N = (D;\ldots)$ una $L(M)$-struttura, allora TFAE:
     \begin{enumerate}
         \item $N \models \diag(M)$.
-        \item La mappa $\iota : C \to D$, definita da $\iota(a) := (c_a)_N$, è un'embedding\footnote{È necessario quindi anche che se $(f(a_1),\ldots, f(a_{\ar(f)})) \in r_N$, allora $(a_1,\ldots,a_{\ar(f)}) \in r_M$.} $\iota : M \hookrightarrow N|_L$.
+        \item La mappa $\iota : C \to D$, definita da $\iota(a) := (c_a)_N$, è un'embedding\footnote{È necessario quindi anche che se $(f(a_1),\ldots, f(a_{\ar(f)})) \in r_N$, allora $(a_1,\ldots,a_{\ar(f)}) \in r_M$. Chiaramente la corestrizione di un embedding all'immagine è un isomorfismo.} $\iota : M \hookrightarrow N|_L$.
         \item Esiste una $L(M)$-sottostruttura $M' \subseteq N$ tale che $M' \cong M_M$.
     \end{enumerate}
 \end{remark}
@@ -1147,7 +1147,7 @@ Veniamo ora alla dimostrazione del teorema di Levi.
     i.e. uno $\ZZ$-modulo finitamente generato che, per il teorema di struttura dei moduli finitamente generati su PID nel caso senza torsione, è isomorfo a $\ZZ^n$ per qualche $n \in \NN$. Possiamo quindi indurre un ordinamento compatibile con l'operazione di gruppo su $H$ mettendo su $\ZZ^n$ l'ordinamento lessicografico,
     ma allora $H \models T_{\text{oag}} \cup X$, da cui $T_{\text{oag}} \cup X$ è coerente e quindi $\not\models \bot$, assurdo.
 \end{proof}
-
+\pagebreak
 \subsection{Teoremi di Löwenheim-Skolem}
 
 \begin{theorem}[Löwenheim-Skolem verso l'alto - forma debole]
@@ -1187,41 +1187,53 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
 \begin{proof}
     Vediamo le due frecce.
     \begin{itemize}
-        \item[$\boxed{\implies}$] Se $M \preceq N$, presi $b_1,\ldots,b_k \in M$ e supposto $N \models \exists x\,\varphi(x,b_1,\ldots,b_k)$, per elementarità (essendo la formula chiusa con parametri in $M$) si ha $M \models \exists x\,\varphi(x,b_1,\ldots,b_k)$. Dunque esiste $a \in M$ tale che $M \models \varphi(a,b_1,\ldots,b_k)$,
-        e ancora per elementarità - i nuovi parametri sono sempre in $M$ e la formula valutata è ancora chiusa - segue $N \models \varphi(a,b_1,\ldots,b_k)$.
-        \item[$\boxed{\impliedby}$] Supponiamo che la condizione del criterio di Tarski-Vaught sia soddisfatta, vogliamo mostrare che $M \preceq N$, ovvero che per ogni $L$-formula $\varphi(x_1, \ldots, x_h)$ vale:
-        \[ \forall a_1, \ldots, a_h \in M \; M \models \varphi(a_1, \ldots, a_h) \iff N \models \varphi(a_1, \ldots, a_h) \]
-        Procediamo per induzione strutturale su $\varphi$, assumendo (WLOG) che $\varphi$ sia formata solo dai connettivi $\neg$, $\land$ e dal quantificatore esistenziale $\exists$. Tuttavia, il caso in cui $\varphi$ è una formula senza quantificatori 
-        Fissati $b_1, \ldots, b_k \in M$, si ha che:
+        \item[$\boxed{\implies}$] Se $M \preceq N$, sia $\varphi(x,b_1,\ldots,b_k)$ una $L$-formula con $b_1, \ldots, b_k \in M$, verifichiamo la condizione di Tarski-Vaught:
         \begin{align*}
-            M \models \purple{\exists x} \; \psi(\purple{x},b_1,\ldots,b_k) &\iff \exists a \in M \; M \models \psi(a,b_1,\ldots,b_k) &&(\text{Tarski}) \\
-                                                                                                  &\iff \exists a \in M \; N \models \psi(a,b_1,\ldots,b_k) &&(\text{hp induttiva}) \\
-                                                                                                  &\implies N \models \purple{\exists x} \; \psi(x,b_1,\ldots,b_k)
+            N \models \exists x \; \varphi(x,b_1,\ldots,b_k) &\iff M \models \exists x \; \varphi(x,b_1,\ldots,b_k) &&(M \preceq N) \\
+                                                             &\iff \exists a \in M \; M \models \varphi(a,b_1,\ldots,b_k) &&(\text{Tarski}) \\
+                                                             &\iff \exists a \in M \; N \models \varphi(a,b_1,\ldots,b_k) &&(M \preceq N)
         \end{align*}
-        infine l'ultima freccia è un $\iff$, infatti, dal criterio di Tarski-Vaught ottengo che $\exists a \in M \; N \models \psi(a,b_1,\ldots,b_k)$, e per ipotesi induttiva questo equivale proprio a $M \models \psi(a,b_1,\ldots,b_k)$, da cui $M \models \purple{\exists x} \; \psi(x,b_1,\ldots,b_k)$.       
+        \textcolor{MidnightBlue}{per l'ultimo passaggio è necessario $M \preceq N$, non si otterrebbe comunque $\implies$ usando che le formule esistenziali si preservano per estensioni perché non è detto che $\varphi$ sia libera da quantificatori.} 
+        \item[$\boxed{\impliedby}$] Supponiamo che valga la condizione del criterio di Tarski-Vaught e che $M \subseteq N$, vogliamo mostrare che $M \preceq N$. Sia $\varphi(x_1,\ldots,x_k)$ una $L$-formula e siano $a_1, \ldots, a_k \in M$, verifichiamo che $M \models \varphi(a_1,\ldots,a_k)$ se e solo se $N \models \varphi(a_1,\ldots,a_k)$.
+        Procediamo per induzione strutturale su $\varphi$, il caso atomico, e quelli $\land$ e $\neg$ sono banali per l'osservazione secondo cui le formule senza quantificatori sono assolute - o si può ripetere la stessa dimostrazione,
+        il caso interessante è $\varphi = \exists y \; \psi(y,x_1,\ldots,x_k)$, allora:
+        \begin{align*}
+            M \models \exists y \; \psi(y,a_1,\ldots,a_k) &\iff \exists a \in M \; M \models \psi(a,a_1,\ldots,a_k) &&(\text{Tarski}) \\
+                                                          &\iff \exists a \in M \; N \models \psi(a,a_1,\ldots,a_k) &&(\text{hp induttiva}) \\
+                                                          &\iff \exists a \in N \; N \models \psi(a,a_1,\ldots,a_k) &&(\star) \\
+                                                          &\iff N \models \exists y \; \psi(y,a_1,\ldots,a_k)
+        \end{align*}
+        dove in $(\star)$: la freccia dall'alto verso il basso è banale per la semantica di Tarski, per la freccia dal basso verso l'alto si usa invece la condizione del criterio di Tarski-Vaught.
     \end{itemize}
 \end{proof}
 
-\begin{remark}[Indeboorangento delle ipotesi del criterio di Tarski-Vaught]
+\begin{remark}[Indebolimento delle ipotesi del criterio di Tarski-Vaught]
     In realtà non serve supporre che $M$ sia già una sottostruttura di $N$, è sufficiente assumere di avere un sottoinsieme di $N$ che, soddisfando il criterio di Tarski-Vaught, è anche in automatico una sottostruttura, infatti la chiusura per l'operazione è gratis dal criterio usando la formula
     $\varphi_f(x) := f(m_1,\ldots,m_{\ar(f)}) = x$ per ogni simbolo di funzione $f$. Questo garantisce la chiusura e quindi dice che il sottoinsieme $M$ di $N$ è anche una $L$-struttura.
 \end{remark}
 
+\begin{example}[Esempio di sottostruttura non elementare]
+    Vediamo un caso semplice di sottostruttura non elementare, sia $L = \{+,0\}$ il linguaggio dei gruppi abeliani e siano $(\ZZ;+,0)$ e $(\QQ;+,0)$ le due $L$-strutture.
+    È ovvio che $\ZZ \subseteq \QQ$, tuttavia $\ZZ$ non è una sottostruttura elementare di $\QQ$, infatti usando la formula $\varphi(x,y) := y + y = x$, allora: $\QQ \models \exists y \; \varphi(1,y)$,
+    ma non posso rimpiazzare il testimone della soddisfacibilità in $\QQ$ con un testimone in $\ZZ$, per cui, per il criterio di Tarski-Vaught, $\ZZ \not \preceq \QQ$.
+\end{example}
+
 \begin{theorem}[Löwenheim-Skolem verso il basso]
-    Sia $N$ una $L$-struttura infinita. Sia $A$ un sottoinsieme del dominio di $N$.
-    Sia infine $\kappa$ un cardinalità infinita con $|L| + |A| \leq \kappa \leq |N|$. Allora esiste $M \preceq N$ con $|M| = \kappa$ il cui dominio contiene $A$.   
+    Sia $N$ una $L$-struttura infinita, e siano:
+    \begin{itemize}
+        \item $A \subseteq N$ un sottoinsieme del dominio di $N$,
+        \item $\aleph_0 \leq \kappa$ un cardinale tale che $|L| + |A| \leq \kappa \leq |N|$,
+    \end{itemize}
+    allora esiste $M \preceq N$ con $|M| = \kappa$ il cui dominio contiene $A$.
 \end{theorem}
 
 \begin{proof}
     A patto di ingrandire $A$, possiamo supporre che $|L| \leq |A| = \kappa$.\\
     \textcolor{MidnightBlue}{L'idea è che definiremo una successione crescente di insiemi $A = A_0 \subseteq A_1 \subseteq A_2 \subseteq \ldots$ in modo tale che $A_{i+1}$ contenga i 
-    testimoni delle formule esistenziali a parametri in $A_i$. Il criterio di Tarski-Vaught ci garantirà che $M := \bigcup_{i \in \NN} A_i \preceq N$. Infine dimostriamo che $|M| = |A| = \kappa$.}\\
-    Formalmente, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ e per ogni $b_1, \ldots, b_k \in A_i$, se esiste $a \in N$ tale che $N \models \varphi(a,b_1,\ldots,b_k)$, allora scegliamo un tale $a$ e lo aggiungiamo ad $A_{i+1}$. Formalmente, se fissiamo una funzione di scelta \[\sigma: \left\{ (\varphi, b_1, \ldots, b_k) : \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}) \in \{\text{$L$-formule}\},b_1, \ldots, b_k \in N \right\}  \to A\] 
-    tale che $ N \models \varphi(\sigma(\varphi,b_1,\ldots,b_k),b_1,\ldots,b_k)$ ogni qualvolta esista almeno un valore $a \in N$ tale che  $\varphi(a,b_1,\ldots,b_k)$ (non ci curiamo di cosa fa altrove) allora definiamo:
-%    \[ A_{i+1} := A_i \cup \{a \in N : \exists \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}),\exists b_1, \ldots, b_k \in A_i \; N \models \varphi(a,b_1,\ldots,b_k)\} \]
-	 \[ A_{i+1} := A_i \cup \{\sigma(\varphi, b_1, \ldots, b_k) : \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}) \in \{\text{$L$-formule}\}; b_1, \ldots, b_k \in A_i \}\]
-    e definiamo $M := \bigcup_{i \in \NN} A_i$. Si verifica subito che $M$ soddisfa il criterio di Tarski-Vaught, infatti, data $\varphi$ $L$-formula e $b_1, \ldots, b_k \in M$, se $N \models \exists x \, \varphi(x,b_1,\ldots,b_k)$, allora, preso $i_0 \in \NN$ tale che $b_1, \ldots, b_k \in A_{i_0}$, per costruzione $\exists a \in A_{i_0 + 1}\subseteq M$
-    per cui $N \models \varphi(a,b_1,\ldots,b_k)$, da cui $M \preceq N$.\\
+    testimoni delle formule esistenziali a parametri in $A_i$. Il criterio di Tarski-Vaught ci garantirà che $M := \bigcup_{i \in \NN} A_i \preceq N$. Infine dimostriamo che $|M| = |A| = \kappa$, e si conclude.}\\
+    Formalmente, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ e per ogni $b_1, \ldots, b_k \in A_i$, se esiste $a \in N$ tale che $N \models \varphi(a,b_1,\ldots,b_k)$, allora scegliamo un tale $a$ e lo aggiungiamo ad $A_{i+1}$:
+    \[ A_{i+1} := A_i \cup \{a \in N : \exists \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}),\exists b_1, \ldots, b_k \in A_i \; N \models \varphi(a,b_1,\ldots,b_k)\} \]
+    e definiamo $M := \bigcup_{i \in \NN} A_i$. Si verifica subito che $M$ soddisfa il criterio di Tarski-Vaught, infatti, data $\varphi$ $L$-formula e $b_1, \ldots, b_k \in M$, se $N \models \exists x \, \varphi(x,b_1,\ldots,b_k)$, allora, preso $i_0 \in \NN$ tale che $b_1, \ldots, b_k \in A_{i_0}$, per costruzione $\exists a \in A_{i_0 + 1}\subseteq M$ per cui $N \models \varphi(a,b_1,\ldots,b_k)$.\\
     Per quanto riguarda la cardinalità dimostriamo per induzione che \textcolor{MidnightBlue}{$\forall i \in \NN \; |A_i| = |A|$}:
     \begin{align*}
         |A_{i+1}| &\leq |A_i| + |\{\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}) : \text{$\varphi$ $L$-formula}, b_1, \ldots, b_k \in A_i\}| \\
@@ -1234,29 +1246,30 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
     dove $(\star)$ è vero perché c'è una mappa surgettiva, che l'indicizzazione degli elementi dell'insieme.
 \end{proof}
 
+Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità arbitrariamente piccola, fino al linguaggio - posso sempre prendere $A = \varnothing$.
+
 \begin{exercise}[Cardinalità delle formule]
     Dimostrare che $|\{\text{$L$-formule}\}| = |L| + \aleph_0$.
 \end{exercise}
 
 \begin{soln}
-    L'insieme delle $L$-formule è un sottoinsieme delle stringhe finite su un alfabeto dato da $A := L \cup \{=, \neg, \land, \lor, \to, \forall, \exists, (, ), ,\} \cup \Var$, ovvero $|\{\text{$L$-formule}\}| \leq |A^{<\NN}| = |A| + \aleph_0$ (se $L$ è finito le stringhe finite sono numerabili, altrimenti sono in bigezione con le parti finite di $A$).\\
+    L'insieme delle $L$-formule è un sottoinsieme delle stringhe finite su un alfabeto dato da $A := L \cup \{=, \neg, \land, \lor, \to, \forall, \exists, (, ), ,\} \cup \Var$, ovvero $|\{\text{$L$-formule}\}| \leq |A^{<\NN}| = |A| + \aleph_0$ (in generale le stringhe finite sono in bigezione con le parti finite di $A$, che sono sempre almeno $\aleph_0$, e se $|A|$ è infinito allora, per $\mathsf{AC}$, $|A^{<\NN}| = |A|$).
     Viceversa, possiamo costruire sempre almeno numerabili $L$-formule, ad esempio $x_i = x_j$ per $i \ne j \in \NN$, e possiamo sempre costruire almeno $|A|$ $L$-formule, cioè tutte quelle corrispondenti ai simboli di relazione e tutte le possibili uguaglianze di simboli di funzione (il caso peggiore possibile è avere un solo simbolo di costante $c$, ma già solo $c = c$ dà almeno una formula e quindi il conto torna, in tutti gli altri casi possibili ho addirittura più uguaglianze di funzioni).
     Pertanto $|L| + \aleph_0 = |A| + \aleph_0 = \max\{|A|,\aleph_0\}\leq |\{\text{$L$-formule}\}|$.
 \end{soln}
 
 \begin{theorem}[Löwenheim-Skolem - verso l'alto - forma forte]
-    Come prima, ma con cardinalità esatta.
+    Come prima, ma con cardinalità esatta, ed un'ipotesi in più per il linguaggio.
     \begin{enumerate}
-        \item Sia $T$ una $L$-teoria. Supponiamo che, per ogni $n \in \NN$, ci sia un modello di $T$ di cardinalità $\geq n$. Allora, per ogni cardinalità $\kappa \geq |L|$, c'è un modello di $T$ di cardinalità $= \kappa$.
-        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità infinita $\kappa \geq |L| + |M|$, c'è una estensione elementare $N$ di $M$ avente cardinalità $= \kappa$.
+        \item Sia $T$ una $L$-teoria. Supponiamo che, per ogni $n \in \NN$, ci sia un modello di $T$ di cardinalità $\geq n$. Allora, per ogni cardinalità $\kappa\, \purple{\geq |L|}$, c'è un modello di $T$ di cardinalità $= \kappa$.
+        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità infinita $\kappa \,\purple{\geq |L|}\, + |M|$, c'è una estensione elementare $N$ di $M$ avente cardinalità $= \kappa$.
     \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-    Per il punto 1., usando la forma debole so già che ho una $L$-struttura $N$ di cardinalità $\geq \kappa$ che soddisfa $T$, usando Löwenheim-Skolem verso il basso trovo una sottostruttura elementare $M \preceq N$ di cardinalità $\kappa$, infine $M$ è un modello di $T$ in quanto $\forall \varphi \in T$ e per ogni valutazione $v$ a valori in $M$, $M \models \{v\} \varphi$ se e solo se $N \models \{v\} \varphi$ per elementarità, e siccome una valutazione a valori in $M$ è anche una valutazione a valori in $N$
-    e che $N \models T$, segue che $M \models \varphi$ (per ogni valutazione) e quindi $M \models T$.\\
-    Per il punto 2., la forma debole ci dà una $L$-struttura $N$ di cardinalità $\geq \kappa$ tale che $M \preceq N$, usando Löwenheim-Skolem verso il basso troviamo una sottostruttura elementare $N' \preceq N$ di cardinalità $\kappa$, visto che $N \models \ED(M)$ e $N' \preceq N$, per elementarità (il ragionamento è simile a quello del punto 1.) $N' \models \ED(M)$, da cui $M \preceq N'$, e quindi $N'$ è una estensione elementare di $M$ di cardinalità $\kappa$, essendo $M$ una sottostruttura si ha $|M| \leq |N'| = \kappa$.\\
-    Osserviamo infine, che avendo usato Löwenheim-Skolem verso il basso abbiamo sempre ottenuto strutture di cardinalità $\geq |L|$ poiché la tesi del teorema di Löwenheim-Skolem verso il basso implica in automatico che $|M| = \kappa \geq |A| + |L| \geq |L|$, quindi tutte le strutture trovate sono vincolate ad avere cardinalità almeno $|L|$, e quindi per il punto 2. ho un lower bound dato da $|L| + |M|$.
+    Per il punto 1., usando la forma debole sappiamo già che abbiamo una $L$-struttura $N$ di cardinalità $\geq \kappa$ che soddisfa $T$, usando Löwenheim-Skolem verso il basso - con $A = \varnothing$, poiché $|L| \leq \kappa$ per ipotesi, troviamo una sottostruttura elementare $M \preceq N$ di cardinalità $\kappa$, e quindi vale $M \models T$.\\
+    Per il punto 2., la forma debole ci dà una $L$-struttura $N'$ di cardinalità $\geq \kappa$ tale che $M \preceq N'$, usando Löwenheim-Skolem verso il basso, con $M = A$ troviamo una sottostruttura elementare $N \preceq N'$ di cardinalità $\kappa$.
+    Visto che $N' \models \ED(M)$ e $N \preceq N'$, allora $N \models \ED(M)$, da cui $M \preceq N$.\\
 \end{proof}
 
 \begin{exercise}[Paradosso di Skolem]
@@ -1280,7 +1293,7 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
 
 \begin{definition}[Categoricità]
     Sia $\kappa$ una cardinalità, diciamo che una $L$-teoria $T$ è \vocab{$\kappa$-categorica} se esiste un unico modello di $T$ di cardinalità $\kappa$, a meno di isomorfismi di $L$-strutture.
-    In pratica diciamo che la teoria è $\kappa$-categorica se esiste almeno un modello di cardinalità $\kappa2. $ e se tutti i modelli di $T$ di cardinalità $\kappa$ sono $L$-isomorfi.
+    Cioè la teoria è $\kappa$-categorica se esiste almeno un modello di cardinalità $\kappa$ e tutti i modelli di $T$ di cardinalità $\kappa$ sono $L$-isomorfi.
 \end{definition}
 
 \begin{proposition}[Criterio di Łoś-Vaught]
@@ -1344,8 +1357,8 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
             Se $T,T'$ sono $L$-teorie complete e $T \models T'$, allora $T'\models T$, per cui $T$ e $T'$ sono logicamente equivalenti.
         \end{lemma}
         \begin{proof}
-            Voglio vedere che per ogni $\varphi \in T$ vale $T' \models \varphi$. Se per assurdo $T' \not\models \varphi$, che equivale, essendo $\varphi$ chiusa a $T' \models \neg \varphi$, allora se $M$ è un modello di $T$ si ha:
-            $M \models \varphi$, ed al contempo $M \models T' \implies M \models \neg \varphi$, assurdo.
+            Voglio vedere che per ogni $\varphi \in T$ vale $T' \models \varphi$. Supponiamo WLOG che $\varphi$ sia chiusa, altrimenti passiamo alla chiusura universale, se per assurdo $T' \not\models \varphi$,
+            che equivale, essendo $\varphi$ chiusa, a $T' \models \neg \varphi$, allora se $M$ è un modello di $T$ si ha: $M \models \varphi$, ed al contempo $M \models T' \implies M \models \neg \varphi$, assurdo.
         \end{proof}
         Dal lemma segue quindi che $\Th(\CC;0,1,+,\cdot)$ e $\mathsf{ACF}_0$ sono logicamente equivalenti, e quindi $\mathsf{ACF}_0$ è un'assiomatizzazione esplicita di $\Th(\CC;0,1,+,\cdot)$.
         \item $\Th(\ZZ;s)$ ha tra le sue conseguenze logiche: il fatto che ogni elemento abbia un predecessore $\forall x \; \exists y \; s(y) = x$, il fatto che $s$ sia iniettivo $\forall x,y \; s(x) = s(y) \to x = y$, e lo schema di assiomi che dicono che non ci sono cicli, ovvero che $s^n(x) \ne x$ per ogni $n \in \NN$.

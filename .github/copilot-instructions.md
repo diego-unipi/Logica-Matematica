@@ -14,63 +14,16 @@ These rules apply to assistant behavior in this workspace.
 - In assistant-authored Italian prose, write proper accented letters and never apostrophized substitutes.
 - This rule applies to chat output and generated edits.
 
-## evan.sty Macro Rendering Policy (Chat)
-- Treat custom macros from `evan.sty` as input aliases.
-- In assistant-authored chat math, prefer renderer-safe canonical expansions instead of raw custom macros.
-- Keep assistant output renderable with standard LaTeX/KaTeX commands whenever possible.
-- Never rewrite existing user-authored source macros unless the user explicitly asks for conversion.
-- If the user explicitly asks to preserve raw macro syntax, provide both:
-	1. a rendered canonical math form using `$...$` or `$$...$$`
-	2. the exact raw macro form in a fenced `tex` code block
+## evan.sty Macro Rendering and Vector Formatting Policy
 
-### Preferred Chat Expansions From evan.sty
-- `\CC`, `\FF`, `\NN`, `\QQ`, `\RR`, `\ZZ` -> `\mathbb{C}`, `\mathbb{F}`, `\mathbb{N}`, `\mathbb{Q}`, `\mathbb{R}`, `\mathbb{Z}`
-- `\N` -> `\mathbb{N}`
-- `\set{X}` -> `\left\{ X \right\}`
-- `\abs{x}` -> `\left\lvert x \right\rvert`
-- `\norm{x}` -> `\left\lVert x \right\rVert`
-- `\floor{x}` -> `\left\lfloor x \right\rfloor`
-- `\ceiling{x}` -> `\left\lceil x \right\rceil`
-- `\Mydef` -> `\overset{\text{def}}{=}`
-- `\defiff` -> `\overset{\text{def}}{\iff}`
-- `\liff` -> `\leftrightarrow`
-- `\lthen` -> `\rightarrow`
-- `\injto` -> `\hookrightarrow`
-- `\surjto` -> `\twoheadrightarrow`
-- `\bij` -> `\xrightarrow{\sim}`
-- `\nmodels` -> `\nvDash`
-- `\Th` -> `\operatorname{Th}`
-- `\var`, `\Var` -> `\operatorname{var}`, `\operatorname{Var}`
-- `\ar`, `\vl`, `\ED`, `\diag`, `\id` -> `\operatorname{ar}`, `\operatorname{vl}`, `\operatorname{ED}`, `\operatorname{diag}`, `\operatorname{id}`
-- `\defeq` -> `\overset{\mathrm{def}}{=}`
-- `\ol`, `\ul`, `\wt`, `\wh`, `\eps` -> `\overline`, `\underline`, `\widetilde`, `\widehat`, `\varepsilon`
-- `\ps`, `\psf`, `\rel`, `\Cl` -> `\mathcal{P}`, `\mathcal{P}^{\text{fin}}`, `\mathcal{R}`, `\mathcal{C}\ell`
-- `\cons`, `\car`, `\cdr`, `\inp`, `\outp`, `\push`, `\rem`, `\exec`, `\ttif`, `\nth`, `\length`, `\head`, `\cat`, `\step`, `\pred` -> corresponding `\texttt{...}` forms
-- `\dotminus` -> `\mathbin{\dot{-}}`
-- `\dotminu` -> `\mathbin{\dot{-}}` (compatibility alias)
-- `\purple{X}`, `\vocab{X}`, `\alert{X}` -> preserve payload `X` and drop style-only formatting in chat math
+See [evan-sty-and-vectors.instructions.md](.github/instructions/evan-sty-and-vectors.instructions.md) for complete redirection rules and vector formatting guidelines.
 
-### Elementary Machine Command Redirection (Chat)
-- `\cons` -> `\texttt{cons}`
-- `\car` -> `\texttt{car}`
-- `\cdr` -> `\texttt{cdr}`
-- `\inp` -> `\texttt{input}`
-- `\outp` -> `\texttt{output}`
-- `\push` -> `\texttt{push}`
-- `\rem` -> `\texttt{rem}`
-- `\exec` -> `\texttt{exec}`
-- `\ttif` -> `\texttt{if}`
-- `\nth` -> `\texttt{nth}`
-- `\length` -> `\texttt{length}`
-- `\head` -> `\texttt{head}`
-- `\cat` -> `\texttt{cat}`
-- `\step` -> `\texttt{step}`
-- `\pred` -> `\texttt{pred}`
-- Preserve superscripts/subscripts and arguments during redirection.
-- Example: `\exec_{2,2} g` -> `\texttt{exec}_{2,2} g`.
-- Example: `\step^n(\ulcorner \delta \urcorner, c)` -> `\texttt{step}^n(\ulcorner \delta \urcorner, c)`.
-- Hard precedence rule: when user input contains `\push`, assistant-authored math output must render `\texttt{push}` and must not mirror raw `\push`.
-- The only exception is explicit verbatim quoting requested by the user, provided in a fenced `tex` block.
+**Summary:**
+- All evan.sty macros redirect to canonical LaTeX forms in chat output
+- All vector variables render in bold (`\mathbf{...}`) in assistant-authored content
+- Single-letter variables in vector-like contexts (e.g., `\norm{x}`) default to bold
+- Tuple vectors bold only when explicitly called vectors in the text
+- No user clarification needed; apply defaults consistently
 
 ## Deterministic Expansion Rules (Chat)
 - For macros declared in `evan.sty` via `\DeclareMathOperator{\cmd}{name}`, render as `\operatorname{name}`.
