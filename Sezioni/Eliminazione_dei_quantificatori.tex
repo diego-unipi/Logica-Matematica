@@ -193,14 +193,19 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
             &\varphi_{\text{dx}} = \underbrace{t_1 \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{11}}\, \land \ldots \land \,\underbrace{t_n \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{1n}} &&\text{con $x_k \not \in \var(t_i)$}\\
             &\varphi_{\text{sx}} = \underbrace{x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, s_{1}}}_{\alpha_{21}}\, \land \ldots \land \,\underbrace{x_k \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, s_{m}}}_{\alpha_{2m}} &&\text{con $x_k \not \in \var(s_j)$}
     \end{align*}
-    come nel caso di $T_{\text{oldse}}$ stiamo considerando come uniche formule atomiche $x < y$ e $x \leq y$ - eliminando $=$ come prima - ed usando termini generici al posto di $x$ e $y$; inoltre possiamo supporre che $x_k \not \in \var(t_i),\var(s_j)$,
-    a meno di aggiungere variabili e formule per le definizioni dei termini, come ad esempio $x_p = s(x_q)$.\\
+    similmente al caso di $T_{\text{oldse}}$ stiamo assumendo le seguenti cose:
+    \begin{itemize}
+        \item l'$=$ può essere eliminato usando $<$ e $\neg$;
+        \item $x_k$ non può comparire da ambo i lati di una disuguaglianza, altrimenti si ottiene sempre $\top$ o $\bot$;
+        \item posso supporre che non ci siano composizioni di $s$, come $s^n$, altrimenti uso una nuova variabile per eliminare la definizione ricorsiva, e.g. $x_q = s(x_p)$;
+        \item posso sempre sostituire $s(x_k) < s_j$ e $t_i < s(x_k)$ con formule equivalenti ``$x_k < s^{-1}(s_j)$'' e ``$s^{-1}(t_i) < x_k$'' rispettivamente perché ogni elemento ha un successore e un predecessore;
+    \end{itemize}
     A questo punto possiamo definire $\psi := \bigwedge_{\substack{i=1, \ldots, n \\ j=1, \ldots, m}} \psi_{i,j}$, dove:
     \[ \psi_{i,j} := \begin{cases}
         t_i \leq s_j & \text{se $\alpha_{1i} = t_i \leq x_k$ e $\alpha_{2j} = x_k \leq s_j$ usano $\leq$}\\
         t_i < s_j & \text{c'è esattamente un $<$ tra $\alpha_{1i}$ e $\alpha_{2j}$ è $<$}\\
-        s(t_i) < s_j & \text{se c'è $<$ sia in $\alpha_{1i}$ che in $\alpha_{2j}$}\footnote{Questo caso serve, altrimenti potremmo incorrere in situazioni come $\exists x (a < x \land x < s(a))$, in cui non è possibile scegliere un successore immediato.}
-    \end{cases}
+        s(t_i) < s_j & \text{se c'è $<$ sia in $\alpha_{1i}$ che in $\alpha_{2j}$}
+    \end{cases}\footnote{L'ultimo caso serve, altrimenti potremmo incorrere in situazioni come $\exists x (a < x \land x < s(a))$, in cui non è possibile scegliere un successore immediato.}
     \]
     se almeno uno tra $n$ o $m$ è 0, poniamo $\psi := \top$. Verifichiamo infine che $\Th(D;<,s) \models (\exists x_k \, \varphi_i) \leftrightarrow \psi$.
     \begin{itemize}

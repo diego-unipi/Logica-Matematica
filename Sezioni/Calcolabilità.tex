@@ -904,13 +904,13 @@ Passiamo alla dimostrazione del teorema.
         \[ \langle \nth(\texttt{update,0}), (\nth(c,1) + \nth(\texttt{update,2})) \dotminus 1, \cat(\alpha,\cons(\nth(\texttt{update,1}),\beta)) \rangle \]
         e chiamiamo questo numero $\texttt{step}(\ulcorner \delta \urcorner, c)$, ottenuto da una composizione di funzioni PR, per cui $\texttt{step}$ è PR.
     \end{proof}
-    Da questa vogliamo scrivere la funzione che, in un certo numero di step, a partire da un certo input e dal codice di $f$, restituisce l'output.\\
-    Iniziamo definendo una codifica dell'input:
+    Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica si fa scrivendo la funzione via ricorsione primitiva.\\
+    Da questa vogliamo scrivere la funzione che, in un certo numero di step, a partire da un certo input e dal codice di $f$, restituisce l'output.
+    Definiamo una codifica dell'input:
     \[ \texttt{codifica\_input}(\langle x_1, \ldots, x_n \rangle) := \langle 1, 0, \cons(\blacktriangleright, \texttt{nastro}(\langle x_1, \ldots, x_k \rangle)) \rangle \]
     dove:
     \[ \texttt{nastro}(\langle x_1, \ldots, x_k \rangle) := \langle \texttt{unario}(x_1),\cons(0,\texttt{nastro}(\langle x_2, \ldots, x_k \rangle)) \rangle \]
-    e $\texttt{unario}(x) := \langle 1, \ldots, 1 \rangle$ è la codifica unaria di $x$, tutte queste cose sono PR per composizione di funzioni PR, va verificato.\\
-    Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica si fa scrivendo la funzione via ricorsione primitiva.
+    e $\texttt{unario}(x) := \langle 1, \ldots, 1 \rangle$ è la codifica unaria di $x$, tutte queste cose sono PR per composizione di funzioni PR.\\
     A questo punto usiamo l'operatore di minimizzazione per procurarci l'$n$ in cui la macchina termina, consideriamo:
     \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0)) \]
     ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM arriva allo stato 0 - termina - a partire da input codificato da $c$; tale funzione non è PR in quanto, per un certo input, la macchina potrebbe non terminare, per cui $\texttt n$ è \textbf{ricorsiva parziale}. E siamo alla fine perché ora per 
@@ -929,14 +929,15 @@ Passiamo alla dimostrazione del teorema.
     $\forall f : \NN_\bot^k \to \NN_\bot$ ricorsiva (parziale) vale:
     \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) = 0 \]
     e, quando questo avviene:
-    \[ f(x_1, \ldots, x_k) = U\!\big(\mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) = 0)\big) \]
-    ovvero se $f$ termina su un certo input, allora l'output è dato da $U$ valutata in $\mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0)$.
+    \[ f(x_1, \ldots, x_k) = U(\mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n))) \]
 \end{corollary}
 
+Quindi esistono un predicato PR, per ogni arietà, che verifica se una funzione ricorsiva termina su un certo input, ed un'altra funzione PR che, nel caso $f$ termini, coincide col valore di $f$ su quell'input, valutata nel numero di step in cui il predicato di controllo termina.
+
 \begin{proof}
-    Mettiamoci nello stesso setting della dimostrazione del teorema precedente. Definiamo la configurazione raggiunta dopo $t$ passi a partire da un certo input e dal codice di $f$ come:
+    Mettiamoci nello stesso setting della dimostrazione del teorema precedente. Definiamo la configurazione raggiunta dopo $t$ passi a partire da un certo input e dal codice di $f$, chiamiamo $\ulcorner f \urcorner$ il codice della funzione di transizione di una qualsiasi TM che implementa $f$ fissata, come:
     \[ c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t) := \texttt{step}^t\big(\ulcorner f \urcorner, \texttt{codifica\_input}(\langle x_1, \ldots, x_k \rangle)\big) \]
-    che è PR, essendo composizione di PR. Codifichiamo una coppia step-configurazione $(t,c)$ come $n = \langle t,c \rangle$, e definiamo esplicitamente:
+    che è PR, essendo composizione di PR. Codifichiamo una coppia numero step-configurazione $(t,c)$ come $n = \langle t,c \rangle$, e definiamo esplicitamente:
     \[ T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) := \begin{cases}
         0 & \text{se } \begin{cases}
             \nth(n,1)=c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, \nth(n,0)) \\
@@ -944,14 +945,14 @@ Passiamo alla dimostrazione del teorema.
         \end{cases} \\
         1 & \text{altrimenti.}
     \end{cases} \]
-    ovvero se la configurazione raggiunta dopo $t$ passi, a partire dalla configurazione iniziale è proprio $c$, $c = c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t)$, e se lo stato di tale configurazione è 0, i.e. la macchina si ferma, allora $T_k$ restituisce 0, altrimenti restituisce 1.
+    ovvero se la configurazione raggiunta dopo $t$ passi, a partire dalla configurazione iniziale è proprio la $c$ configurazione codificata come secondo numero della lista di $n$, $c = c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t)$, e se lo stato di tale configurazione è 0, i.e. la macchina si ferma, allora $T_k$ restituisce 0, altrimenti restituisce 1.\\
     Abbiamo dato la definizione per casi con le codifiche in modo da avere una definizione PR di $T_k$. 
     In questo modo:
     \begin{itemize}
-        \item[$\boxed{\implies}$] se $f(x_1, \ldots, x_k) \ne \bot$, esiste un tempo di arresto $t$ e la relativa configurazione $c = c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t)$ con stato $0$, e quindi scegliendo proprio $n = \langle t,c \rangle$ si ha che $T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0$;
+        \item[$\boxed{\implies}$] se $f(x_1, \ldots, x_k) \ne \bot$, esiste un tempo di arresto $t$ e la relativa configurazione $c = c_k(\ulcorner f \urcorner, x_1, \ldots, x_k, t)$ con stato $0$, e quindi scegliendo proprio $n := \langle t,c \rangle$ si ha che $T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0$;
         \item[$\boxed{\impliedby}$] se esiste $n$ con $T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)=0$, allora per la definizione per casi, data sopra, $n$ codifica una configurazione di arresto raggiunta in un certo numero finito di passi - per la precisione $\nth(n,0)$, quindi la computazione termina e $f(x_1, \ldots, x_k) \ne \bot$.
     \end{itemize}
-    Mettiamoci nel caso in cui $f(x_1, \ldots, x_k) \ne \bot$, allora esiste un tempo di arresto minimo:
+    Mettiamoci nel caso in cui $f(x_1, \ldots, x_k) \ne \bot$, allora esiste un tempo di arresto minimo, che posso recuperare con la minimizzazione:
     \[ n_0 := \mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)) \]
     per cui il nastro della configurazione raggiunta dopo $n_0$ passi è data da $\nth(\nth(n_0,1),2)$, quindi non bisogna far altro che convertire il nastro di tale configurazione in output, e questo è esattamente quello che fa $U$:
     \[ U(n) := \texttt{conta\_uni}(\nth(\nth(n,1),2)) \]
@@ -963,10 +964,10 @@ Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferi
 \subsection{Teoremi di punto fisso e \texorpdfstring{$s$-$m$-$n$}{s-m-n}}
 
 \begin{theorem}[$s-m-n$]
-    Esiste, per ogni $m,n \in \NN$, una funzione ricorsiva totale (in realtà PR):
+    Esiste, per ogni $m,n \in \NN$, una funzione ricorsiva totale - in realtà PR:
     \[ s_n^m : \NN^{m+1} \to \NN \]
     tale che per ogni $\alpha,x_1, \ldots, x_m,y_1, \ldots, y_n \in \NN$ vale:
-    \[ u_{n+m}(\alpha, \langle x_1, \ldots, x_m, y_1, \ldots, y_n \rangle) = u_n(s_n^m(\alpha,x_1, \ldots, x_m), \langle y_1, \ldots, y_n \rangle) \]
+    \[ u_{n+m}(\alpha, x_1, \ldots, x_m, y_1, \ldots, y_n) = u_n(s_n^m(\alpha,x_1, \ldots, x_m), y_1, \ldots, y_n) \]
 \end{theorem}
 
 \begin{example}[Somma PR]
@@ -978,9 +979,11 @@ Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferi
 \end{example}
 
 \begin{theorem}[(Secondo) teorema di punto fisso]
-    Sia $h : \NN \to \NN$ una funzione ricorsiva totale, e sia $n \in \NN$, allora esiste $\alpha$ tale che:
+    Siano $h : \NN \to \NN$ funzione ricorsiva \purple{totale}, e sia $n \in \NN$, allora esiste un $\alpha \in \NN$ tale che:
     \[ \forall x_1, \ldots, x_n \; u_n(\textcolor{purple}{\alpha}, x_1, \ldots, x_n) = u_n(h(\textcolor{purple}{\alpha}), x_1, \ldots, x_n) \]
 \end{theorem}
+
+Cioè ogni funzione ricorsiva totale ha un punto fisso per ogni $n$ naturale, che corrisponde ad una funzione che simula la funzione con codice $h(\alpha)$ per il calcolatore universale di arietà $n$.
 
 \begin{example}[Successione di Fibonacci PR - v.2]
     Consideriamo la classica funzione di Fibonacci $f : \NN \to \NN$ definita da:
@@ -1027,7 +1030,7 @@ Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evalua
     \end{align*}
     quindi vogliamo solo dimostrare che:
     \[ \forall \alpha, x_1 \in \NN \; \forall \mathbf{y} \in \NN^n \; u_{n+1}(\alpha, x_1, \mathbf{y}) = u_n(s_n^1(\alpha,x_1), \mathbf{y}) \]
-    Fisso quindi $\alpha$, $x_1$ e $\mathbf{y}$, e considero la TM che implementa la funzione codificata da $\alpha$, l'idea è quella di costruire una macchina che riceve in input $1 \blacktriangleright y_1 \ldots y_n$ e restituisce $1_\alpha \blacktriangleright x_1 y_1 \ldots y_n$,
+    Fisso quindi $\alpha$, $x_1$ e $\mathbf{y}$, e considero la TM $M$ che implementa la funzione codificata da $\alpha$, l'idea è quella di costruire una macchina che riceve in input $1 \blacktriangleright y_1 \ldots y_n$ e restituisce $1_\alpha \blacktriangleright x_1 y_1 \ldots y_n$,
     ovvero una macchina che aggiunge $x_1$ davanti all'input, e poi simula la macchina che implementa la funzione codificata da $\alpha$. Unendo tale macchina e quella che implementa la funzione codificata da $\alpha$ ottengo la macchina che implementa la funzione codificata da $s_n^1(\alpha,x_1)$, e quindi ho questa funzione ricorsiva.\\
     Consideriamo $1 \blacktriangleright y_1 \ldots y_n$, WLOG possiamo supporre di avere già uno 0 in fondo - altrimenti si fa $\push$ di uno dei valori, e si applica la macchina che implementa la funzione costante 0, quindi $1 \blacktriangleright y_1 \ldots y_n 0$, a questo punto trasformo lo 0 alla fine in $x_1$:
     \[ 1 \to \underbrace{\exec_{n+1,n+1} s \to \exec_{n+1,n+1} s \to \ldots \to \exec_{n+1,n+1} s}_{\text{$x_1$ volte}} \to 2 \]
@@ -1035,13 +1038,13 @@ Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evalua
     \[ 2 \to \push_{n+1,1} \to \push_{n+2,2} \to \ldots \to \push_{2n, n} \to 3 \]
     con $3 \blacktriangleright y_1 \ldots y_n x_1 y_1 \ldots y_n$, e infine:
     \[ 3 \to \rem_{2n+1,1} \to \rem_{2n,1} \to \ldots \to \rem_{n+2,1} \to 4 \]
-    con $4 \blacktriangleright x_1 y_1 \ldots y_n$, e da qui si manda in $0 \blacktriangleright x_1 y_1 \ldots y_n$ (che poi verrà attaccato allo stato iniziale $1_\alpha$ come al solito).\\
+    con $4 \blacktriangleright x_1 y_1 \ldots y_n$, e da qui si manda in $0 \blacktriangleright x_1 y_1 \ldots y_n$, che poi verrà attaccato allo stato iniziale $1_\alpha$ come al solito quando si compongono TM.\\
     Osservare infine che la macchina costruita termina sempre, perché è composta da un numero finito di step e nessuna delle macchine che la compongono è non-terminante, per di più abbiamo usato 
     solo macchine elementari che corrispondono a funzioni PR, per cui $s_n^1$ è PR, e per composizione anche $s_n^m$ è PR.
 \end{proof}
 
 \begin{exercise}[Effetto collaterale del teorema $s-m-n$]
-    Dimostrare che esiste una funzione $\texttt k : \NN \to \NN$, ricorsiva totale, per cui:
+    Dimostrare che esiste una funzione $\texttt k : \NN \to \NN$, ricorsiva \purple{totale}, per cui:
     \[ \forall n \in \NN \; n = u_0(\texttt k(n)) \]
     ovvero c'è una funzione ricorsiva totale che, dato un numero $n$, restituisce un codice di una funzione costante sempre $n$.
 \end{exercise}
@@ -1057,7 +1060,7 @@ Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evalua
 \end{soln}
 
 \begin{exercise}[Generalizzazione dell'esercizio precedente]
-    Data $f : \NN_\bot \to \NN_\bot$ ricorsiva parziale, dimostrare che esiste $\texttt k f : \NN \to \NN$ ricorsiva totale tale che:
+    Data $f : \NN_\bot \to \NN_\bot$ ricorsiva parziale, dimostrare che esiste $\texttt k f : \NN \to \NN$ ricorsiva \purple{totale} tale che:
     \[ \forall n \; f(n) \in \NN \implies f(n) = u_0(\texttt k f(n)) \]
 \end{exercise}
 
@@ -1068,7 +1071,7 @@ Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evalua
     \[ u_0(s_0^1(\ulcorner f \urcorner, n)) = u_1(\ulcorner f \urcorner, n) = f(n) \]
     essendo $s_0^1$ PR, è sufficiente definire:
     \[ \texttt k f(n) := s_0^1(\ulcorner f \urcorner, n) \]
-    che è ricorsiva totale.
+    che è ricorsiva totale.\footnote{Notare che provare a scegliere $\kappa f(n) := \kappa \circ f(n)$ non funziona perché la funzione ottenuta non è necessariamente totale.}
 \end{soln}
 
 \begin{remark}[Eager evaluation vs lazy evaluation]
