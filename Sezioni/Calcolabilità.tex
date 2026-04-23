@@ -1090,7 +1090,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
     Questo non possiamo farlo nel nostro contesto, tuttavia, a meno di passare alle codifiche di funzioni, possiamo fare qualcosa di simile.}\\
     \textcolor{purple}{Vediamo come la prima cosa possibile, per imitare l'euristica, non funziona, infatti se provassimo a usare $u_1(x,x)$ per $x(x)$ avremmo:
     \[ F(x) := h(u_1(x,x)) \]
-    da cui $F(\ulcorner F \urcorner) = h(u_1(\ulcorner F \urcorner, \ulcorner F \urcorner))$, cioè $h(F(\ulcorner F \urcorner))$, che è un punto fisso. Il problema sta nel fatto che $F(\ulcorner F \urcorner)$ potrebbe fare $\bot$, che è contro la tesi che il punto fisso stia in $\NN$.}\\
+    da cui $F(\ulcorner F \urcorner) = h(u_1(\ulcorner F \urcorner, \ulcorner F \urcorner))$, cioè $h(F(\ulcorner F \urcorner))$, che è un punto fisso. Il problema sta nel fatto che $F(\ulcorner F \urcorner)$ potrebbe fare $\bot$ - se $u_1(\ulcorner F \urcorner, \ulcorner F \urcorner) = \bot$, che è contro la tesi che il punto fisso stia in $\NN$.}\\
     Definiamo allora:
     \[ g(x,\mathbf y) := u_n(h(u_1(x,x)),\mathbf y) \]
     e definiamo $F(x) := s_n^1(\ulcorner g \urcorner, x)$, per cui $F$ è una funzione ricorsiva totale, in tal modo, sfruttando l'half-evaluation, abbiamo ottenuta la stessa cosa di prima, perché $s_1^1$ si comporta come se avessimo fatto $g(x,\cdot)$, ma mantenendo la totalità e quindi

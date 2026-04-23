@@ -15,7 +15,7 @@
 
 \begin{remark}[Completezza di teorie con l'eliminazione dei quantificatori]
     Se una teoria coerente $T$ ha l'eliminazione dei quantificatori, e, per ogni formula \purple{$\boxed{\text{chiusa e senza quantificatori}}$} $\varphi$, 
-vale $T \models \varphi$ o $T \models \purple{\neg} \,\varphi$, allora $T$ è completa.
+vale $T \models \varphi$ o $T \models \purple{\neg \,} \,\varphi$, allora $T$ è completa.
 \end{remark}
 
 Dimostreremo la seguente proposizione.
@@ -68,8 +68,8 @@ Vediamo la soluzione dell'esercizio nell'osservazione.
     Procediamo per induzione strutturale su $\psi_1$.
     \begin{itemize}
         \item[$\boxed{\text{$\psi_1$ atomica}}$] In tal caso necessariamente $\psi_1 = \varphi_1$, per cui la tesi segue subito dall'ipotesi.
-        \item[$\boxed{\text{$\psi_1 = \neg \varphi_1$}}$] Il caso $\varphi_1 = \psi_1$ è banale. Per ipotesi induttiva, se sostituisco una sottoformula di $\varphi_1$ con una formula $T$-equivalente, allora $T \models \varphi_1 \leftrightarrow \varphi_2$, dove $\varphi_2$ è la formula ottenuta da $\varphi_1$ dopo aver sostituito la sottoformula. 
-        A questo punto, per la semantica di Tarski, $T \models \varphi_1 \leftrightarrow \varphi_2 \iff T \models \varphi_1 \leftrightarrow T \models\varphi_2 \iff T \models \neg \varphi_1 \leftrightarrow T \models\neg \varphi_2$, e questo è esattamente $T \models (\neg \varphi_1 \leftrightarrow \neg \varphi_2)$, per cui $T \models \psi_1 \leftrightarrow \psi_2$.
+        \item[$\boxed{\text{$\psi_1 = \neg \, \varphi_1$}}$] Il caso $\varphi_1 = \psi_1$ è banale. Per ipotesi induttiva, se sostituisco una sottoformula di $\varphi_1$ con una formula $T$-equivalente, allora $T \models \varphi_1 \leftrightarrow \varphi_2$, dove $\varphi_2$ è la formula ottenuta da $\varphi_1$ dopo aver sostituito la sottoformula. 
+        A questo punto, per la semantica di Tarski, $T \models \varphi_1 \leftrightarrow \varphi_2 \iff T \models \varphi_1 \leftrightarrow T \models\varphi_2 \iff T \models \neg \, \varphi_1 \leftrightarrow T \models\neg \, \varphi_2$, e questo è esattamente $T \models (\neg \, \varphi_1 \leftrightarrow \neg \, \varphi_2)$, per cui $T \models \psi_1 \leftrightarrow \psi_2$.
         \item[$\boxed{\text{$\psi_1 = \varphi_1 * \theta_1$}}$] Con  $* \in \{\land, \lor, \to\}$. Come prima il caso in cui la sottoformula che cambia è tutto è banale. Supponiamo (WLOG), che la sottoformula che cambia sia una sottoformula di $\varphi_1$, per cui, per ipotesi induttiva, $T \models \varphi_1 \leftrightarrow \varphi_2$, dove $\varphi_2$ è la formula ottenuta da $\varphi_1$ dopo aver sostituito la sottoformula.
         Per la semantica di Tarski:
         \begin{align*}
@@ -114,8 +114,8 @@ Introduciamo due nozioni di logica proposizionale che sono elementari ma spesso 
     \begin{enumerate}
         \item Considerare ogni possibile assegnazione dei valori di verità alle formule atomiche che compaiono in $\varphi$. Le asserzioni che rendono $\varphi$ vera danno i disgiunti
         (\vocab{implicanti primi}) della DNF, quelle che rendono $\varphi$ falsa danno i congiunti (\vocab{clausole}) della CNF.
-        \item Per induzione strutturale dimostra che se $\varphi_1$ e $\varphi_2$ possono essere espresse in CNF e DNF, allora anche $\purple{\neg}\,\varphi_1$, $\varphi_1 \,\purple{\land}\, \varphi_2$ possono essere espresse in CNF e DNF.
-        Osservare inoltre che i connettivi $\purple{\neg}$ e $\purple{\land}$ possono essere usati per esprimere tutti gli altri connettivi.
+        \item Per induzione strutturale dimostra che se $\varphi_1$ e $\varphi_2$ possono essere espresse in CNF e DNF, allora anche $\purple{\neg \,}\,\varphi_1$, $\varphi_1 \,\purple{\land}\, \varphi_2$ possono essere espresse in CNF e DNF.
+        Osservare inoltre che i connettivi $\purple{\neg \,}$ e $\purple{\land}$ possono essere usati per esprimere tutti gli altri connettivi.
     \end{enumerate}
 \end{proof}
 
@@ -123,12 +123,12 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
 
 \begin{proof}
     Procediamo per induzione strutturale, supponiamo (WLOG, a meno di $T_{\text{oldse}}$-equivalenza) $\varphi$ libera dai quantificatori e verifichiamo che $\exists x_k \, \varphi$ è $T_{\text{oldse}}$-equivalente ad una formula senza quantificatori. Non sarà necessario fare lo stesso anche con il quantificatore universale in quanto
-    $\models \forall x_k \varphi \leftrightarrow \neg(\exists x_k \, \neg \varphi)$ per cui ci basta poter eliminare $\exists$. Per ipotesi induttiva, usando il lemma sopra, posso scrivere $\varphi$ in DNF: 
+    $\models \forall x_k \varphi \leftrightarrow \neg \,(\exists x_k \, \neg \, \varphi)$ per cui ci basta poter eliminare $\exists$. Per ipotesi induttiva, usando il lemma sopra, posso scrivere $\varphi$ in DNF: 
     \[ \varphi = \varphi_1 \lor \ldots \lor \varphi_l
     \]
     dove ogni $\varphi_i$ è un implicante primo. Si osserva che, banalmente, vale $\models \exists x_k \, \varphi \leftrightarrow (\exists x_k \, \varphi_1) \lor \ldots \lor (\exists x_k \, \varphi_l)$, per cui possiamo ridurci ad eliminare $\exists$ da $\exists x_k \, \varphi_i$.
-    Possiamo assumere che in $\varphi_i$ non ci siano formule chiuse, altrimenti possono essere portate fuori dall'esistenziale; le formule non chiuse atomiche sono quindi solo del tipo $x_j < x_k$ o $\neg (x_j < x_k)$\footnote{Le formule con uguaglianza di termini, $x_j = x_k$, sono $T_{\text{oldse}}$-equivalenti, per via del
-    fatto che l'ordinamento è totale, a formule del tipo $\neg(x_j < x_k) \land \neg (x_k < x_j)$, pertanto questi casi sono riassorbiti già nella dimostrazione.} che posso abbreviare con $x_j \geq x_k$, in quanto $T_{\text{oldse}} \models \neg (x_j < x_k) \leftrightarrow x_j \geq x_k$.\\
+    Possiamo assumere che in $\varphi_i$ non ci siano formule chiuse, altrimenti possono essere portate fuori dall'esistenziale; le formule non chiuse atomiche sono quindi solo del tipo $x_j < x_k$ o $\neg \, (x_j < x_k)$\footnote{Le formule con uguaglianza di termini, $x_j = x_k$, sono $T_{\text{oldse}}$-equivalenti, per via del
+    fatto che l'ordinamento è totale, a formule del tipo $\neg \,(x_j < x_k) \land \neg \, (x_k < x_j)$, pertanto questi casi sono riassorbiti già nella dimostrazione.} che posso abbreviare con $x_j \geq x_k$, in quanto $T_{\text{oldse}} \models \neg \, (x_j < x_k) \leftrightarrow x_j \geq x_k$.\\
     Infine scrivo $\varphi_i = \varphi_{\text{dx}} \land \varphi_{\text{sx}}$, dove metto in $\varphi_{\text{dx}}$ tutte le formule in cui $x_k$ compare a destra, e in $\varphi_{\text{sx}}$ tutte le formule in cui $x_k$ compare a sinistra:
     \begin{align*}
             &\varphi_{\text{dx}} = \underbrace{v_1 \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{11}}\, \land \ldots \land \,\underbrace{v_m \,\purple{\underset{\leq}{\overset{<}{\bullet}}\, x_k}}_{\alpha_{1m}} &&\text{con $v_i$ variabili diverse da $x_k$}\\
@@ -170,7 +170,7 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
 
 \begin{soln}
     Per quanto riguarda $\Th(D;<)$, consideriamo la formula:
-    \[\varphi(x,y) := x < y \land \neg ( \exists z \, x < z \land z < y )\]
+    \[\varphi(x,y) := x < y \land \neg \, ( \exists z \, x < z \land z < y )\]
     che esprime: ``che $y$ è il successore immediato di $x$".
     Supponiamo per assurdo che esista una formula $\psi(x,y)$ senza quantificatori, $\Th(D;<)$-equivalente a $\varphi$. In ogni 
     modello di $\Th(D;<)$ dovrebbe valere che $\psi$ è vera esattamente sulle coppie di elementi in cui vale $\varphi$, in particolare,
@@ -195,7 +195,7 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
     \end{align*}
     similmente al caso di $T_{\text{oldse}}$ stiamo assumendo le seguenti cose:
     \begin{itemize}
-        \item l'$=$ può essere eliminato usando $<$ e $\neg$;
+        \item l'$=$ può essere eliminato usando $<$ e $\neg \,$;
         \item $x_k$ non può comparire da ambo i lati di una disuguaglianza, altrimenti si ottiene sempre $\top$ o $\bot$;
         \item posso supporre che non ci siano composizioni di $s$, come $s^n$, altrimenti uso una nuova variabile per eliminare la definizione ricorsiva, e.g. $x_q = s(x_p)$;
         \item posso sempre sostituire $s(x_k) < s_j$ e $t_i < s(x_k)$ con formule equivalenti ``$x_k < s^{-1}(s_j)$'' e ``$s^{-1}(t_i) < x_k$'' rispettivamente perché ogni elemento ha un successore e un predecessore;
@@ -521,14 +521,14 @@ Concludiamo infine questa sezione con la dimostrazione del teorema di Łoś di c
 \end{theorem}
 
 \begin{proof}
-    Siccome, a meno di equivalenza logica, ogni formula può essere scritta usando solamente \purple{$\exists,\neg,\land$}, possiamo supporre che $\varphi$ non contenga il quantificatore \purple{$\forall$} né altri connettivi salvo \purple{$\neg$} e \purple{$\land$}. Procediamo dunque 
+    Siccome, a meno di equivalenza logica, ogni formula può essere scritta usando solamente \purple{$\exists,\neg \,,\land$}, possiamo supporre che $\varphi$ non contenga il quantificatore \purple{$\forall$} né altri connettivi salvo \purple{$\neg \,$} e \purple{$\land$}. Procediamo dunque 
     per induzione strutturale sulle $L$-formule.\\
-    Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = \purple{\neg} \,\psi(\purple{x_1},\ldots,\purple{x_k})$, allora:
+    Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = \purple{\neg \,} \,\psi(\purple{x_1},\ldots,\purple{x_k})$, allora:
         \begin{align*}
-            \faktor{\prod_{i \in I} M_i}{U} \models \neg\, \psi([\mathbf a_1],\ldots,[\mathbf a_k]) &\iff \neg \left(\faktor{\prod_{i \in I} M_i}{U} \models \psi([\mathbf a_1],\ldots,[\mathbf a_k])\right) && \text{(Tarski)} \\
+            \faktor{\prod_{i \in I} M_i}{U} \models \neg \,\, \psi([\mathbf a_1],\ldots,[\mathbf a_k]) &\iff \neg \, \left(\faktor{\prod_{i \in I} M_i}{U} \models \psi([\mathbf a_1],\ldots,[\mathbf a_k])\right) && \text{(Tarski)} \\
             & \iff \{i \in I | M_i \models \psi(a_{1i},\ldots,a_{ki})\} \not\in U && \text{(hp. ind.)} \\
-            & \iff \{i \in I | \neg (M_i \models \psi(a_{1i},\ldots,a_{ki}))\} \in U && \text{(def. ultraf.)} \\
-            & \iff \{i \in I | M_i \models \neg\,\psi(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
+            & \iff \{i \in I | \neg \, (M_i \models \psi(a_{1i},\ldots,a_{ki}))\} \in U && \text{(def. ultraf.)} \\
+            & \iff \{i \in I | M_i \models \neg \,\,\psi(a_{1i},\ldots,a_{ki})\} \in U && \text{(Tarski)}
         \end{align*}
     Se $\varphi(\purple{x_1},\ldots,\purple{x_k}) = \psi_1(\purple{x_1},\ldots,\purple{x_k}) \, \purple{\land} \, \psi_2(\purple{x_1},\ldots,\purple{x_k})$, allora similmente:
         \begin{align*}
@@ -663,7 +663,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \item Supponiamo, per assurdo, che esista una teoria $T$ che assiomatizza la classe degli insiemi finiti nel linguaggio vuoto $L_\varnothing = \varnothing$. Allora:
         \[ T' = T \cup \{\mathsf{AtLeast}_2, \mathsf{AtLeast}_3, \ldots\} 
         \]
-        dove $\mathsf{AtLeast}_n := \exists x_1 \ldots \exists x_n \bigwedge_{1 \leq i < j \leq n} \neg (x_i = x_j)$ è la formula che dice che ci sono almeno $n$ elementi distinti; quella ottenuta è una $L$-teoria nel linguaggio espanso $L := L_\varnothing \cup \{\purple{c_1}, \purple{c_2}, \ldots\}$\footnote{Tecnicamente in questo caso non è davvero necessario espandere il linguaggio, lo diventa quando non possiamo scrivere 
+        dove $\mathsf{AtLeast}_n := \exists x_1 \ldots \exists x_n \bigwedge_{1 \leq i < j \leq n} \neg \, (x_i = x_j)$ è la formula che dice che ci sono almeno $n$ elementi distinti; quella ottenuta è una $L$-teoria nel linguaggio espanso $L := L_\varnothing \cup \{\purple{c_1}, \purple{c_2}, \ldots\}$\footnote{Tecnicamente in questo caso non è davvero necessario espandere il linguaggio, lo diventa quando non possiamo scrivere 
         una formula del linguaggio che testimonia l'esistenza di infiniti elementi.}. Osserviamo che $T'$ è finitamente coerente perché data una qualsiasi sottoteoria finita 
         questa conterrà un numero finito di nuovi assiomi, per cui un sottoinsieme sufficientemente grande di $\NN$ è un modello di tale sottoteoria. Per la proposizione precedente, $T'$ è coerente, quindi ha un modello $M$. 
         A questo punto consideriamo la struttura ridotta $M|_{L_\varnothing}$, che è ovviamente \textbf{ancora un modello di $T$}, ma non è finita perché le interpretazioni delle costanti $\purple{c_1}, \purple{c_2}, \ldots$ in $M$, che sono
@@ -675,7 +675,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \[ f : [0,1] \to \faktor{\prod_{n \in \NN} \{0,1,\ldots,n\}}{U} : x \mapsto [(\floor{x \cdot n})_{n \in \NN}] \]
         è iniettiva per la stessa ragione per cui lo era nella dimostrazione della caratterizzazione di $\CC$ come ultraprodotto.
         \item Supponiamo, per assurdo, che esista una teoria $T$ che assiomatizza la classe dei grafi connessi nel linguaggio $L = \{\textcolor{purple}{e(\cdot,\cdot)}\}$, e consideriamo la teoria:
-        \[ T' = T \cup \{\neg\,\mathsf{Path}_1(a,b),\neg\,\mathsf{Path}_2(a,b),\ldots\}
+        \[ T' = T \cup \{\neg \,\,\mathsf{Path}_1(a,b),\neg \,\,\mathsf{Path}_2(a,b),\ldots\}
         \]
         dove:
         \begin{align*}
@@ -683,7 +683,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
                 \mathsf{Path}_n(a,b) &:= \exists x_1\ldots\exists x_{n-1}\;\bigl(e(a,x_1) \land e(x_1,x_2) \land \ldots \land e(x_{n-1},b)\bigr)\; n\geq 2
         \end{align*}
         Quella ottenuta è una $L' := L \cup \{\textcolor{purple}{a}, \textcolor{purple}{b}\}$-teoria.
-        Mostriamo che è finitamente coerente. Sia $T'' \subseteq T'$ finita. Se $T''$ non contiene formule del tipo $\neg\,\mathsf{Path}_k(a,b)$, allora basta un qualsiasi grafo connesso. Altrimenti, sia $m$ il massimo indice che compare in tali formule e poniamo $n:=m+1$.
+        Mostriamo che è finitamente coerente. Sia $T'' \subseteq T'$ finita. Se $T''$ non contiene formule del tipo $\neg \,\,\mathsf{Path}_k(a,b)$, allora basta un qualsiasi grafo connesso. Altrimenti, sia $m$ il massimo indice che compare in tali formule e poniamo $n:=m+1$.
         In questo caso $T''$ è soddisfatta da un grafo connesso del tipo:
         \begin{center}
             \begin{tikzpicture}
@@ -704,7 +704,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \end{center}
         interpretando $a,b$ come gli estremi della catena. Questo grafo è connesso, quindi soddisfa $T$; inoltre la distanza tra $a$ e $b$ è $\purple{n=m+1}$, dunque per ogni $k\leq m$ non vale $\mathsf{Path}_k(a,b)$, e quindi soddisfa tutte le formule di $T''$.
         Per la proposizione precedente, $T'$ è coerente, quindi ha un modello $M \models T'$. Consideriamo il modello ridotto $M|_{L}$: vale $M|_{L} \models T$, dunque $M|_{L}$ è connesso.
-        D'altra parte, in $M$ valgono tutte le formule $\neg\,\mathsf{Path}_n(a,b)$, quindi tra $a_M$ e $b_M$ non esiste alcun cammino finito. Contraddizione, perché in un grafo connesso ogni coppia di vertici è collegata da un cammino finito $\lightning$.
+        D'altra parte, in $M$ valgono tutte le formule $\neg \,\,\mathsf{Path}_n(a,b)$, quindi tra $a_M$ e $b_M$ non esiste alcun cammino finito. Contraddizione, perché in un grafo connesso ogni coppia di vertici è collegata da un cammino finito $\lightning$.
         \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei campi di caratteristica finita nel linguaggio dei campi $L = \{\textcolor{purple}{0}, \textcolor{purple}{1}, \textcolor{purple}{+}, \textcolor{purple}{\cdot}\}$, per quanto visto:
         \[ \CC = \faktor{\prod_{p \text{ primo}} \overline{\mathbb{F}_p}}{U}
         \]
@@ -749,7 +749,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
 
 \begin{proof}
     Sia:
-    \[ \mathsf{AtLeast}_n = \purple{\exists x_1 \; \exists x_2 \; \ldots \; \exists x_n \; \underbrace{\neg (x_1 = x_2) \land \neg (x_1 = x_3) \land \ldots}_{\textcolor{MidnightBlue}{= \displaystyle\bigwedge_{\substack{i < j \leq n \\ i \ne j}} \neg (x_i = x_j)}}}
+    \[ \mathsf{AtLeast}_n = \purple{\exists x_1 \; \exists x_2 \; \ldots \; \exists x_n \; \underbrace{\neg \, (x_1 = x_2) \land \neg \, (x_1 = x_3) \land \ldots}_{\textcolor{MidnightBlue}{= \displaystyle\bigwedge_{\substack{i < j \leq n \\ i \ne j}} \neg \, (x_i = x_j)}}}
     \]
     e sia $T = \{\mathsf{AtLeast}_2, \mathsf{AtLeast}_3, \ldots\}$, è chiaro che tale teoria assiomatizza la classe degli insiemi infiniti.
     Così abbiamo dimostrato che la teoria degli insiemi infiniti nel linguaggio vuoto è assiomatizzabile. \\
@@ -780,10 +780,10 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         se $G$ è un gruppo infinito, allora banalmente $G \models T''$; viceversa, se $G \models T''$, allora $G \models T'$, per cui $G$ è infinito. Siamo dunque arrivati ad un assurdo perché $\ZZ/(n) \models T''$.\\
         Il ragionamento funziona uguale per gli anelli e per i campi, con l'unica osservazione che nel caso dei campi scelgo come $n$ un primo $p$ sufficiente grande per poi usare $\FF_p$ come controesempio. 
         \item Consideriamo la formula: $\underbrace{1 + 1 + \ldots + 1}_{p \text{ volte}} = 0 =: \mathsf{char}_p$, allora un'assiomatizzazione della classe dei campi di caratteristica 0 nel linguaggio dei campi è data da:
-        \[ T := \{\text{assiomi dei campi}\} \cup \{\neg\, \mathsf{char}_{p_i} | p_i \text{ primo}, i \in \NN\}
+        \[ T := \{\text{assiomi dei campi}\} \cup \{\neg \,\, \mathsf{char}_{p_i} | p_i \text{ primo}, i \in \NN\}
         \]
         Chiaramente un campo $F$ ha caratteristica 0 se e solo se $F \models T$. Supponiamo ora per assurdo che esista $T'$ finita che assiomatizza la classe dei campi di caratteristica 0, allora chiaramente $T' \models T$,
-        e per il teorema di compattezza semantica esiste un $n \in \NN$ sufficientemente grande tale che $T'' := \{\text{assiomi dei campi}\} \cup \{\neg\, \mathsf{char}_{p_1}, \ldots, \neg\, \mathsf{char}_{p_n}\} \models T'$.
+        e per il teorema di compattezza semantica esiste un $n \in \NN$ sufficientemente grande tale che $T'' := \{\text{assiomi dei campi}\} \cup \{\neg \,\, \mathsf{char}_{p_1}, \ldots, \neg \,\, \mathsf{char}_{p_n}\} \models T'$.
         Osserviamo ora che anche $T''$ assiomatizza la classe dei campi di caratteristica 0, infatti: se $F$ è un campo di caratteristica 0, allora banalmente $F \models T''$; viceversa, se $F \models T''$, allora $F \models T'$, per cui $F$ ha caratteristica 0.
         Siamo dunque arrivati ad un assurdo perché $\FF_{p_{n+1}} \models T''$ ed ha caratteristica $p_{n+1}$.
         \item Nel linguaggio dei campi definiamo, $\forall n \geq 1$, la formula: $\forall y_0, \ldots, y_{n-1} \; \exists x \; x^n + y_{n-1} x^{n-1} + \ldots + y_0 = 0 =: \varphi_n$, che esprime il fatto che ogni polinomio di grado $n$ ha una radice.
@@ -809,7 +809,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         ma $S^{-1}\ZZ$ non è divisibile per $q$ con $q$ primo e $q > n$ - per cui non ho $1/q$ in $S^{-1}\ZZ$, quindi $S^{-1}\ZZ \not\models T$ $\lightning$.
         \item Nel linguaggio dei grafi $L = \{e(\cdot,\cdot)\}$, per il teorema di de Bruijn-Erdős [REF], un grafo è 3-colorabile se e solo se ogni suo sottografo finito lo è. Sia $F$ un insieme di rappresentanti, a meno di isomorfismo, di tutti i grafi finiti \emph{non} 3-colorabili, $F$ è definibile in $\mathsf{ZFC}$ come quoziente di un opportuno insieme definito per separazione.
         Per ogni $H \in F$ con vertici $v_1, \dots, v_n$, definiamo la formula $\phi_H$:
-        \[ \phi_H := \forall x_1 \dots \forall x_n \, \neg \left( \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
+        \[ \phi_H := \forall x_1 \dots \forall x_n \, \neg \, \left( \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
         che esprime il fatto che $H$ non è un sottografo della struttura che la soddisfa, e che quindi non ci sono sottografi finiti non 3-colorabili - nella stessa classe di equivalenza di $H$.
         Possiamo quindi assiomatizzare la classe dei grafi 3-colorabili con la teoria:
         \[ T_{\text{3-col}} := T_{\text{grafi}} \cup \{ \phi_H \mid H \in F \} \]
@@ -951,7 +951,8 @@ che abbiamo definito, nella maniera seguente.
         \item $M \preceq N$ se e solo se $N_M \models \ED(M)$.
     \end{itemize}
 \end{remark}
-
+\iffalse
+Probabilmente non ha davvero senso mettere l'intera dimostrazione di quest'osservazione.
 \begin{proof}
     Dimostriamo separatamente i due punti.
     \begin{itemize}
@@ -978,10 +979,10 @@ che abbiamo definito, nella maniera seguente.
                 \end{align*}
                 che ci dà $r_M \subseteq r_N|_C = r_N \cap C^{\ar(r)}$; viceversa, per avere l'altro contenimento:
                 \begin{align*}
-                    (m_1, \ldots, m_{\ar(r)}) \not \in r_M & \iff M \models \neg r(m_1, \ldots, m_{\ar(r)}) \\
-                                                          &\iff M_M \models \neg r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \\
-                                                          &\iff \neg r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \in \diag(M) \\
-                                                          &\implies N_M \models \neg r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \\
+                    (m_1, \ldots, m_{\ar(r)}) \not \in r_M & \iff M \models \neg \, r(m_1, \ldots, m_{\ar(r)}) \\
+                                                          &\iff M_M \models \neg \, r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \\
+                                                          &\iff \neg \, r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \in \diag(M) \\
+                                                          &\implies N_M \models \neg \, r(c_{m_1}, \ldots, c_{m_{\ar(r)}}) \\
                                                           &\iff (m_1, \ldots, m_{\ar(r)}) \notin r_{N_M} = r_N
                 \end{align*}
                 ma $r_N|_C = r_N \cap C^{\ar(r)}$, per cui $(m_1, \ldots, m_{\ar(r)}) \notin r_N|_C$, e ho anche l'altro contenimento.
@@ -1003,12 +1004,12 @@ che abbiamo definito, nella maniera seguente.
                     \item Se \textcolor{MidnightBlue}{$\varphi = r(t_1, \ldots, t_{\ar(r)})$} con $r$ simbolo di relazione e $t_i$ termini chiusi di $L(M)$, allora:
                     \[ M_M \models r(t_1, \ldots, t_{\ar(r)}) \iff ((t_1)_{M_M}, \ldots, (t_{\ar(r)})_{M_M}) \in r_{M_M} = r_M \]
                     per il punto precedente $(t_i)_{M_M} = (t_i)_{N_M}$ per ogni $i$, e inoltre ogni $(t_i)_{M_M} \in C$; quindi la tupla sta in $C^{\ar(r)}$. Poiché $M \subseteq N$, abbiamo $r_M = r_N|_C = r_N \cap C^{\ar(r)}$, dunque la stessa tupla appartiene a $r_N = r_{N_M}$, e quindi $N_M \models r(t_1, \ldots, t_{\ar(r)})$.
-                    Analogamente, se $M_M \models \neg r(t_1, \ldots, t_{\ar(r)})$, allora la tupla non appartiene a $r_M$, per cui non appartiene a $r_N|_C = r_N \cap C^{\ar(r)}$, e poiché ogni $(t_i)_{M_M} \in C$, la tupla non appartiene a $r_N$, e quindi $N_M \models \neg r(t_1, \ldots, t_{\ar(r)})$.
+                    Analogamente, se $M_M \models \neg \, r(t_1, \ldots, t_{\ar(r)})$, allora la tupla non appartiene a $r_M$, per cui non appartiene a $r_N|_C = r_N \cap C^{\ar(r)}$, e poiché ogni $(t_i)_{M_M} \in C$, la tupla non appartiene a $r_N$, e quindi $N_M \models \neg \, r(t_1, \ldots, t_{\ar(r)})$.
                     \item Se \textcolor{MidnightBlue}{$\varphi = (t_1 = t_2)$} con $t_1,t_2$ termini chiusi di $L(M)$, il punto precedente sui termini dà subito:
                     \begin{align*} M_M \models (t_1=t_2) &\iff (t_1)_{M_M}=(t_2)_{M_M} \\
                                                          &\iff (t_1)_{N_M}=(t_2)_{N_M} \iff N_M \models (t_1=t_2)
                     \end{align*}
-                    \item Se \textcolor{MidnightBlue}{$\varphi = \neg\psi$} con $\psi$ atomica chiusa, dai due casi precedenti segue $M_M \models \psi \iff N_M \models \psi$, e dunque anche $M_M \models \neg\psi \iff N_M \models \neg\psi$.
+                    \item Se \textcolor{MidnightBlue}{$\varphi = \neg \,\psi$} con $\psi$ atomica chiusa, dai due casi precedenti segue $M_M \models \psi \iff N_M \models \psi$, e dunque anche $M_M \models \neg \,\psi \iff N_M \models \neg \,\psi$.
                 \end{itemize}
         \end{itemize}
         \item Verifichiamo che $M \preceq N$ se e solo se $N_M \models \ED(M)$.
@@ -1029,7 +1030,7 @@ che abbiamo definito, nella maniera seguente.
                                                              &\iff N_M \not \models \varphi(c_{a_1}, \ldots, c_{a_k}) \\
                                                              &\iff N \not \models \varphi(a_1, \ldots, a_k)
                 \end{align*}
-                (essendo formule chiuse $\not\models$ è equivalente a $\models \neg$).
+                (essendo formule chiuse $\not\models$ è equivalente a $\models \neg \,$).
                 \item[$\boxed{\implies}$] Supponiamo che $M \preceq N$, vogliamo mostrare che $N_M \models \ED(M)$. Sia $\varphi \in \ED(M)$, allora $\varphi$ è una $L(M)$-formula chiusa e soddisfatta da $M_M$.
                 Esistono quindi una $L$-formula $\psi(x_1,\ldots,x_n)$ e $a_1,\ldots,a_n \in C$ tali che:
                 \[ \varphi = \psi(c_{a_1},\ldots,c_{a_n}) \]
@@ -1044,7 +1045,7 @@ che abbiamo definito, nella maniera seguente.
             \end{itemize}
     \end{itemize}
 \end{proof}
-
+\fi
 Basta burocrazia, questa è l'applicazione promessa.
 
 \begin{theorem}[Levi]
@@ -1076,11 +1077,11 @@ L'osservazione è un corollario del seguente esercizio.
         \item Sia $\varphi$ una formula senza quantificatori, procediamo per induzione strutturale su $\varphi$:
         \begin{itemize}
             \item[$\boxed{\text{$\varphi$ atomica}}$] Se $\varphi$ è una formula atomica, sia $v$ una valutazione a valori in $C$ tale che $M \models \{v\} \varphi$, per cui $M_M \models \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, cioè $\varphi(c_{v(x_1)},\ldots,c_{v(x_k)}) \in \diag(M)$, e per un'osservazione precedente è equivalente a $N_M \models \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, per cui $N \models \{v\} \varphi$.
-            Per il viceversa sia $v$ una valutazione a valori in $C$ tale che $\neg(M \models \{v\} \varphi)$, cioè per Tarski $M \models \{v\} \neg \, \varphi$, che implica $M_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, che equivale a $\neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)}) \in \diag(M)$, e di nuovo $N_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, da cui $N \models \{v\} \neg \, \varphi$, e quindi $\neg(N \models \{v\} \varphi)$.
-            \item[$\boxed{\text{$\varphi = \neg \psi$}}$] È sufficiente usare la semantica di Tarski e l'ipotesi induttiva:
+            Per il viceversa sia $v$ una valutazione a valori in $C$ tale che $\neg \,(M \models \{v\} \varphi)$, cioè per Tarski $M \models \{v\} \neg \, \varphi$, che implica $M_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, che equivale a $\neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)}) \in \diag(M)$, e di nuovo $N_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, da cui $N \models \{v\} \neg \, \varphi$, e quindi $\neg \,(N \models \{v\} \varphi)$.
+            \item[$\boxed{\text{$\varphi = \neg \, \psi$}}$] È sufficiente usare la semantica di Tarski e l'ipotesi induttiva:
             \begin{align*}
-                M \models \{v\} \neg \, \psi &\iff \neg(M \models \{v\} \psi) \\
-                                             &\iff \neg(N \models \{v\} \psi) &&(\text{hp induttiva}) \\
+                M \models \{v\} \neg \, \psi &\iff \neg \,(M \models \{v\} \psi) \\
+                                             &\iff \neg \,(N \models \{v\} \psi) &&(\text{hp induttiva}) \\
                                              &\iff N \models \{v\} \neg \, \psi
             \end{align*}       
             \item[$\boxed{\text{$\varphi = \psi_1 \star \psi_2$}}$] Con $\star \in \{\land, \lor, \to\}$, di nuovo:
@@ -1165,7 +1166,7 @@ Veniamo ora alla dimostrazione del teorema di Levi.
 
 \begin{proof}
     Per il punto 1. è sufficiente espandere il linguaggio\footnote{In questo caso è necessario e non si può evitare.} $L$ aggiungendo $\kappa$ costanti $\purple{c_i}$, con $i \in \kappa$, per cui ho $L' :=  L \cup \{c_i \mid i \in \kappa\}$ e posso definire la $L'$-teoria:
-    \[ T' := T \cup \{\neg(c_i = c_j) : i,j \in \kappa, i \ne j\}
+    \[ T' := T \cup \{\neg \,(c_i = c_j) : i,j \in \kappa, i \ne j\}
     \]
     ora tale teoria è finitamente coerente, data $T'' \subseteq T'$ finita, $T''$ contiene un numero finito di assiomi che dicono che due costanti sono diverse, quindi per ipotesi $T'$ è finitamente coerente, dunque coerente e quindi ha un modello $M$ di cardinalità $\geq \kappa$; infine è ovvio che la $L$-struttura $M|_L$ è un modello di $T$ di cardinalità $\geq \kappa$.\\
     Per il punto 2. basta applicare il punto 1., infatti la $L(M)$-teoria $\ED(M)$ ha come modello infinito $M_M$, per cui per 1. ha modelli di cardinalità $\geq \kappa$, e per un'osservazione precedente se $N \models \ED(M)$, allora esiste un'immersione elementare $M \hookrightarrow N|_L$.
@@ -1195,7 +1196,7 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
         \end{align*}
         \textcolor{MidnightBlue}{per l'ultimo passaggio è necessario $M \preceq N$, non si otterrebbe comunque $\implies$ usando che le formule esistenziali si preservano per estensioni perché non è detto che $\varphi$ sia libera da quantificatori.} 
         \item[$\boxed{\impliedby}$] Supponiamo che valga la condizione del criterio di Tarski-Vaught e che $M \subseteq N$, vogliamo mostrare che $M \preceq N$. Sia $\varphi(x_1,\ldots,x_k)$ una $L$-formula e siano $a_1, \ldots, a_k \in M$, verifichiamo che $M \models \varphi(a_1,\ldots,a_k)$ se e solo se $N \models \varphi(a_1,\ldots,a_k)$.
-        Procediamo per induzione strutturale su $\varphi$, il caso atomico, e quelli $\land$ e $\neg$ sono banali per l'osservazione secondo cui le formule senza quantificatori sono assolute - o si può ripetere la stessa dimostrazione,
+        Procediamo per induzione strutturale su $\varphi$, il caso atomico, e quelli $\land$ e $\neg \,$ sono banali per l'osservazione secondo cui le formule senza quantificatori sono assolute - o si può ripetere la stessa dimostrazione,
         il caso interessante è $\varphi = \exists y \; \psi(y,x_1,\ldots,x_k)$, allora:
         \begin{align*}
             M \models \exists y \; \psi(y,a_1,\ldots,a_k) &\iff \exists a \in M \; M \models \psi(a,a_1,\ldots,a_k) &&(\text{Tarski}) \\
@@ -1253,7 +1254,7 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
 \end{exercise}
 
 \begin{soln}
-    L'insieme delle $L$-formule è un sottoinsieme delle stringhe finite su un alfabeto dato da $A := L \cup \{=, \neg, \land, \lor, \to, \forall, \exists, (, ), ,\} \cup \Var$, ovvero $|\{\text{$L$-formule}\}| \leq |A^{<\NN}| = |A| + \aleph_0$ (in generale le stringhe finite sono in bigezione con le parti finite di $A$, che sono sempre almeno $\aleph_0$, e se $|A|$ è infinito allora, per $\mathsf{AC}$, $|A^{<\NN}| = |A|$).
+    L'insieme delle $L$-formule è un sottoinsieme delle stringhe finite su un alfabeto dato da $A := L \cup \{=, \neg \,, \land, \lor, \to, \forall, \exists, (, ), ,\} \cup \Var$, ovvero $|\{\text{$L$-formule}\}| \leq |A^{<\NN}| = |A| + \aleph_0$ (in generale le stringhe finite sono in bigezione con le parti finite di $A$, che sono sempre almeno $\aleph_0$, e se $|A|$ è infinito allora, per $\mathsf{AC}$, $|A^{<\NN}| = |A|$).
     Viceversa, possiamo costruire sempre almeno numerabili $L$-formule, ad esempio $x_i = x_j$ per $i \ne j \in \NN$, e possiamo sempre costruire almeno $|A|$ $L$-formule, cioè tutte quelle corrispondenti ai simboli di relazione e tutte le possibili uguaglianze di simboli di funzione (il caso peggiore possibile è avere un solo simbolo di costante $c$, ma già solo $c = c$ dà almeno una formula e quindi il conto torna, in tutti gli altri casi possibili ho addirittura più uguaglianze di funzioni).
     Pertanto $|L| + \aleph_0 = |A| + \aleph_0 = \max\{|A|,\aleph_0\}\leq |\{\text{$L$-formule}\}|$.
 \end{soln}
@@ -1286,7 +1287,21 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
 \end{exercise}
 
 \begin{soln}
-
+    Nel linguaggio $L = \{0, 1, +, \cdot, s\}$, si può scrivere una formula che esprime la divisibilità $p \mid x$:
+    \[ \mathsf{div}(p, x) := \exists y (p \cdot y = x) \]
+    Sia $P \subseteq \NN$ l'insieme dei numeri primi. Per ogni sottoinsieme $S \subseteq P$, definiamo un insieme di formule $p_S(x)$ nella variabile libera $x$, che specifica insieme di divisori primi di $x$:
+    \[ p_S(x) = \{ \mathsf{div}(p, x) : p \in S \} \cup \{ \neg \, \mathsf{div}(q, x) : q \in P \setminus S \} \]
+    cioè $p_S(x)$ è l'unione di due insiemi di formule, il primo che elenca i primi che dividono $x$ in $S$, e il secondo che elenca i primi che non dividono $x$ in $P \setminus S$.\\
+    Espandiamo il linguaggio aggiungendo una costante $\purple{c}$, e consideriamo la teoria $T_S := \mathrm{Th}(\NN; 0, 1, +, \cdot, s) \cup p_S(c)$, tale teoria è finitamente coerente,
+    infatti preso un sottoinsieme finito di formule $T_S' \subseteq T_S$, che posso supporre contenga solo un numero finito di formule $\mathsf{div}(p, c)$ e $\neg \, \mathsf{div}(q, c)$, è sufficiente interpretare $c$ come il prodotto dei primi $p$ per cui $\mathsf{div}(p, c) \in T_S'$,
+    in questo modo $\NN$ è un modello di $T_S'$ e $T_S$ è coerente.\\
+    Quindi per ogni $S \subseteq P$, la teoria $T_S$ è coerente e ammette un modello; usando Löwenheim-Skolem verso il basso - con $A = \varnothing$ - otteniamo che esiste un modello numerabile $N_S$ di $T_S$, per ogni $S \subseteq P$,
+    inoltre possiamo considerare i modelli ristretti $M_S := N_S|_L$, che sono modelli numerabili di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ che realizzano le formule $p_S(x)$.\\
+    Usiamo ora questi $2^{\aleph_0}$ modelli $M_S$ per dimostrare che $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ ha $2^{\aleph_0}$ ha almeno $2^{\aleph_0}$ modelli numerabili non isomorfi.\\
+    Se $S,S' \subseteq P$ sono due sottoinsiemi distinti di primi, allora gli insiemi $p_S(x)$ e $p_{S'}(x)$ sono diversi ed in particolare in contraddizione tra di loro perché da un lato ci sarà una formula che dice che un certo primo $p$ divide $x$ e dall'altro ci sarà la formula che dice che $p$ non divide $x$.
+    In particolare ogni elemento di un modello realizza esattamente solo l'insieme di formule $p_S(x)$ con $S$ proprio l'insieme dei primi nella sua fattorizzazione. Poiché ogni modello numerabile di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ possiede $\aleph_0$ elementi, esso può realizzare al massimo $\aleph_0$ insiemi di formule $p_S(x)$ distinti.
+    Se per assurdo esistessero al massimo $\kappa < 2^{\aleph_0}$ modelli numerabili non isomorfi di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$, allora l'unione di tutti gli elementi di tutti i tali modelli
+    sarebbe $\max\{\aleph_0, \kappa\} < 2^{\aleph_0}$, quindi realizzerebbe al massimo $\kappa < 2^{\aleph_0}$ insiemi di formule $p_S(x)$, ma questo è assurdo perché abbiamo costruito $2^{\aleph_0}$ modelli che realizzano $2^{\aleph_0}$ insiemi di formule $p_S(x)$.
 \end{soln}
 
 \subsection{Categoricità e completezza}
@@ -1301,10 +1316,9 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
 \end{proposition}
 
 \begin{proof}
-    Supponiamo il viceversa. Allora esistono $\varphi$ e due modelli $M_1, M_2$ di $T$ tali che $M_1 \models \varphi$ e $M_2 \models \neg \, \varphi$, dalle ipotesi si ha necessariamente $|M_1|,|M_2| \geq \aleph_0$, per cui possiamo supporre
-    (WLOG, a meno di applicare Löwenheim-Skolem verso l'alto debole) che $|M_1|,|M_2| \geq \kappa$.\\
-    Applicando il teorema di Löwenheim-Skolem verso il basso troviamo due $L$-sottostrutture elementari $M_1', M_2'$ di cardinalità $\kappa$ elementarmente equivalenti a $M_1$ e $M_2$ rispettivamente, per cui $M_1' \models \varphi$ e $M_2' \models \neg \, \varphi$.
-    Ma allora avremmo trovato due modelli di $T$ di cardinalità $\kappa$ non isomorfi$\lightning$.
+    Supponiamo il viceversa. Allora esistono $\varphi$ chiusa e due modelli $M_1, M_2$ di $T$ tali che $M_1 \models \varphi$ e $M_2 \models \neg \, \varphi$, dalle ipotesi si ha necessariamente $|M_1|,|M_2| \geq \aleph_0$, essendo che $\kappa \geq |L| + \aleph_0$ possiamo usare Löwenheim-Skolem verso l'alto
+    e trovare due estensioni elementari $N_1, N_2$ di $M_1$ e $M_2$ rispettivamente, di cardinalità $\kappa$.\\
+    Segue immediatamente che $N_1$ e $N_2$ sono modelli di $T$ e che $N_1 \models \varphi$ e $N_2 \models \neg \, \varphi$ - non serve nemmeno l'elementarità - ma questo è assurdo perché $T$ è $\kappa$-categorica, da cui $N_1$ e $N_2$ sono isomorfi, quindi soddisfano le stesse formule chiuse $\lightning$.
 \end{proof}
 
 \begin{remark}[Completezza $\implies$ categoricità]
@@ -1350,19 +1364,70 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     Vediamo i vari punti.
     \begin{enumerate}
         \item $\Th(\CC;0,1,+,\cdot)$ ha tra le sue conseguenze logiche: il soddisfare la teoria dei campi, il soddisfare lo schema di assiomi che danno la chiusura algebrica e lo
-        schema di assiomi che dicono che la caratteristica non è $p$ per un primo $p$ qualsiasi - notare che non sono ben definite formule che ci danno stime sulla cardinalità infinita.
+        schema di assiomi che dicono che la caratteristica non è $p$ per un primo $p$ qualsiasi \textcolor{MidnightBlue}{- notare che non sono ben definite formule che ci danno stime sulla cardinalità infinita}.
         Indicando la teoria che contiene questi assiomi con $\mathsf{ACF}_0$ abbiamo quindi che $\Th(\CC;0,1,+,\cdot) \models \mathsf{ACF}_0$. Per un fatto citato in precedenza, due campi algebricamente chiusi, della stessa caratteristica
-        e della stessa cardinalità sono isomorfi, per cui $\mathsf{ACF}_0$ è $\kappa$-categorica per ogni $\kappa \geq \aleph_0$, da cui (sapendo inoltre che non può avere modelli finiti) segue che $\mathsf{ACF}_0$ è completa.
-        \begin{lemma}
+        e della stessa cardinalità sono isomorfi, per cui $\mathsf{ACF}_0$ è $\kappa$-categorica per ogni $\kappa \geq \aleph_0$, da cui - sapendo che non può avere modelli finiti, perché $\ZZ$ si immerge in ogni modello - segue che $\mathsf{ACF}_0$ è completa.
+        \begin{lemma}[Equivalenza di teorie complete]
             Se $T,T'$ sono $L$-teorie complete e $T \models T'$, allora $T'\models T$, per cui $T$ e $T'$ sono logicamente equivalenti.
         \end{lemma}
         \begin{proof}
             Voglio vedere che per ogni $\varphi \in T$ vale $T' \models \varphi$. Supponiamo WLOG che $\varphi$ sia chiusa, altrimenti passiamo alla chiusura universale, se per assurdo $T' \not\models \varphi$,
-            che equivale, essendo $\varphi$ chiusa, a $T' \models \neg \varphi$, allora se $M$ è un modello di $T$ si ha: $M \models \varphi$, ed al contempo $M \models T' \implies M \models \neg \varphi$, assurdo.
+            che equivale, essendo $\varphi$ chiusa, a $T' \models \neg \, \varphi$, allora se $M$ è un modello di $T$ si ha: $M \models \varphi$, ed al contempo $M \models T' \implies M \models \neg \, \varphi$, assurdo.
         \end{proof}
         Dal lemma segue quindi che $\Th(\CC;0,1,+,\cdot)$ e $\mathsf{ACF}_0$ sono logicamente equivalenti, e quindi $\mathsf{ACF}_0$ è un'assiomatizzazione esplicita di $\Th(\CC;0,1,+,\cdot)$.
-        \item $\Th(\ZZ;s)$ ha tra le sue conseguenze logiche: il fatto che ogni elemento abbia un predecessore $\forall x \; \exists y \; s(y) = x$, il fatto che $s$ sia iniettivo $\forall x,y \; s(x) = s(y) \to x = y$, e lo schema di assiomi che dicono che non ci sono cicli, ovvero che $s^n(x) \ne x$ per ogni $n \in \NN$.
-        Quindi 
+        \item $\Th(\ZZ;s)$ ha tra le sue conseguenze logiche:
+        \begin{enumerate}[(i)]
+            \item $\forall x \forall y \; s(x) = s(y) \to x = y$, il successore è iniettivo;
+            \item $\forall y \; \exists x \; s(x) = y$, ogni elemento ha un predecessore;
+            \item $\varphi_n := \forall x \; \neg(s^n(x) = x)$, lo schema di formule che dice che non ci sono cicli;
+        \end{enumerate}
+        chiamiamo $T_{\ZZ}$ la teoria che contiene questi assiomi. Vediamo che è completa, e come prima si concluderà che è logicamente equivalente a $\Th(\ZZ;s)$, e quindi è un'assiomatizzazione esplicita di $\Th(\ZZ;s)$.\\
+        \textbf{$T_{\ZZ}$ non ha modelli finiti}\\
+        Supponiamo per assurdo che $M$ sia un modello finito di $T_{\ZZ}$, allora $s_M$ è una permutazione sul dominio finito di $M$, per cui ha un ordine finito $n$, cioè $s_M^k = \mathrm{id}_M$, ma questo contraddice il fatto che $M$ soddisfa $\varphi_k$.\\
+        \textbf{$T_{\ZZ}$ è $\kappa$-categorica per ogni $\kappa > \aleph_0$}\\
+        Siano $M_1, M_2$ due modelli di $T_{\ZZ}$ di cardinalità $\kappa > \aleph_0$, possiamo definire su entrambi gli insiemi la seguente relazione di equivalenza:
+        \[ x \sim y \overset{\mathrm{def}}{\iff} \exists n \in \ZZ \; s^n(x) = y \]
+        questa relazione partiziona i domini in classi di equivalenza. Vediamo che ogni classe di equivalenza è $L$-isomorfa a $(\ZZ;s)$.
+        Sia $[a]$ una classe di equivalenza, consideriamo:
+        \[ f : \ZZ \to [a] : n \mapsto s_M^n(a) \]
+        questa mappa è: surgettiva per (ii), iniettiva per (i) + (iii), ed è un morfismo per definizione, infatti:
+        \begin{align*}
+            s_M \circ f(n) &= s_M(s_M^n(a)) \\
+                           &= s_M^{n+1}(a) \\
+                           &= f(n+1) = f(s_{\ZZ}(n))
+        \end{align*}
+        ed è un isomorfismo - volendo già perché non essendoci simboli di relazione in $L$ è un embedding surgettivo - perché anche l'inversa $f^{-1} : [a] \to \ZZ$ che mappa $s_M^n(a) = b \mapsto n$ è un morfismo, infatti:
+        \begin{align*}
+            s_\ZZ \circ f^{-1}(b) &= s_\ZZ \circ f^{-1}(s_M^n(a)) \\
+                                   &= s_\ZZ(n) \\
+                                   &= n + 1 \\
+                                   &= f^{-1}(s_M^{n+1}(a)) = f^{-1}(s_M(b))
+        \end{align*}
+        quindi ogni classe di equivalenza è una sottostruttura isomorfa a $(\ZZ;s)$. Per concludere basta osservare che poiché $M_1$ e $M_2$ sono unione disgiunta delle proprie classi di equivalenza vale che:
+        \[ \kappa = |M_i| = \sum_{\{\text{classi di equivalenza in $M_i$}\}} \aleph_0 = \aleph_0 \cdot |\{\text{classi di equivalenza in $M_i$}\}| \]
+        per cui sia $M_1$ che $M_2$ hanno $\kappa$ classi di equivalenza \textcolor{MidnightBlue}{- questo passaggio non funzionerebbe se $\kappa = \aleph_0$, in quanto l'equazione sopra avrebbe più cardinali possibili come soluzione}, e quindi sono isomorfi, perché basta comporre le mappe che portano dalla classi di equivalenza di $M_1$ a $\ZZ$ e da $\ZZ$ alle classi di equivalenza di $M_2$, e poi definire un'unica mappa incollandole.\footnote{Credo che sia proprio che entrambe le strutture sono isomorfe a $\coprod_{\kappa} (\ZZ;s)$, inteso come il coprodotto nella categoria delle $L$-strutture,
+        infatti la mappa che stiamo costruendo è proprio quella data dalla sua proprietà universale.} 
+        \item $\Th(\NN;s)$ ha tra le sue conseguenze:
+        \begin{enumerate}[(i)]
+            \item $\forall x \forall y \; s(x) = s(y) \to x = y$, il successore è iniettivo;
+            \item $(\exists x \; \neg \, \exists y \; s(y) = x) \land \forall z (\neg (z = x) \to \exists w \; s(w) = z)$, esiste un elemento che non è il successore di nessun altro, e tale elemento è unico;
+            \item $\varphi_n := \forall x \; \neg(s^n(x) = x)$, lo schema di formule che dice che non ci sono cicli;
+        \end{enumerate}
+        Si procede come prima, dimostriamo che la teoria $T_{\NN}$ è completa, e quindi è equivalente a $\Th(\NN;s)$.\\
+        Dimostriamo allora che $T_{\NN}$ è $\kappa$-categorica per ogni $\kappa > \aleph_0$. Esattamente per lo stesso motivo di prima $T_\NN$ non ha modelli finiti,
+        inoltre, se $M_1, M_2$ sono due modelli di $T_\NN$ di cardinalità $\kappa$, possiamo definire la medesima relazione di equivalenza di prima, osservando tuttavia che in questo caso
+        ci sarà una classe di equivalenza che contiene l'elemento che non è il successore di nessun altro. Le classi di equivalenza che non contengono questo elemento sono isomorfe a $(\ZZ;s)$ esattamente come sopra,
+        mentre la classe che contiene tale elemento sarà $L$-isomorfa a $(\NN;s)$, usando la funzione che mappa $0$ nell'elemento che non ha predecessore e tutti gli altri naturali per commutatività del successore.\\
+        Quindi come prima abbiamo scoperto che $M_1$ e $M_2$ sono unione disgiunta di classi di equivalenza, che sono sottostrutture, una delle quali isomorfa a $(\NN;s)$ e tutte le altre isomorfe a $(\ZZ;s)$;
+        per stabilire quante sono facciamo esattamente lo stesso conto di prima ottenendo:
+        \[ \kappa = \aleph_0 + \aleph_0 \cdot |\{\text{classi di equivalenza in $M_i$}\}| = \aleph_0 \cdot |\{\text{classi di equivalenza in $M_i$}\}| \]
+        da cui segue che $M_1$ e $M_2$ hanno $\kappa$ classi di equivalenza, e quindi sono isomorfi componendo ed incollando le mappe come prima.
+        \item $\Th(\QQ;0,+)$ ha tra le sue conseguenze logiche:
+        \begin{enumerate}[(i)]
+            \item gli assiomi della teoria dei gruppi abeliani divisibili;
+            \item $\varphi_n := \forall x \; \neg(n \cdot x = 0)$, lo schema di formule che dice che non ci sono $n$-torsioni;
+        \end{enumerate}
+        chiamiamo $T_{\QQ}$ la teoria che contiene questi assiomi.
     \end{enumerate}
 \end{soln}
 
@@ -1371,6 +1436,8 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     Classifica le $L$-teorie complete che estendono $T$.
 \end{exercise}
 
+
+\iffalse
 \begin{soln}
     Sia $M$ un modello di una teoria completa che estende $T$. Allora, per ogni $n,m \in \NN \cup \{\infty\}$, definiamo la teoria $T_{n,m}$ come l'estensione di $T$ che dice che ci sono esattamente $n$ classi di equivalenza finite
     e $m$ classi di equivalenza infinite. È chiaro che ogni teoria completa che estende $T$ è una di queste. Mostriamo ora che ogni $T_{n,m}$ è completa. Siano infatti $M_1, M_2 \models T_{n,m}$,
@@ -1378,3 +1445,4 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     (entrambe hanno la stessa cardinalità per definizione di $T_{n,m}$), e così via per tutte le classi finite. Facciamo lo stesso per le classi infinite. Otteniamo così un isomorfismo parziale tra $M_1$ e $M_2$
     che copre tutto il dominio di entrambe le strutture, per cui è un isomorfismo vero e proprio. Quindi $M_1 \cong M_2$, da cui segue che $M_1 \equiv M_2$.
 \end{soln}
+\fi

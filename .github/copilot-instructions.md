@@ -16,7 +16,7 @@ These rules apply to assistant behavior in this workspace.
 
 ## evan.sty Macro Rendering and Vector Formatting Policy
 
-See [evan-sty-and-vectors.instructions.md](.github/instructions/evan-sty-and-vectors.instructions.md) for complete redirection rules and vector formatting guidelines.
+See [evan-sty-and-vectors.instructions.md](instructions/evan-sty-and-vectors.instructions.md) for complete redirection rules and vector formatting guidelines.
 
 **Summary:**
 - All evan.sty macros redirect to canonical LaTeX forms in chat output
