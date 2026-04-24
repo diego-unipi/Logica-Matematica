@@ -1,7 +1,7 @@
 \section{Eliminazione dei quantificatori, forme normali ed ultrafiltri}
 \subsection{Eliminazione dei quantificatori}
 \begin{definition}[Formule equivalenti per una teoria]
-    Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalente} per $T$ (o $T$-\vocab{equivalenti}),
+    Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalente} a $\psi$ per $T$ (o $\phi$ e $\psi$ sono $T$-\vocab{equivalenti}),
     denotato con $T \models (\varphi \,\purple{\leftrightarrow}\, \psi)$\footnote{Come già osservato nella semantica di Tarski, fare attenzione perché di fatto il $\leftrightarrow$ 
     interpretato è l'equivalenza logica nella metateoria, ovvero $\iff$ in $\mathsf{ZFC}$.} se $T \models \purple{(} \varphi \rightarrow \psi \purple{)} \land \purple{(} \psi \rightarrow \varphi \purple{)}$,
     ossia (via semantica di Tarski) $T,\varphi \models \psi$ e $T,\psi \models \varphi$.
@@ -203,7 +203,7 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
     A questo punto possiamo definire $\psi := \bigwedge_{\substack{i=1, \ldots, n \\ j=1, \ldots, m}} \psi_{i,j}$, dove:
     \[ \psi_{i,j} := \begin{cases}
         t_i \leq s_j & \text{se $\alpha_{1i} = t_i \leq x_k$ e $\alpha_{2j} = x_k \leq s_j$ usano $\leq$}\\
-        t_i < s_j & \text{c'è esattamente un $<$ tra $\alpha_{1i}$ e $\alpha_{2j}$ è $<$}\\
+        t_i < s_j & \text{c'è esattamente uno $<$ tra $\alpha_{1i}$ e $\alpha_{2j}$ è $<$}\\
         s(t_i) < s_j & \text{se c'è $<$ sia in $\alpha_{1i}$ che in $\alpha_{2j}$}
     \end{cases}\footnote{L'ultimo caso serve, altrimenti potremmo incorrere in situazioni come $\exists x (a < x \land x < s(a))$, in cui non è possibile scegliere un successore immediato.}
     \]
@@ -346,7 +346,7 @@ Usiamo la notazione appena introdotta per enunciare il teorema di Łoś.
 \end{theorem}
 
 \begin{corollary}[Un ultraprodotto di modelli è un modello della stessa teoria]
-w    Se per ogni $i \in I$, vale $M_i \models \varphi$, allora $\faktor{\prod_{i \in I} M_i}{U} \models \varphi$.
+    Se per ogni $i \in I$, vale $M_i \models \varphi$, allora $\faktor{\prod_{i \in I} M_i}{U} \models \varphi$.
     Quindi un ultraprodotto di modelli di una $L$-teoria $T$ è anch'esso un modello di $T$. Inoltre, per \purple{$U$ non principale},
     se per ogni $i \in I$, \purple{eccetto al più un numero finito di indici}, vale $M_i \models \varphi$, allora $\faktor{\prod_{i \in I} M_i}{U} \models \varphi$.
 \end{corollary}
@@ -572,7 +572,7 @@ Concludiamo infine questa sezione con la dimostrazione del teorema di Łoś di c
 
 \subsection{Applicazioni del teorema di compattezza}
 In questa sezione mostriamo alcuni esempi ed applicazioni del teorema di compattezza. Le tecniche che useremo costituiscono gli elementi della \vocab{teoria dei modelli}, che
-studia le proprietà e della relazione di conseguenza logica. I risultati principali che dimostreremo sono: i teoremi di Löwenheim-Skolem - ce ne sono due, uno per salire e uno per scendere in cardinalità,
+studia le proprietà della relazione di conseguenza logica. I risultati principali che dimostreremo sono: i teoremi di Löwenheim-Skolem - ce ne sono due, uno per salire e uno per scendere in cardinalità,
 però, rozzamente, possiamo scrivere come segue.
 
 \begin{theorem}[Löwenheim-Skolem - alla buona]
@@ -607,7 +607,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
 
 \begin{exercise}[Modelli non standard di $\Th(\RR;0,1,+,\cdot,<)$]
     Allo stesso modo si può dimostrare anche che esistono modelli non standard di $\Th(\RR; 0,1,+,\cdot,<)$.\footnote{\underline{Hint}: Basta aggiungere una costante $\textcolor{purple}{c}$ e gli assiomi $\{\textcolor{purple}{1 < c}, \textcolor{purple}{1 + 1 < c}, \textcolor{purple}{1 + 1 + 1 < c}, \ldots\}$, che renderanno di fatto $c$ un \vocab{infinito},
-    quindi i modelli questa teoria non soddisfano la proprietà Archimedea.}
+    quindi i modelli di questa teoria non soddisfano la proprietà Archimedea.}
 \end{exercise}
 
 \begin{soln}
@@ -649,7 +649,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
     Le seguenti classi di strutture NON sono assiomatizzabili:
     \begin{enumerate}
         \item insiemi finiti nel linguaggio $\varnothing$;
-        \item grafi connessi - con il linguaggio $L = \{\purple{e(\cdot,\cdot)}\}$ (simbolo di relazione binaria) \textcolor{MidnightBlue}{- per ogni coppia di vertici è collegata esiste un cammino che li connette};
+        \item grafi connessi - con il linguaggio $L = \{\purple{e(\cdot,\cdot)}\}$ (simbolo di relazione binaria) \textcolor{MidnightBlue}{- per ogni coppia di vertici esiste un cammino che li connette};
         \item campi di caratteristica finita;
         \item gruppi abeliani non divisibili \textcolor{MidnightBlue}{- per ogni $x$ esiste $n \in \NN$ tale che $\forall y \; x \ne \underbrace{y+\ldots + y}_{n\text{ volte}}$};
         \item $\purple{{}^*}$gruppi liberi \textcolor{MidnightBlue}{- esistono un insieme di generatori liberi, ossia senza relazioni non banali tra di loro};
@@ -809,11 +809,11 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         ma $S^{-1}\ZZ$ non è divisibile per $q$ con $q$ primo e $q > n$ - per cui non ho $1/q$ in $S^{-1}\ZZ$, quindi $S^{-1}\ZZ \not\models T$ $\lightning$.
         \item Nel linguaggio dei grafi $L = \{e(\cdot,\cdot)\}$, per il teorema di de Bruijn-Erdős [REF], un grafo è 3-colorabile se e solo se ogni suo sottografo finito lo è. Sia $F$ un insieme di rappresentanti, a meno di isomorfismo, di tutti i grafi finiti \emph{non} 3-colorabili, $F$ è definibile in $\mathsf{ZFC}$ come quoziente di un opportuno insieme definito per separazione.
         Per ogni $H \in F$ con vertici $v_1, \dots, v_n$, definiamo la formula $\phi_H$:
-        \[ \phi_H := \forall x_1 \dots \forall x_n \, \neg \, \left( \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
+        \[ \phi_H := \forall x_1 \dots \forall x_n \, \neg \, \left(\bigwedge_{1 \leq i < j \leq n} \neg(x_i = x_j) \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
         che esprime il fatto che $H$ non è un sottografo della struttura che la soddisfa, e che quindi non ci sono sottografi finiti non 3-colorabili - nella stessa classe di equivalenza di $H$.
         Possiamo quindi assiomatizzare la classe dei grafi 3-colorabili con la teoria:
         \[ T_{\text{3-col}} := T_{\text{grafi}} \cup \{ \phi_H \mid H \in F \} \]
-        È chiaro che un modello $G$ è un grafo 3-colorabile se e solo se $G \models T_{\text{3-col}}$, infatti soddisfare tutte le $\phi_H$ equivale a non avere sottografi finiti non 3-colorabili, che è appunto la condizione per essere 3-colorabile, notiamo infinite che $|F|$ è infinita perché ci sono infiniti grafi finiti non 3-colorabili (ad esempio i grafi a ruota dispari [REF] $W_{2k+1}$).
+        È chiaro che un modello $G$ è un grafo 3-colorabile se e solo se $G \models T_{\text{3-col}}$, infatti soddisfare tutte le $\phi_H$ equivale a non avere sottografi finiti non 3-colorabili, che è appunto la condizione per essere 3-colorabile, notiamo infinite che $|F|$ è infinito perché ci sono infiniti grafi finiti non 3-colorabili (ad esempio i grafi a ruota dispari [REF] $W_{2k+1}$).
         \begin{center}
             \begin{tikzpicture}[every node/.style={circle, draw, minimum size=4.55mm, inner sep=0pt}]
                 \begin{scope}[shift={(-4.8,0)}]
@@ -872,31 +872,31 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
 Vediamo ora due esempi di applicazione al di fuori della logica matematica.
 
 \begin{definition}[Partizione litigiosa]
-    Diciamo che una partizione $V = A \sqcup B$ dei vertici di un grafo $G = (V,E)$ è \vocab{litigiosa} (o \vocab{unfriendly partition}) se, per ogni vertice $v \in V$,
-    il numero di adiacenti a $v$ che appartiene alla medesima parte di $v$ è $\leq$ del numero di adiacenti a $v$ che appartiene all'altra parte.
+    Diciamo che una partizione $V = A \sqcup B$ dei vertici di un grafo $G = (V;E)$ è \vocab{litigiosa} (o \vocab{unfriendly partition}) se, per ogni vertice $v \in V$,
+    il numero di adiacenti a $v$ che appartiene alla medesima parte di $v$ è $\leq$ del numero di adiacenti a $v$ che appartiene all'altra parte. Cioè se $v \in A$:
+    \[ \#\{w \in A | e(v,w) \in E\} \leq \#\{w \in B | e(v,w) \in E\} \]
 \end{definition}
 
-\begin{proposition}[Ogni grafo localmente finito ammette una partizione litigiosa]
-    Sia $G$ un grafo \vocab{localmente finito} - ossia ogni vertice di $G$ ha un numero finito di vertici adiacenti - allora $G$ ammette una partizione litigiosa.
+\begin{definition}
+    Diciamo che un grafo $G = (V;E)$ è \vocab{localmente finito} se ogni vertice di $V$ ha un numero finito di adiacenti, ovvero:
+    \[ \forall v \in V \; \#\{w \in V | e(v,w) \in E\} < \aleph_0 \]
+\end{definition}
+
+\begin{proposition}[localmente finito $\implies$ esiste partizione litigiosa]
+    Sia $G = (V;E)$ un grafo localmente finito, allora $G$ ammette una partizione litigiosa.
 \end{proposition}
 
 \begin{proof}
-    Sia $L = \{\purple{e(\cdot,\cdot)}\}$ il linguaggio dei grafi, e sia $T$ la $L$-teoria costituita dagli assiomi dei grafi più l'insieme di $L$-formule:
-    \[ \{\exists x \; (\purple{P(x)} \land \bigwedge_{i=1}^n \neg \, \purple{P(c_i)}) \;|\; n \in \NN, c_1, \ldots, c_n \text{ costanti di } L\} \cup
-    \]
-    \[ \{\exists x \; (\neg \, \purple{P(x)} \land \bigwedge_{i=1}^n \purple{P(c_i)}) \;|\; n \in \NN, c_1, \ldots, c_n \text{ costanti di } L\}
-    \]
-    dove $\purple{P(\cdot)}$ è un nuovo simbolo di predicato unario. Mostriamo che $T$ è coerente. Data infatti una sottoteoria finita $T' \subseteq T$, questa conterrà un numero finito di formule del primo tipo e un numero finito di formule del secondo tipo,
-    diciamo rispettivamente $m$ e $n$. Sia quindi $V' \subseteq V$ l'insieme dei vertici che interpretano le costanti presenti in $T'$, e sia $W$ l'insieme dei vertici adiacenti a qualche vertice in $V'$ - che è finito per ipotesi di localmente finito.
-    Consideriamo ora la partizione $V = A \sqcup B$ definita come segue:
-    \[ A = V' \cup (W \cap V_{\text{dispari}}) \cup (V \setminus (V' \cup W)) ,\quad B = W \cap V_{\text{pari}}
-    \]
-    dove $V_{\text{pari}}$ e $V_{\text{dispari}}$ sono rispettivamente i vertici a distanza pari e dispari da un vertice fissato di $V'$.
-    È chiaro che questa partizione soddisfa tutte le formule in $T'$, per cui $T'$ è coerente. Per la proposizione precedente, $T$ è coerente, quindi ha un modello $M$.\\
-    Ora $M$ è una $L$-struttura e $M \models T$. Consideriamo la partizione $V = A \sqcup B$ definita come:
-    \[ A = \{v \in V | M \models P(v)\}, \quad B = \{v \in V | M \models \neg \, P(v)\}
-    \]
-    Questa partizione è chiaramente litigiosa, perché se così non fosse esisterebbe un vertice $v \in V$ che viola uno degli assiomi di $T$, il che è assurdo.
+    Se $G = (V;E)$ è finito, basta considerare una partizione $V = A \sqcup B$ che massimizza il numero di archi che collegano un vertice di $A$ con un vertice di $B$,
+    e questa sarà una partizione litigiosa perché se esistesse un vertice $v$ che non soddisfa la condizione di litigiosità, allora spostando $v$ dall'altra parte si otterrebbe una partizione con un numero maggiore di archi che collegano un elemento di $A$ con uno $B$ $\lightning$.\\
+    Nel caso generale, consideriamo il linguaggio $L := \{\purple{p_i} | i \in V\}$ costituito da tante \vocab{costanti proposizionali} - ossia predicati 0-ari - quanti sono i vertici di $G$. Sia $T$ la $L$-teoria:
+    \[ T := \left\{\bigvee_{\substack{A \subseteq N(i) \\ |A| \geq |N(i)|/2}}\vphantom{\bigwedge_{j \in A} (\purple{p_i \leftrightarrow \neg\, p_j})}\smash{\underbrace{\bigwedge_{j \in A} (\purple{p_i \leftrightarrow \neg\, p_j})}_{=:\,\purple{\varphi_i}}} \,\middle|\, i \in V\right\} \]
+    dove $N(i) := \{k \in V | e(i,k) \in E\}$ è l'insieme dei vicini di $i$. Le formule $\varphi_i$ dicono ``la maggioranza dei vicini di $i$ ha valore opposto a $p_i$'',
+    di conseguenza i valori di verità assegnati alle $\purple{p_{\bullet}}$, da un modello di $T$ ci danno la partizione litigiosa cercata. Resta da dimostrare che $T$ è coerente.\\
+    Supponiamo per assurdo che $T' := \{\varphi_i | i \in V'\}$ non sia coerente per qualche $V' \subseteq V$ finito, e consideriamo il grafo ottenuto prendendo solo i vertici di $V'$ e i loro adiacenti:
+    \[ V'' := V' \cup \bigcup_{i \in V'} N(i) \]
+    che è finito perché $G$ è localmente finito, per cui gli $N(i)$ sono finiti. Per il caso finito $V''$ ammette una partizione litigiosa $V'' = A \sqcup B$,
+    assegnando il valore $\top$ - cioè dichiarando che è vera nella valutazione - a $\purple{p_i}$ se e solo se $i \in A$ si ottiene che $V''$ è un modello di $T'$, assurdo.
 \end{proof}
 
 La seconda applicazione ci dà il pretesto per introdurre le seguenti definizioni, che, in realtà, sono nozioni di base della teoria dei modelli.
@@ -1141,11 +1141,12 @@ Veniamo ora alla dimostrazione del teorema di Levi.
     Sia $T_{\text{oag}}$ la teoria dei gruppi abeliani ordinati nel linguaggio $L := L_{\text{oag}} = \{\purple{e}, \purple{^{-1}}, \purple{\cdot}, \purple{<}\} = L_{\text{gr.}} \cup \{\purple{<}\}$, che è assiomatizzata da:
     \[ T_{\text{oag}} = T_{\text{gr. ab.}} \cup T_{\text{ord. tot.}} \cup \{\forall x,y,z \; \purple{x < y} \leftrightarrow \purple{xz < yz}\}
     \]
-    ed è una teoria universale. Sia $G$ un gruppo abeliano senza torsione, se la $L(G)$-teoria $T_{\text{oag}} \cup \diag(G)$ fosse coerente allora avrebbe un modello $M$, che a sua volta avrebbe una $L(G)$-sottostruttura isomorfa a $G_G$.
-    Essendo la teoria universale $M \models T_{\text{oag}} \implies G_G \models T_{\text{oag}}$, infine, essendo $G_G$ $L_{\text{gr.}}$-isomorfo a $G$ ($G$ è una $L_{\text{gr.}}$-struttura), possiamo indurre l'ordinamento voluto su $G$.\\
-    Verifichiamo che $T_{\text{oag}} \cup \diag(G)$ è coerente. Se per assurdo non lo fosse, allora $T_{\text{oag}} \cup \diag(G) \models \bot$, e per compattezza esiste un sottoinsieme finito $X$ della teoria che ha $\bot$ come conseguenza logica, tale 
+    ed è una teoria universale. Sia $G$ un gruppo abeliano senza torsione, se la $L(G)$-teoria $T_{\text{oag}} \cup \diag(G)$ fosse coerente allora avrebbe un modello $M$, e la mappa $\iota : G \to M$ definita da $\iota(g) := (c_g)_M$ sarebbe un embedding di $G$ in $M|_L$,
+    per cui essendo che $M|_L \models T_{\text{oag}}$ e che tale teoria è universale allora $G \cong \iota[G]$ sarebbe un modello di $T_{\text{oag}}$ da cui la tesi.
+    Verifichiamo allora che $T_{\text{oag}} \cup \diag(G)$ è coerente.\\
+    Se per assurdo non lo fosse, allora $T_{\text{oag}} \cup \diag(G) \models \bot$, e per compattezza esiste un sottoinsieme finito $X$ della teoria che ha $\bot$ come conseguenza logica, tale 
     sottoinsieme $X$ è necessariamente contenuto in $\diag(G)$ perché $T_{\text{oag}}$ è coerente, per cui si ha $T_{\text{oag}} \cup X \models \bot$. Consideriamo ora $H := \langle  g | c_g \in X\rangle \leqslant G$, essendo $G$ abeliano $H$ è un sottogruppo abeliano finitamente generato,
-    i.e. uno $\ZZ$-modulo finitamente generato che, per il teorema di struttura dei moduli finitamente generati su PID nel caso senza torsione, è isomorfo a $\ZZ^n$ per qualche $n \in \NN$. Possiamo quindi indurre un ordinamento compatibile con l'operazione di gruppo su $H$ mettendo su $\ZZ^n$ l'ordinamento lessicografico,
+    i.e. uno $\ZZ$-modulo finitamente generato che, per il teorema di struttura dei moduli finitamente generati su PID, nel caso senza torsione, è isomorfo a $\ZZ^n$ per qualche $n \in \NN$. Possiamo quindi indurre un ordinamento compatibile con l'operazione di gruppo su $H$ mettendo su $\ZZ^n$ l'ordinamento lessicografico,
     ma allora $H \models T_{\text{oag}} \cup X$, da cui $T_{\text{oag}} \cup X$ è coerente e quindi $\not\models \bot$, assurdo.
 \end{proof}
 \pagebreak
@@ -1155,7 +1156,7 @@ Veniamo ora alla dimostrazione del teorema di Levi.
     Il teorema di Löwenheim-Skolem verso l'alto dice due cose.
     \begin{enumerate}
         \item Sia $T$ una $L$-teoria. Supponiamo che, per ogni $n \in \NN$, ci sia un modello di $T$ di cardinalità $\geq n$. Allora, per ogni cardinalità $\kappa$, c'è un modello di $T$ di cardinalità $\geq \kappa$.
-        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità $\kappa$, c'è una estensione elementare $N$ di $M$ avente cardinalità $\geq \kappa$.
+        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità $\kappa$, c'è un'estensione elementare $N$ di $M$ avente cardinalità $\geq \kappa$.
     \end{enumerate}
 \end{theorem}
 
@@ -1233,7 +1234,7 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
     \textcolor{MidnightBlue}{L'idea è che definiremo una successione crescente di insiemi $A = A_0 \subseteq A_1 \subseteq A_2 \subseteq \ldots$ in modo tale che $A_{i+1}$ contenga i 
     testimoni delle formule esistenziali a parametri in $A_i$. Il criterio di Tarski-Vaught ci garantirà che $M := \bigcup_{i \in \NN} A_i \preceq N$. Infine dimostriamo che $|M| = |A| = \kappa$, e si conclude.}\\
     Formalmente, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ e per ogni $b_1, \ldots, b_k \in A_i$, se esiste $a \in N$ tale che $N \models \varphi(a,b_1,\ldots,b_k)$, allora scegliamo un tale $a$ e lo aggiungiamo ad $A_{i+1}$:
-    \[ A_{i+1} := A_i \cup \{a \in N : \exists \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}),\exists b_1, \ldots, b_k \in A_i \; N \models \varphi(a,b_1,\ldots,b_k)\} \]
+    \[ A_{i+1} := A_i \cup \{a \in N : \exists \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}),\exists b_1, \ldots, b_k \in A_i \; N \models \varphi(a,b_1,\ldots,b_k)\}\footnote{La definizione andrebbe precisata meglio, escludendo formule del tipo $x = x$, ma così si capisce comunque chiaramente cosa si vuole fare.} \]
     e definiamo $M := \bigcup_{i \in \NN} A_i$. Si verifica subito che $M$ soddisfa il criterio di Tarski-Vaught, infatti, data $\varphi$ $L$-formula e $b_1, \ldots, b_k \in M$, se $N \models \exists x \, \varphi(x,b_1,\ldots,b_k)$, allora, preso $i_0 \in \NN$ tale che $b_1, \ldots, b_k \in A_{i_0}$, per costruzione $\exists a \in A_{i_0 + 1}\subseteq M$ per cui $N \models \varphi(a,b_1,\ldots,b_k)$.\\
     Per quanto riguarda la cardinalità dimostriamo per induzione che \textcolor{MidnightBlue}{$\forall i \in \NN \; |A_i| = |A|$}:
     \begin{align*}
@@ -1263,7 +1264,7 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     Come prima, ma con cardinalità esatta, ed un'ipotesi in più per il linguaggio.
     \begin{enumerate}
         \item Sia $T$ una $L$-teoria. Supponiamo che, per ogni $n \in \NN$, ci sia un modello di $T$ di cardinalità $\geq n$. Allora, per ogni cardinalità $\kappa\, \purple{\geq |L|}$, c'è un modello di $T$ di cardinalità $= \kappa$.
-        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità infinita $\kappa \,\purple{\geq |L|}\, + |M|$, c'è una estensione elementare $N$ di $M$ avente cardinalità $= \kappa$.
+        \item Sia $M$ una $L$-struttura infinita, allora, per ogni cardinalità infinita $\kappa \,\purple{\geq |L|}\, + |M|$, c'è un'estensione elementare $N$ di $M$ avente cardinalità $= \kappa$.
     \end{enumerate}
 \end{theorem}
 
@@ -1297,7 +1298,7 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     in questo modo $\NN$ è un modello di $T_S'$ e $T_S$ è coerente.\\
     Quindi per ogni $S \subseteq P$, la teoria $T_S$ è coerente e ammette un modello; usando Löwenheim-Skolem verso il basso - con $A = \varnothing$ - otteniamo che esiste un modello numerabile $N_S$ di $T_S$, per ogni $S \subseteq P$,
     inoltre possiamo considerare i modelli ristretti $M_S := N_S|_L$, che sono modelli numerabili di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ che realizzano le formule $p_S(x)$.\\
-    Usiamo ora questi $2^{\aleph_0}$ modelli $M_S$ per dimostrare che $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ ha $2^{\aleph_0}$ ha almeno $2^{\aleph_0}$ modelli numerabili non isomorfi.\\
+    Usiamo ora questi $2^{\aleph_0}$ modelli $M_S$ per dimostrare che $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ ha almeno $2^{\aleph_0}$ modelli numerabili non isomorfi.\\
     Se $S,S' \subseteq P$ sono due sottoinsiemi distinti di primi, allora gli insiemi $p_S(x)$ e $p_{S'}(x)$ sono diversi ed in particolare in contraddizione tra di loro perché da un lato ci sarà una formula che dice che un certo primo $p$ divide $x$ e dall'altro ci sarà la formula che dice che $p$ non divide $x$.
     In particolare ogni elemento di un modello realizza esattamente solo l'insieme di formule $p_S(x)$ con $S$ proprio l'insieme dei primi nella sua fattorizzazione. Poiché ogni modello numerabile di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ possiede $\aleph_0$ elementi, esso può realizzare al massimo $\aleph_0$ insiemi di formule $p_S(x)$ distinti.
     Se per assurdo esistessero al massimo $\kappa < 2^{\aleph_0}$ modelli numerabili non isomorfi di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$, allora l'unione di tutti gli elementi di tutti i tali modelli
@@ -1366,7 +1367,7 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
         \item $\Th(\CC;0,1,+,\cdot)$ ha tra le sue conseguenze logiche: il soddisfare la teoria dei campi, il soddisfare lo schema di assiomi che danno la chiusura algebrica e lo
         schema di assiomi che dicono che la caratteristica non è $p$ per un primo $p$ qualsiasi \textcolor{MidnightBlue}{- notare che non sono ben definite formule che ci danno stime sulla cardinalità infinita}.
         Indicando la teoria che contiene questi assiomi con $\mathsf{ACF}_0$ abbiamo quindi che $\Th(\CC;0,1,+,\cdot) \models \mathsf{ACF}_0$. Per un fatto citato in precedenza, due campi algebricamente chiusi, della stessa caratteristica
-        e della stessa cardinalità sono isomorfi, per cui $\mathsf{ACF}_0$ è $\kappa$-categorica per ogni $\kappa \geq \aleph_0$, da cui - sapendo che non può avere modelli finiti, perché $\ZZ$ si immerge in ogni modello - segue che $\mathsf{ACF}_0$ è completa.
+        e della stessa cardinalità sono isomorfi, per cui $\mathsf{ACF}_0$ è $\kappa$-categorica per ogni $\kappa > \aleph_0$, da cui - sapendo che non può avere modelli finiti, perché $\ZZ$ si immerge in ogni modello - segue che $\mathsf{ACF}_0$ è completa.
         \begin{lemma}[Equivalenza di teorie complete]
             Se $T,T'$ sono $L$-teorie complete e $T \models T'$, allora $T'\models T$, per cui $T$ e $T'$ sono logicamente equivalenti.
         \end{lemma}
@@ -1427,7 +1428,17 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
             \item gli assiomi della teoria dei gruppi abeliani divisibili;
             \item $\varphi_n := \forall x \; \neg(n \cdot x = 0)$, lo schema di formule che dice che non ci sono $n$-torsioni;
         \end{enumerate}
-        chiamiamo $T_{\QQ}$ la teoria che contiene questi assiomi.
+        chiamiamo $T_{\QQ}$ la teoria che contiene questi assiomi. Vediamo che è completa, come nei casi precedenti, da cui è equivalente a $\Th(\QQ;0,+)$.\\
+        In primis osserviamo che non ha modelli finiti, perché se $M$ fosse un modello finito di $T_{\QQ}$, allora sarebbe un gruppo abeliano finito, con un ordine
+        e quindi sarebbe un gruppo di torsione, ma questo contraddice uno dei $\varphi_n$.\\
+        Osserviamo ora che la teoria è $\kappa > \aleph_0$-categorica. Preliminarmente vediamo che ogni modello di $T_{\QQ}$ è $\QQ$-spazio vettoriale, infatti possiamo definire il prodotto per scalare $\QQ \times M \to M$ nel
+        modo seguente, sia $\frac{m}{n} \in \QQ$ con $m \in \ZZ$ e $n \in \NN \setminus \{0\}$, e sia $a \in M$, allora, in primis $m \cdot a$ è ben definito perché $M$ è un gruppo abeliano, quindi ha una naturale struttura di $\ZZ$-modulo,
+        a questo punto usiamo l'assioma di divisibilità per $n$, per ottenere $y \in M$ tale che $n \cdot y = am$, e definiamo $\frac{m}{n} \cdot a := y$.\\
+        Infine osserviamo che in generale, che se un $\QQ$-spazio vettoriale ha cardinalità $\kappa > \aleph_0$, allora ha dimensione $\kappa$, infatti, se $B$ è una base di $M$, allora:
+        \[ |M| = |\{\text{combinazioni lineari finite di elementi di $B$ e coefficienti in $\QQ$}\}| \]
+        l'insieme a destra è in bigezione con $\psf(\QQ \times B)$, che per $\mathsf{AC}$ ha cardinalità $\max\{|B|,|\QQ|\} = |B|$, da cui $\kappa = |M| = |B|$.\\
+        Abbiamo finito, se $M_1, M_2$ sono due modelli di $T_{\QQ}$ di cardinalità $\kappa > \aleph_0$, allora sono $\QQ$-spazi vettoriali di dimensione $\kappa$, quindi sono isomorfi come $\QQ$-spazi vettoriali, ed in particolare come gruppi abeliani, cioè come $L$-strutture.
+        \enlargethispage{\baselineskip}
     \end{enumerate}
 \end{soln}
 
@@ -1436,13 +1447,55 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     Classifica le $L$-teorie complete che estendono $T$.
 \end{exercise}
 
-
-\iffalse
 \begin{soln}
-    Sia $M$ un modello di una teoria completa che estende $T$. Allora, per ogni $n,m \in \NN \cup \{\infty\}$, definiamo la teoria $T_{n,m}$ come l'estensione di $T$ che dice che ci sono esattamente $n$ classi di equivalenza finite
-    e $m$ classi di equivalenza infinite. È chiaro che ogni teoria completa che estende $T$ è una di queste. Mostriamo ora che ogni $T_{n,m}$ è completa. Siano infatti $M_1, M_2 \models T_{n,m}$,
-    vogliamo mostrare che $M_1 \equiv M_2$. Costruiamo quindi un isomorfismo parziale tra $M_1$ e $M_2$ come segue: scegliamo una classe di equivalenza finita in $M_1$ e la mappiamo in una classe di equivalenza finita in $M_2$
-    (entrambe hanno la stessa cardinalità per definizione di $T_{n,m}$), e così via per tutte le classi finite. Facciamo lo stesso per le classi infinite. Otteniamo così un isomorfismo parziale tra $M_1$ e $M_2$
-    che copre tutto il dominio di entrambe le strutture, per cui è un isomorfismo vero e proprio. Quindi $M_1 \cong M_2$, da cui segue che $M_1 \equiv M_2$.
+    Iniziamo osservando che possiamo scrivere una $L$-formula che dice ``la classe di equivalenza di $x$ ha cardinalità $n$'', infatti definiamo:
+    \[ \mathsf{AtLeast}_n(x) := \exists x_1, \ldots, \exists x_n \left(\bigwedge_{1 \leq i < j \leq n} \neg (x_i = x_j) \land \bigwedge_{k = 1}^n x \sim x_k \right) \]
+    che dice ``esistono almeno $n$ elementi distinti che sono in relazione con $x$'', definendo inoltre $\mathsf{AtMost}_n(x) := \neg \, \mathsf{AtLeast}_{n+1}(x)$, che dice ``esistono al massimo $n$ elementi distinti che sono in relazione con $x$'',
+    possiamo definire allora la formula voluta:
+    \[ \mathsf{Exactly}_n(x) := \mathsf{AtLeast}_n(x) \land \mathsf{AtMost}_n(x) \]
+    per cui $M \models \{v\} \mathsf{Exactly}_n(x)$ se e solo se la classe di equivalenza di $v(x)$ ha cardinalità esatta $n$.\\
+    \begin{claim}
+        Le teorie complete che estendono $T$ nel linguaggio $L = \{\sim\}$ sono in bigezione con l'insieme delle funzioni $(\NN \cup \{\infty\})^{\NN_{\geq 1} \,\cup \,\{\infty\}}$.
+        Dove una funzione $\sigma : \NN_{\geq 1} \cup \{\infty\} \to \NN \cup \{\infty\}$ è tale che $\sigma(n)$ è il numero di classi di equivalenza di cardinalità $n$ in quella teoria e $\sigma(\infty)$ è il numero di classi di equivalenza infinite.
+    \end{claim}
+    Per contare il numero di classi di una certa cardinalità, definiamo per ogni $n \geq 1$ e per ogni $k \geq 1$ l'enunciato $\mathsf{Class}_{\geq k, = n}$, il quale asserisce ``ci sono almeno $k$ classi di equivalenza distinte di cardinalità esatta $n$'':
+    \[ \mathsf{Class}_{\geq k, = n} := \exists x_1 \dots \exists x_k \left( \bigwedge_{1 \leq i < j \leq k} \neg(x_i \sim x_j) \land \bigwedge_{i=1}^k \mathsf{Exactly}_n(x_i) \right) \]
+    analogamente, per contare il numero di classi di cardinalità almeno $m$, definiamo:
+    \[ \mathsf{Class}_{\geq k, \geq m} := \exists x_1 \dots \exists x_k \left( \bigwedge_{1 \leq i < j \leq k} \neg(x_i \sim x_j) \land \bigwedge_{i=1}^k \mathsf{AtLeast}_m(x_i) \right) \]
+    questa formula ci serve perché per dire che una classe di equivalenza è infinita, dobbiamo dire che è di cardinalità almeno $m$ per ogni $m \geq 1$ - non potendo dire che è infinita.
+    Data una funzione $\sigma : \mathbb{N}_{\geq 1} \cup \{\infty\} \to \mathbb{N} \cup \{\infty\}$, possiamo costruire un'estensione $T_{\sigma}$ aggiungendo a $T$ assiomi che forzano il modello ad avere esattamente il profilo descritto da $\sigma$:
+    \begin{enumerate}
+        \item Per ogni $n \geq 1$:
+        \begin{itemize}
+            \item se $\sigma(n) = k \in \mathbb{N}$, ovvero ci sono $k$ classi di cardinalità $n$, aggiungiamo $\mathsf{Class}_{\geq k, = n} \land \neg\, \mathsf{Class}_{\geq k+1, = n}$ che esprime questa cosa;
+            \item se $\sigma(n) = \infty$, ovvero ci sono infinite classi di cardinalità $n$, aggiungiamo $\mathsf{Class}_{\geq k, = n}$ per ogni $k \geq 1$;
+        \end{itemize}
+        \item Per il valore $\sigma(\infty)$, che codifica il numero di classi infinite:
+        \begin{itemize}
+            \item se $\sigma(\infty) = \infty$, aggiungiamo $\mathsf{Class}_{\geq k, \geq m}$ per ogni $m \geq 1$ e per ogni $k \geq 1$, in questo modo diciamo che ci sono infinite classi di cardinalità $m$ arbitrariamente grande, e quindi infinite classi infinite;
+            \item se $\sigma(\infty) = k$, sia $N := \max\{n \geq 1 : \sigma(n) > 0\}$\purple{$^*$}, ovvero la massima cardinalità finita di classe di equivalenza, se non ci sono classi di cardinalità finita allora $N := 0$,
+            per codificare che ci sono esattamente $k$ classi infinite, si aggiunge il seguente insieme di assiomi:
+            \[ \{\mathsf{Class}_{\geq k, \geq m} \land \neg\, \mathsf{Class}_{\geq k+1, \geq m} : m > N\} \]
+            ovvero per ogni $m$ maggiore di $N$ diciamo che ci sono almeno $k$ classi di cardinalità almeno $m$, ma non ci sono almeno $k+1$ classi di cardinalità almeno $m$, in questo modo diciamo che ci sono esattamente $k$ classi infinite - perché le classi finite si fermano 
+            alla taglia $N$, tutte le classi di cardinalità almeno $N+1$ sono infinite, quindi stiamo contando le classi infinite come quelle di taglia più grande della massima taglia di quelle finite.
+        \end{itemize}
+    \end{enumerate}
+    Vediamo che $T_{\sigma}$ è completa. Distinguiamo due casi in base alla funzione $\sigma$:
+    \begin{itemize}
+        \item Se $\sigma(\infty) = 0$ e $\sigma(n) = 0$ per quasi ogni $n$ - per cui l'insieme delle taglie delle classi finite è limitato e finito, allora ogni modello di $T_{\sigma}$ è necessariamente finito, in particolare dovrà avere necessariamente cardinalità $\sum_{n \geq 1} n \cdot \sigma(n)$.
+        A questo punto è ovvio che tutti i modelli di $T_{\sigma}$ sono isomorfi, perché possiamo costruire un $L$-isomorfismo incollando gli isomorfismi tra le classi di equivalenza, che sono a loro volta banalmente definiti dalle bigezioni insiemistiche. Incollando isomorfismi delle classi di equivalenza di stessa cardinalità si ottiene un isomorfismo tra i modelli.
+        Segue che questa $T_{\sigma}$ è completa perché ha un solo modello finito a meno di $L$-isomorfismo.
+        \item In tutti gli altri casi, $T_{\sigma}$ non ammette modelli finiti, quindi possiamo usare il criterio di Łoś-Vaught per dimostrare che $T_\sigma$ è $\aleph_0$-categorica (usiamo $\aleph_0$ perché per cardinali più grandi ci possono essere classi di equivalenza infinite che hanno cardinalità diversa, ma che non siamo in grado di distinguere al primo ordine).\\
+        Siano $M_1, M_2$ due modelli numerabili di $T_{\sigma}$ numerabili, allora $\sigma(\infty)$ corrisponde proprio al numero di classi di equivalenza numerabili di $M_1$ e $M_2$, a questo punto come nel caso finito si fissano delle bigezioni insiemistiche tra le classi di equivalenza di $M_1$ e quelle di $M_2$ e si incollano per ottenere in automatico un $L$-isomorfismo tra $M_1$ e $M_2$.
+    \end{itemize}
+    Viceversa, tutte le affermazioni del tipo $\mathsf{Class}$ sono chiuse, ogni teoria completa che estende $T$ deve soddisfarne alcune e soddisfare la negazione di altre, per cui si può ricostruire la funzione $\sigma$ associata a quella teoria, e quindi abbiamo anche l'altra mappa della bigezione.
 \end{soln}
-\fi
+
+\enlargethispage{1\baselineskip}
+\begin{remark}[$\purple{^*}$ e i limiti della logica del primo ordine nell'esercizio precedente]
+    Si noti che la classificazione tramite la funzione $\sigma$ richiede un'importante precisazione. Se la funzione $\sigma$ prevedesse l'esistenza di classi finite di cardinalità arbitrariamente grande, la logica del primo ordine non sarebbe in grado di limitare il numero di classi infinite a un valore finito.\\
+    Per via del teorema di compattezza - o Löwenheim-Skolem, una teoria che ammette classi finite di dimensione arbitrariamente grande ammette necessariamente modelli che contengono classi di equivalenza infinite.
+    Di conseguenza, due funzioni $\sigma$ distinte sui valori di $\sigma(\infty)$ (ad esempio, una con $\sigma(\infty) = 0$ e una con $\sigma(\infty) = 1$) ma coincidenti e illimitate sui valori finiti produrrebbero la medesima teoria completa, rompendo la bigezione.
+\end{remark}
+
+Per mantenere quindi la validità della classificazione, è necessario assumere che, qualora le taglie delle classi finite non ammettano un massimo, la funzione associata debba necessariamente soddisfare $\sigma(\infty) = \infty$.
