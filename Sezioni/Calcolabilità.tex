@@ -1118,7 +1118,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
     \end{itemize}
 \end{definition}
 
-\begin{proposition}[Equivalenza delle nozioni di decidibilità]
+\begin{proposition}[Equivalenza delle nozioni di semidecidibilità]
     Sia $R \subseteq \NN^k$, allora le seguenti sono equivalenti:
     \begin{enumerate}
         \item $R$ è semidecidibile,
@@ -1132,32 +1132,33 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
 \begin{proof}
     Vediamo le implicazioni in ordine circolare.
     \begin{itemize}
-        \item[$\boxed{1. \Rightarrow 2.}$] se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, \textcolor{MidnightBlue}{$R$ non è già il dominio di $f$, perché $f$ potrebbe assumere altri valori oltre a 0, ma poco manca}, infatti basta definire $g : \NN^k \to \NN_\bot$ come:
-        \[ g(\mathbf y) := \begin{cases}
-            0 & \text{se $\mathbf y = \mathbf 0$} \\
+        \item[$\boxed{1. \Rightarrow 2.}$] se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, \textcolor{MidnightBlue}{$R$ non è già il dominio di $f$, perché $f$ potrebbe assumere altri valori oltre a 0, ma poco manca}, basta definire $h : \NN \to \NN_\bot$ come:
+        \[ h(y) := \begin{cases}
+            0 & \text{se $y = 0$} \\
             \bot & \text{altrimenti}
         \end{cases} \]
-        che è ricorsiva parziale \textcolor{MidnightBlue}{- ed in pratica la composizione manda tutti i valori di $f$ che non siano 0 a $\bot$}, per cui si ha $R = \{\mathbf x \in \NN^k | g \circ f(\mathbf x) \ne \bot\}$, infatti $g \circ f(\mathbf x) \ne \bot$ se e solo se $f(\mathbf x) = 0$.
-        \item[$\boxed{2. \Rightarrow 3.}$] Sia $R = \{\mathbf x \in \NN^k | f(\mathbf x) \ne \bot\}$, per qualche funzione ricorsiva parziale $f : \NN^k \to \NN_\bot$, per il teorema della forma normale esistono $T_k$ predicato PR e $U$ funzione PR tali che:
-        \[ f(\mathbf x) \ne \bot \iff \exists m \;T_k(\ulcorner f \urcorner, \mathbf x, m) = 0 \]
-        e, in tal caso, $f(\mathbf x) = U(\mu_m(T_k(\ulcorner f \urcorner, \mathbf x, m))))$, non possiamo usare direttamente $U$ in quanto dipende da $\mathbf x$, tuttavia possiamo definire una funzione che 
-        per ogni $n \in \NN$, che corrisponderà alla codifica della lista $\langle \mathbf x, m \rangle$, restituisce $\mathbf x$ se la minimizzazione del predicato risulta ben definita, altrimenti restituisce un elemento qualsiasi $\mathbf c \in R$:
+        che è ricorsiva parziale e considerare $g(\mathbf x) := h \circ f(\mathbf x)$. Ora  $R = \{\mathbf x \in \NN^k | g(\mathbf x) \ne \bot\}$, infatti $g (\mathbf x) \ne \bot$ se e solo se $h \circ f(\mathbf x) \ne \bot$, che equivale a $f(\mathbf x) = 0$, che è esattamente la definizione di $R$, per cui i due insiemi coincidono.
+        \item[$\boxed{2. \Rightarrow 3.}$] Sia $R = \{\mathbf x \in \NN^k | f(\mathbf x) \ne \bot\}$, per qualche funzione ricorsiva parziale $f : \NN^k \to \NN_\bot$, per il teorema della forma normale esistono $T_{k+2}$ predicato PR e $U$ funzione PR tali che:
+        \[ f(\mathbf x) \ne \bot \iff \exists n \;T_{k+2}(\ulcorner f \urcorner, \mathbf x, n) = 0 \]
+        e, in tal caso, $f(\mathbf x) = U(\mu_n(T_{k+2}(\ulcorner f \urcorner, \mathbf x, n))))$. Non possiamo usare direttamente $\mathbf x \mapsto U(\mu_n(T_{k+2}(\ulcorner f \urcorner, \mathbf x, n)))$, in quanto $U$ prende in input il valore della minimizzazione che dipende da $\mathbf x$, e può essere $\bot$, quindi $U$ potrebbe non essere definita per alcuni valori di $\mathbf x$.\\
+        Possiamo aggirare questo problema considerando la lista $\langle \mathbf x, n \rangle$, e definendo una funzione che controlla se la minimizzazione di $T_{k+2}$ è ben definita per questi valori, nel cui caso restituisce $\mathbf x$, altrimenti restituisce un elemento qualsiasi $\mathbf c \in R$:
         \[ g(n) := \begin{cases}
-            \car(n) & \text{se $T_k(\ulcorner f \urcorner, \nth(n,0), \nth(n,1), \ldots, \nth(n,k)) = 0$} \\
+           ``\mathbf x\text{"} &\text{se $T_{k+2}(\ulcorner f \urcorner, \nth(n,1), \ldots, \nth(n,k),\purple{\nth(n,k+1)}) = 0$} \\
             \mathbf c & \text{altrimenti}
         \end{cases} \]
-        che è ricorsiva totale, perché in particolare è PR, e vale che $R = \Img g$ in quanto $\mathbf x \in R$ se e solo se $\exists m \; T_k(\ulcorner f \urcorner, \mathbf x, m) = 0$, e in tal caso $g(\langle \mathbf x, m \rangle) = \mathbf x$.
-        \item[$\boxed{3. \Rightarrow 1.}$] Sia $R = \{f(n) | n \in \NN\}$, per qualche funzione ricorsiva totale $f : \NN \to \NN^k$, allora basta definire $g : \NN^k \to \NN_\bot$ come:
+        dove ``$\mathbf x$'' è in realtà $(\car(n),\car\circ \cdr(n),\ldots,\car \circ \cdr^{k-1}(n))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti $\mathbf x \in R$ se e solo se $f(\mathbf x) \ne \bot$,
+        se e solo se $\exists n \; T_{k+2}(\ulcorner f \urcorner, \mathbf x, n) = 0$, se e solo se $\exists n \; g(n) = \mathbf x$.
+        \item[$\boxed{3. \Rightarrow 1.}$] Sia $R = \{f(n) | n \in \NN\}$, per qualche funzione ricorsiva totale $f : \NN \to \NN^k$, allora basta definire $g : \NN^{k+1} \to \NN_\bot$:
         \[ g(\mathbf y,n) := \begin{cases}
             0 & \text{se $f(n) = \mathbf y$} \\
             1 & \text{altrimenti}
         \end{cases} \]
-        definiamo infine:
+        questa $g$ è già ricorsiva totale ma non è ancora della forma richiesta, bisogna fare un passaggio di minimizzazione, definiamo:
         \[ h(\mathbf y) := \begin{cases}
             0 &\text{se $\exists n \; g(\mathbf y,n) = 0$} \\
             \bot & \text{altrimenti}
         \end{cases} \]
-        che è ricorsiva parziale, e vale che $h(\mathbf x) = 0$ se e solo se $\mu_n g(\mathbf x,n)$ è ben definita, cioè se e solo se $\exists n \; g(\mathbf x,n) = 0$, che equivale a $\exists n \; f(n) = \mathbf x$.
+        che è ricorsiva parziale, e vale che $h(\mathbf x) = 0$ se e solo se $\exists n \; g(\mathbf x,n) = 0$, ovvero se e solo se esiste $n$ tale che $f(n) = \mathbf x$.
     \end{itemize}
 \end{proof}
 
@@ -1169,9 +1170,14 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
     Se $R$ è decidibile, allora $R^\complement$ è decidibile, infatti se $f : \NN^k \to \NN$ è ricorsiva totale tale che $R = \{f(\mathbf x) = 0\}$, allora $R^\complement = \{1\dotminus f(\mathbf x) = 0\}$, e quindi è decidibile, perché la funzione ottenuta dalla ricorsione è ancora ricorsiva totale.
 \end{remark}
 
+\begin{remark}[Algebra degli insiemi decidibili]
+    Per quanto detto gli insiemi decidibili formano un'algebra su $\mathcal{P}(\NN^k)$: infatti la chiusura per complementare è garantita dall'osservazione precedente,
+    $\NN^k$ è decidibile perché è il luogo di zero della funzione costante 0$_k$, e l'unione di due insiemi decidibili $R = \{f(\mathbf x) = 0\}$ e $S = \{g(\mathbf x) = 0\}$ è decidibile usando $h := f \cdot g$.
+\end{remark}
+
 \begin{proof}
     È ovvio che se $R$ è decidibile, allora $R$ e $R^\complement$ sono semidecidibili. Per il viceversa, se $R$ e $R^\complement$ sono semidecidibili,
-    per la proposizione precedente sono enumerabili, quindi esistono $f,g : \NN \to \NN^k$ ricorsive totali tali che:
+    per la proposizione precedente sono ricorsivamente enumerabili, quindi esistono $f,g : \NN \to \NN^k$ ricorsive totali tali che:
     \[ R = \{f(n) | n \in \NN\} \quad\text{e}\quad R^\complement = \{g(n) | n \in \NN\} \]
     a questo punto posso definire $h : \NN \to \NN^k$ come:
     \[ h(n) := \begin{cases}
@@ -1179,37 +1185,69 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
         g(n \div 2) & \text{se $n \bmod 2 = 1$}
     \end{cases} \]
     in pratica $h$ alterna le due enumerazioni, calcolate ciascuna su tutti i valori.
+    \begin{center}
+    \begin{tikzpicture}[scale=0.80, transform shape, x=2.5cm, y=1.8cm, >={Stealth[length=2.5mm]}]
+        % Stile per le etichette di h(n)
+        \tikzset{
+            hlabel/.style={font=\small, color=gray!90!black}
+        }
+        % Prima riga: f(n)
+        \foreach \i in {0, 1, 2, 3} {
+            \node (f\i) at (\i, 1) {$f(\i)$};
+            \pgfmathsetmacro{\hind}{int(2*\i)}
+            \node[above=0.15cm of f\i, hlabel] {$h(\hind)$};
+        }
+        \node (f4) at (4, 1) {$\dots$};
+        % Seconda riga: g(n), posizionata in modo sfalsato rispetto a f(n)
+        \foreach \i in {0, 1, 2, 3} {
+            \node (g\i) at (\i + 0.5, 0) {$g(\i)$};
+            \pgfmathsetmacro{\hind}{int(2*\i + 1)}
+            \node[below=0.15cm of g\i, hlabel] {$h(\hind)$};
+        }
+        \node (g4) at (4.5, 0) {$\dots$};
+        % Percorso a zig-zag che definisce l'ordinamento di h
+        \draw[->, thick, blue!70!black] (f0) -- (g0);
+        \draw[->, thick, blue!70!black] (g0) -- (f1);
+        \draw[->, thick, blue!70!black] (f1) -- (g1);
+        \draw[->, thick, blue!70!black] (g1) -- (f2);
+        \draw[->, thick, blue!70!black] (f2) -- (g2);
+        \draw[->, thick, blue!70!black] (g2) -- (f3);
+        \draw[->, thick, blue!70!black] (f3) -- (g3);
+        \draw[->, thick, blue!70!black, dashed] (g3) -- (f4);
+    \end{tikzpicture}
+    \end{center}
     La funzione ricorsiva totale che decide $R$ è quindi:
     \[ \mu_n(\chi_{=}(h(n),\mathbf x)) \bmod 2 \]
-    dove $\chi_{=}$ è il predicato PR che definisce l'uguaglianza, e quindi la funzione definita restituisce il minimo $n$, modulo 2, tale che $h(n) = \mathbf x$.
-    Se tale funzione fa 0 allora $\mathbf x = f(n \div 2)$ per qualche $n$, e quindi $\mathbf x \in R$; viceversa se $\mathbf x \in R$, allora $\mathbf x = f(n)$ per qualche $n$, da cui $h(2n) = f(n) = \mathbf x$, per cui la
-    minimizzazione è ben definita e restituisce un valore pari, che dà 0 modulo 2.
+    dove $\chi_{=}$ è il predicato PR che definisce l'uguaglianza. Quindi la funzione definita restituisce il minimo $n$, modulo 2, tale che $h(n) = \mathbf x$, pertanto tale funzione farà 0 sui valori di $R$ e 1 sui valori di $R^\complement$.\\
+    Per la precisione: se $\mathbf x \in R$, allora esiste $n$ tale che $f(n) = \mathbf x$, e quindi $h(2n) = f(n) = \mathbf x$, per cui la minimizzazione è ben definita e restituisce un valore pari, che dà 0; viceversa se la minimizzazione modulo 2 dà 0,
+    allora esiste un valore pari $2k$ tale che $h(2k) = \mathbf x$, e quindi $f(k) = \mathbf x$, per cui $\mathbf x \in R$.
 \end{proof}
 
 Vediamo un insieme non decidibile.
+
+\begin{remark}[Definizione per casi decidibili di funzioni ricorsive]
+    Se $R$ è decidibile, ovvero $R$ è il luogo di zero di una funzione ricorsiva totale, allora:
+    \[ f(\mathbf x) := \begin{cases}
+        g(\mathbf x) & \text{se $\mathbf x \in R$} \\
+        h(\mathbf x) & \text{altrimenti}
+    \end{cases} \]
+    con $g$ e $h$ funzioni ricorsive parziali, è ricorsiva parziale in quanto:
+    \[ f(\mathbf x) = g(\mathbf x)(1 \dotminus R(\mathbf x)) + h(\mathbf x)(1 \dotminus (1 \dotminus R(\mathbf x)))\]
+    dove con $R(\mathbf x)$ indichiamo la funzione che restituisce 0 se $\mathbf x \in R$ e un numero naturale $\geq 1$ altrimenti, che è ricorsiva totale, e quindi $f$ è ricorsiva parziale. Se $g,h$ sono ricorsive \purple{totali}, allora $f$ è ricorsiva \purple{totale}.\\
+    Osserviamo infine che se $R$ è semidecidibile allora lo stesso discorso non funzione, perché se $R(\mathbf x) = \bot$ otteniamo solo che $f(\mathbf x)$ è uguale ad un'espressione aritmetica indefinita, perché c'è un $\bot$ in mezzo, e quindi $f$ non fa $\bot$ perché è mal definita.
+\end{remark}
 
 \begin{proposition}[Halting problem]
     Sia $H_1 := \{(\alpha,x) \in \NN^2 | u_1(\alpha,x) \ne \bot\}$, ovvero l'insieme di codice-input per cui la macchina universale in dimensione 1 si ferma. Vale che $H_1$ non è decidibile.
 \end{proposition}
 
-\begin{remark}[Definizione per casi di funzioni ricorsive]
-    Osserviamo che se $R$ è decidibile, ovvero $R$ è il luogo di zero di una funzione ricorsiva totale, allora:
-    \[ f(\mathbf x) := \begin{cases}
-        g(\mathbf x) & \text{se $\mathbf x \in R$} \\
-        h(\mathbf x) & \text{altrimenti}
-    \end{cases} \]
-    con $g$ e $h$ funzioni ricorsive parziali, è ricorsiva parziale in quanto $f(\mathbf x) = g(\mathbf x)(1 - R(\mathbf x)) + h(\mathbf x)(1 \dotminus (1 \dotminus R(\mathbf x)))$, dove con $R(\mathbf x)$ indichiamo la funzione che
-    restituisce 0 se $\mathbf x \in R$ e un numero naturale $\geq 1$ altrimenti, che è ricorsiva totale, e quindi $f$ è ricorsiva parziale. Se $g,h$ sono ricorsive totali, allora $f$ è ricorsiva totale.\\
-    Osserviamo infine che se $R$ è semidecidibile allora lo stesso discorso non funzione, perché se $R(\mathbf x) = \bot$ otteniamo solo che $f(\mathbf x)$ è uguale ad un'espressione aritmetica indefinita, perché c'è un $\bot$ in mezzo, e quindi $f$ non fa $\bot$ perché è mal definita.
-\end{remark}
-
 \begin{proof}
-    Se per assurdo $H_1$ sia decidibile, allora la funzione definita per casi da:
+    Se per assurdo $H_1$ fosse decidibile, allora la funzione definita per casi da:
     \[ f(\alpha) := \begin{cases}
         u_1(\alpha,\alpha) + 1 & \text{se $(\alpha,\alpha) \in H_1$} \\
         0 & \text{altrimenti}
     \end{cases} \]
-    è ricorsiva totale, infatti nel caso $(\alpha,\alpha) \in H_1$ sappiamo a priori che $u_1(\alpha,\alpha) \ne \bot$.\\
+    sarebbe ricorsiva totale, infatti nel caso $(\alpha,\alpha) \in H_1$ sappiamo a priori che $u_1(\alpha,\alpha) \ne \bot$.\\
     Applichiamo ora $f$ al suo stesso codice, si danno due casi:
     \begin{itemize}
         \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, allora $f(\ulcorner f \urcorner) = u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) + 1$,
@@ -1245,18 +1283,8 @@ Vediamo un insieme non decidibile.
     ed è infatti banalmente il dominio della funzione ricorsiva $u_n : \NN^{n+1} \to \NN_\bot$.
 \end{soln}
 
-\begin{exercise}[Insiemi non semidecidibili]
-    Dimostrare che l'insieme:
-    \[ TOT := \{\alpha | n \mapsto u_1(\alpha, n) \text{ è totale}\} \]
-    ovvero l'insieme dei codici dei programmi che terminano su ogni input,
-    non è semidecidibile e che anche $TOT^\complement$ non è semidecidibile.\footnote{\underline{\textbf{Hint}}: Esibisco una $f$ ricorsiva totale tale che,
-    $(\alpha,x) \in \NN^2 \setminus H_1 \iff f(\alpha,x) \in TOT$.}
-\end{exercise}
-
-\begin{remark}[Algebra degli insiemi decidibili]
-    Osserviamo che gli insiemi decidibili formano un'algebra, infatti: sono chiusi per unione, è sufficiente prendere il prodotto delle due funzioni che decidono i due insiemi;
-    sono chiusi per complementare come già visto in precedenza, inoltre la funzione $0_k$ è PR, e quindi $\NN^k$ è decidibile.\\
-    Osserviamo invece che gli insiemi semidecidibili \textcolor{purple}{non} formano un'algebra, infatti se la chiusura per unione ed il fatto che $\NN^k$ è semidecidibile funzionano come sopra,
+\begin{remark}[Non algebra degli insiemi semidecidibili]
+    Osserviamo che gli insiemi semidecidibili \textcolor{purple}{non} formano un'algebra, infatti se la chiusura per unione ed il fatto che $\NN^k$ è semidecidibile funzionano come sopra,
     il passaggio al complementare non funziona in generale, infatti ad esempio $H_1$ è semidecidibile, ma $H_1^\complement$ non lo è, perché se lo fosse, allora $H_1$ sarebbe decidibile $\lightning$.\\
     Tuttavia, nonostante gli insiemi semidecidibili non siano chiusi per complementare è comunque vero che sono chiusi per intersezione,
     infatti se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$ e $S = \{\mathbf x \in \NN^k | g(\mathbf x) = 0\}$, con $f,g : \NN^k \to \NN_\bot$ ricorsive parziali, allora $R \cap S = \{\mathbf x \in \NN^k | h(\mathbf x) = 0\}$, con $h : \NN^k \to \NN_\bot$ definita come:
@@ -1267,25 +1295,58 @@ Vediamo un insieme non decidibile.
     che è ricorsiva parziale.
 \end{remark}
 
+\begin{remark}[Preimmagine di insieme semidecidibile]
+    Se $f : \NN^k \to \NN_\bot$ è ricorsiva parziale e $R \subseteq \NN$ è semidecidibile, allora $f^{-1}[R]$ è semidecidibile.\\
+    Infatti se $R = \{x \in \NN | g(x) = 0\}$, con $g$ ricorsiva parziale, allora $f^{-1}[R] = \{\mathbf x \in \NN^k | g \circ f(\mathbf x) = 0\}$, e $g \circ f$ è ricorsiva parziale.\\
+    Analogo risultato si ottiene usando un sottoinsieme decidibile ed una funzione ricorsiva totale. Inoltre questi discorsi si possono generalizzare a funzioni ricorsive vettoriali.
+\end{remark}
+
+\begin{exercise}[Insiemi non semidecidibili]
+    Dimostrare che l'insieme:
+    \[ TOT := \{\alpha | n \mapsto u_1(\alpha, n) \text{ è totale}\} \]
+    ovvero l'insieme dei codici delle funzioni ricorsive totali 1-arie, non è semidecidibile.
+    Si ha anche che $TOT^\complement$ non è semidecidibile.\footnote{\underline{\textbf{Hint}}: Esibisco una $f$ ricorsiva totale tale che, $(\alpha,x) \in \NN^2 \setminus H_1 \iff f(\alpha,x) \in TOT$.}
+\end{exercise}
+
 \begin{soln}
     Se riuscissimo a trovare una funzione ricorsiva totale $f : \NN^2 \to \NN$ tale che per ogni $(\alpha,x) \in \NN^2$ si abbia che $(\alpha,x) \in \NN^2 \setminus H_1$ se e solo se $f(\alpha,x) \in TOT$,
-    per cui si avrebbe $H_1^\complement = f^{-1}[TOT]$, allora $TOT$ non è semidecidibile, perché se lo fosse, allora anche $f^{-1}[TOT]$ sarebbe semidecidibile - infatti $TOT$ è semidecidibile se e solo se è dominio di $\varphi$ ricorsiva parziale, e quindi $f^{-1}[TOT]$ è dominio di $\varphi \circ f$, che è ricorsiva parziale, e quindi semidecidibile.
+    per cui si avrebbe $H_1^\complement = f^{-1}[TOT]$, allora $TOT$ non è semidecidibile.
     Ora definiamo $f : \NN^2 \to \NN$ come:
     \[ f(\alpha,x) := \ulcorner g_{\alpha,x} \urcorner, \qquad g_{\alpha,x}(n) := \begin{cases}
-        0 & \text{se $\forall m \le n \; T_1(\alpha,x,m) \ne 0$} \\
+        0 & \text{se $\forall m \le n \; T_3(\alpha,x,m) \ne 0$} \\
         \bot & \text{altrimenti}
     \end{cases} \]
-    che è ricorsiva totale, e vediamo che soddisfa la condizione richiesta. Se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $T_1(\alpha,x,m) \ne 0$ per ogni $m \in \mathbb N$, perché non esiste minimo, per cui $g_{\alpha,x} \equiv 0$, e quindi il suo codice sta in $TOT$.\\
-    Viceversa, se $(\alpha,x) \in f^{-1}[TOT]$, allora $g_{\alpha,x}$ è totale, per cui per ogni $m \in \NN$ si ha $T_1(\alpha,x,m) \ne 0$, quindi la minimizzazione non è ben definita, quindi $u_1(\alpha,x) = \bot$, e quindi $(\alpha,x) \in H_1^\complement$.
+    ovvero associo ad ogni coppia codice-input il codice della funzione che manda $n$ in 0 se per tutti i valori minori o uguali di $n$ la funzione codificata da $\alpha$ non si ferma, e manda $n$ in $\bot$ se si ferma per qualche valore più piccolo.\\
+    La mappa definita è PR, per la dimostrazione del fatto che Turing computabile implica ricorsivo. Verifichiamo infine che: $(\alpha,x) \in H_1^\complement$,
+    allora $u_1(\alpha,x) = \bot$, per cui $T_3(\alpha,x,m) \ne 0$ per ogni $m \in \mathbb N$, per cui $g_{\alpha,x} \equiv 0$, e quindi il suo codice sta in $TOT$.
+    Viceversa, se $(\alpha,x) \in f^{-1}[TOT]$, allora $g_{\alpha,x}$ è totale, per cui è costantemente 0, e quindi $u_1(\alpha,x) = \bot \implies (\alpha,x) \in H_1^\complement$.
+    \textcolor{MidnightBlue}{L'idea è quindi che quando la funzione associata ad $\alpha$, con un certo input, non termina, allora la funzione $g_{\alpha,x}$ è 0;
+    viceversa, se la funzione associata ad $\alpha$ con un certo input termina, allora $g_{\alpha,x}$ non è totale perché, facendo il controllo col test della forma normale, la si pone $\bot$ apposta quando converge}.\\
+    Per dimostrare che $TOT^\complement$ non è semidecidibile usiamo la stessa identica strategia, definendo $f : \NN^2 \to \NN_\bot$ come segue:
+    \[ f(\alpha,x) := \ulcorner g_{\alpha,x} \urcorner \qquad g_{\alpha,x}(n) := u_1(\alpha,x) \]
+    in questo modo, se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $g_{\alpha,x} \equiv \bot$, e quindi il suo codice sta in $TOT^\complement$;
+    viceversa, se $(\alpha,x) \in f^{-1}[TOT^\complement]$, allora $g_{\alpha,x} \equiv u_1(\alpha,x)$ non è totale, che essendo costante significa che $u_1(\alpha,x) = \bot$, e quindi $(\alpha,x) \in H_1^\complement$.
 \end{soln}
 
 \begin{exercise}[Separazione di insiemi semidecidibili]
-    Esistono $A,B$ semidecidibili, con $A \cap B = \varnothing$, tali che non esiste $C$ decidibile con $A \subseteq C$ e $B \subseteq C^\complement$.
+    Esistono $A,B$ semidecidibili, con $A \cap B = \varnothing$, tali che non esiste $C$ decidibile con $A \subseteq C$ e $B \cap C^\complement = \varnothing$.
     Ovvero non esistono due insiemi semidecidibili disgiunti che possono essere separati da un insieme decidibile.
 \end{exercise}
 
 \begin{soln}
-    TODO
+    Consideriamo i due insiemi semidecidibili:
+    \[ A := \{n | u_1(n,n) = 0\} \qquad B := \{n | u_1(n,n) = 1\} \]
+    che sono disgiunti. Se per assurdo esistesse un insieme decidibile $C$ con $A \subseteq C$ e $B \cap C^\complement = \varnothing$, allora $C = \{f(x) = 0\}$, per qualche funzione ricorsiva totale $f$,
+    definiamo una funzione ricorsiva totale $g$ che fa lo switch dei valori di $f$:
+    \[ g(n) := \begin{cases}
+        1 & \text{se $f(n) = 0$} \\
+        0 & \text{se $f(n) \ne 0$}
+    \end{cases} \]
+    a questo punto consideriamo $u_1(\ulcorner g \urcorner, \ulcorner g \urcorner) = g(\ulcorner g \urcorner)$, si danno due casi:
+    \begin{itemize}
+        \item se $g(\ulcorner g \urcorner) = u_1(\ulcorner g \urcorner, \ulcorner g \urcorner) = 0$, allora $\ulcorner g \urcorner \in A \subseteq C$, ed al contempo $f(\ulcorner g \urcorner) \ne 0$, per cui $\ulcorner g \urcorner \not\in C$, assurdo;
+        \item se $g(\ulcorner g \urcorner) = u_1(\ulcorner g \urcorner, \ulcorner g \urcorner) = 1$, allora $\ulcorner g \urcorner \in B$, ed al contempo $f(\ulcorner g \urcorner) = 0$, per cui $\ulcorner g \urcorner \in C$, assurdo.
+    \end{itemize}
 \end{soln}
 
 \subsection{Insiemi aritmetici}
@@ -1371,11 +1432,11 @@ Vediamo un insieme non decidibile.
                     &= \exists x_1 \ldots \exists x_k \exists y_1 \ldots \exists y_m \; (\psi_1 * \psi_2)
         \end{align*}
         con $* \in \{\land, \lor\}$, e $\psi_1 * \psi_2$ è di classe $\Pi_{n-1}^0$ per ipotesi induttiva, quindi $\varphi$ è di classe $\Sigma_n^0$. Notare infine che abbiamo supposto WLOG che $y_i \not \in \vl(\psi_1)$ e $x_i \not \in \vl(\psi_2)$,
-        e possiamo farlo perché le variabili sono legate, e.g. le $y_i$ sono legate nel secondo blocco, ma possono essere libere nel primo, nel cui caso le rinominiamo con $x_j$ per qualche $j$ che non compare già, e viceversa; tale procedimento non cambi nulla
+        e possiamo farlo perché le variabili sono legate, e.g. le $y_i$ sono legate nel secondo blocco, ma possono essere libere nel primo, nel cui caso le rinominiamo con $x_j$ per qualche $j$ che non compare già, e viceversa; tale procedimento non cambia nulla
         in quanto $\exists z \; \psi \leftrightarrow \exists z' \; \psi[z'/z]$ se $z'$ è una variabile che non compare in $\psi$, e ugualmente per i quantificatori universali.
         \item[$\boxed{\exists}$] È banale.
         \item[$\boxed{\forall y \le x}$] Scriviamo $\varphi(x,y)$ in forma premessa $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora:
-        \[ \forall y\le x\,\varphi(x,y) \leftrightarrow \exists b\,\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b\,\theta(x,y,\mathbf z) \]
+        \[ \forall y\le x\,\varphi(x,y) \leftrightarrow \exists b\,\underbrace{\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b}_{\text{quantificatori limitati}}\,\theta(x,y,\mathbf z) \]
         e l'equivalenza è facile dimostrare, ad esempio semanticamente, in particolare per $\rightarrow$ c'è bisogno che gli $z_i$ siano in numero finito.
     \end{itemize}
 \end{proof}
@@ -1387,7 +1448,7 @@ Vediamo che la chiusura delle $L_{\text{arit}}$-formule corrisponde alla chiusur
     \begin{itemize}
         \item $R \cap S$ è di classe $\Sigma_n^0$,
         \item $R \cup S$ è di classe $\Sigma_n^0$,
-        \item se $R \subseteq \NN^2$ si ha che $\{x \in \NN : \exists y\le x\;(x,y)\in R\}$ e $\{x \in \NN : \forall y\le x\;(x,y)\in R\}$ sono di classe $\Sigma_n^0$.
+        \item se $R \subseteq \NN^{k+1}$ di classe $\Sigma_n^0$ e $t(\mathbf x)$ è un termine aritmetico, allora $\{\mathbf x \in \NN^k : \forall y \leq t(\mathbf x) \; (\mathbf x, y) \in R\}$ è di classe $\Sigma_n^0$; questa operazione è chiamata \vocab{proiezione universale},
     \end{itemize}
     In tutti i casi la dimostrazione segue semplicemente dal fatto che lo sono le $L_{\text{arit}}$-formule che definiscono $R$ e $S$, e che le classi aritmetiche sono chiuse per le operazioni corrispondenti. Analogamente nel caso di $\Pi_n^0$.
 \end{remark}
@@ -1404,6 +1465,11 @@ Quindi il corollario seguente è una proprietà di chiusura per operazioni su so
     allora $R \cap S$ è sia di classe $\Sigma_n^0$ che di classe $\Pi_n^0$, e quindi è di classe $\Delta_n^0$, e così via per le altre operazioni.
 \end{proof}
 
+\begin{remark}[Algebra degli insiemi $\Delta_n^0$]
+    Dal corollario precedente segue che gli insiemi di classe $\Delta_n^0$ formano un'algebra, infatti l'unica cosa che manca da osservare è che $\NN^k$ è di classe $\Delta_n^0$,
+    ma è vero perché $\NN^k$ è definito ad esempio dalla formula $\mathbf x = \mathbf x$, che è $\Delta_0^0$.
+\end{remark}
+
 \begin{theorem}[Semidecidibilità in termini della gerarchia aritmetica]
     $S \subseteq \NN^k$ è semidecidibile se e solo se $S$ è di classe $\Sigma_1^0$.
 \end{theorem}
@@ -1417,7 +1483,6 @@ Vediamo subito la dimostrazione del corollario.
 \begin{proof}
     Sappiamo che $S \subseteq \NN^k$ è decidibile se e solo se $S$ e $S^\complement$ sono semidecidibili, che equivale per il teorema a dire che $S$ è di classe $\Sigma_1^0$ e $S^\complement$ è di classe $\Sigma_1^0$.
     Ora $S^\complement$ è di classe $\Sigma_1^0$ se e solo se $S$ è di classe $\Pi_1^0$, per cui $S$ è sia di classe $\Sigma_1^0$ che di classe $\Pi_1^0$, e quindi è di classe $\Delta_1^0$, e viceversa.\\
-   Abbiamo usato che se un insieme è di classe $\Sigma_n^0$ allora il suo complementare è di classe $\Pi_n^0$, ciò deriva dal fatto che la negazione inverte i quantificatori, e dalla definizione di classe di un sottoinsieme di $\NN^k$.
 \end{proof}
 
 Il nostro obiettivo è ora dimostrare il teorema ed ottenere la seguente catena di inclusioni:
