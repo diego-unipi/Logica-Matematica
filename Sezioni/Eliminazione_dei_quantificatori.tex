@@ -3,7 +3,7 @@
 \begin{definition}[Formule equivalenti per una teoria]
     Siano $\varphi$ e $\psi$ $L$-formule e $T$ una $L$-teoria. Diciamo che $\varphi$ è \vocab{equivalente} a $\psi$ per $T$ (o $\phi$ e $\psi$ sono $T$-\vocab{equivalenti}),
     denotato con $T \models (\varphi \,\purple{\leftrightarrow}\, \psi)$\footnote{Come già osservato nella semantica di Tarski, fare attenzione perché di fatto il $\leftrightarrow$ 
-    interpretato è l'equivalenza logica nella metateoria, ovvero $\iff$ in $\mathsf{ZFC}$.} se $T \models \purple{(} \varphi \rightarrow \psi \purple{)} \land \purple{(} \psi \rightarrow \varphi \purple{)}$,
+    interpretato è l'equivalenza logica nella metateoria.} se $T \models \purple{(} \varphi \rightarrow \psi \purple{)} \land \purple{(} \psi \rightarrow \varphi \purple{)}$,
     ossia (via semantica di Tarski) $T,\varphi \models \psi$ e $T,\psi \models \varphi$.
 \end{definition}
 
@@ -37,6 +37,8 @@ Vediamo la dimostrazione del corollario.
     hanno un valore di verità definito. Pertanto come osservato sopra, $T_{\text{oldse}}$ è completa rispetto alle formule chiuse e senza quantificatori, e per l'osservazione precedente questo è sufficiente a dire che $T_{\text{oldse}}$ è completa.
 \end{proof}
 
+\enlargethispage{8.825mm}
+
 Altre teorie con l'eliminazione dei quantificatori sono, per esempio, $\Th(\CC;\purple{0},\purple{1},+,\cdot)$ e $\Th(\RR;\purple{0},\purple{1},+,\cdot,<)$:
 rispettivamente, la teoria dei campi algebricamente chiusi e la teoria dei campi reali chiusi.
 
@@ -44,7 +46,7 @@ rispettivamente, la teoria dei campi algebricamente chiusi e la teoria dei campi
     La scelta del linguaggio è cruciale per l'eliminazione dei quantificatori. Per esempio la teoria $\Th(\RR;\purple{0},\purple{1},\purple{+},\purple{\cdot})$ può
     esprimere le medesime proprietà di $\Th(\RR;\purple{0},\purple{1},\purple{+},\purple{\cdot},<)$, perché $x < y$ equivale a $x \ne y \land \exists z \; x + z\cdot z = y$.
     Tuttavia, senza il simbolo $<$, non c'è modo di eliminare il quantificatore esistenziale in $\exists y (x = y \cdot y)$ (esercizio: perché?). \textcolor{MidnightBlue}{In un linguaggio opportuno}, ogni teoria ha
-    l'eliminazione dei quantificatori: basta infatti aggiungere un simbolo di relazione $\mathcal R_\varphi$ per ogni formula $\varphi(x_1,\ldots,x_k)$ con l'assioma $\varphi(x_1,\ldots,x_k) \leftrightarrow \mathcal R_\varphi(x_1,\ldots,x_k)$.\\
+    l'eliminazione dei quantificatori: basta infatti aggiungere un simbolo di relazione $\mathcal R_\varphi$ per ogni formula $\varphi(x_1,\ldots,x_k)$ con l'assioma $\varphi(x_1,\ldots,x_k) \leftrightarrow \mathcal R_\varphi(x_1,\ldots,x_k)$.
     Questa nuova teoria ha ovviamente l'eliminazione dei quantificatori, che però è inutile, perché decidere le formule atomiche nel linguaggio espanso (quello con i nuovi simboli $\mathcal R_\varphi$) è tanto complesso quanto decidere le formule della teoria di partenza.
 \end{note}
 
@@ -209,10 +211,10 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
     \]
     se almeno uno tra $n$ o $m$ è 0, poniamo $\psi := \top$. Verifichiamo infine che $\Th(D;<,s) \models (\exists x_k \, \varphi_i) \leftrightarrow \psi$.
     \begin{itemize}
-        \item[$\boxed{\to}$] Siano $M$ e $v$ tali che $M \models \{v\} \Th(D;<,s)$ e $M \models \{v\} \exists x_k \, \varphi_i$, allora per gli assiomi di $\Th(D;<,s)$, per transitività, e per il fatto che $a < b \to s(a) \leq b$, segue subito che tutte le $\psi_{i,j}$ valgono in $M$, e quindi vale $\psi$. In particolare, per avere il terzo caso, se $t_i < x_k < s_j$, allora $v(t_i) < v(x_k) < v(s_j)$, per cui:
-        \[ s(v(t_i)) < s(v(x_k)) \leq v(s_j) \implies s(v(t_i)) < v(s_j) \]
-        \item[$\boxed{\leftarrow}$] Siano $M$ e $v$ tali che $M \models \{v\} \Th(D;<,s)$ e $M \models \{v\} \psi$. Se $n \ne 0$ esiste una $\alpha_{1\overline i}$ più restrittiva delle altre (ovvero quella con $v(t_i)$ più grande), per cui chiamo $\overline \varphi_1 := t_{\overline i} \bullet x_k$; se $n = 0$ pongo $\overline \varphi_1 := \top$.
-        Similmente, se $m \ne 0$ esiste una $\alpha_{2\overline j}$ più restrittiva delle altre (ovvero quella con $v(s_j)$ più piccola), per cui chiamo $\overline \varphi_2 := x_k \bullet s_{\overline j}$; se $m = 0$ pongo $\overline \varphi_2 := \top$. Segue immediatamente che:
+        \item[$\boxed{\to}$] Siano $M$ e $v$ tali che $M \models \{v\} \Th(D;<,s)$ e $M \models \{v\} \exists x_k \, \varphi_i$, allora per gli assiomi di $\Th(D;<,s)$, per transitività, e per il fatto che $a < b \to s(a) \leq b$, segue subito che tutte le $\psi_{i,j}$ valgono in $M$, e quindi vale $\psi$. In particolare, per avere il terzo caso, se $t_i < x_k < s_j$, allora $\{v\}_M t_i < v(x_k) < \{v\}_M s_j$, per cui:
+        \[ s_M(\{v\}_M t_i) < s_M(v(x_k)) \leq \{v\}_M s_j \implies s_M(\{v\}_M t_i) < \{v\}_M s_j \]
+        \item[$\boxed{\leftarrow}$] Siano $M$ e $v$ tali che $M \models \{v\} \Th(D;<,s)$ e $M \models \{v\} \psi$. Se $n \ne 0$ esiste una $\alpha_{1\overline i}$ più restrittiva delle altre (ovvero quella con $\{v\}_M t_i$ più grande), per cui chiamo $\overline \varphi_1 := t_{\overline i} \bullet x_k$; se $n = 0$ pongo $\overline \varphi_1 := \top$.
+        Similmente, se $m \ne 0$ esiste una $\alpha_{2\overline j}$ più restrittiva delle altre (ovvero quella con $\{v\}_M s_j$ più piccola), per cui chiamo $\overline \varphi_2 := x_k \bullet s_{\overline j}$; se $m = 0$ pongo $\overline \varphi_2 := \top$. Segue immediatamente che:
         \[ M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_1 \to \varphi_{\text{dx}} \quad \text{e} \quad M \models \{v\} \purple{\forall \, x_k}\, \overline{\varphi}_2 \to \varphi_{\text{sx}}
         \]
         di conseguenza $M \models \{v\} \purple{\forall x_k} (\overline{\varphi}_1 \land \overline{\varphi}_2) \to \varphi_i$, quindi per verificare che $M \models \{v\} \exists x_k \, \varphi_i$, è sufficiente vedere che:
@@ -220,17 +222,23 @@ Dimostriamo ora finalmente che $T_{\text{oldse}}$ ha l'eliminazione dei quantifi
         \]
         Distinguiamo due casi:
         \begin{itemize}
-            \item Se almeno uno tra $n$ o $m$ è 0, allora $\psi = \top$ e rimane solo una delle due condizioni $\ol \psi_i$, quindi solo una disuguaglianza da soddisfare almeno una volta, e questo è vero in $M$ perché è un ordine senza estremi, quindi l'implicazione è soddisfatta.
-            \item Se sia $n$ che $m$ sono diversi da 0, allora, dall'ipotesi, so che $M \models \{v\} \psi_{\overline i, \overline j}$, con $\psi_{\overline i, \overline j} = t_{\overline i} \bullet s_{\overline j}$, per cui vale $v(t_{\overline i}) \bullet v(s_{\overline j})$ e ci sono tre sottocasi.
+            \item Se almeno uno tra $n$ o $m$ è 0, allora $\psi = \top$ e rimane solo una delle due condizioni $\ol \psi_i$, quindi solo una disuguaglianza da soddisfare almeno una volta, e questo è vero in $M$ perché è un ordine con predecessori, quindi l'implicazione è soddisfatta.
+            \item Se sia $n$ che $m$ sono diversi da 0, allora, dall'ipotesi, so che $M \models \{v\} \psi_{\overline i, \overline j}$, con $\psi_{\overline i, \overline j} = t_{\overline i} \bullet s_{\overline j}$, per cui vale $\{v\}_M t_{\overline i} \bullet \{v\}_M s_{\overline j}$ e ci sono tre sottocasi.
                   \begin{itemize}[$*$]
-                    \item Se sia $\overline \varphi_1$ che $\overline \varphi_2$ usano $\leq$, allora posso scegliere come $x_k$ uno qualsiasi tra $v(t_{\overline i})$ e $v(s_{\overline j})$.
-                    \item Se una tra $\overline \varphi_1$ e $\overline \varphi_2$ usa $<$, allora, se $\alpha_{1\overline i}$ usa $<$, prendo $x_k$ come il successore di $v(t_{\overline i})$, per cui vale $x_k > v(t_{\overline i})$ e $x_k \leq v(s_{\overline j})$; se invece $\alpha_{2\overline j}$ usa $<$, prendo $x_k$ come il predecessore di $v(s_{\overline j})$, per cui vale $x_k < v(s_{\overline j})$ e $x_k \geq v(t_{\overline i})$.
+                    \item Se sia $\overline \varphi_1$ che $\overline \varphi_2$ usano $\leq$, allora posso scegliere come $x_k$ uno qualsiasi tra $\{v\}_M t_{\overline i}$ e $\{v\}_M s_{\overline j}$.
+                    \item Se una tra $\overline \varphi_1$ e $\overline \varphi_2$ usa $<$, allora, se $\alpha_{1\overline i}$ usa $<$, prendo $x_k$ come il successore di $\{v\}_M t_{\overline i}$, per cui vale $x_k > \{v\}_M t_{\overline i}$ e $x_k \leq \{v\}_M s_{\overline j}$; se invece $\alpha_{2\overline j}$ usa $<$, prendo $x_k$ come il predecessore di $\{v\}_M s_{\overline j}$, per cui vale $x_k < \{v\}_M s_{\overline j}$ e $x_k \geq \{v\}_M t_{\overline i}$.
                     È importante osservare che, a differenza di $\Th(D;<)$, in $\Th(D;<,s)$ ho un simbolo per il successore $s$, e tramite questo posso anche definire il predecessore, quindi questo è quello che funziona a differenza del caso precedente.
-                    \item Se c'è $<$ sia in $\overline \varphi_1$ che in $\overline \varphi_2$, allora, per il terzo caso di $\psi_{i,j}$, so che $s(v(t_{\ol i})) < v(s_{\ol j})$, per cui posso scegliere $x_k = s(v(t_{\ol i}))$, per cui vale anche $x_k > v(t_{\ol i})$.
+                    \item Se c'è $<$ sia in $\overline \varphi_1$ che in $\overline \varphi_2$, allora, per il terzo caso di $\psi_{i,j}$, so che $s(\{v\}_M t_{\ol i}) < \{v\}_M s_{\ol j}$, per cui posso scegliere $x_k = s_M(\{v\}_M t_{\ol i})$, per cui vale anche $x_k > \{v\}_M t_{\ol i}$.
                   \end{itemize} 
         \end{itemize}
     \end{itemize}
 \end{soln}
+
+\begin{example}[Completezza di $\Th(\ZZ;<,s)$]
+    L'ultimo esempio ci permette di dire che $\Th(\ZZ;<,s)$ ha l'eliminazione dei quantificatori, al contrario di $\Th(\ZZ;<)$.
+    Le uniche formule chiuse e senza quantificatori nel linguaggio $L = \{<,s\}$ sono solo combinazioni booleane di $\top$ e $\bot$, per cui, in particolare, ogni formula chiusa è decidibile
+    e la teoria $\Th(\ZZ;<,s)$ è completa.
+\end{example}
 
 \subsection{Ultraprodotti}
 Introduciamo una prima tecnica per costruire modelli: gli ultraprodotti. Usando gli ultraprodotti dimostreremo il seguente teorema.
@@ -469,7 +477,7 @@ Passiamo ora alla dimostrazione del teorema di Ax-Grothendieck.
 \end{exercise}
 
 \begin{soln}
-    Chiaramente c'è un controesempio banale alla freccia opposta che è $p(x) = x^2$, come funzione polinomiale da $\CC$ in $\CC$.\\
+    Chiaramente c'è un controesempio banale alla freccia opposta che è $p(z) = z^2$, come funzione polinomiale da $\CC$ in $\CC$.\\
     La dimostrazione sopra non funziona perché non è detto che la restrizione di $f : \overline{\FF_{p_i}} \to \overline{\FF_{p_i}}$ a una funzione da $\FF_{p_i^{j_0!}}$ in se stesso sia surgettiva.
 \end{soln}
 
@@ -1233,7 +1241,7 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
     A patto di ingrandire $A$, possiamo supporre che $|L| \leq |A| = \kappa$.\\
     \textcolor{MidnightBlue}{L'idea è che definiremo una successione crescente di insiemi $A = A_0 \subseteq A_1 \subseteq A_2 \subseteq \ldots$ in modo tale che $A_{i+1}$ contenga i 
     testimoni delle formule esistenziali a parametri in $A_i$. Il criterio di Tarski-Vaught ci garantirà che $M := \bigcup_{i \in \NN} A_i \preceq N$. Infine dimostriamo che $|M| = |A| = \kappa$, e si conclude.}\\
-    Formalmente, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ e per ogni $b_1, \ldots, b_k \in A_i$, se esiste $a \in N$ tale che $N \models \varphi(a,b_1,\ldots,b_k)$, allora scegliamo un tale $a$ e lo aggiungiamo ad $A_{i+1}$:
+    Formalmente, per ogni $L$-formula $\varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k})$ e per ogni $b_1, \ldots, b_k \in A_i$, se esiste $a \in N$ tale che $N \models \varphi(a,b_1,\ldots,b_k)$, allora fissiamo un tale $a$ e lo aggiungiamo ad $A_{i+1}$:
     \[ A_{i+1} := A_i \cup \{a \in N : \exists \varphi(\purple{x},\purple{y_1},\ldots,\purple{y_k}),\exists b_1, \ldots, b_k \in A_i \; N \models \varphi(a,b_1,\ldots,b_k)\}\footnote{La definizione andrebbe precisata meglio, escludendo formule del tipo $x = x$, ma così si capisce comunque chiaramente cosa si vuole fare.} \]
     e definiamo $M := \bigcup_{i \in \NN} A_i$. Si verifica subito che $M$ soddisfa il criterio di Tarski-Vaught, infatti, data $\varphi$ $L$-formula e $b_1, \ldots, b_k \in M$, se $N \models \exists x \, \varphi(x,b_1,\ldots,b_k)$, allora, preso $i_0 \in \NN$ tale che $b_1, \ldots, b_k \in A_{i_0}$, per costruzione $\exists a \in A_{i_0 + 1}\subseteq M$ per cui $N \models \varphi(a,b_1,\ldots,b_k)$.\\
     Per quanto riguarda la cardinalità dimostriamo per induzione che \textcolor{MidnightBlue}{$\forall i \in \NN \; |A_i| = |A|$}:

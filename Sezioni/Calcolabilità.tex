@@ -885,7 +885,7 @@ Passiamo alla dimostrazione del teorema.
         \begin{itemize}
             \item \textcolor{purple}{stato} $= \nth(c,0)$,
             \item \textcolor{purple}{posizione} $= \nth(c,1)$,
-            \item \textcolor{purple}{simbolo} $= \nth(c,2)$
+            \item \textcolor{purple}{nastro} $= \nth(c,2)$
         \end{itemize}
         ora il nastro è a sua volta la codifica di una lista:
         \[ \text{nastro} = \langle \underbrace{a_1,\ldots,a_{p-1}}_{=:\textcolor{MidnightBlue}{\alpha}}, \underbrace{a_p}_{=:\textcolor{MidnightBlue}{\sigma}}, \underbrace{a_{p+1},\ldots}_{=:\textcolor{MidnightBlue}{\beta}} \rangle \]
@@ -907,16 +907,16 @@ Passiamo alla dimostrazione del teorema.
     Ora, la funzione che itera uno step $(n,c,\ulcorner \delta \urcorner) \mapsto \texttt{step}^n(\ulcorner \delta \urcorner, c)$ è PR, la verifica si fa scrivendo la funzione via ricorsione primitiva.\\
     Da questa vogliamo scrivere la funzione che, in un certo numero di step, a partire da un certo input e dal codice di $f$, restituisce l'output.
     Definiamo una codifica dell'input:
-    \[ \texttt{codifica\_input}(\langle x_1, \ldots, x_n \rangle) := \langle 1, 0, \cons(\blacktriangleright, \texttt{nastro}(\langle x_1, \ldots, x_k \rangle)) \rangle \]
+    \[ \texttt{codifica\_input}(\langle x_1, \ldots, x_k \rangle) := \langle 1, 0, \cons(\blacktriangleright, \texttt{nastro}(\langle x_1, \ldots, x_k \rangle)) \rangle \]
     dove:
-    \[ \texttt{nastro}(\langle x_1, \ldots, x_k \rangle) := \langle \texttt{unario}(x_1),\cons(0,\texttt{nastro}(\langle x_2, \ldots, x_k \rangle)) \rangle \]
+    \[ \texttt{nastro}(\langle x_1, \ldots, x_k \rangle) := \cat(\texttt{unario}(x_1),\cons(0,\texttt{nastro}(\langle x_2, \ldots, x_k \rangle))) \]
     e $\texttt{unario}(x) := \langle 1, \ldots, 1 \rangle$ è la codifica unaria di $x$, tutte queste cose sono PR per composizione di funzioni PR.\\
     A questo punto usiamo l'operatore di minimizzazione per procurarci l'$n$ in cui la macchina termina, consideriamo:
     \[ \texttt{n}(c, \ulcorner \delta \urcorner) := \mu_n(\nth(\texttt{step}^n(\ulcorner \delta \urcorner, c) , 0)) \]
     ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM arriva allo stato 0 - termina - a partire da input codificato da $c$; tale funzione non è PR in quanto, per un certo input, la macchina potrebbe non terminare, per cui $\texttt n$ è \textbf{ricorsiva parziale}. E siamo alla fine perché ora per 
     ottenere l'output basta prendere il nastro della configurazione finale, ovvero, indicando con $\langle\mathbf{x}\rangle = \langle x_1, \ldots, x_k \rangle$:
     \[ \nth(\texttt{step}^{\texttt{n}(\texttt{codifica\_input}(\langle\mathbf{x}\rangle),\ulcorner \delta \urcorner)}(\ulcorner \delta \urcorner, \texttt{codifica\_input}(\langle\mathbf{x}\rangle))), 2) \]
-    a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$, posso definire:
+    a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$ - a meno di sottrarre 2 perché abbiamo detto all'inizio che $\blacktriangleright$ corrisponde a 2, posso definire:
     \[ \texttt{conta\_uni}(l) := \begin{cases}
         0 & \text{se } \car(l) = 0 \\
         1 + \texttt{conta\_uni}(\cdr(l)) & \text{altrimenti}
@@ -1114,7 +1114,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
     \begin{itemize}
         \item \vocab{semidecidibile} se esiste una funzione $f : \NN^k \to \NN_\bot$ ricorsiva parziale tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, i.e. se $R$ è il luogo di zero di una funzione ricorsiva parziale,
         \item \vocab{decidibile} se esiste $f$ ricorsiva totale $f : \NN^k \to \NN$ tale che $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, i.e. se $R$ è il luogo di zero di una funzione ricorsiva totale,
-        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva \textcolor{purple}{totale} tale che $R = \{f(n) | n \in \NN\}$, i.e. se $R$ è l'immagine di una funzione ricorsiva totale.
+        \item \vocab{ricorsivamente enumerabile} se esiste $f : \NN \to \NN^k$ ricorsiva \textcolor{purple}{totale} tale che $R = \{f(n) | n \in \NN\}$, i.e. se $R$ è l'immagine di una funzione ricorsiva totale, oppure se $R = \varnothing$.
     \end{itemize}
 \end{definition}
 
@@ -1143,7 +1143,7 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
         e, in tal caso, $f(\mathbf x) = U(\mu_n(T_{k+2}(\ulcorner f \urcorner, \mathbf x, n))))$. Non possiamo usare direttamente $\mathbf x \mapsto U(\mu_n(T_{k+2}(\ulcorner f \urcorner, \mathbf x, n)))$, in quanto $U$ prende in input il valore della minimizzazione che dipende da $\mathbf x$, e può essere $\bot$, quindi $U$ potrebbe non essere definita per alcuni valori di $\mathbf x$.\\
         Possiamo aggirare questo problema considerando la lista $\langle \mathbf x, n \rangle$, e definendo una funzione che controlla se la minimizzazione di $T_{k+2}$ è ben definita per questi valori, nel cui caso restituisce $\mathbf x$, altrimenti restituisce un elemento qualsiasi $\mathbf c \in R$:
         \[ g(n) := \begin{cases}
-           ``\mathbf x\text{"} &\text{se $T_{k+2}(\ulcorner f \urcorner, \nth(n,1), \ldots, \nth(n,k),\purple{\nth(n,k+1)}) = 0$} \\
+           ``\mathbf x\text{"} &\text{se $T_{k+2}(\ulcorner f \urcorner, \nth(n,0), \ldots, \nth(n,k),\purple{\nth(n,k)}) = 0$} \\
             \mathbf c & \text{altrimenti}
         \end{cases} \]
         dove ``$\mathbf x$'' è in realtà $(\car(n),\car\circ \cdr(n),\ldots,\car \circ \cdr^{k-1}(n))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti $\mathbf x \in R$ se e solo se $f(\mathbf x) \ne \bot$,
@@ -1252,7 +1252,7 @@ Vediamo un insieme non decidibile.
     \begin{itemize}
         \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \in H_1$, allora $f(\ulcorner f \urcorner) = u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) + 1$,
         ma per la definizione di $u_1$ si ha che $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = f(\ulcorner f \urcorner)$, da si otterrebbe che $f(\ulcorner f \urcorner) = f(\ulcorner f \urcorner) + 1 \; \lightning$;
-        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \notin H_1$, questo equivale a $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = \bot$, ovvero $f(\ulcorner f \urcorner) = \bot$, che è assurdo visto che $f$ è ricorsiva totale - oppure ancora più nello specifico perché dovrebbe venire proprio 0 per la sua definizione.
+        \item se $(\ulcorner f \urcorner, \ulcorner f \urcorner) \notin H_1$, questo equivale a $u_1(\ulcorner f \urcorner, \ulcorner f \urcorner) = \bot$, ovvero $f(\ulcorner f \urcorner) = \bot$, che è assurdo visto che $f$ è ricorsiva totale, oppure perché dovrebbe venire proprio 0 per la sua definizione.
     \end{itemize}
 \end{proof}
 
@@ -1262,8 +1262,8 @@ Vediamo un insieme non decidibile.
 
 \begin{soln}
     Supponiamo per assurdo che $H_n := \{(\alpha, \mathbf x) \in \NN^{n+1} | u_n(\alpha, \mathbf x) \ne \bot\}$ sia decidibile, allora si procede allo stesso identico modo, definendo:
-    \[ f(\alpha,\ldots, \alpha) := \begin{cases}
-        u_n(\alpha, \alpha, \ldots, \alpha) + 1 & \text{se $(\alpha, \alpha, \ldots, \alpha) \in H_n$} \\
+    \[ f(x_1,\ldots, x_n) := \begin{cases}
+        u_n(x_1, x_1, \ldots, x_1) + 1 & \text{se $(\alpha, \alpha, \ldots, \alpha) \in H_n$} \\
         0 & \text{altrimenti}
     \end{cases} \]
     che è ricorsiva totale, e poi si applica $f$ al suo stesso codice, ottenendo una contraddizione esattamente come prima:
@@ -1386,7 +1386,7 @@ Vediamo un insieme non decidibile.
 \end{tikzcd}\]
 
 \begin{example}[$p$ è primo]
-    La formula $\textsf{prime}(p) := \forall n \leq p \; (n = 1 \lor n = p \lor \neg \exists m \leq p \; m \cdot n = p)$, che esprime che $p$ è un numero primo,
+    La formula $\textsf{prime}(p) := (p > 1) \land \forall n \leq p \; (n = 1 \lor n = p \lor \neg \exists m \leq p \; m \cdot n = p)$, che esprime che $p$ è un numero primo,
     è di classe $\Delta_0^0$, perché è una formula ottenuta solo con quantificatori limitati, e quindi è senza quantificatori veri.
 \end{example}
 
@@ -1448,13 +1448,12 @@ Vediamo che la chiusura delle $L_{\text{arit}}$-formule corrisponde alla chiusur
     \begin{itemize}
         \item $R \cap S$ è di classe $\Sigma_n^0$,
         \item $R \cup S$ è di classe $\Sigma_n^0$,
-        \item se $R \subseteq \NN^{k+1}$ di classe $\Sigma_n^0$ e $t(\mathbf x)$ è un termine aritmetico, allora $\{\mathbf x \in \NN^k : \forall y \leq t(\mathbf x) \; (\mathbf x, y) \in R\}$ è di classe $\Sigma_n^0$; questa operazione è chiamata \vocab{proiezione universale},
+        \item se $R \subseteq \NN^{k+1}$ di classe $\Sigma_n^0$ e $t(\mathbf x)$ è un termine aritmetico, allora $\{\mathbf x \in \NN^k : \forall y \leq t(\mathbf x) \; (\mathbf x, y) \in R\}$ è di classe $\Sigma_n^0$; questa operazione è chiamata \vocab{proiezione universale}, ne esiste anche una analoga \vocab{esistenziale}.
     \end{itemize}
     In tutti i casi la dimostrazione segue semplicemente dal fatto che lo sono le $L_{\text{arit}}$-formule che definiscono $R$ e $S$, e che le classi aritmetiche sono chiuse per le operazioni corrispondenti. Analogamente nel caso di $\Pi_n^0$.
 \end{remark}
 
 Quindi il corollario seguente è una proprietà di chiusura per operazioni su sottoinsiemi $\Delta_n^0$ di $\NN^k$, non avendo il corrispettivo di $L_{\text{arit}}$-formule in questo caso.
-
 
 \begin{corollary}[Chiusura di $\Delta_n^0$]
     $\Delta_n^0$ è stabile per: $\land$, $\lor$, $\neg$, $\forall y \leq x$, $\exists y \leq x$.
@@ -1495,7 +1494,7 @@ ma soprattutto se mettessimo un blocco di $\exists$ davanti ad una formula polin
 \[ \{(x_1,\ldots,x_k) \in \NN^k : \exists y_1\ldots\exists y_m\; p(x_1,\ldots,x_k,y_1,\ldots,y_m) = 0\} \]
 cioè l'insieme dei parametri per cui esistono dei valori che soddisfano un'equazione polinomiale, e questi insiemi sono di classe $\Sigma_1^0$. In particolare sempre per la catena sopra abbiamo scoperto allora che 
 ogni insieme semidecidibile è diofanteo, per cui esiste una corrispondenza 1:1 tra insiemi di parametri che risolvono un'equazione diofantea ed insiemi di parametri per cui esiste un programma che può terminare o meno.
-Quello che scopriremo è che appunto esisterà una diofantea, il cui insieme di parametri che la risolvono corrispondente all'halting set, e quindi non necessariamente decidibile, ovvero non esisterà un algoritmo che, dati i coefficienti di un polinomio, riesca a decidere se esiste una soluzione o meno
+Quello che scopriremo è che appunto esisterà una diofantea, il cui insieme di parametri che la risolvono corrisponde all'halting set, e quindi non necessariamente decidibile, ovvero non esisterà un algoritmo che, dati i coefficienti di un polinomio, riesca a decidere se esiste una soluzione o meno
 e questo ci permetterà di rispondere - negativamente - al decimo problema di Hilbert.\\
 
 Introduciamo ora i lemmi necessari per dimostrare il teorema.

@@ -140,7 +140,7 @@ Per il resto di questo capitolo fissiamo un linguaggio al primo ordine $L = (R,F
 \begin{definition}
     [$L$-formula]
     Le \vocab{$L$-formule} sono stringhe dell'alfabeto dato da:
-    \[ F \sqcup R \sqcup \Var\sqcup \,\{\purple{(}, \purple{)}, \purple{,}, \purple{\top}, \purple{\bot}, \purple{\neg}, \purple{\land}, \purple{\lor}, \purple{\to}, \purple{\forall}, \purple{\exists}\}
+    \[ F \sqcup R \sqcup \Var\sqcup \,\{\purple{(}, \purple{)}, \purple{,}, \purple{\top}, \purple{\bot}, \purple{\neg}, \purple{\land}, \purple{\lor}, \purple{\to}, \purple{\forall}, \purple{\exists}, \purple{=}\}
     \]
     una $L$-formula può essere una \vocab{formula atomica}, ossia:
     \begin{itemize}
@@ -225,7 +225,7 @@ Nella definizione precedente abbiamo definito le sottoformule per via ricorsiva 
     Vediamo alcuni esempi:
     \begin{itemize}[$\diamondsuit$]
         \item $\vl((\exists x_1 ( x_0 = (x_1 \cdot x_1)))) = \{x_0\}$ e la variabile $x_1$ è legata.
-        \item $\vl((\exists x_1 ( x_0 = (x_1 \cdot x_1))) \land (\exists x_0 ( x_1 = (x_0 \cdot x_0)))) = \{x_0\} \cup \{x_1\} = \{x_0,x_1\}$\footnote{Se interpretassimo queste due affermazioni nei naturali, la prima vorrebbe dire ogni numero è un quadrato, mentre la seconda che ogni numero naturale ha un quadrato.}.
+        \item $\vl((\exists x_1 ( x_0 = (x_1 \cdot x_1))) \land (\exists x_0 ( x_0 = (x_1 \cdot x_1)))) = \{x_0\} \cup \{x_1\} = \{x_0,x_1\}$\footnote{Se interpretassimo queste due affermazioni nei naturali, la prima vorrebbe dire ogni numero è un quadrato, mentre la seconda che ogni numero naturale ha un quadrato.}.
         \item $\vl((\forall x_7 (\exists x_7 ((x_2 + x_2) = x_4)))) = \{x_2,x_4\}$, si noti che i quantificatori all'inizio sono specchietti per le allodole, in quanto non conta nulla per il significato della formula.
     \end{itemize}
 \end{example}
@@ -362,7 +362,7 @@ oppure esiste un $b \in D$ tale che $b \notin p_M$, ma scegliendo $a$ come quel 
 
 \begin{definition}
     [Formula logica valida]
-    Una $L$-formula $\varphi$ si dice \vocab{logicamente valida} se per ogni $L$-struttura $M = (D;i)$ e per ogni valutazione delle variabili $v : \Var \to D$ vale $M \models \{v\}\varphi$, i.e. la formula è soddisfatta in ogni $L$-struttura e per ogni valutazione delle variabili.
+    Una $L$-formula $\varphi$ si dice \vocab{logicamente valida} se \purple{per ogni $L$-struttura} $M = (D;i)$ e \purple{per ogni valutazione} delle variabili $v : \Var \to D$ vale $M \models \{v\}\varphi$, i.e. la formula è soddisfatta in ogni $L$-struttura e per ogni valutazione delle variabili.
 \end{definition}
 
 \begin{remark}[Indipendenza dalle variabili non libere]
@@ -906,7 +906,6 @@ La teoria $T_{\text{oldse}}$ è una teoria finita, descritta esplicitamente e ch
 
 Nella prossima sezione si dimostrerà che è anche completa.
 \end{example}
-
 
 Alla luce di ciò \textcolor{MidnightBlue}{non c'è possibilità di caratterizzare una struttura per mezzo di una teoria del primo ordine}. 
 Tenteremo allora di caratterizzare non più una struttura, ma la sua teoria completa, ovvero l'insieme degli enunciati veri in una struttura. 
