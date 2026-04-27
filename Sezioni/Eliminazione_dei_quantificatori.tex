@@ -900,11 +900,11 @@ Vediamo ora due esempi di applicazione al di fuori della logica matematica.
     Nel caso generale, consideriamo il linguaggio $L := \{\purple{p_i} | i \in V\}$ costituito da tante \vocab{costanti proposizionali} - ossia predicati 0-ari - quanti sono i vertici di $G$. Sia $T$ la $L$-teoria:
     \[ T := \left\{\bigvee_{\substack{A \subseteq N(i) \\ |A| \geq |N(i)|/2}}\vphantom{\bigwedge_{j \in A} (\purple{p_i \leftrightarrow \neg\, p_j})}\smash{\underbrace{\bigwedge_{j \in A} (\purple{p_i \leftrightarrow \neg\, p_j})}_{=:\,\purple{\varphi_i}}} \,\middle|\, i \in V\right\} \]
     dove $N(i) := \{k \in V | e(i,k) \in E\}$ è l'insieme dei vicini di $i$. Le formule $\varphi_i$ dicono ``la maggioranza dei vicini di $i$ ha valore opposto a $p_i$'',
-    di conseguenza i valori di verità assegnati alle $\purple{p_{\bullet}}$, da un modello di $T$ ci danno la partizione litigiosa cercata. Resta da dimostrare che $T$ è coerente.\\
+    di conseguenza i valori assegnati alle $\purple{p_{\bullet}}$, da un modello di $T$ ci danno la partizione litigiosa cercata. Non resta che dimostrare che $T$ è coerente.
     Supponiamo per assurdo che $T' := \{\varphi_i | i \in V'\}$ non sia coerente per qualche $V' \subseteq V$ finito, e consideriamo il grafo ottenuto prendendo solo i vertici di $V'$ e i loro adiacenti:
     \[ V'' := V' \cup \bigcup_{i \in V'} N(i) \]
     che è finito perché $G$ è localmente finito, per cui gli $N(i)$ sono finiti. Per il caso finito $V''$ ammette una partizione litigiosa $V'' = A \sqcup B$,
-    assegnando il valore $\top$ - cioè dichiarando che è vera nella valutazione - a $\purple{p_i}$ se e solo se $i \in A$ si ottiene che $V''$ è un modello di $T'$, assurdo.
+    assegnando il valore $\top$ ai $\purple{p_i}$, per i quali $i \in V'$, se e solo se $i \in A$, si ottiene che $V''$ è un modello di $T'$, assurdo.
 \end{proof}
 
 La seconda applicazione ci dà il pretesto per introdurre le seguenti definizioni, che, in realtà, sono nozioni di base della teoria dei modelli.
@@ -1085,7 +1085,8 @@ L'osservazione è un corollario del seguente esercizio.
         \item Sia $\varphi$ una formula senza quantificatori, procediamo per induzione strutturale su $\varphi$:
         \begin{itemize}
             \item[$\boxed{\text{$\varphi$ atomica}}$] Se $\varphi$ è una formula atomica, sia $v$ una valutazione a valori in $C$ tale che $M \models \{v\} \varphi$, per cui $M_M \models \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, cioè $\varphi(c_{v(x_1)},\ldots,c_{v(x_k)}) \in \diag(M)$, e per un'osservazione precedente è equivalente a $N_M \models \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, per cui $N \models \{v\} \varphi$.
-            Per il viceversa sia $v$ una valutazione a valori in $C$ tale che $\neg \,(M \models \{v\} \varphi)$, cioè per Tarski $M \models \{v\} \neg \, \varphi$, che implica $M_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, che equivale a $\neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)}) \in \diag(M)$, e di nuovo $N_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, da cui $N \models \{v\} \neg \, \varphi$, e quindi $\neg \,(N \models \{v\} \varphi)$.
+            Per il viceversa sia $v$ una valutazione a valori in $C$ tale che $\neg \,(M \models \{v\} \varphi)$, cioè per Tarski $M \models \{v\} \neg \, \varphi$, che implica $M_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, che equivale a $\neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)}) \in \diag(M)$, e di nuovo $N_M \models \neg \, \varphi(c_{v(x_1)},\ldots,c_{v(x_k)})$, da cui $N \models \{v\} \neg \, \varphi$,
+            e quindi $\neg \,(N \models \{v\} \varphi)$, da cui la tesi per le formule atomiche.
             \item[$\boxed{\text{$\varphi = \neg \, \psi$}}$] È sufficiente usare la semantica di Tarski e l'ipotesi induttiva:
             \begin{align*}
                 M \models \{v\} \neg \, \psi &\iff \neg \,(M \models \{v\} \psi) \\
@@ -1205,15 +1206,15 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
         \end{align*}
         \textcolor{MidnightBlue}{per l'ultimo passaggio è necessario $M \preceq N$, non si otterrebbe comunque $\implies$ usando che le formule esistenziali si preservano per estensioni perché non è detto che $\varphi$ sia libera da quantificatori.} 
         \item[$\boxed{\impliedby}$] Supponiamo che valga la condizione del criterio di Tarski-Vaught e che $M \subseteq N$, vogliamo mostrare che $M \preceq N$. Sia $\varphi(x_1,\ldots,x_k)$ una $L$-formula e siano $a_1, \ldots, a_k \in M$, verifichiamo che $M \models \varphi(a_1,\ldots,a_k)$ se e solo se $N \models \varphi(a_1,\ldots,a_k)$.
-        Procediamo per induzione strutturale su $\varphi$, il caso atomico, e quelli $\land$ e $\neg \,$ sono banali per l'osservazione secondo cui le formule senza quantificatori sono assolute - o si può ripetere la stessa dimostrazione,
-        il caso interessante è $\varphi = \exists y \; \psi(y,x_1,\ldots,x_k)$, allora:
+        Procediamo per induzione strutturale su $\varphi$: il caso atomico segue dall'osservazione che le formule senza quantificatori sono assolute; i casi $\land$ e $\neg$ sono banali per induzione strutturale.
+        Il caso interessante che rimane è $\varphi = \exists y \; \psi(y,x_1,\ldots,x_k)$, allora:
         \begin{align*}
             M \models \exists y \; \psi(y,a_1,\ldots,a_k) &\iff \exists a \in M \; M \models \psi(a,a_1,\ldots,a_k) &&(\text{Tarski}) \\
-                                                          &\iff \exists a \in M \; N \models \psi(a,a_1,\ldots,a_k) &&(\text{hp induttiva}) \\
-                                                          &\iff \exists a \in N \; N \models \psi(a,a_1,\ldots,a_k) &&(\star) \\
+                                                          &\iff \exists a \in M \; N \models \psi(a,a_1,\ldots,a_k) &&(\star) \\
+                                                          &\iff \exists c \in N \; N \models \psi(c,a_1,\ldots,a_k) &&(\text{Tarski}) \\
                                                           &\iff N \models \exists y \; \psi(y,a_1,\ldots,a_k)
         \end{align*}
-        dove in $(\star)$: la freccia dall'alto verso il basso è banale per la semantica di Tarski, per la freccia dal basso verso l'alto si usa invece la condizione del criterio di Tarski-Vaught.
+        dove in $(\star)$: la freccia dall'alto verso il basso è l'ipotesi induttiva, mentre la freccia dal basso verso l'alto è la condizione del criterio di Tarski-Vaught.
     \end{itemize}
 \end{proof}
 
@@ -1279,7 +1280,7 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
 \begin{proof}
     Per il punto 1., usando la forma debole sappiamo già che abbiamo una $L$-struttura $N$ di cardinalità $\geq \kappa$ che soddisfa $T$, usando Löwenheim-Skolem verso il basso - con $A = \varnothing$, poiché $|L| \leq \kappa$ per ipotesi, troviamo una sottostruttura elementare $M \preceq N$ di cardinalità $\kappa$, e quindi vale $M \models T$.\\
     Per il punto 2., la forma debole ci dà una $L$-struttura $N'$ di cardinalità $\geq \kappa$ tale che $M \preceq N'$, usando Löwenheim-Skolem verso il basso, con $M = A$ troviamo una sottostruttura elementare $N \preceq N'$ di cardinalità $\kappa$.
-    Visto che $N' \models \ED(M)$ e $N \preceq N'$, allora $N \models \ED(M)$, da cui $M \preceq N$.\\
+    Visto che $N' \models \ED(M)$ e $N \preceq N'$, allora $N \models \ED(M)$, da cui $M \preceq N$. \textcolor{MidnightBlue}{In realtà nulla ci vietava di applicare direttamente il punto 1. a $\ED(M)$, che ha come modello infinito $M_M$, però nel modo usato prima si vede meglio come si usano i due teoremi di Löwenheim-Skolem insieme.}
 \end{proof}
 
 \begin{exercise}[Paradosso di Skolem]
@@ -1375,7 +1376,8 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
         \item $\Th(\CC;0,1,+,\cdot)$ ha tra le sue conseguenze logiche: il soddisfare la teoria dei campi, il soddisfare lo schema di assiomi che danno la chiusura algebrica e lo
         schema di assiomi che dicono che la caratteristica non è $p$ per un primo $p$ qualsiasi \textcolor{MidnightBlue}{- notare che non sono ben definite formule che ci danno stime sulla cardinalità infinita}.
         Indicando la teoria che contiene questi assiomi con $\mathsf{ACF}_0$ abbiamo quindi che $\Th(\CC;0,1,+,\cdot) \models \mathsf{ACF}_0$. Per un fatto citato in precedenza, due campi algebricamente chiusi, della stessa caratteristica
-        e della stessa cardinalità sono isomorfi, per cui $\mathsf{ACF}_0$ è $\kappa$-categorica per ogni $\kappa > \aleph_0$, da cui - sapendo che non può avere modelli finiti, perché $\ZZ$ si immerge in ogni modello - segue che $\mathsf{ACF}_0$ è completa.
+        e della stessa cardinalità sono isomorfi, per cui $\mathsf{ACF}_0$ è $\kappa$-categorica per ogni $\kappa > \aleph_0$\footnote{Esistono campi algebricamente chiusi, di caratteristica zero, cardinalità $\aleph_0$ ma con gradi di trascendenza diversi,
+        ad esempio $\overline{\QQ}$, che ha grado di trascendenza $\aleph_0$ su $\QQ$, e $\overline{\QQ(t)}$, che ha grado $1$ su $\QQ$.}, da cui - sapendo che non può avere modelli finiti, perché $\ZZ$ si immerge in ogni modello - segue che $\mathsf{ACF}_0$ è completa.
         \begin{lemma}[Equivalenza di teorie complete]
             Se $T,T'$ sono $L$-teorie complete e $T \models T'$, allora $T'\models T$, per cui $T$ e $T'$ sono logicamente equivalenti.
         \end{lemma}
@@ -1446,7 +1448,6 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
         \[ |M| = |\{\text{combinazioni lineari finite di elementi di $B$ e coefficienti in $\QQ$}\}| \]
         l'insieme a destra è in bigezione con $\psf(\QQ \times B)$, che per $\mathsf{AC}$ ha cardinalità $\max\{|B|,|\QQ|\} = |B|$, da cui $\kappa = |M| = |B|$.\\
         Abbiamo finito, se $M_1, M_2$ sono due modelli di $T_{\QQ}$ di cardinalità $\kappa > \aleph_0$, allora sono $\QQ$-spazi vettoriali di dimensione $\kappa$, quindi sono isomorfi come $\QQ$-spazi vettoriali, ed in particolare come gruppi abeliani, cioè come $L$-strutture.
-        \enlargethispage{\baselineskip}
     \end{enumerate}
 \end{soln}
 
@@ -1457,19 +1458,19 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
 
 \begin{soln}
     Iniziamo osservando che possiamo scrivere una $L$-formula che dice ``la classe di equivalenza di $x$ ha cardinalità $n$'', infatti definiamo:
-    \[ \mathsf{AtLeast}_n(x) := \exists x_1, \ldots, \exists x_n \left(\bigwedge_{1 \leq i < j \leq n} \neg (x_i = x_j) \land \bigwedge_{k = 1}^n x \sim x_k \right) \]
-    che dice ``esistono almeno $n$ elementi distinti che sono in relazione con $x$'', definendo inoltre $\mathsf{AtMost}_n(x) := \neg \, \mathsf{AtLeast}_{n+1}(x)$, che dice ``esistono al massimo $n$ elementi distinti che sono in relazione con $x$'',
+    \[ \mathsf{AtLeast}_n^{(\sim)}(x) := \exists x_1, \ldots, \exists x_n \left(\bigwedge_{1 \leq i < j \leq n} \neg (x_i = x_j) \land \bigwedge_{k = 1}^n x \sim x_k \right) \]
+    che dice ``esistono almeno $n$ elementi distinti che sono in relazione con $x$'', definendo inoltre $\mathsf{AtMost}_n^{(\sim)}(x) := \neg \, \mathsf{AtLeast}_{n+1}^{(\sim)}(x)$, che dice ``esistono al massimo $n$ elementi distinti che sono in relazione con $x$'',
     possiamo definire allora la formula voluta:
-    \[ \mathsf{Exactly}_n(x) := \mathsf{AtLeast}_n(x) \land \mathsf{AtMost}_n(x) \]
-    per cui $M \models \{v\} \mathsf{Exactly}_n(x)$ se e solo se la classe di equivalenza di $v(x)$ ha cardinalità esatta $n$.\\
+    \[ \mathsf{Exactly}_n^{(\sim)}(x) := \mathsf{AtLeast}_n^{(\sim)}(x) \land \mathsf{AtMost}_n^{(\sim)}(x) \]
+    per cui $M \models \{v\} \mathsf{Exactly}_n^{(\sim)}(x)$ se e solo se la classe di equivalenza di $v(x)$ ha cardinalità esatta $n$.\\
     \begin{claim}
         Le teorie complete che estendono $T$ nel linguaggio $L = \{\sim\}$ sono in bigezione con l'insieme delle funzioni $(\NN \cup \{\infty\})^{\NN_{\geq 1} \,\cup \,\{\infty\}}$.
         Dove una funzione $\sigma : \NN_{\geq 1} \cup \{\infty\} \to \NN \cup \{\infty\}$ è tale che $\sigma(n)$ è il numero di classi di equivalenza di cardinalità $n$ in quella teoria e $\sigma(\infty)$ è il numero di classi di equivalenza infinite.
     \end{claim}
     Per contare il numero di classi di una certa cardinalità, definiamo per ogni $n \geq 1$ e per ogni $k \geq 1$ l'enunciato $\mathsf{Class}_{\geq k, = n}$, il quale asserisce ``ci sono almeno $k$ classi di equivalenza distinte di cardinalità esatta $n$'':
-    \[ \mathsf{Class}_{\geq k, = n} := \exists x_1 \dots \exists x_k \left( \bigwedge_{1 \leq i < j \leq k} \neg(x_i \sim x_j) \land \bigwedge_{i=1}^k \mathsf{Exactly}_n(x_i) \right) \]
+    \[ \mathsf{Class}_{\geq k, = n} := \exists x_1 \dots \exists x_k \left( \bigwedge_{1 \leq i < j \leq k} \neg(x_i \sim x_j) \land \bigwedge_{i=1}^k \mathsf{Exactly}_n^{(\sim)}(x_i) \right) \]
     analogamente, per contare il numero di classi di cardinalità almeno $m$, definiamo:
-    \[ \mathsf{Class}_{\geq k, \geq m} := \exists x_1 \dots \exists x_k \left( \bigwedge_{1 \leq i < j \leq k} \neg(x_i \sim x_j) \land \bigwedge_{i=1}^k \mathsf{AtLeast}_m(x_i) \right) \]
+    \[ \mathsf{Class}_{\geq k, \geq m} := \exists x_1 \dots \exists x_k \left( \bigwedge_{1 \leq i < j \leq k} \neg(x_i \sim x_j) \land \bigwedge_{i=1}^k \mathsf{AtLeast}_m^{(\sim)}(x_i) \right) \]
     questa formula ci serve perché per dire che una classe di equivalenza è infinita, dobbiamo dire che è di cardinalità almeno $m$ per ogni $m \geq 1$ - non potendo dire che è infinita.
     Data una funzione $\sigma : \mathbb{N}_{\geq 1} \cup \{\infty\} \to \mathbb{N} \cup \{\infty\}$, possiamo costruire un'estensione $T_{\sigma}$ aggiungendo a $T$ assiomi che forzano il modello ad avere esattamente il profilo descritto da $\sigma$:
     \begin{enumerate}
@@ -1502,8 +1503,8 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
 \enlargethispage{1\baselineskip}
 \begin{remark}[$\purple{^*}$ e i limiti della logica del primo ordine nell'esercizio precedente]
     Si noti che la classificazione tramite la funzione $\sigma$ richiede un'importante precisazione. Se la funzione $\sigma$ prevedesse l'esistenza di classi finite di cardinalità arbitrariamente grande, la logica del primo ordine non sarebbe in grado di limitare il numero di classi infinite a un valore finito.\\
-    Per via del teorema di compattezza - o Löwenheim-Skolem, una teoria che ammette classi finite di dimensione arbitrariamente grande ammette necessariamente modelli che contengono classi di equivalenza infinite.
-    Di conseguenza, due funzioni $\sigma$ distinte sui valori di $\sigma(\infty)$ (ad esempio, una con $\sigma(\infty) = 0$ e una con $\sigma(\infty) = 1$) ma coincidenti e illimitate sui valori finiti produrrebbero la medesima teoria completa, rompendo la bigezione.
+    Per via del teorema di compattezza - o Löwenheim-Skolem, una teoria che ammette classi finite di dimensione arbitrariamente grande ammette necessariamente modelli arbitrariamente grandi, che quindi contengono classi di equivalenza infinite.
+    Di conseguenza, due funzioni $\sigma$ distinte sui valori di $\sigma(\infty)$ (ad esempio, una con $\sigma(\infty) = 0$ e una con $\sigma(\infty) = 1$) ma coincidenti e illimitate sui valori finiti, produrrebbero la medesima teoria completa, rompendo la bigezione.
 \end{remark}
 
 Per mantenere quindi la validità della classificazione, è necessario assumere che, qualora le taglie delle classi finite non ammettano un massimo, la funzione associata debba necessariamente soddisfare $\sigma(\infty) = \infty$.
