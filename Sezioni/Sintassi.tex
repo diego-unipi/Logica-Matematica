@@ -1,15 +1,14 @@
 \section{Deduzione naturale, teoremi di correttezza e completezza}
+\subsection{\texorpdfstring{Sistema di deduzione naturale ($\mathsf{ND}$)}{Sistema di deduzione naturale (ND)}}
 
 \begin{definition}[Formula in $\mathsf{ND}$]
     Sia $L$ un linguaggio, una \vocab{$L$-formula in $\mathsf{ND}$} è una sequenza finita di simboli nell'alfabeto $\{\land, \lor, \to, \neg, \forall, \exists, \top, \bot,=\} \cup L$ (il primo insieme è costituito dai \vocab{simboli logici}).
 \end{definition}
 
-\begin{definition}[Dimostrazione in $\mathsf{ND}$]
-    Una \vocab{dimostrazione in $\mathsf{ND}$} di una $L$-formula $\varphi$ è una sequenza finita di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$
-    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale} (\vocab{$\mathsf{ND}$}) qui di seguito riportate.
+\begin{definition}[Sequente in $\mathsf{ND}$]
+    Un \vocab{sequente} $T \vdash_{\mathsf{ND}} \psi$ significa che esiste un insieme finito di formule $T_0 = \{\varphi_1,\ldots,\varphi_n\} \subseteq T$ tale che
+    $\psi$ si ottiene da $T_0$ con un numero finito di applicazioni delle \vocab{regole di inferenza} del \vocab{sistema di deduzione naturale} (\vocab{$\mathsf{ND}$}) riportate qui di seguito.
 \end{definition}
-
-\subsection{\texorpdfstring{Sistema di deduzione naturale ($\mathsf{ND}$)}{Sistema di deduzione naturale (ND)}}
 
 \[
 \renewcommand{\arraystretch}{1.8}
@@ -74,20 +73,21 @@
 \refstepcounter{footnote}\footnotetext[\value{footnote}]{\label{fn:nd-el-exists}La condizione $x_k \notin \vl(T,\psi)$ garantisce che il testimone introdotto da $\exists x_k\,\varphi$ sia generico: la conclusione $\psi$ non deve dipendere da quel nome di variabile, e nemmeno dalle formule aperte in $T$. Controesempio senza quell'ipotesi: $T = \{\exists x_k P(x_k)\}$, $\varphi = P(x_k)$, $\psi = P(x_k)$, che è in generale falso perché $x_k$ è un testimone specifico, e non generico, per cui se la deduzione fosse vera avremmo che $T \vdash P(x_k)$, per qualsiasi valore di $x_k$.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{definition}[Sequente in $\mathsf{ND}$]
-    Una \vocab{sequente} $T \vdash_{\mathsf{ND}} \varphi$ indica che esiste una dimostrazione in $\mathsf{ND}$ di $\varphi$ a partire dalle formule in $T$.
+\begin{definition}[Dimostrazione in $\mathsf{ND}$]
+    Una \vocab{dimostrazione in $\mathsf{ND}$} di un sequente, $T \vdash_{\mathsf{ND}} \varphi$, è una sequenza finita di sequenti $\sigma_1, \sigma_2, \ldots, \sigma_n$ tale che $\sigma_n = (T \vdash_{\mathsf{ND}} \varphi)$ e per ogni $1 \leq k \leq n$
+    o $\sigma_k$ è un assioma, oppure $\sigma_k$ è ottenuto da sequenti precedenti applicando una delle regole di inferenza del sistema di deduzione naturale ($\mathsf{ND}$).
 \end{definition}
+
+\subsection{\texorpdfstring{Sistema ridotto ($\mathsf{ND}_{\to, \bot, \exists, =}$)}{Sistema ridotto (ND→,⊥,∃,=)}}
 
 \begin{definition}[Formula in $\mathsf{ND}_{\to, \bot, \exists, =}$]
     Sia $L$ un linguaggio, una \vocab{$L$-formula in $\mathsf{ND}_{\to, \bot, \exists, =}$} è una sequenza finita di simboli nell'alfabeto $\{\to, \bot, \exists, =\} \cup L$ (il primo insieme è costituito dai \vocab{simboli logici} di $\mathsf{ND}_{\to, \bot, \exists, =}$).
 \end{definition}
 
-\begin{definition}[Dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$]
-    Una \vocab{dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$} di una $L$-formula $\varphi$ è una sequenza finita di $L$-formule $\varphi_1, \varphi_2, \ldots, \varphi_n$ tale che $\varphi_n = \varphi$ e per ogni $1 \leq k \leq n$,
-    o $\varphi_k$ è un assioma, oppure $\varphi_k$ è ottenuta da formule precedenti tramite una \vocab{regola di inferenza} del \vocab{sistema di deduzione naturale ridotto} (\vocab{$\mathsf{ND}_{\to, \bot, \exists, =}$}) qui di seguito riportate.
+\begin{definition}[Sequente in $\mathsf{ND}_{\to, \bot, \exists, =}$]
+    Un \vocab{sequente} $T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \psi$ significa che esiste un insieme finito di formule $T_0 = \{\varphi_1,\ldots,\varphi_n\} \subseteq T$ tale che
+    $\psi$ si ottiene da $T_0$ con un numero finito di applicazioni delle \vocab{regole di inferenza} del \vocab{sistema di deduzione naturale ridotto} (\vocab{$\mathsf{ND}_{\to, \bot, \exists, =}$}) riportate qui di seguito.
 \end{definition}
-
-\subsection{\texorpdfstring{Sistema ridotto ($\mathsf{ND}_{\to, \bot, \exists, =}$)}{Sistema ridotto (ND→,⊥,∃,=)}}
 
 \[
 \begingroup
@@ -118,8 +118,10 @@
 \endgroup
 \]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{definition}[Sequente in $\mathsf{ND}_{\to, \bot, \exists, =}$]
-    Un \vocab{sequente} $T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \varphi$ indica che esiste una dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$ di $\varphi$ a partire dalle formule in $T$.
+
+\begin{definition}[Dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$]
+    Una \vocab{dimostrazione in $\mathsf{ND}_{\to, \bot, \exists, =}$} di un sequente, $T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \varphi$, è una sequenza finita di sequenti $\sigma_1, \sigma_2, \ldots, \sigma_n$ tale che
+    $\sigma_n = (T \vdash_{\mathsf{ND}_{\to, \bot, \exists, =}} \varphi)$ e per ogni $1 \leq k \leq n$, o $\sigma_k$ è un assioma, oppure $\sigma_k$ è ottenuto da sequenti precedenti applicando una delle regole di inferenza del sistema di deduzione naturale ridotto ($\mathsf{ND}_{\to, \bot, \exists, =}$).
 \end{definition}
 
 \begin{definition}[$\purple{\neg, \top, \land, \lor, \forall}$]
@@ -154,12 +156,18 @@
     Segue quindi che due formule sono deduttivamente equivalenti (o interderivabili) se $\vdash \varphi \to \psi$ e $\vdash \psi \to \varphi$, o equivalentemente se $\varphi \vdash \psi$ e $\psi \vdash \varphi$.
 \end{remark}
 
+\begin{remark}
+    Formule $T$-deduttivamente equivalenti possono essere rimpiazzate l'una con l'altra in qualsiasi dimostrazione che utilizzi $T$ come ipotesi, senza alterare la validità della dimostrazione stessa.
+\end{remark}
+
 \begin{example}[Doppia negazione]
     Dimostriamo che $\varphi \vdash \neg\neg\varphi$ e $\neg\neg\varphi \vdash \varphi$ per ogni $L$-formula $\varphi$.
     \[\displaystyle\text{In}_\to\frac{\displaystyle\text{In}_\neg\frac{\displaystyle\text{El}_\neg\frac{\displaystyle \text{Wk}\frac{\displaystyle \text{Ax}\frac{}{\varphi \vdash \varphi}}{\varphi,\neg\varphi\vdash \varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg \varphi \vdash \neg\varphi}}{\varphi,\neg\varphi\vdash \neg\varphi}}{\varphi,\neg\varphi\vdash\bot}}{\varphi \vdash \neg(\neg\varphi)}}{\vdash \varphi \to \neg(\neg \varphi)}\]
     Analogamente per $\neg\neg\varphi \vdash \varphi$.
     \[\displaystyle\text{RaA}\frac{\displaystyle\text{El}_\neg\frac{\displaystyle\text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\neg\varphi \vdash \neg\neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\neg\varphi} \; \text{Wk}\frac{\displaystyle\text{Ax}\frac{}{\neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \neg\varphi}}{\neg\neg\varphi, \neg\varphi \vdash \bot}}{\neg\neg\varphi \vdash \varphi}\]
 \end{example}
+
+\enlargethispage{3\baselineskip}
 
 \begin{example}[Principio del terzo escluso]
     Dimostriamo che $\vdash \varphi \lor \neg\varphi$ per ogni $L$-formula $\varphi$.
@@ -233,12 +241,12 @@ Un'altra brutta notizia è che il sistema di deduzione naturale non potrebbe fun
 \end{remark}
 
 \begin{proposition}[Equivalenza tra $\vdash$ e $\models$]
-    Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, vale che $T \vdash \varphi \iff$ \purple{per ogni}
+    Data $T$ una $L$-teoria e $\varphi$ una $L$-formula, non necessariamente chiusa, vale che $T \vdash \varphi \iff$ \purple{per ogni}
     $L$-struttura $M = (D;i)$ e \purple{per ogni} $v : \Var \to D$ valutazione delle variabili, si ha $M \models \{v\}T \implies M \models \{v\}\varphi$.
 \end{proposition}
 
 \begin{remark}[Sulla condizione semantica equivalente a $\vdash$]
-    La cosa a destra dell'equivalenza nella proposizione precedente è più forte di $T \models \varphi$, infatti $T \models \varphi$ significa:
+    La cosa a destra dell'equivalenza nella proposizione precedente è più forte di $T \models \varphi$, infatti $T \models \varphi$ significa, per definizione:
     \[ \forall M ( \forall v \; M \models \{v\}T \implies \forall v M \models \{v\}\varphi) \]
     mentre la cosa a destra dell'equivalenza nella proposizione precedente significa:
     \[ \forall M \forall v ( M \models \{v\}T \implies M \models \{v\}\varphi) \]
@@ -248,13 +256,13 @@ Un'altra brutta notizia è che il sistema di deduzione naturale non potrebbe fun
 
 Questa proposizione ha i due corollari che desideriamo, ovvero l'equivalenza dei due simboli $\vdash$ e $\models$ quando la teoria ha solo formule chiuse.
 
-\begin{corollary}[Teorema di correttezza]
-    Sia $T$ una $L$-teoria (chiusa\footnote{Non è necessario in realtà per questa freccia.}), e sia $\varphi$ una $L$-formula, allora:
+\begin{corollary}[Teorema di correttezza - per la $\mathsf{ND}$]
+    Sia $T$ una $L$-teoria, e sia $\varphi$ una $L$-formula, allora:
     \[T \vdash \varphi \implies T \models \varphi\]
 \end{corollary}
 
 \begin{corollary}[Teorema di completezza]
-    Sia $T$ una $L$-teoria fatta da $\boxed{\text{formule chiuse}}$, e sia $\varphi$ una $L$-formula, allora:
+    Sia $T$ una $L$-teoria fatta da \purple{formule chiuse}, e sia $\varphi$ una $L$-formula, allora:
     \[T \models \varphi \implies T \vdash \varphi\]
 \end{corollary}
 
@@ -263,7 +271,7 @@ Questa proposizione ha i due corollari che desideriamo, ovvero l'equivalenza dei
 Vogliamo dimostrare la freccia $\implies$ della proposizione, che corrisponderà al teorema di correttezza. Prima di procedere richiamiamo due risultati importanti.
 
 \begin{remark}[Sostituibilità e coincidenza delle valutazioni]
-    Sia $M$ una $L$-struttura.
+    Sia $M$ una $L$-struttura, ricordiamo le seguenti cose.
     \begin{itemize}
         \item Se $v_1$ e $v_2$ sono due valutazioni tali che $v_1|_{\vl(\varphi)} \equiv v_2|_{\vl(\varphi)}$, per una $L$-formula, allora $M \models \{v_1\}\varphi \iff M \models \{v_2\}\varphi$.
         \item Se $\varphi$ è una $L$-formula e $t$ un $L$-termine sostituibile per $x_k$ in $\varphi$, allora $M \models \{v\}\varphi[t/x_k] \iff M \models \{v[\{v\}_M t/x_k]\}\varphi$.
@@ -273,9 +281,11 @@ Vogliamo dimostrare la freccia $\implies$ della proposizione, che corrisponderà
 Assumiamo quindi $T \vdash \varphi$ e dimostriamo che $\forall v \; \forall M (M \models \{v\}T \implies M \models \{v\}\varphi)$.
 
 \begin{proof}
-    Sia $T \vdash \varphi$, per definizione questo significa che esiste una dimostrazione (la consideriamo in $\mathsf{ND}_{\to, \bot, \exists, =}$ per comodità), ovvero esiste $\varphi_1, \ldots, \varphi_n$ con $\varphi_n = \varphi$ e tale che per ogni $1 \leq k \leq n$
-    vale che o $\varphi_k$ è un assioma, o $\varphi_k$ è ottenuta da formule precedenti tramite una regola di inferenza in $\mathsf{ND}_{\to, \bot, \exists, =}$.\\
-    Procediamo per induzione sulla lunghezza della dimostrazione, i.e. per ciascuna delle regole di inferenza di $\mathsf{ND}_{\to, \bot, \exists, =}$, assumiamo che la tesi sia vera per le formule che compaiono nelle premesse e dimostriamo che è vera anche per la formula che compare nella conclusione.
+    Sia $T \vdash \varphi$, fissiamo una dimostrazione di questo sequente, $\sigma_1,\ldots,\sigma_n$, con $\sigma_n = T \vdash \varphi$ e $\forall k \; 1 \leq k \leq n$ $\sigma_k$ che è o un assioma o si ottiene, tramite regole di inferenza, dai sequenti precedenti.\\
+    Procediamo per induzione sulla lunghezza della dimostrazione, cioè: l'ipotesi induttiva consiste nell'assumere la tesi vera per ogni dimostrazione di lunghezza $j < n$, e dimostrare che è vera anche per la dimostrazione di lunghezza $n$.
+    Nello specifico l'ultimo sequente $\sigma_n$ della nostra dimostrazione, o $n = 1$, e quindi $\sigma_n$ è un assioma, oppure $\sigma_n$ si ottiene applicando una regola di inferenza ai sequenti $\sigma_j$ che compaiono prima nella lista.
+    Poiché per ogni $j < n$ la sequenza $\sigma_1, \ldots, \sigma_j$ è una dimostrazione di lunghezza minore di $n$, vale l'ipotesi induttiva per $\sigma_j$; il passo induttivo consiste quindi nel dimostrare 
+    che la tesi si conserva necessariamente nell'applicare le regole di inferenza, cioè passando dalle premesse alla conclusione, e quindi ci si riduce a dover controllare regola per regola - ci bastano quelle di $\mathsf{ND}_{\to, \bot, \exists, =}$ - che se la tesi è vera per le premesse, allora è vera anche per la conclusione.
     \begin{itemize}
         \item \textcolor{MidnightBlue}{$\displaystyle\text{Ax} \frac{}{\varphi \vdash \varphi}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}\varphi \implies M \models \{v\}\varphi)$}, che è banalmente vera.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{Wk} \frac{T \vdash \varphi}{T' \vdash \varphi}$}, con $T \subseteq T'$, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi)$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T' \implies M \models \{v\}\varphi)$}. Fissati $M$ e $v$, se $M \models \{v\}T'$, allora in particolare $M \models \{v\}T$ perché $T \subseteq T'$, e quindi per ipotesi induttiva segue $M \models \{v\}\varphi$.
@@ -296,7 +306,7 @@ Assumiamo quindi $T \vdash \varphi$ e dimostriamo che $\forall v \; \forall M (M
         \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_= \frac{T \vdash s = t \quad T \vdash \varphi[s/x_k]}{T \vdash \varphi[t/x_k]}$}, l'ipotesi induttiva è \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}s = t)$} e \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi[s/x_k])$}, vogliamo dimostrare \textcolor{purple}{$\forall M \; \forall v (M \models \{v\}T \implies M \models \{v\}\varphi[t/x_k])$}.
         Fisso $M$, $v$ ed assumo $M \models\{v\}T$, dalle ipotesi induttive ottengo $M \models \{v\}s = t$ e $M \models \{v\}\varphi[s/x_k]$, usando la seconda osservazione sulla sostituibilità, l'ultima cosa equivale a $M \models \{v[\{v\}_M s/x_k]\}\varphi$, ora $M \models \{v\}s = t$ significa che $\{v\}_M s = \{v\}_M t$, mettendo assieme le due cose ottengo $M \models \{v[\{v\}_M t/x_k]\}\varphi$, che è equivalente a $M \models \{v\}\varphi[t/x_k]$.
     \end{itemize}
-    Il caso base, in cui la dimostrazione ha lunghezza 1 è già incluso nei casi sopra\footnote{In particolare se $\varphi \in T$, potremmo dire che la dimostrazione è di lunghezza 1, ma in realtà è di lunghezza 2, perché la si ottiene combinando Wk + Ax.}.
+    Il caso base, in cui la dimostrazione ha lunghezza 1 è già incluso nei casi sopra - in particolare basta applicare Ax + Wk.
 \end{proof}
 
 Segue banalmente il teorema di correttezza.
@@ -314,11 +324,10 @@ Segue banalmente il teorema di correttezza.
 \begin{theorem}[Teorema di compattezza - versione sintattica]
     Siano $T$ una $L$-teoria e $\varphi$ una $L$-formula, se $T \vdash \varphi$, allora esiste una sottoteoria finita $T' \subseteq T$ tale che $T' \vdash \varphi$.
 \end{theorem}
-
+%con questa definizione di sequente è già vero, tuttavia non vedo altri modi di rendere coerente il discorso, una definizione di sequente con un sottoinsieme infinito perderebbe di senso in relazione alla finitezza del numero di premesse delle regole di inferenza in ND
 \begin{proof}
-    Sia $T \vdash \varphi$, per definizione esiste una dimostrazione di $\varphi$ a partire da $T$, questa dimostrazione è una sequenza finita di formule $\varphi_1, \ldots, \varphi_n$ con $\varphi_n = \varphi$ e tale che per ogni $1 \leq k \leq n$ vale che
-    o $\varphi_k$ è un assioma, o $\varphi_k$ è ottenuta da formule precedenti tramite una regola di inferenza in $\mathsf{ND}$ (useremo comunque sempre $\mathsf{ND}_{\to, \bot, \exists, =}$ per comodità). Procedo di nuovo per induzione sulla lunghezza della dimostrazione,
-    i.e. per ciascuna delle regole di inferenza di $\mathsf{ND}$, assumo che la tesi sia vera per le formule che compaiono nelle premesse e dimostro che è vera anche per la formula che compare nella conclusione.
+    Sia $T \vdash \varphi$, fissiamo una dimostrazione $\sigma_1,\ldots,\sigma_n = T \vdash \varphi$ del sequente. Procediamo per induzione sulla lunghezza della dimostrazione,
+    come per il teorema di correttezza.
     \begin{itemize}
         \item \textcolor{MidnightBlue}{$\displaystyle\text{Ax} \frac{}{\varphi \vdash \varphi}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare che esiste una sottoteoria finita $T' \subseteq \{\varphi\}$ tale che $T' \vdash \varphi$, e ovviamente basta $T' := \{\varphi\}$.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{Wk} \frac{T \vdash \varphi}{T'' \vdash \varphi}$}, con $T'' \supseteq T$, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \varphi$}, e quindi prendiamo $T' \subseteq T \subseteq T''$ finito tale che $T' \vdash \varphi$.
@@ -326,12 +335,12 @@ Segue banalmente il teorema di correttezza.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_\to \frac{T,\varphi \vdash \psi}{T \vdash \varphi \to \psi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T \cup \{\varphi\}$ finita tale che $T' \vdash \psi$}. WLOG $\varphi \not\in T'$, se $\varphi$ fosse in $T'$ lo togliamo per avere $T' \subseteq T$, eventualmente per Wk si ha $T',\varphi \vdash \psi$, e quindi per In$_\to$: $T' \vdash \varphi \to \psi$.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\to \frac{T \vdash \varphi \to \psi\quad T \vdash \varphi}{T \vdash \psi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \varphi \to \psi$} e \textcolor{purple}{$\exists T'' \subseteq T$ finita tale che $T'' \vdash \varphi$}, prendiamo $T''' := T' \cup T''$, che è finito. Per Wk si ha $T''' \vdash \varphi \to \psi$ e $T''' \vdash \varphi$, e quindi per El$_\to$: $T''' \vdash \psi$.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_\exists \frac{T \vdash \varphi[t/x_k]}{T \vdash \exists x_k\,\varphi}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \varphi[t/x_k]$}, e quindi per In$_\exists$: $T' \vdash \exists x_k\,\varphi$.
-        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\exists \frac{T \vdash \exists x_k\,\varphi \quad T,\varphi \vdash \psi}{T \vdash \psi}$}, con $x_k \not\in \vl(T,\psi)$, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \exists x_k\,\varphi$} e \textcolor{purple}{$\exists T'' \subseteq T \cup \{\varphi\}$ finita tale che $T'' \vdash \psi$}. Prendiamo $T''' := T''\setminus\{\varphi\}$, che è necessario perché altrimenti potrebbe accadere che $x_k \in \vl(T'')$, in quanto tipicamente $x_k$ è libera in $\varphi$ e $\varphi$ potrebbe essere rimasta in $T''$. 
-        Sia $\widetilde{T} := T' \cup T'''$, per Wk si ha $\widetilde T \vdash \exists x_k\,\varphi$ e $\widetilde{T} ,\varphi \vdash \psi$. Infine $x_k \not\in \vl(\widetilde{T},\psi)$ poiché $\widetilde T\subseteq T$, quindi per El$_\exists$: $\widetilde T \vdash \psi$.
+        \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_\exists \frac{T \vdash \exists x_k\,\varphi \quad T,\varphi \vdash \psi}{T \vdash \psi}$}, con $x_k \not\in \vl(T,\psi)$, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash \exists x_k\,\varphi$} e \textcolor{purple}{$\exists T'' \subseteq T \cup \{\varphi\}$ finita tale che $T'' \vdash \psi$}. Prendiamo $T''' := T' \cup T''\setminus\{\varphi\}$,
+        per Wk si ha $T''' \vdash \exists x_k\,\varphi$ e $T''' ,\varphi \vdash \psi$. Infine $x_k \not\in \vl(T''',\psi)$ poiché $T'''\subseteq T$, quindi per El$_\exists$: $T''' \vdash \psi$.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{In}_= \frac{}{\vdash t = t}$}, l'ipotesi induttiva è vuota, vogliamo dimostrare che esiste una sottoteoria finita $T' \subseteq \varnothing$ tale che $T' \vdash t = t$, e ovviamente basta $T' := \varnothing$.
         \item \textcolor{MidnightBlue}{$\displaystyle\text{El}_= \frac{T \vdash s = t \quad T \vdash \varphi[s/x_k]}{T \vdash \varphi[t/x_k]}$}, l'ipotesi induttiva è \textcolor{purple}{$\exists T' \subseteq T$ finita tale che $T' \vdash s = t$} e \textcolor{purple}{$\exists T'' \subseteq T$ finita tale che $T'' \vdash \varphi[s/x_k]$}, prendiamo $T''' := T' \cup T''$, che è finito. Per Wk si ha $T''' \vdash s = t$ e $T''' \vdash \varphi[s/x_k]$, e quindi per El$_=$ si ha $T''' \vdash \varphi[t/x_k]$.
     \end{itemize}
-    Il caso base, in cui la dimostrazione ha lunghezza 1, è già incluso nei casi sopra.
+    Il caso base, in cui la dimostrazione ha lunghezza 1, è già incluso nei casi sopra - usando Ax + Wk.
 \end{proof}
 
 \subsection{Teorema di completezza}
@@ -357,7 +366,7 @@ A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo os
 \end{remark}
 
 \begin{definition}[Deduttiva completezza]
-    Diciamo che $T$ è una $L$-teoria \vocab{deduttivamente completa} se per ogni \textcolor{purple}{$\boxed{\text{$L$-formula chiusa}}$} $\varphi$ vale che o $T \vdash \varphi$ o $T \vdash \neg\varphi$.
+    Diciamo che $T$ è una $L$-teoria \vocab{deduttivamente completa} se per ogni \textcolor{purple}{$L$-formula chiusa} $\varphi$ vale che o $T \vdash \varphi$ o $T \vdash \neg\varphi$.
 \end{definition}
 
 \begin{exercise}[Deduttiva completezza e disgiunzioni]
@@ -375,12 +384,13 @@ A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo os
 \begin{proof}
     Vediamo le due implicazioni.
     \begin{itemize}
-        \item[$\boxed{\implies}$] Assumo che $T \vdash \forall x_k\,\varphi$\footnote{Formalmente farò tutto in $L'$, e $T \vdash \forall x_k \varphi$ resta valida nel linguaggio espanso poiché la derivazione in $L$ è una sequenza finita di passi sintattici, passando a $L'$ ogni $\varphi_i$ resta ben formata e le condizioni laterali delle regole (e.g. quella di In$_\forall$) non cambiano.},
-        applico El$_\forall$ (come regola nel linguaggio espanso) con $c$, che essendo costante è sempre sostituibile a $x_k$ in $\varphi$, e ottengo $T \vdash \varphi[c/x_k]$.
-        \item[$\boxed{\impliedby}$] Assumo che $T \vdash \varphi[c/x_k]$ - sempre come sequente in $L' = L \cup \{c\}$, per compattezza sintattica esiste $T' \subseteq T$ finita tale che $T' \vdash \varphi[c/x_k]$,
+        \item[$\boxed{\implies}$] Assumiamo il sequente $T \vdash \forall x_k\,\varphi$ nel linguaggio $L$, tale sequente lo è anche in $L'$ perché quello che c'è a destra continua a seguire da un sottoinsieme finito di quello che c'è a sinistra usando le regole di inferenza.
+        A questo punto usando El$_\exists$ si ottiene $T \vdash \varphi[c/t]$ - la costante è sempre sostituibile.
+        \item[$\boxed{\impliedby}$] Assumiamo che $T \vdash \varphi[c/x_k]$ - sempre come sequente in $\purple{L'} = L \cup \{c\}$, per compattezza sintattica esiste $T' \subseteq T$ finita tale che $T' \vdash \varphi[c/x_k]$,
         fissiamo inoltre una dimostrazione di $\varphi[c/x_k]$ a partire da $T'$.\\
-        Sia $x_l$ una variabile che non compare né in $T'$ né nella dimostrazione (posso prenderla per finitezza), allora dico che $T' \vdash \varphi[x_l/x_k]$, infatti, sostituendo ogni formula $\varphi_i$ della dimostrazione con $\varphi_i[x_l/c]$ (e posso farlo perché la variabile non potendo essere catturata è sempre sostituibile), ottengo una dimostrazione di $\varphi[x_l/x_k]$ a partire da $T'$.\\
-        Ora per In$_\forall$ ho $\displaystyle\text{In}_\forall\frac{T' \vdash \varphi[x_l/x_k]}{T' \vdash \forall x_l \varphi[x_l/x_k]}$, con $x_l \not\in \vl(T')$ poiché $T' \subseteq T$, usando la conclusione di questa regola voglio dimostrare che $T' \vdash \forall x_k \varphi$, per fare ciò dimostro direttamente che $\vdash \forall x_l \varphi[x_l/x_k] \to \forall x_k \varphi$:
+        Sia $x_l$ una variabile che non compare né in $T'$ né nella dimostrazione - posso prenderla per finitezza della dimostrazione e delle formule usate nei sequenti;
+        diciamo che vale l'\purple{$L$}-sequente $T' \vdash \varphi[x_l/x_k]$, infatti, sostituendo ogni formula $\varphi_i$ della dimostrazione con $\varphi_i[x_l/c]$ - e si può fare perché la variabile non può essere catturata, si ottiene una dimostrazione di $T'\vdash\varphi[x_l/x_k]$.\\
+        Ora per In$_\forall$ ho $\displaystyle\text{In}_\forall\frac{T' \vdash \varphi[x_l/x_k]}{T' \vdash \forall x_l \varphi[x_l/x_k]}$, con $x_l \not\in \vl(T')$. Poiché $T' \subseteq T$, usando la conclusione di questa regola, vogliamo arrivare a $T' \vdash \forall x_k \varphi$, per fare ciò dimostriamo direttamente che \purple{$\vdash \forall x_l \varphi[x_l/x_k] \to \forall x_k \varphi$}:
         \[ \text{In}_\to\frac{\displaystyle \text{In}_\forall\frac{\displaystyle \text{El}_\forall\frac{\displaystyle\text{Ax}\frac{}{\forall x_l \varphi[x_l/x_k]\vdash \forall x_l \varphi[x_l/x_k]}}{\forall x_l \varphi[x_l/x_k] \vdash \varphi}}{\forall x_l \varphi[x_l/x_k] \vdash \forall x_k \varphi}}{\vdash \forall x_l \varphi[x_l/x_k] \to \forall x_k \varphi} \]
     \end{itemize}
     Notare che $x_k \not\in \vl(\forall x_l \varphi[x_l/x_k])$, per cui il passaggio con In$_\forall$ è legittimo, inoltre per El$_\forall$ ho usato $(\varphi[x_l/x_k])[x_k/x_l] = \varphi$. La tesi originale si ottiene per Wk.
@@ -452,7 +462,7 @@ partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teo
     Assumo $T \nvdash \bot$, con $T$ $L$-teoria, e voglio $\exists M\;\exists v (M \models \{v\}T)$. Procediamo con i seguenti passi.
     \begin{enumerate}
         \item Iniziamo espandendo il linguaggio con l'aggiunta di un simbolo di costante per ogni variabile $L' := L \cup \{c_1,c_2,\ldots\}$, ed estendendo la teoria $T' := T \cup \{c_1 = x_1, c_2 = x_2, \ldots\}$, tale estensione è ancora deduttivamente coerente, infatti se $T' \vdash \bot$, allora per compattezza avremmo un sottoinsieme finito 
-        (WLOG - per Wk) $T \cup \{c_1 = x_1, \ldots, c_n = x_n\} \vdash \bot$. Consideriamo la teoria ottenuta da questa sostituendo $x_i$ ad ogni $c_i$, che è banalmente lecito e dà luogo a $T \cup \{x_1 = x_1, \ldots, x_n = x_n\} \vdash \bot$ - basta fissare una dimostrazione e sostituire $x_i/c_i$,
+        (WLOG - per Wk) $T \cup \{c_1 = x_1, \ldots, c_n = x_n\} \vdash \bot$. Consideriamo la teoria ottenuta da questa sostituendo $x_i$ ad ogni $c_i$, che è banalmente lecito e dà luogo al sequente $T \cup \{x_1 = x_1, \ldots, x_n = x_n\} \vdash \bot$ - basta fissare una dimostrazione e sostituire $x_i/c_i$,
         a questo punto notiamo che possiamo eliminare uno alla volta gli assiomi extra, detta $\Gamma := T \cup \{x_1 = x_1, \ldots, x_{n-1} = x_{n-1}\}$, per modus ponens:
         \[ \text{El}_\to \frac{\displaystyle \text{In}_\to\frac{\displaystyle \frac{}{\Gamma, x_n = x_n \vdash \bot}}{\Gamma \vdash x_n = x_n \to \bot}\quad \text{Wk}\frac{\displaystyle\text{In}_=\frac{}{\vdash x_n = x_n}}{\Gamma \vdash x_n = x_n}}{\Gamma \vdash \bot}\]
         reiterando $n$ volte questo procedimento ottengo $T \vdash \bot$, che è assurdo.
