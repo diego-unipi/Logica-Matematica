@@ -1146,7 +1146,7 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
            ``\mathbf x\text{"} &\text{se $T_{k+2}(\ulcorner f \urcorner, \nth(n,0), \ldots, \nth(n,k),\purple{\nth(n,k)}) = 0$} \\
             \mathbf c & \text{altrimenti}
         \end{cases} \]
-        dove ``$\mathbf x$'' è in realtà $(\car(n),\car\circ \cdr(n),\ldots,\car \circ \cdr^{k-1}(n))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti $\mathbf x \in R$ se e solo se $f(\mathbf x) \ne \bot$,
+        dove ``$\mathbf x$'' è in realtà $(\nth(n,0), \ldots, \nth(n,k-1))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti $\mathbf x \in R$ se e solo se $f(\mathbf x) \ne \bot$,
         se e solo se $\exists n \; T_{k+2}(\ulcorner f \urcorner, \mathbf x, n) = 0$, se e solo se $\exists n \; g(n) = \mathbf x$.
         \item[$\boxed{3. \Rightarrow 1.}$] Sia $R = \{f(n) | n \in \NN\}$, per qualche funzione ricorsiva totale $f : \NN \to \NN^k$, allora basta definire $g : \NN^{k+1} \to \NN_\bot$:
         \[ g(\mathbf y,n) := \begin{cases}
@@ -1154,11 +1154,8 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
             1 & \text{altrimenti}
         \end{cases} \]
         questa $g$ è già ricorsiva totale ma non è ancora della forma richiesta, bisogna fare un passaggio di minimizzazione, definiamo:
-        \[ h(\mathbf y) := \begin{cases}
-            0 &\text{se $\exists n \; g(\mathbf y,n) = 0$} \\
-            \bot & \text{altrimenti}
-        \end{cases} \]
-        che è ricorsiva parziale, e vale che $h(\mathbf x) = 0$ se e solo se $\exists n \; g(\mathbf x,n) = 0$, ovvero se e solo se esiste $n$ tale che $f(n) = \mathbf x$.
+        \[ h(\mathbf y) := 0_1(\mu_n(g(\mathbf y, n))) \]
+        che è ricorsiva parziale, e vale che $h(\mathbf x) = 0 \ne \bot$ se e solo se $\exists n \; g(\mathbf x,n) = 0$, ovvero se e solo se esiste $n$ tale che $f(n) = \mathbf x$.
     \end{itemize}
 \end{proof}
 
