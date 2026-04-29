@@ -1215,7 +1215,8 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
     \end{center}
     La funzione ricorsiva totale che decide $R$ è quindi:
     \[ \mu_n(\chi_{=}(h(n),\mathbf x)) \bmod 2 \]
-    dove $\chi_{=}$ è il predicato PR che definisce l'uguaglianza. Quindi la funzione definita restituisce il minimo $n$, modulo 2, tale che $h(n) = \mathbf x$, pertanto tale funzione farà 0 sui valori di $R$ e 1 sui valori di $R^\complement$.\\
+    dove $\chi_{=}$ è il predicato PR che definisce l'uguaglianza, e la funzione è totale in quanto ogni $\mathbf x$ sta in $R$ o $R^\complement$, per cui una tra $f$ e $g$ becca necessariamente $\mathbf x$.
+    Quindi la funzione definita restituisce il minimo $n$, modulo 2, tale che $h(n) = \mathbf x$, pertanto tale funzione farà 0 sui valori di $R$ e 1 sui valori di $R^\complement$.\\
     Per la precisione: se $\mathbf x \in R$, allora esiste $n$ tale che $f(n) = \mathbf x$, e quindi $h(2n) = f(n) = \mathbf x$, per cui la minimizzazione è ben definita e restituisce un valore pari, che dà 0; viceversa se la minimizzazione modulo 2 dà 0,
     allora esiste un valore pari $2k$ tale che $h(2k) = \mathbf x$, e quindi $f(k) = \mathbf x$, per cui $\mathbf x \in R$.
 \end{proof}
@@ -1357,7 +1358,7 @@ Vediamo un insieme non decidibile.
 \begin{definition}[Classi di complessità aritmetica]
     Diciamo che una formula aritmetica $\varphi$ è \vocab{di classe} (o ha \vocab{complessità aritmetica}):
     \begin{itemize}
-        \item $\Delta_0^0 = \Sigma_0^0 = \Pi_0^0$ se si ottiene dagli $L_{\text{arit}}$-termini per chiusura sotto: \textcolor{purple}{$\neg$}, \textcolor{purple}{$\land$}, \textcolor{purple}{$\lor$}, \textcolor{purple}{$\forall x \leq y$}, \textcolor{purple}{$\exists x \leq y$},
+        \item $\Delta_0^0 = \Sigma_0^0 = \Pi_0^0$ se si ottiene dagli $L_{\text{arit}}$-termini per chiusura sotto: \textcolor{purple}{$\neg \,$}, \textcolor{purple}{$\land$}, \textcolor{purple}{$\lor$}, \textcolor{purple}{$\forall x \leq y$}, \textcolor{purple}{$\exists x \leq y$},
         dove le ultime due sono abbreviazioni per le formule $\forall x\,(x \leq y \to \ldots)$ e $\exists x\,(x \leq y \land \ldots)$, con $x < y \overset{\text{def}}{=} \exists t\,(x + t = y)$, cioè possiamo applicare solo \vocab{quantificatori limitati} - i.e. quantificatori che quantificano su un intervallo finito,
         pertanto non possono essere usati per esprimere proprietà di insiemi infiniti;
         \item $\Sigma_{n+1}^0$ se $\varphi = \exists x_1 \ldots \exists x_k \psi$ con $\psi$ di classe $\Pi_n^0$;
@@ -1383,7 +1384,7 @@ Vediamo un insieme non decidibile.
 \end{tikzcd}\]
 
 \begin{example}[$p$ è primo]
-    La formula $\textsf{prime}(p) := (p > 1) \land \forall n \leq p \; (n = 1 \lor n = p \lor \neg \exists m \leq p \; m \cdot n = p)$, che esprime che $p$ è un numero primo,
+    La formula $\textsf{prime}(p) := (p > 1) \land \forall n \leq p \; (n = 1 \lor n = p \lor \neg \, \exists m \leq p \; m \cdot n = p)$, che esprime che $p$ è un numero primo,
     è di classe $\Delta_0^0$, perché è una formula ottenuta solo con quantificatori limitati, e quindi è senza quantificatori veri.
 \end{example}
 
@@ -1455,7 +1456,7 @@ Vediamo che la chiusura delle $L_{\text{arit}}$-formule corrisponde alla chiusur
 Quindi il corollario seguente è una proprietà di chiusura per operazioni su sottoinsiemi $\Delta_n^0$ di $\NN^k$, non avendo il corrispettivo di $L_{\text{arit}}$-formule in questo caso.
 
 \begin{corollary}[Chiusura di $\Delta_n^0$]
-    $\Delta_n^0$ è stabile per: $\land$, $\lor$, $\neg$, $\forall y \leq x$, $\exists y \leq x$.
+    $\Delta_n^0$ è stabile per: $\land$, $\lor$, $\neg \,$, $\forall y \leq x$, $\exists y \leq x$.
 \end{corollary}
 
 \begin{proof}
@@ -1522,7 +1523,7 @@ Dimostriamo ora il lemma.
         \item[$\boxed{\text{minimizzazione}}$] Sia $f : \NN^k \to \NN_\bot$ definita per minimizzazione da $g : \NN^{k+1} \to \NN_\bot$ come $f(\mathbf x) := \mu_ng(\mathbf x,n)$, con $g$ ricorsiva parziale.
         Per ipotesi induttiva esiste $\varphi_g(\mathbf x,n,z)$ di classe $\Sigma_1^0$ che rappresenta il grafico di $g$, da questa, usando la definizione di minimizzazione abbiamo:
         \[ f(\mathbf x) = y \iff \varphi_g(\mathbf x,y,0) \land \forall i < y \, \exists v\, (\varphi_g(\mathbf x,i,v) \land v \ne 0), \]
-        e questa formula è ancora di classe $\Sigma_1^0$ perché abbiamo aggiunto solo un $\land$, una quantificazione limitata $\forall i < y$, ed un esistenziale, che serve per coprire il caso in cui $g(\mathbf x,i)$ non è definita, e quindi non è zero - richiedere solo $\neg \varphi_g(\mathbf x,i,0)$ non coprirebbe questo caso.
+        e questa formula è ancora di classe $\Sigma_1^0$ perché abbiamo aggiunto solo un $\land$, una quantificazione limitata $\forall i < y$, ed un esistenziale, che serve per coprire il caso in cui $g(\mathbf x,i)$ non è definita, e quindi non è zero - richiedere solo $\neg \, \varphi_g(\mathbf x,i,0)$ non coprirebbe questo caso.
         \item[$\boxed{\begin{matrix}\text{ricorsione}\\\text{primitiva}\end{matrix}}$] Sia $f : \NN^{k+1} \to \NN_\bot$ definita per ricorsione da:
         \[ f(\mathbf x,0) = g(\mathbf x), \qquad f(\mathbf x,y+1)=h(\mathbf x,y,f(\mathbf x,y)), \]
         con $h,g$ ricorsive parziali, per ipotesi induttiva esistono $\varphi_g(\mathbf x,y)$ e $\varphi_h(\mathbf a,b,c,t)$ di classe $\Sigma_1^0$, che corrispondono ai grafici di $g$ e $h$.
@@ -1567,6 +1568,8 @@ Dimostriamo ora il lemma.
         questa formula è quasi corretta e di classe $\Sigma_1^0$; la cosa mancante è che $\beta$ non è un simbolo di funzione, ma una abbreviazione per la formula sopra, quindi non possiamo fare la composizione davvero, quello che andrebbe fatto
         è riscrivere la formula nel secondo passaggio come:
         \[ \forall i < y \, \exists m \exists n \; (\beta(a,b,i) = n) \land (\beta(a,b,i+1) = m) \land \varphi_h(\mathbf x,i,n,m) \]
+        e quella del primo come:
+        \[ \exists w \; (\beta(a,b,0) = w) \land \varphi_g(\mathbf x,w) \]
     \end{itemize}
 \end{proof}
 
@@ -1586,14 +1589,14 @@ Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implic
         e l'insieme definito è quindi $\{p(x_1,\ldots,x_k) = q(x_1,\ldots,x_k)\}$, che è un predicato PR per quanto visto.
         \item[$\boxed{\land,\lor}$] Se $\varphi = \psi_1 * \psi_2$ con $\{\NN \models \psi_1\}$ e $\{\NN\models \psi_2\}$, predicati PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi_1\} *' \{\NN \models \psi_2\}$, con $*' \in \{\cap, \cup\}$, è un predicato PR
         poiché abbiamo visto che i predicati PR formano un'algebra.
-        \item[$\boxed{\neg}$] Se $\varphi = \neg \psi$ con $\{\NN \models \psi\}$ un predicato PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi\}^\complement$ è un predicato PR, poiché i predicati PR sono chiusi per complementare, essendo un'algebra.
+        \item[$\boxed{\neg \,}$] Se $\varphi = \neg \, \psi$ con $\{\NN \models \psi\}$ un predicato PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi\}^\complement$ è un predicato PR, poiché i predicati PR sono chiusi per complementare, essendo un'algebra.
         \item[$\boxed{\forall y \le x}$] Se $\varphi = \forall y \leq z \; \psi(\mathbf x,y)$, allora, detto $R := \{\NN \models \psi(\mathbf x,y)\} \subseteq \NN^{k+1}$, per ipotesi induttiva si ha che esiste una funzione $T : \NN^{k+1} \to \NN$ PR tale che:
         \[ R = \{T(\mathbf x,y) = 0\} \]
         Poiché:
         \[ \{\NN \models \forall y \leq z \; \psi(\mathbf x,y)\} = \{(\mathbf x,z) \in \NN^{k+1} : \forall y \leq z \; (\mathbf x,y) \in R\} \]
-        ovvero è sufficiente controllare che per tutti gli $i < z$ vale $T(\mathbf x,i) = 0$, e questo è precisamente il luogo di zero del predicato PR che conta gli 
+        ovvero è sufficiente controllare che per tutti gli $i \leq z$ vale $T(\mathbf x,i) = 0$, e questo è precisamente il luogo di zero del predicato PR che conta gli 
         elementi, sotto un certo valore di un altro predicato:
-        \[ \{ \#\{i < z : T(\mathbf x,i) = 0\} = 0 \} = R \]
+        \[ \{ \#\{i \leq z : T(\mathbf x,i) \ne 0\} = 0 \} = R \]
     \end{itemize}
 \end{proof}
 
@@ -1629,7 +1632,7 @@ Morale l'insieme delle verità aritmetiche non è semidecidibile, e quindi non e
 Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $L_{\text{arit}} = \{0,+,\cdot,s\}$.
 
 \begin{itemize}
-        \item [\textcolor{purple}{$\mathsf{Q}1$}] $\forall x \; \neg s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
+        \item [\textcolor{purple}{$\mathsf{Q}1$}] $\forall x \; \neg \, s(x) = 0$ \textcolor{MidnightBlue}{(0 non successore)};
         \item [\textcolor{purple}{$\mathsf{Q}2$}] $\forall x \; \forall y \; s(x) = s(y) \to x = y$ \textcolor{MidnightBlue}{(iniettività del successore)};
         \item [\textcolor{purple}{$\mathsf{Q}3$}] $\forall x \; x + 0 = x$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
         \item [\textcolor{purple}{$\mathsf{Q}4$}] $\forall x \; \forall y \; x + s(y) = s(x + y)$ \textcolor{MidnightBlue}{(def. ricorsiva somma)};
@@ -1661,12 +1664,12 @@ L'idea del perché questa sia la formulazione giusta, con $Q$ e non $\mathsf{PA}
 Per arrivare alla dimostrazione del teorema di Rosser, vediamo prima come $\mathsf{Q}$ si comporta rispetto alle funzioni calcolabili, in particolare vogliamo dimostrare la seguente proposizione.
 
 \begin{proposition}[Equivalenza tra validità in $\NN$ e dimostrabilità in $\mathsf{Q}$]
-    Sia $\varphi$ una formula aritmetica $\boxed{\text{chiusa}}$, valgono i seguenti fatti.
+    Sia $\varphi$ una formula aritmetica $\purple{\text{chiusa}}$, valgono i seguenti fatti.
     \begin{itemize}
         \item Se $\varphi$ è di classe $\Delta_0^0$, allora:
         \begin{enumerate}
             \item $\NN \models \varphi \iff \mathsf{Q} \vdash \varphi$,
-            \item $\NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi$.
+            \item $\NN \models \neg \, \varphi \iff \mathsf{Q} \vdash \neg \, \varphi$.
         \end{enumerate}
         \item Se $\varphi$ è di classe $\Sigma_1^0$, allora:
         \begin{itemize}
@@ -1676,7 +1679,7 @@ Per arrivare alla dimostrazione del teorema di Rosser, vediamo prima come $\math
 \end{proposition}
 
 \begin{remark}
-    Vale ovviamente che (3) $\implies$ (1), e (1) $\iff$ (2), passando semplicemente alla negazione $\neg \varphi \in \Delta_0^0$.\\
+    Vale ovviamente che (3) $\implies$ (1), e (1) $\iff$ (2), passando semplicemente alla negazione $\neg \, \varphi \in \Delta_0^0$.\\
     Inoltre (1), (2) implicano che le formule chiuse in $\Delta_0^0$ sono decidibili in $\mathsf{Q}$, in quanto a sinistra la decidibilità è garantita dal modello $\NN$ e questa 
     cosa viene tradotta dalla proposizione in una decidibilità sintattica per $\mathsf{Q}$.
 \end{remark}
@@ -1704,34 +1707,45 @@ Operativamente, nonostante (3) $\implies$ (2) $\iff$ (1), la dimostrazione proce
     o una somma o un prodotto di termini chiusi - non possono esserci variabili, essendo libere.
     \begin{itemize}
         \item \textcolor{MidnightBlue}{$t = 0$} In questo caso $n = 0$, indipendentemente dalla valutazione essendo chiuso, e $\ol 0 = 0$ per definizione, quindi $Q \vdash t = \ol n$, per Wk + In$_{=}$.
-        \item \textcolor{MidnightBlue}{$t = s(t')$} Per ipotesi induttiva, detto $m := \{\ldots\}_\NN t'$, vale che $Q \vdash t' = \ol m$, e quindi $Q \vdash s(t') = s(\ol m)$, per El$_{=}$, inoltre per definizione di numerale $s(\ol m) = \ol{m+1}$, e per definizione di interpretazione $\{\ldots\}_\NN s(t') = m + 1$.
+        \item \textcolor{MidnightBlue}{$t = s(t')$} Per ipotesi induttiva, detto $m := \{\ldots\}_\NN t'$, vale che $Q \vdash t' = \ol m$, e quindi - modus ponens - $Q \vdash s(t') = s(\ol m)$, inoltre per definizione di numerale $s(\ol m) = \ol{m+1}$, e per definizione di interpretazione $\{\ldots\}_\NN s(t') = m + 1$.
         \item \textcolor{MidnightBlue}{$t = t_1 + t_2$} Detti $a := \{\ldots\}_\NN t_1$, $b := \{\ldots\}_\NN t_2$ e $c := \{\ldots\}_\NN t$, vale per ipotesi induttiva che $Q \vdash t_1 = \ol a$ e $Q \vdash t_2 = \ol b$, inoltre, poiché $\NN \models (t = t_1+t_2)$ vale $c = a + b$. Vogliamo dimostrare che $Q \vdash t = \ol c$,
         ovvero, per El$_{=}$, che $Q \vdash t_1 + t_2 = \ol c$, che si riduce, sempre per El$_{=}$, a dimostrare che $Q \vdash \ol a + \ol b = \ol c$. Ci siamo quindi ridotti a voler verificare:
-        \[ a+b = c \implies Q \vdash \ol a + \ol b = \ol c \]
+        \[\forall a,b,c \in \NN \quad a+b = c \implies Q \vdash \ol a + \ol b = \ol c \]
         e lo dimostriamo usando l'induzione metateorica su $b$. Se $b = 0$, allora $a + 0 = a$, e quindi $c = a$, per $\mathsf{Q}3$ vale che $\mathsf{Q} \vdash \ol a + \ol 0 = \ol a$, e per definizione di numerale $\ol 0 = 0$, quindi vale la tesi.
-        Assumiamo che $a + b = c \implies Q \vdash \ol a + \ol b = \ol c$, e vediamo che $a + s(b) = c$, allora $\mathsf{Q} \vdash \ol a + \ol{b+1} = \ol c$, ora per definizione di numerale $\ol{b+1} = \ol b + \ol 1$, e per $\mathsf{Q}4$ vale che $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol a + \ol b)$, 
-        che, per El$_{=}$, è equivalente a $\mathsf{Q} \vdash \ol a + \ol{b+1} = s(\ol c)$, e per definizione di numerale $s(\ol c) = \ol{c+1}$, che corrisponde alla tesi perché semanticamente $a + s(b) = s(a+b) = s(c)$.
+        Assumiamo che $a + b = c \implies Q \vdash \ol a + \ol b = \ol c$, e vediamo che $a + s(b) = c$, allora $\mathsf{Q} \vdash \ol a + s(\ol{b}) = s(\ol{c})$, e per $\mathsf{Q}4$ vale che $\mathsf{Q} \vdash \ol a + s(\ol{b}) = s(\ol a + \ol b)$, 
+        che, per El$_{=}$, è equivalente a $\mathsf{Q} \vdash \ol a + s(\ol{b}) = s(\ol c)$, e per definizione di numerale $s(\ol c) = \ol{c+1}$, che corrisponde alla tesi perché semanticamente $a + s(b) = s(a+b) = s(c)$.
         \item \textcolor{MidnightBlue}{$t = t_1 \cdot t_2$} Analogo al caso precedente.
     \end{itemize}
 \end{proof}
 
 \begin{lemma}[Caso base del teorema di equivalenza]
-    Sia $\varphi$ una formula atomica chiusa, allora:
-    \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \quad \text{e} \quad \NN \models \neg \varphi \iff \mathsf{Q} \vdash \neg \varphi \]
+    Sia $\varphi$ una $L_{\text{arit}}$-formula atomica chiusa, allora:
+    \[ \NN \models \varphi \iff \mathsf{Q} \vdash \varphi \quad \text{e} \quad \NN \models \neg \, \varphi \iff \mathsf{Q} \vdash \neg \, \varphi \]
 \end{lemma}
 
 \begin{proof}
-    L'unica $L_{\text{arit}}$-formule atomica chiusa è del tipo $t_1 = t_2$, con $t_1,t_2$ termini chiusi. Se $\NN \models t_1 = t_2$, allora $\{\ldots\}_\NN t_1 = \{\ldots\}_\NN t_2$, per il lemma precedente valgono $\mathsf{Q} \vdash t_1 = \ol{\{\ldots\}_\NN t_1}$ e $\mathsf{Q} \vdash t_2 = \ol{\{\ldots\}_\NN t_2}$, e quindi
-    usando due volte El$_{=}$ otteniamo questa implicazione, $\mathsf{Q} \vdash t_1 = t_2$.\\
-    Per il viceversa dimostriamo la contronominale, i.e. $\NN \models \neg (t_1 = t_2)$, allora $\mathsf{Q} \vdash \neg (t_1 = t_2)$. WLOG assumiamo che $n_1 := \{\ldots\}_\NN t_1 < \{\ldots\}_\NN t_2 =: n_2$, dal lemma sappiamo che $\mathsf{Q} \vdash t_1 = \ol{n_1}$ e $\mathsf{Q} \vdash t_2 = \ol{n_2}$, per cui è sufficiente dimostrare
-    che $\mathsf{Q} \vdash \neg(\ol{n_1} = \ol{n_2})$. Per induzione metateoretica su $n_1$ (precisamente vogliamo dimostrare $P(n) : \forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, se $n_1 = 0$, allora $n_2 > 0$ e vogliamo dimostrare che $\mathsf{Q} \vdash \neg(\ol 0 = \ol{n_2})$, con $\ol 0 = 0$ per definizione, da $0 < n_2$ segue che $\ol{n_2} = s(\ol{x})$ per qualche $x$, e quindi:
-    \[ Q \vdash \neg(\ol 0 = s(\ol x)) \]
-    che è proprio $\mathsf{Q}1$. Ora per ipotesi induttiva $\forall m (n < m \implies \mathsf{Q} \vdash \neg(\ol n = \ol m))$, e vogliamo dimostrare che $\forall q \; n+1 < q$ allora $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
-    Fisso $q$ tale che $n+1 < q$, allora $q = m+1$ per qualche $m$, da questo segue che $n < m$, e quindi $\mathsf{Q} \vdash \neg(\ol n = \ol m)$, infine per $\mathsf{Q}2$ vale che $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol{m+1})$, che è proprio $\mathsf{Q} \vdash \neg(\ol{n+1} = \ol q)$.
+    Osserviamo in primis che ci basta solo dimostrare l'implicazione $\NN \models \varphi \implies \mathsf{Q} \vdash \varphi$, poiché infatti $\mathsf{Q} \vdash \psi$ se e solo se $\mathsf{Q} \models \psi$ per completezza,
+    e poiché $\NN$ è un modello di $\mathsf{Q}$, allora $\NN \models \psi$.\\
+    Assumiamo che $\NN \models \varphi$ e vediamo che $\mathsf{Q} \vdash \varphi$. Le uniche $L_{\text{arit}}$-formule atomiche chiuse, non banali, sono uguaglianze di termini chiusi $t_1 = t_2$, procediamo con la prima implicazione:
+    \begin{align*}
+        \NN \models t_1 = t_2 &\iff \{\ldots\}_\NN t_1 = \{\ldots\}_\NN t_2 \\
+                            &\implies \mathsf{Q} \vdash \ol{\{\ldots\}_\NN t_1} = \ol{\{\ldots\}_\NN t_2}
+    \end{align*}
+    per il lemma $\mathsf{Q} \vdash t_1 = \ol{\{\ldots\}_\NN t_1}$ e $\mathsf{Q} \vdash t_2 = \ol{\{\ldots\}_\NN t_2}$, usando due volte El$_{=}$ si conclude.\\
+    Per l'altra implicazione, assumiamo che $\NN \models \neg \, (t_1 = t_2)$, e supponiamo WLOG che $n_1 := \{\ldots\}_\NN t_1 < \{\ldots\}_\NN t_2 =: n_2$,
+    allora per il lemma vale $\mathsf{Q} \vdash t_1 = \ol{n_1}$ e $\mathsf{Q} \vdash t_2 = \ol{n_2}$. Ci basta dimostrare quindi che $\mathsf{Q} \vdash \neg \, \ol{n_1} = \ol{n_2}$,
+    per avere la tesi. Procediamo per induzione metateorica su $n_1$.
+    \begin{itemize}
+        \item \textcolor{MidnightBlue}{$n_1 = 0$} In questo caso $0 < n_2$ per ipotesi e vogliamo dimostrare che $\mathsf{Q} \vdash \neg \, \ol 0 = \ol{n_2}$. Dalle ipotesi segue che $\ol n_2$ è successore di qualche altro termine, e quindi
+        il fatto che $\mathsf{Q} \vdash \neg \, \ol 0 = \ol{n_2}$ segue da $\mathsf{Q}1$ e $\mathsf{Q}7$.
+        \item \textcolor{MidnightBlue}{$n_1 \implies n_1 + 1$} Assumiamo che $n_1 + 1 < n_2$, come ipotesi induttiva abbiamo che $\forall m \in \NN \; n_1 < m \implies \mathsf{Q} \vdash \neg \, \ol{n_1} = \ol m$, e vogliamo dimostrare che $\mathsf{Q} \vdash \neg \, \ol{n_1 + 1} = \ol{n_2}$.
+        Poiché $n_1 + 1 < n_2$, allora $n_2 = s(l)$ con $n_1 < l$ per $\mathsf{Q}2$, quindi per ipotesi induttiva $\mathsf{Q} \vdash \neg \, \ol{n_1} = \ol l$, da cui:
+        \[ \mathsf{Q} \vdash \neg \, s(\ol{n_1}) = s(\ol l) \implies \mathsf{Q} \vdash \neg \, \ol{n_1 + 1} = \ol{n_2} \]
+    \end{itemize}
 \end{proof}
 
 \begin{definition}[``Ordinamento" sui termini aritmetici]
-    Siano $t_1, t_2$ $L_{\text{arit}}$-termini, dico che $t_1 \, \textcolor{purple}{\leq} t_2$ se $\exists x \; x + t_1 = t_2$.\footnote{Questa è una relazione di ordinamento, ma $\mathsf Q$ non è in grado di dimostrare che è un ordinamento, inoltre si poteva anche mettere $+x$ a posto di $x+$,
+    Siano $t_1, t_2$ $L_{\text{arit}}$-termini, dico che $t_1 \, \textcolor{purple}{\leq} \,t_2$ se $\exists x \; x + t_1 = t_2$.\footnote{Questa è una relazione di ordinamento, ma $\mathsf Q$ non è in grado di dimostrare che è un ordinamento, inoltre si poteva anche mettere $+x$ a posto di $x+$,
     visto che $\mathsf{Q}$ non è in grado di dimostrare che $+$ è commutativo, quindi in principio sono due cose diverse.}
 \end{definition}
 
@@ -1808,33 +1822,35 @@ In particolare ora vediamo la dimostrazione di (1) e (2).
 \begin{proof}
     Dimostriamo contemporaneamente (1) e (2).
     L'implicazione $\impliedby$ è banale poiché $\NN$ è un modello di $\mathsf{Q}$, per cui se $\mathsf{Q} \vdash \varphi$, allora $\NN \models \varphi$.\\
-    Per dimostrare $\implies$, procediamo per induzione strutturale, contemporaneamente sia su (1) che su (2),sulla $L_\text{arit}$-formula $\varphi$ chiusa di classe $\Delta_0^0$, possiamo limitarci ai soli connettivi logici $\neg$ e $\land$, perché $\lor$ si ottiene da loro, e au quantificatori $\forall x \leq t$ e $\exists x \leq t$.
+    Per dimostrare $\implies$, procediamo per induzione strutturale, contemporaneamente sia su (1) che su (2),sulla $L_\text{arit}$-formula $\varphi$ chiusa di classe $\Delta_0^0$, possiamo limitarci ai soli connettivi logici $\neg \,$ e $\land$, perché $\lor$ si ottiene da loro, e au quantificatori $\forall x \leq t$ e $\exists x \leq t$.
     \begin{itemize}
         \item \textcolor{MidnightBlue}{$\varphi$ è atomica} È il lemma già visto.
-        \item \textcolor{MidnightBlue}{$\varphi = \neg \psi$} Abbiamo due casi o $\NN \models \neg \psi$ o $\NN \models \neg(\neg \psi)$, nel primo caso basta l'ipotesi induttiva (2): $\NN \models \neg \psi \implies \mathsf{Q} \vdash \neg \psi$.
-        Il caso in cui invece $\NN \models \neg(\neg \psi)$ è banale, infatti sappiamo già che $\models \neg(\neg \psi) \iff \psi$ e che $\vdash \neg(\neg \psi) \iff \psi$, per cui si riduce all'ipotesi induttiva (1), cioè $\NN \models \psi \implies \mathsf{Q} \vdash \psi$.
+        \item \textcolor{MidnightBlue}{$\varphi = \neg \, \psi$}
+        Il caso in cui invece $\NN \models \neg \,(\neg \, \psi)$ è banale, infatti sappiamo già che $\models \neg \,(\neg \, \psi) \iff \psi$ e che $\vdash \neg \,(\neg \, \psi) \iff \psi$, per cui si riduce all'ipotesi induttiva (1), cioè $\NN \models \psi \implies \mathsf{Q} \vdash \psi$.
         \item \textcolor{MidnightBlue}{$\varphi = \psi_1 \land \psi_2$} Come prima si danno due casi, quello in cui $\NN \models \psi_1 \land \psi_2$, che segue dalla semantica di Tarski:
         \begin{align*}
             \NN \models \psi_1 \land \psi_2 &\iff \NN \models \psi_1 \; \land \; \NN \models \psi_2 &&(\text{Tarski}) \\
                                               &\iff \mathsf{Q} \vdash \psi_1 \; \land \; \mathsf{Q} \vdash \psi_2 &&(\text{hp induttiva (1)}) \\
                                               &\iff \mathsf{Q} \vdash \psi_1 \land \psi_2 &&(\text{In$_{\land}$})
         \end{align*}
-        Se invece $\NN \models \neg(\psi_1 \land \psi_2)$, allora (De Morgan) vale $\NN \models \neg\psi_1 \lor \neg\psi_2$; dunque si danno necessariamente due sottocasi.
+        Se invece $\NN \models \neg \,(\psi_1 \land \psi_2)$, allora (De Morgan) vale $\NN \models \neg \,\psi_1 \lor \neg \,\psi_2$; dunque si danno necessariamente due sottocasi.
         \begin{itemize}
-            \item Se $\NN \models \neg\psi_1$, per ipotesi induttiva (2) abbiamo $\mathsf{Q} \vdash \neg\psi_1$, e quindi, usando In$_{\lor\cdot}$ e De Morgan, $\mathsf{Q} \vdash \neg(\psi_1 \land \psi_2)$.
-            \item Se $\NN \models \neg\psi_2$, analogamente otteniamo $\mathsf{Q} \vdash \neg\psi_2$, e quindi $\mathsf{Q} \vdash \neg(\psi_1 \land \psi_2)$.
+            \item Se $\NN \models \neg \,\psi_1$, per ipotesi induttiva (2) abbiamo $\mathsf{Q} \vdash \neg \,\psi_1$, e quindi, usando In$_{\lor\cdot}$ e De Morgan, $\mathsf{Q} \vdash \neg \,(\psi_1 \land \psi_2)$.
+            \item Se $\NN \models \neg \,\psi_2$, analogamente otteniamo $\mathsf{Q} \vdash \neg \,\psi_2$, e quindi $\mathsf{Q} \vdash \neg \,(\psi_1 \land \psi_2)$.
         \end{itemize}
         \item \textcolor{MidnightBlue}{$\varphi = \forall x \leq t \; \psi$} Assumiamo che $\NN \models \forall x \leq t \; \psi$, con $t$ termine chiuso perché lo è $\varphi$, e vogliamo dimostrare che $\mathsf{Q} \vdash \forall x \leq t \; \psi$.
-        Sia $\{t\}_\NN = n$, per un lemma sappiamo che $\mathsf{Q} \vdash t = \ol n$, inoltre, per un altro lemma, $\mathsf{Q} \vdash \forall x \leq t \; \psi \leftrightarrow \forall x (x = \ol 0 \lor x = \ol 1 \lor \ldots \lor x = \ol n) \to \psi$,
-        e questa formula equivale a:
-        \[ (\forall x \; x = \ol 0 \to \psi) \land (\forall x \; x = \ol 1 \to \psi) \land \ldots \land (\forall x \; x = \ol n \to \psi) \]
-        dove ciascuna delle sottoformule $\forall x \; x = \ol m \to \psi$ è proprio $\psi[m/x]$ - e questo si verifica tramite semantica di Tarski. Per cui la tesi si riduce a dimostrare che:
-        \[ \mathsf{Q} \vdash \psi[0/x] \land \psi[1/x] \land \ldots \land \psi[n/x] \]
-        ed a questo punto la tesi segue dal caso dell'$\land$.
+        Sia $\{t\}_\NN = n$, per un lemma sappiamo che $\mathsf{Q} \vdash t = \ol n$, quindi possiamo rimpiazzare $t$ con $\ol n$. Per definizione di quantificazione limitata la formula equivale a:
+        \[ \forall x (x \leq \ol{n} \to \psi) \]
+        e per un lemma visto sopra $\mathsf{Q} \vdash x \leq \ol n \leftrightarrow (x = \ol 0 \lor x = \ol 1 \lor \ldots \lor x = \ol n)$, per cui la formula equivale a:
+        \[ \forall x (x = \ol 0 \to \psi) \land (x = \ol 1 \to \psi) \land \ldots \land (x = \ol n \to \psi) \]
+        dove ciascuna delle sottoformule $\forall x (x = \ol m \to \psi)$ è proprio $\psi[m/x]$ - e questo si verifica tramite semantica di Tarski. Per cui la tesi si riduce a dimostrare che:
+        \[ \mathsf{Q} \vdash \psi[\ol 0/x] \land \psi[\ol 1/x] \land \ldots \land \psi[\ol n/x] \]
+        ed a questo punto la tesi segue dall'ipotesi induttiva e dal caso dell'$\land$.
         \item \textcolor{MidnightBlue}{$\varphi = \exists x \leq t \; \psi$} Esattamente come nel caso di sopra si arriva a voler dimostrare:
-        \[ \mathsf{Q} \vdash \psi[0/x] \lor \psi[1/x] \lor \ldots \lor \psi[n/x] \]
-        e anche in questo caso la tesi segue dal caso dell'$\lor$.
+        \[ \mathsf{Q} \vdash \psi[\ol 0/x] \lor \psi[\ol 1/x] \lor \ldots \lor \psi[\ol n/x] \]
+        e anche in questo caso la tesi segue dal caso dell'$\lor$ e dall'ipotesi induttiva.
     \end{itemize}
+    Notare che negli ultimi due casi non abbiamo verificato anche la tesi di (2), perché segue dalla tesi di (1) osservando che $\neg \, \forall x \leq t \; \psi$ è equivalente a $\exists x \leq t \; \neg \, \psi$, e viceversa.
 \end{proof}
 
 Infine vediamo anche la dimostrazione di (3).
@@ -1851,20 +1867,22 @@ e che per i parametri per cui la formula è vera, $\mathsf{Q}$ dimostra proprio 
 
 \begin{corollary}[Rappresentazione (del grafico) di funzioni ricorsive in $\mathsf{Q}$]
     Se $f : \NN^k \to \NN_\bot$ è ricorsiva, allora c'è $\varphi(x_1,\ldots,x_k,y)$ di classe $\Sigma_1^0$ tale che:
-    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\;(\mathsf{Q} \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \iff f(x_1,\ldots,x_k)=y) \]
+    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN \qquad f(x_1,\ldots,x_k)=y \iff \mathsf{Q} \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \]
 \end{corollary}
 
 \begin{proof}
-    La dimostrazione si ottiene considerando $\{f(x_1,\ldots,x_k) - y = 0\}$, che è semidecidibile, e per la caratterizzazione degli insiemi semidecidibili come gli insiemi di classe $\Sigma_1^0$,
-    esiste una formula di classe $\Sigma_1^0$ tale $(x_1,\ldots,x_k,y) \in \{f(x_1,\ldots,x_k) - y = 0\}$ se e solo se $\NN \models \varphi(x_1,\ldots,x_k,y)$.
-    Infine per la proposizione appena dimostrata vale che $\NN \models \varphi(x_1,\ldots,x_k,y)$ se e solo se $\mathsf{Q} \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y)$, e questa è proprio l'equivalenza della tesi.
+    Per il lemma sulla rappresentazione di funzioni ricorsive, mediante formule in $\Sigma_1^0$, sappiamo che esiste $\varphi \in \Sigma_1^0$ tale che:
+    \[ \forall x_1,\ldots,x_k\in\NN\;\forall y\in\NN\; f(x_1,\ldots,x_k) = y \iff \NN \models \varphi(x_1,\ldots,x_k,y) \]
+    Per il teorema di equivalenza tra validità in $\NN$ e dimostrabilità in $\mathsf{Q}$ per le formule \purple{chiuse} di classe $\Sigma_1^0$, sappiamo che:
+    \[ \NN \models \varphi(x_1,\ldots,x_k,y) \iff \mathsf{Q} \vdash \varphi(\ol{x_1},\ldots,\ol{x_k},\ol y) \]
+    mettendo assieme queste due cose si ottiene la tesi.
 \end{proof}
 
 Vediamo un risultato più forte, visto che il precedente è una condizione puntuale, nel senso che fissati a priori i parametri si ha l'equivalenza, possiamo migliorare l'equivalenza richiedendo che la funzione ricorsiva sia totale,
 e ottenendo di conseguenza che la $\mathsf{Q}$ capisca che $f$ è una funzione, ovvero che per ogni $x_1,\ldots,x_k$ esiste un unico $y$ tale che $\varphi(x_1,\ldots,x_k,y)$ è vera, e che questo $y$ è proprio $f(x_1,\ldots,x_k)$.
 
 \begin{lemma}[Rappresentazione di funzioni ricorsive totali in $\mathsf{Q}$]
-    Sia $f : \NN^k \to \NN$ ricorsiva totale, allora c'è $\varphi(x_1,\ldots,x_k,y)$ di classe $\Sigma_1^0$ tale che:
+    Sia $f : \NN^k \to \NN$ ricorsiva \purple{totale}, allora c'è $\varphi(x_1,\ldots,x_k,y)$ di classe $\Sigma_1^0$ tale che:
     \[ \forall x_1,\ldots,x_k\in\NN\; \mathsf{Q} \vdash \forall y \; (\varphi(\ol{x_1},\ldots,\ol{x_k},y) \leftrightarrow y = \ol{f(x_1,\ldots,x_k)}) \]
 \end{lemma}
 
@@ -1922,7 +1940,7 @@ La scelta concreta dei numeri è irrilevante: ciò che conta è che le operazion
         \[ \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle\qquad \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
         \[ \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
         \item $L_{\text{arit}}$-formule:
-        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle\qquad \ulcorner\neg\varphi\urcorner := \langle\#\neg,\ulcorner\varphi\urcorner\rangle \]
+        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle\qquad \ulcorner\neg \,\varphi\urcorner := \langle\#\neg \,,\ulcorner\varphi\urcorner\rangle \]
         \[ \ulcorner\varphi\to\psi\urcorner := \langle\#\to,\ulcorner\varphi\urcorner,\ulcorner\psi\urcorner\rangle\qquad \ulcorner\forall x_i\,\varphi\urcorner := \langle\#\forall,\#x_i,\ulcorner\varphi\urcorner\rangle \]
     \end{itemize}
 \end{definition}
@@ -1951,7 +1969,7 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
     \begin{align*}
         \textsf{For}(n) &= (\nth(n,0) = \#\bot \land \length(n) = 1) \\
                         &\land (\nth(n,0) = \#= \land \length(n) = 3 \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
-                        &\land (\nth(n,0) = \#\neg \land \length(n) = 2 \land \textsf{For}(\nth(n,1))) \\
+                        &\land (\nth(n,0) = \#\neg \, \land \length(n) = 2 \land \textsf{For}(\nth(n,1))) \\
                         &\land (\nth(n,0) = \#\to \land \length(n) = 3 \land \textsf{For}(\nth(n,1)) \land \textsf{For}(\nth(n,2))) \\
                         &\land (\nth(n,0) = \#\forall \land \length(n) = 3 \land \nth(n,1) \geq 8 \land \textsf{For}(\nth(n,2)))
     \end{align*}
@@ -1990,10 +2008,10 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
 \begin{proof}
     Anche questa può essere definita a partire da funzioni PR:
     \[ \textsf{Sub}(n,i,x) := \begin{cases}
-        0 & \text{se $\neg\textsf{For}(n)$} \\
+        0 & \text{se $\neg \,\textsf{For}(n)$} \\
         \langle \#\bot \rangle & \text{se $n = \langle\#\bot\rangle$} \\
         \langle \#=, \textsf{Sub}(a,i,x), \textsf{Sub}(b,i,x) \rangle & \text{se $n = \langle\#=,\ulcorner a\urcorner,\ulcorner b\urcorner\rangle$} \\
-        \langle \#\neg, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\neg,\ulcorner a\urcorner\rangle$} \\
+        \langle \#\neg \,, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\neg \,,\ulcorner a\urcorner\rangle$} \\
         \langle \#\to, \textsf{Sub}(a,i,x), \textsf{Sub}(b,i,x) \rangle & \text{se $n = \langle\#\to,\ulcorner a\urcorner,\ulcorner b\urcorner\rangle$} \\
         \langle \#\forall, j, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\forall,j,\ulcorner a\urcorner\rangle$ e $j \ne i$} \\
         \langle \#\forall, j, a \rangle & \text{se $n = \langle\#\forall,j,\ulcorner a\urcorner\rangle$ e $j = i$}
@@ -2133,15 +2151,15 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
 
 \begin{proof}
     Lo scopo è costruire una formula $\gamma$ che dica ``io non sono dimostrabile in $T$'', ovvero una formula che per $T$ è proprio equivalente al fatto che non esiste una dimostrazione per lei:
-    \[ T \vdash \gamma \leftrightarrow \neg\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) \]
-    Per costruire $\gamma$ basta applicare il lemma di diagonalizzazione alla formula $\varphi(x) := \neg\exists d\,\mathsf{Dim}_T(d,x)$, e otteniamo $\gamma$, che per il lemma di diagonalizzazione
-    soddisfa esattamente la condizione di cui sopra. Vediamo ora che $T$ non dimostra né $\gamma$ né $\neg\gamma$.
+    \[ T \vdash \gamma \leftrightarrow \neg \,\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) \]
+    Per costruire $\gamma$ basta applicare il lemma di diagonalizzazione alla formula $\varphi(x) := \neg \,\exists d\,\mathsf{Dim}_T(d,x)$, e otteniamo $\gamma$, che per il lemma di diagonalizzazione
+    soddisfa esattamente la condizione di cui sopra. Vediamo ora che $T$ non dimostra né $\gamma$ né $\neg \,\gamma$.
     \begin{itemize}
         \item Supponiamo $T \vdash \gamma$, allora esiste il codice di una dimostrazione di $\gamma$ in $T$, chiamiamolo $\delta$,
         quindi $\textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ è un predicato PR vero, che per il lemma di rappresentazione di funzioni ricorsive totali in $\mathsf{Q}$,
         significa che $\mathsf{Q} \vdash \textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$, e quindi $T \vdash \textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ e per In$_\exists$ si ha $T \vdash \exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$;
-        ma $T$ dimostra anche $\gamma$, che per $T$ equivale a $\neg\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$, quindi $T$ dimostra sia $\textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ che $\neg\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$ $\lightning$, perché $T$ è coerente per ipotesi (ii).
-        \item Supponiamo $T \vdash \neg\gamma$, allora, doppia negazione, $T$ dimostra $\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$, ma allora per (ii) $\NN \models \exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$,
+        ma $T$ dimostra anche $\gamma$, che per $T$ equivale a $\neg \,\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$, quindi $T$ dimostra sia $\textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ che $\neg \,\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$ $\lightning$, perché $T$ è coerente per ipotesi (ii).
+        \item Supponiamo $T \vdash \neg \,\gamma$, allora, doppia negazione, $T$ dimostra $\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$, ma allora per (ii) $\NN \models \exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$,
         che per la semantica di Tarski equivale a dire che $\exists d \in \NN \; \NN \models \mathsf{Dim}_T(\ol d, \ulcorner\gamma\urcorner)$; segue che $d$ codifica una dimostrazione di $\gamma$ in $T$, per cui $T \vdash \gamma$, assurdo.
     \end{itemize} 
 \end{proof}
@@ -2162,7 +2180,7 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 
 \begin{proof}[Dimostrazione \textup{(IDEA)}]
     L'idea della dimostrazione, che non vediamo, è quella di usare una formula che dice ``se ci fosse una mia dimostrazione, allora ci sarebbe anche una dimostrazione di una mia negazione più corta'', ovvero:
-    \[ \mathsf{Q} \vdash\varphi \leftrightarrow \forall d \, \textsf{Dim}_T(d,\ulcorner\varphi\urcorner) \to \exists d' \leq d \, \textsf{Dim}_T(d',\ulcorner\neg\varphi\urcorner) \]
+    \[ \mathsf{Q} \vdash\varphi \leftrightarrow \forall d \, \textsf{Dim}_T(d,\ulcorner\varphi\urcorner) \to \exists d' \leq d \, \textsf{Dim}_T(d',\ulcorner\neg \,\varphi\urcorner) \]
     e questo è un modo per ottenere comunque una formula che dice di sé stessa che è non dimostrabile - basta pensare alla negazione.
 \end{proof}
 
@@ -2180,7 +2198,7 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
     Per ipotesi possiamo fissare un'enumerazione delle formule chiuse $\{\varphi_i\}_{i\in\NN}$ e definiamo per ricorsione:
     \[ T_0:=T \]
     \[ T_{i+1}:=\begin{cases}
-        T_i\cup\{\varphi_i\} & \text{se $T_i\nvdash\neg\varphi_i$}\\
+        T_i\cup\{\varphi_i\} & \text{se $T_i\nvdash\neg \,\varphi_i$}\\
         T_i & \text{altrimenti}
     \end{cases} \]
     cioè in ogni step se la $i$-esima teoria non dimostra la negazione dell'$i$-esima formula, allora la aggiungo, altrimenti lascio tutto com'è.\\
@@ -2188,11 +2206,11 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
     quindi per compattezza esisterebbe un sottoinsieme finito $T'' \subseteq T'$ tale che $T'' \vdash \bot$, per cui esiste un $i_0$ tale che $T'' \subseteq T_{i_0}$, ma allora $T_{i_0} \vdash \bot$,
     che è assurdo perché si verifica per induzione che ogni $T_i$ è coerente.\\
     $T'$ è decidibile, presa $\{\sigma_j\}_{j \in \NN}$ un'enumerazione di tutte le $L_{\text{arit}}$-formule, e fissato un algoritmo che decide se una formula è dimostrata da $T$ o no,
-    basta testare, per $\sigma = \sigma_k$, per qualche $k > 0$, se $T_k \vdash \neg\sigma$ o no, e questo posso farlo perché $T_k = T \cup \{\varphi_0, \ldots, \varphi_{k-1}\}$ e:
-    \[ T_k \vdash \neg\sigma \iff T \vdash (\varphi_0 \land \ldots \land \varphi_{k-1}) \to \neg\sigma\]
-    e questo è decidibile per ipotesi, se il risultato dell'algoritmo è falso, allora $T_{k+1} = T_k \cup \{\sigma\}$ e $T' \vdash \sigma$, altrimenti $T_{k+1} = T_k$ e $T' \vdash \neg\sigma$. Nel caso $k = 0$ la tesi è banale perché $T_0 = T$ è decidibile per ipotesi.\\
+    basta testare, per $\sigma = \sigma_k$, per qualche $k > 0$, se $T_k \vdash \neg \,\sigma$ o no, e questo posso farlo perché $T_k = T \cup \{\varphi_0, \ldots, \varphi_{k-1}\}$ e:
+    \[ T_k \vdash \neg \,\sigma \iff T \vdash (\varphi_0 \land \ldots \land \varphi_{k-1}) \to \neg \,\sigma\]
+    e questo è decidibile per ipotesi, se il risultato dell'algoritmo è falso, allora $T_{k+1} = T_k \cup \{\sigma\}$ e $T' \vdash \sigma$, altrimenti $T_{k+1} = T_k$ e $T' \vdash \neg \,\sigma$. Nel caso $k = 0$ la tesi è banale perché $T_0 = T$ è decidibile per ipotesi.\\
     Infine, $T'$ è completa, fissata una enumerazione $\{\varphi_i\}_{i\in\NN}$ di tutte le $L_{\text{arit}}$-formule, allora, per ogni $\varphi_i$, si ha che 
-    o $T_i \nvdash \neg\varphi_i$, e allora $T_{i+1} \vdash \varphi_i$, oppure $T_i \vdash \neg\varphi_i$, nel primo caso ottengo $T' \vdash \varphi_i$, nel secondo caso $T' \vdash \neg\varphi_i$, quindi $T'$ è completa.
+    o $T_i \nvdash \neg \,\varphi_i$, e allora $T_{i+1} \vdash \varphi_i$, oppure $T_i \vdash \neg \,\varphi_i$, nel primo caso ottengo $T' \vdash \varphi_i$, nel secondo caso $T' \vdash \neg \,\varphi_i$, quindi $T'$ è completa.
 \end{proof}
 
 \begin{corollary}[$\mathsf Q$ e $\mathsf{PA}$ non sono decidibili]
@@ -2238,14 +2256,14 @@ D'altronde una teoria incoerente dimostra tutto, quindi anche la propria coerenz
 
 \begin{remark}
     Con questa notazione, la formula $\gamma$ costruita nel primo teorema di incompletezza di Gödel è tale che:
-    \[ \mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma \]
+    \[ \mathsf{PA} \vdash \gamma \leftrightarrow \neg \,\square\gamma \]
      ovvero $\gamma$ dice di sé stessa che non è dimostrabile in $\mathsf{PA}$.
 \end{remark}
 
 Il secondo teorema di incompletezza di Gödel si esprime nel seguente modo con questa notazione.
 
 \begin{theorem}[Secondo teorema di incompletezza di Gödel]
-    $\mathsf{PA} \nvdash \neg\square\bot$, ovvero $\mathsf{PA}$ non dimostra la propria non incoerenza.
+    $\mathsf{PA} \nvdash \neg \,\square\bot$, ovvero $\mathsf{PA}$ non dimostra la propria non incoerenza.
 \end{theorem}
 
 Per dimostrare il teorema ci serve un lemma, che non dimostreremo.
@@ -2262,31 +2280,31 @@ Per dimostrare il teorema ci serve un lemma, che non dimostreremo.
 Usando il lemma possiamo concludere dimostrando il secondo teorema di incompletezza di Gödel.
 
 \begin{proof}
-    Dal primo teorema di incompletezza di Gödel, esiste una formula $\gamma$ che è indecidibile in $\mathsf{PA}$, il nostro obiettivo è dimostrare che tale formula è equivalente a $\neg\square\bot$:
-    \[ \mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\bot \]
-    ed essendo, in particolare, che $\mathsf{PA} \nvdash \gamma$, allora $\mathsf{PA} \nvdash \neg\square\bot$. La formula $\gamma$ è costruita in modo che $\mathsf{PA} \vdash \gamma \leftrightarrow \neg \square \gamma$,
+    Dal primo teorema di incompletezza di Gödel, esiste una formula $\gamma$ che è indecidibile in $\mathsf{PA}$, il nostro obiettivo è dimostrare che tale formula è equivalente a $\neg \,\square\bot$:
+    \[ \mathsf{PA} \vdash \gamma \leftrightarrow \neg \,\square\bot \]
+    ed essendo, in particolare, che $\mathsf{PA} \nvdash \gamma$, allora $\mathsf{PA} \nvdash \neg \,\square\bot$. La formula $\gamma$ è costruita in modo che $\mathsf{PA} \vdash \gamma \leftrightarrow \neg \, \square \gamma$,
     usiamo questo fatto per dimostrare le equivalenze.
     \begin{itemize}
-        \item \textcolor{purple}{$\mathsf{PA} \vdash \gamma \to \neg\square\bot$}, poiché $\mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma$, allora è equivalente dimostrare $\mathsf{PA} \vdash \neg\square\gamma \to \neg\square\bot$.
+        \item \textcolor{purple}{$\mathsf{PA} \vdash \gamma \to \neg \,\square\bot$}, poiché $\mathsf{PA} \vdash \gamma \leftrightarrow \neg \,\square\gamma$, allora è equivalente dimostrare $\mathsf{PA} \vdash \neg \,\square\gamma \to \neg \,\square\bot$.
         Procediamo dimostrando la contronominale, che è equivalente, ovvero $\mathsf{PA} \vdash \square\bot \to \square\gamma$, e questo segue per El$_\to$:
         \[ \text{El}_\to\frac{\displaystyle \mathsf{PA} \vdash \textcolor{MidnightBlue}{\square(\bot \to \gamma)} \quad \mathsf{PA} \vdash \textcolor{MidnightBlue}{(\square \bot \land \square(\bot \to \gamma)) \to \square\gamma}}{\mathsf{PA} \vdash \square\bot \to \square\gamma} \]
         dove $\mathsf{PA} \vdash \square(\bot \to \gamma)$ perché $\mathsf{PA} \vdash \bot \to \gamma$ (è El$_\bot$) unito con la (1); mentre $\mathsf{PA} \vdash (\square \bot \land \square(\bot \to \gamma)) \to \square\gamma$ è la (3) del lemma.
-        \item \textcolor{purple}{$\mathsf{PA} \vdash \neg\square\bot \to \gamma$}, come prima usiamo $\neg\square \gamma$ al posto di $\gamma$, e dimostriamo $\mathsf{PA} \vdash \neg\square\bot \to \neg\square\gamma$ usando la contronominale.
-        \[ (a)\frac{\displaystyle \frac{(\star)}{\mathsf{PA}\vdash \square \gamma \to \square \neg \gamma} \quad (b)\frac{\displaystyle \frac{(\star')}{\mathsf{PA} \vdash \square (\gamma \to (\neg \gamma \to \bot))}}{\mathsf{PA} \vdash \square \gamma \to (\square\neg \gamma \to \square \bot)}}{\mathsf{PA} \vdash \square\gamma \to \square\bot} \]
+        \item \textcolor{purple}{$\mathsf{PA} \vdash \neg \,\square\bot \to \gamma$}, come prima usiamo $\neg \,\square \gamma$ al posto di $\gamma$, e dimostriamo $\mathsf{PA} \vdash \neg \,\square\bot \to \neg \,\square\gamma$ usando la contronominale.
+        \[ (a)\frac{\displaystyle \frac{(\star)}{\mathsf{PA}\vdash \square \gamma \to \square \neg \, \gamma} \quad (b)\frac{\displaystyle \frac{(\star')}{\mathsf{PA} \vdash \square (\gamma \to (\neg \, \gamma \to \bot))}}{\mathsf{PA} \vdash \square \gamma \to (\square\neg \, \gamma \to \square \bot)}}{\mathsf{PA} \vdash \square\gamma \to \square\bot} \]
     \end{itemize}
-    dove $(a)$ si ottiene perché stiamo assumendo $\square\gamma$, quindi aggiungiamo $\square\gamma$ come premessa e otteniamo, per El$_\to$, $\mathsf{PA} \vdash \square\neg\gamma$, e usando questa come premessa per la cosa a destra, sempre via El$_\to$, otteniamo $\mathsf{PA} \vdash \square\bot$;
-    mentre $(\star')$ si ottiene applicando: il punto (1) del lemma, due volte In$_\to$ e poi El$_\neg$; $(b)$ si ottiene invece applicando il punto (3) del lemma, sempre ricordando che stiamo assumendo $\square\gamma$, così abbiamo $\mathsf{PA},\square \gamma \vdash \square(\neg \gamma \to \bot)$, e si conclude con In$_\to$.\\
+    dove $(a)$ si ottiene perché stiamo assumendo $\square\gamma$, quindi aggiungiamo $\square\gamma$ come premessa e otteniamo, per El$_\to$, $\mathsf{PA} \vdash \square\neg \,\gamma$, e usando questa come premessa per la cosa a destra, sempre via El$_\to$, otteniamo $\mathsf{PA} \vdash \square\bot$;
+    mentre $(\star')$ si ottiene applicando: il punto (1) del lemma, due volte In$_\to$ e poi El$_\neg \,$; $(b)$ si ottiene invece applicando il punto (3) del lemma, sempre ricordando che stiamo assumendo $\square\gamma$, così abbiamo $\mathsf{PA},\square \gamma \vdash \square(\neg \, \gamma \to \bot)$, e si conclude con In$_\to$.\\
     Infine $(\star)$ si ottiene come segue:
-    \[ (d)\frac{\displaystyle (c)\frac{\displaystyle (2)\frac{\displaystyle \frac{\displaystyle\frac{}{\mathsf{PA} \vdash \gamma \leftrightarrow \neg\square\gamma}}{\mathsf{PA} \vdash \square \gamma \to \neg \gamma}}{\mathsf{PA} \vdash \square(\square \gamma \to \neg \gamma)}}{\mathsf{PA} \vdash \square \square \gamma \to \square \neg \gamma} \qquad (2)\frac{}{\mathsf{PA} \vdash \square \gamma \to \square \square \gamma}}{\mathsf{PA} \vdash \square\gamma \to \square\neg\gamma} \]
+    \[ (d)\frac{\displaystyle (c)\frac{\displaystyle (2)\frac{\displaystyle \frac{\displaystyle\frac{}{\mathsf{PA} \vdash \gamma \leftrightarrow \neg \,\square\gamma}}{\mathsf{PA} \vdash \square \gamma \to \neg \, \gamma}}{\mathsf{PA} \vdash \square(\square \gamma \to \neg \, \gamma)}}{\mathsf{PA} \vdash \square \square \gamma \to \square \neg \, \gamma} \qquad (2)\frac{}{\mathsf{PA} \vdash \square \gamma \to \square \square \gamma}}{\mathsf{PA} \vdash \square\gamma \to \square\neg \,\gamma} \]
     come prima $(d)$ si ottiene perché stiamo assumendo $\square\gamma$ e usando El$_\to$ due volte;
-    infine per $(c)$, usando (2) e El$_{\to}$ ho che $\mathsf{PA} \vdash \square\square\gamma$, quindi posso usare (3) con $\mathsf{PA} \vdash (\square\square\gamma \land \square(\square\gamma \to \neg\gamma)) \to \square\neg\gamma$, da cui, usando Wk, ottengo $\mathsf{PA} \vdash \square\gamma \to \square\neg\gamma$.
+    infine per $(c)$, usando (2) e El$_{\to}$ ho che $\mathsf{PA} \vdash \square\square\gamma$, quindi posso usare (3) con $\mathsf{PA} \vdash (\square\square\gamma \land \square(\square\gamma \to \neg \,\gamma)) \to \square\neg \,\gamma$, da cui, usando Wk, ottengo $\mathsf{PA} \vdash \square\gamma \to \square\neg \,\gamma$.
 \end{proof}
 
 \begin{remark}[Sulla scelta della codifica e sulla coerenza di $\mathsf{PA}$]
-    Alla fine dei conti, la formula che esprime la coerenza di $\mathsf{PA}$, $\neg\square\bot \equiv \exists d\,\neg\mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\bot\urcorner)$, è
+    Alla fine dei conti, la formula che esprime la coerenza di $\mathsf{PA}$, $\neg \,\square\bot \equiv \exists d\,\neg \,\mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\bot\urcorner)$, è
     un numero naturale che noi scegliamo di leggere come la formula che dice ``esiste una dimostrazione di $\bot$ in $\mathsf{PA}$'', nulla esclude a priori che ci sia un'altro numero 
     che corrisponde, in un'altra codifica, alla formula che dice che $\mathsf{PA}$ dimostra la propria stessa coerenza.
-    Cioè, non è detto, a priori, che se dovessimo scrivere una formula che dice ``Peano è coerente'' finiremmo sulla formula $\neg\square\bot$.\\
+    Cioè, non è detto, a priori, che se dovessimo scrivere una formula che dice ``Peano è coerente'' finiremmo sulla formula $\neg \,\square\bot$.\\
     Ad esempio, se definissimo Peano in questo modo: enumerando tutti gli assiomi, aggiungendo quelli di base, ed uno alla volta quelli dello schema di induzione,
     fermandoci non appena arriviamo al primo assioma che dà incoerenza; avremmo ottenuto una definizione del tutto corretta di Peano - perché sappiamo che concretamente non beccheremo mai 
     un assioma che dà incoerenza - quindi gli assiomi ci sono tutti, e questa teoria sarà coerente perché è definita apposta modo che sia così - volendo essere formali basterebbe usare la compattezza.\\
