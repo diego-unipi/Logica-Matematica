@@ -1130,7 +1130,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
 Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiva sono tutte la stessa cosa.
 
 \begin{proof}
-    Vediamo le implicazioni in ordine circolare.
+    Vediamo le implicazioni in ordine circolare, fare attenzione al caso in cui $R = \varnothing$.
     \begin{itemize}
         \item[$\boxed{1. \Rightarrow 2.}$] se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, \textcolor{MidnightBlue}{$R$ non è già il dominio di $f$, perché $f$ potrebbe assumere altri valori oltre a 0, ma poco manca}, basta definire $h : \NN \to \NN_\bot$ come:
         \[ h(y) := \begin{cases}
@@ -1321,7 +1321,7 @@ Vediamo un insieme non decidibile.
     viceversa, se la funzione associata ad $\alpha$ con un certo input termina, allora $g_{\alpha,x}$ non è totale perché, facendo il controllo col test della forma normale, la si pone $\bot$ apposta quando converge}.\\
     Per dimostrare che $TOT^\complement$ non è semidecidibile usiamo la stessa identica strategia, definendo $f : \NN^2 \to \NN_\bot$ come segue:
     \[ f(\alpha,x) := \ulcorner g_{\alpha,x} \urcorner \qquad g_{\alpha,x}(n) := u_1(\alpha,x) \]
-    in questo modo, se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $g_{\alpha,x} \equiv \bot$, e quindi il suo codice sta in $TOT^\complement$;
+    che è ricorsiva totale - per il teorema s-m-n - e se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $g_{\alpha,x} \equiv \bot$, e quindi il suo codice sta in $TOT^\complement$;
     viceversa, se $(\alpha,x) \in f^{-1}[TOT^\complement]$, allora $g_{\alpha,x} \equiv u_1(\alpha,x)$ non è totale, che essendo costante significa che $u_1(\alpha,x) = \bot$, e quindi $(\alpha,x) \in H_1^\complement$.
 \end{soln}
 
@@ -1445,9 +1445,11 @@ Vediamo che la chiusura delle $L_{\text{arit}}$-formule corrisponde alla chiusur
     \begin{itemize}
         \item $R \cap S$ è di classe $\Sigma_n^0$,
         \item $R \cup S$ è di classe $\Sigma_n^0$,
-        \item se $R \subseteq \NN^{k+1}$ di classe $\Sigma_n^0$ e $t(\mathbf x)$ è un termine aritmetico, allora $\{\mathbf x \in \NN^k : \forall y \leq t(\mathbf x) \; (\mathbf x, y) \in R\}$ è di classe $\Sigma_n^0$; questa operazione è chiamata \vocab{proiezione universale}, ne esiste anche una analoga \vocab{esistenziale}.
-    \end{itemize}
-    In tutti i casi la dimostrazione segue semplicemente dal fatto che lo sono le $L_{\text{arit}}$-formule che definiscono $R$ e $S$, e che le classi aritmetiche sono chiuse per le operazioni corrispondenti. Analogamente nel caso di $\Pi_n^0$.
+        \item se $R \subseteq \NN^{k+1}$ di classe $\Sigma_n^0$, definito dalla formula $R(\mathbf x,y)$, allora $\forall y \leq z \; R(\mathbf x,y)$ corrisponde all'insieme:
+        \[ S := \{(\mathbf x,\purple{z}) \in \NN^{k+1} : \forall y \leq z \; R(\mathbf x,y)\} = \{(\mathbf x,z) : \mathbf x \in \bigcap_{y \leq z} R_y\} \]
+        dove $R_y := \{\mathbf x \in \NN^k : R(\mathbf x,y)\}$. Analogamente $\exists y \leq z \; R(\mathbf x,y)$:
+        \[ S = \{(\mathbf x,\purple{z}) \in \NN^{k+1} : \exists y \leq z \; R(\mathbf x,y)\} = \{(\mathbf x,z) : \mathbf x \in \bigcup_{y \leq z} R_y\} \]
+   \end{itemize}
 \end{remark}
 
 Quindi il corollario seguente è una proprietà di chiusura per operazioni su sottoinsiemi $\Delta_n^0$ di $\NN^k$, non avendo il corrispettivo di $L_{\text{arit}}$-formule in questo caso.
@@ -1496,7 +1498,7 @@ e questo ci permetterà di rispondere - negativamente - al decimo problema di Hi
 
 Introduciamo ora i lemmi necessari per dimostrare il teorema.
 
-\begin{lemma}[Corrispondenza tra funzioni ricorsive parziali e formule di classe $\Sigma_1^0$]
+\begin{lemma}[Per ogni funzione ricorsiva c'è una formula equivalente di classe $\Sigma_1^0$]
     Sia $f : \NN^k \to \NN_\bot$ ricorsiva parziale, allora esiste $\varphi(x_1, \ldots, x_k, y)$ di classe $\Sigma_1^0$ tale che:
     \[ f(x_1, \ldots, x_k) = y \iff \NN \models \varphi(x_1, \ldots, x_k, y)\footnote{Si intende sempre con la convenzione che le variabili tra parantesi indicano ``per ogni valutazione $v$ tale che la valutazione di $x_i$ corrisponda al valore di $x_i$ della formula a sinistra''.} \]
 \end{lemma}
@@ -1522,7 +1524,7 @@ Dimostriamo ora il lemma.
         \[ f(\mathbf x) = y \iff \varphi_g(\mathbf x,y,0) \land \forall i < y \, \exists v\, (\varphi_g(\mathbf x,i,v) \land v \ne 0), \]
         e questa formula è ancora di classe $\Sigma_1^0$ perché abbiamo aggiunto solo un $\land$, una quantificazione limitata $\forall i < y$, ed un esistenziale, che serve per coprire il caso in cui $g(\mathbf x,i)$ non è definita, e quindi non è zero - richiedere solo $\neg \varphi_g(\mathbf x,i,0)$ non coprirebbe questo caso.
         \item[$\boxed{\begin{matrix}\text{ricorsione}\\\text{primitiva}\end{matrix}}$] Sia $f : \NN^{k+1} \to \NN_\bot$ definita per ricorsione da:
-        \[ f(\mathbf x,0) = g(\mathbf x), \qquad f(\mathbf x,y+1)=g(\mathbf x,y,f(\mathbf x,y)), \]
+        \[ f(\mathbf x,0) = g(\mathbf x), \qquad f(\mathbf x,y+1)=h(\mathbf x,y,f(\mathbf x,y)), \]
         con $h,g$ ricorsive parziali, per ipotesi induttiva esistono $\varphi_g(\mathbf x,y)$ e $\varphi_h(\mathbf a,b,c,t)$ di classe $\Sigma_1^0$, che corrispondono ai grafici di $g$ e $h$.
         \textcolor{purple}{Quello che vorremmo fare è scrivere la formula:
         \[ f(\mathbf x,y)=z \iff \exists z_0,\ldots z_y \, (\varphi_g(\mathbf x,0,z_0)) \land (\forall i < y \, \varphi_h(\mathbf x,i,z_i)) \land (z_y = z) \]
@@ -1556,12 +1558,15 @@ Dimostriamo ora il lemma.
         \end{remark}
         Quindi possiamo tornare alla formula che rappresenta $f(\mathbf x,y) = z$ e riscriverla come:
         \[ (\beta(a,b,0) = g(\mathbf x)) \land (\forall i < y \, \beta(a,b,i+1) = h(\mathbf x,i,\beta(a,b,i))) \land (\beta(a,b,y) = z) \]
-        tale formula è di classe $\Sigma_1^0$, ma va scritta per esteso per verificarlo davvero, anche perché altrimenti sembra che stiamo usando $\beta$ come simbolo di funzione, cosa che non è. È facile riscrivere la prima e la terza congiunzione,
-        quella in mezzo:
-        \[ \beta(a,b,i+1) = h(\mathbf x,i,\beta(a,b,i)) \]
-        è equivalente a:
-        \[ \exists m \exists n \; (\beta(a,b,i+1) = n) \land \varphi_h(\mathbf x,i,m) \land (\beta(\mathbf x,i,m) = n) \land (\beta(a,b,i) = m) \]
-        che è di classe $\Sigma_1^0$.
+        o meglio:
+        \begin{align*}
+            \varphi_f(\mathbf x,y,z) := \exists a \exists b \; &\varphi_g(\mathbf x,\beta(a,b,0)) \\
+                                                             &\land \forall i < y \, \varphi_h(\mathbf x,i,\beta(a,b,i),\beta(a,b,i+1)) \\
+                                                             &\land \beta(a,b,y) = z
+        \end{align*}
+        questa formula è quasi corretta e di classe $\Sigma_1^0$; la cosa mancante è che $\beta$ non è un simbolo di funzione, ma una abbreviazione per la formula sopra, quindi non possiamo fare la composizione davvero, quello che andrebbe fatto
+        è riscrivere la formula nel secondo passaggio come:
+        \[ \forall i < y \, \exists m \exists n \; (\beta(a,b,i) = n) \land (\beta(a,b,i+1) = m) \land \varphi_h(\mathbf x,i,n,m) \]
     \end{itemize}
 \end{proof}
 
@@ -1573,7 +1578,7 @@ Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implic
 \end{lemma}
 
 \begin{proof}
-    Procediamo per induzione strutturale sulla costruzione di una formula di classe $\Delta_0^0$.
+    Procediamo per induzione strutturale sulla costruzione di una formula di classe $\Delta_0^0$, da cui si considera l'insieme definito e si dimostra che è un predicato PR.
     \begin{itemize}
         \item[$\boxed{\begin{matrix}\text{formule}\\\text{atomiche}\end{matrix}}$] Se $\varphi$ è una $L_{\text{arit}}$-formula atomica, allora o è $\top,\bot$, nel cui caso gli insiemi 
         definiti sono $\NN^k$ e $\varnothing$, che sono entrambi predicati PR, oppure è della forma $t_1 = t_2$ con $t_1,t_2$ termini, che nel nostro caso possono essere solo polinomi, per cui formule del tipo:
@@ -1582,29 +1587,28 @@ Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implic
         \item[$\boxed{\land,\lor}$] Se $\varphi = \psi_1 * \psi_2$ con $\{\NN \models \psi_1\}$ e $\{\NN\models \psi_2\}$, predicati PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi_1\} *' \{\NN \models \psi_2\}$, con $*' \in \{\cap, \cup\}$, è un predicato PR
         poiché abbiamo visto che i predicati PR formano un'algebra.
         \item[$\boxed{\neg}$] Se $\varphi = \neg \psi$ con $\{\NN \models \psi\}$ un predicato PR, allora $\{\NN \models \varphi\} = \{\NN \models \psi\}^\complement$ è un predicato PR, poiché i predicati PR sono chiusi per complementare, essendo un'algebra.
-        \item[$\boxed{\forall y \le x}$] Se $\varphi = \forall y \le x \; \psi(y,\mathbf z)$, con $\{\NN \models \psi(y,\mathbf z)\} =: R$ un predicato PR, allora esiste $f : \NN^{k+1} \to \NN$ PR tale che $R = \{f(\mathbf z,y) = 0\}$, e quindi $\{\NN \models \varphi\} = \{\mathbf z \in \NN^k : \forall y \le x \; f(\mathbf z,y) = 0\}$,
-        si può ottenere come $\{\#\{y \le x : f(\mathbf z,y) \ne 0\} = 0\}$ \textcolor{MidnightBlue}{- cioè quando tutti gli elementi sotto $x$ effettivamente azzerano la funzione $f$}, dove la funzione $\#$ che conta il numero di $y \le x$ tali che $f(\mathbf z,y) \ne 0$, ovvero è la funzione che conta il numero di elementi che appartengono ad un altro predicato sotto un certo valore, che abbiamo visto essere PR.
-        \item[$\boxed{\exists y \le x}$] Se $\varphi = \exists y \le x \; \psi(y,\mathbf z)$, con $\{\NN \models \psi(y,\mathbf z)\} =: R$ un predicato PR, allora, possiamo usare direttamente il caso precedente e scrivere:
-        \begin{align*}
-            \{\NN \models \varphi\} &= \{\mathbf z \in \NN^k : \neg (\forall y \le x \; \neg R(\mathbf z,y))\} \\
-                                    &= \{\mathbf z \in \NN^k : \forall y \le x \; \neg R(\mathbf z,y)\}^\complement
-        \end{align*}
-        e quindi è un predicato PR, essendo i predicati PR chiusi per complementare, e quindi anche $\neg R$ è un predicato PR, da questo uso il caso precedente e poi di nuovo il complementare.
+        \item[$\boxed{\forall y \le x}$] Se $\varphi = \forall y \leq z \; \psi(\mathbf x,y)$, allora, detto $R := \{\NN \models \psi(\mathbf x,y)\} \subseteq \NN^{k+1}$, per ipotesi induttiva si ha che esiste una funzione $T : \NN^{k+1} \to \NN$ PR tale che:
+        \[ R = \{T(\mathbf x,y) = 0\} \]
+        Poiché:
+        \[ \{\NN \models \forall y \leq z \; \psi(\mathbf x,y)\} = \{(\mathbf x,z) \in \NN^{k+1} : \forall y \leq z \; (\mathbf x,y) \in R\} \]
+        ovvero è sufficiente controllare che per tutti gli $i < z$ vale $T(\mathbf x,i) = 0$, e questo è precisamente il luogo di zero del predicato PR che conta gli 
+        elementi, sotto un certo valore di un altro predicato:
+        \[ \{ \#\{i < z : T(\mathbf x,i) = 0\} = 0 \} = R \]
     \end{itemize}
 \end{proof}
 
 E quindi possiamo dimostrare la freccia $\impliedby$ del teorema.
 
 \begin{proof}
-    Sia $S \in \Sigma_1^0$, allora $S = \{\mathbf x \in \NN^k : \NN \models \exists y_1\ldots \exists x_h \varphi(\mathbf x,y_1,\ldots,y_h)\}$, con $\varphi$ di classe $\Delta_0^0$.
-    Per il lemma precedente allora esiste $T$ predicato PR tale che $\varphi(\mathbf x,y_1,\ldots,y_h) \iff (\mathbf x,y_1,\ldots,y_h) \in T$, e quindi:
-    \[ S = \{\mathbf x \in \NN^k : \exists y_1\ldots\exists y_h \; (\mathbf x,y_1,\ldots,y_h) \in T\} \]
-    A questo punto $\mathbf x \in S$ se e solo se:
-    \[ 0_1 \circ \mu_{\mathbf y}((\mathbf x,y_1,\ldots,y_h) \in T) = 0 \]
-    cioè se il minimo $\mathbf y$ tale per cui sto nell'insieme converge, quindi compongo con 0, e se la minimizzazione converge non viene $\bot$, per cui esce 0. In pratica ho definito 
-    $S$ come il luogo di zero di quest'ultima funzione (dove l'appartenenza a $T$ è in realtà l'azzeramento della funzione PR che definisce $T$), che è ricorsiva parziale, e la condizione 
-    è che effettivamente esista $\mathbf y$ tale che $(\mathbf x,\mathbf y) \in T$.
-    \textcolor{MidnightBlue}{Istanziare che  ci sono degli $\mathbf y$ che funzionano equivale a dire che la ricerca del minimo che funziona termina.}
+    Sia $S \in \Sigma_1^0$, allora $S$ è della forma:
+    \[ S = \{\mathbf x \in \NN^k : \NN \models \exists y_1\ldots \exists y_h \varphi(\mathbf x,y_1,\ldots,y_h)\}\]
+    con $\varphi$ di classe $\Delta_0^0$. Consideriamo l'insieme $\{\NN \models \varphi(\mathbf x,y_1,\ldots,y_h)\} \subseteq \NN^{k+h}$, per il lemma precedente esiste un predicato PR $T : \NN^{k+h} \to \NN$
+    tale che $\{\NN \models \varphi(\mathbf x,y_1,\ldots,y_h)\} = \{T(\mathbf x,y_1,\ldots,y_h) = 0\}$. Possiamo quindi riscrivere $S$ come:
+    \[ S = \{\mathbf x \in \NN^k : \exists y_1\ldots \exists y_h \; (\mathbf x, y_1,\ldots,y_h) \in T\} \]
+    a questo punto per decidere se un $\mathbf x$ appartiene a $S$ o meno è sufficiente stabilire se esistono $y_1,\ldots,y_h$ tali che $T(\mathbf x,y_1,\ldots,y_h) = 0$, e possiamo fare questo lavoro usando la minimizzazione,
+    ovvero chiedendo che $\mu_{\mathbf y}(T(\mathbf x,y_1,\ldots,y_h)) \in \NN$. Per cui la funzione ricorsiva di cui $S$ è luogo di zero è semplicemente mandare a 0 il controllo che un elemento $\mathbf x$ appartenga a $T$, ovvero:
+    \[ S = \{0_1 \circ \mu_{\mathbf y}(T(\mathbf x,y_1,\ldots,y_h)) = 0\} \]
+    dove per minimizzazione su un vettore intendiamo la minimizzazione sulla codifica $\langle \mathbf y \rangle = n$, e quindi nella formula ci vanno $\nth(n,i)$ al posto di $y_i$.
 \end{proof}
 
 Vediamo infine un interessante corollario sulla non semidecidibilità dell'insieme delle verità aritmetiche. Supponiamo che l'insieme delle $L_{\text{arit}}$-formule chiuse
@@ -1615,23 +1619,9 @@ esista - e che sia compatibile con l'operazione di sostituire un numero al posto
     L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi, \text{$\varphi$ chiusa}\}$ non è semidecidibile.
 \end{corollary}
 
-\begin{proof}
-    Poniamo $V := \{\ulcorner\varphi\urcorner : \NN\models\varphi, \text{$\varphi$ chiusa}\}$ e vediamo che non è decidibile.
-    Poiché $H_1$ è semidecidibile, per il teorema precedente esiste una formula $\psi(x,y)$ di classe $\Sigma_1^0$ tale che:
-    \[ (x,y)\in H_1 \iff \NN\models\psi(x,y) \]
-    definiamo la funzione che a $n,m$ associa il codice della formula $\psi$ con $n$ e $m$ al posto di $x$ e $y$ (per ipotesi sulla nostra numerazione questo darà il codice di una formula chiusa dove la sostituzione è stata effettuata):
-    \[ f(n,m):=\ulcorner\psi(n,m)\urcorner \]
-    a questo punto $(n,m) \in H_1$ se e solo se $\NN \models \psi(n,m)$, se e solo se $f(n,m) \in V$, ovvero se il codice di $\psi(n,m)$ è una formula vera in $\NN$, e quindi:
-    \[ H_1 = f^{-1}[V] \]
-    Il fatto di aver assunto che la codifica sia compatibile con la sostituzione ci dirà poi che $f$ è ricorsiva totale, e quindi $H_1$ sarebbe decidibile, in quanto la preimmagine di un insieme decidibile tramite una funzione ricorsiva totale è decidibile\footnote{Abbiamo già visto ciò nel caso semidecidibile,
-    per dimostrare questo lemmetto nel caso decidibile è sufficiente partire da quello ed usare la caratterizzazione degli insiemi decidibili.}, assurdo.\\
-    Mostriamo ora che $V$ non è semidecidibile. Dalla semidecidibilità di $H_1$ e dalla non decidibilità di $H_1$ sappiamo che $H_1^\complement$ non è semidecidibile,
-    consideriamo la funzione:
-    \[ g(n,m):=\ulcorner\neg\psi(n,m)\urcorner \]
-    Allora, analogamente a prima:
-    \[ (n,m)\in H_1^\complement \iff \NN\models\neg\psi(n,m) \]
-    da cui $H_1^\complement = g^{-1}[V]$, e quindi $H_1^\complement$ sarebbe semidecidibile, assurdo.
-\end{proof}
+\textcolor{MidnightBlue}{L'idea è, essendo $H_1$ semidecidibile, allora, per quanto visto, è di classe $\Sigma_1^0$, e quindi esiste una formula $\varphi(x,y) \in \Sigma_1^0$
+tale che $H_1 = \{N \models \varphi(x,y)\}$. A questo punto considerando la codifica della formula ottenuta sostituendo $(\alpha,x)$ alle due variabili libere di $\varphi$, otteniamo
+un numero naturale, e se l'insieme sopra fosse decidibile, allora stabilire se $\NN$ dimostra o meno quest'affermazione, e di conseguenza potremmo decidere l'halting set$\lightning$.}
 
 Morale l'insieme delle verità aritmetiche non è semidecidibile, e quindi non esiste un'assiomatizzazione ricorsiva dell'aritmetica.
 
@@ -1906,6 +1896,8 @@ e ottenendo di conseguenza che la $\mathsf{Q}$ capisca che $f$ è una funzione, 
     \end{itemize}
 \end{proof}
 
+\pagebreak
+
 \section{Teoremi di incompletezza}
 \subsection{Numerazione di Gödel}
 
@@ -1976,7 +1968,6 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
     anche in questo caso la definizione è fatta per ricorsione sul corso dei valori intersecando cose PR.
 \end{proof}
 
-\pagebreak
 \begin{remark}[$n$ è il codice di un numerale]
     Definiamo la funzione $\textsf{Num}(n) : n \mapsto \ulcorner\ol n\urcorner$, ovvero la funzione che associa ad ogni numero naturale il numerale corrispondente,
     tale funzione è PR.

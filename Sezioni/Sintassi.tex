@@ -421,16 +421,21 @@ A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo os
 
 \begin{proof}
     Consideriamo la seguente successione di teorie:
-    \[ T_i := \begin{cases}
+    \begin{align*} &T_i := \begin{cases}
         T_0 := T \\
-        T_{i+1} := T_i \cup \{\exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k] : \varphi(x_k) \text{ è una $L_i$-formula}\}
-    \end{cases}\]
-    dove con $L_i$ indichiamo il linguaggio di $T_i$ (definito aggiungendo tutte le costanti di Henkin di $T_i$), definiamo $T' := \bigcup_{i \in \NN} T_i$, tale teoria è coerente.
-    Se per assurdo $T' \vdash \bot$, allora per compattezza sintattica esiste $T'' \subseteq T'$ finito tale che $T'' \vdash \bot$, per finitezza e per il fatto che sia un'unione crescente esiste $i_0 \in \NN$
+        T_{i+1} := T_i \cup \{\exists x_k \varphi \to \varphi[c_{\varphi,x_k}/x_k] : \varphi(x_k) \text{ è una $L_i$-formula}, c_{\varphi,x_k} \not \in L_i\}
+    \end{cases} \\
+    &L_i :=  \begin{cases}
+        L_0 := L \\
+        L_{i+1} := L_i \cup \{c_{\varphi,x_k} : \text{$c_{\varphi,x_k}$ è la costante di Henkin di qualche $L_i$-formula}\}
+    \end{cases}
+    \end{align*}
+    definiamo quindi $L' := \bigcup_{i \in \NN} L_i$ e $T' := \bigcup_{i \in \NN} T_i$. Vediamo che la teoria è coerente,
+    se per assurdo $T' \vdash \bot$, allora per compattezza sintattica esiste $T'' \subseteq T'$ finito tale che $T'' \vdash \bot$, per finitezza e per il fatto che sia un'unione crescente esiste $i_0 \in \NN$
     tale che $T'' \subseteq T_{i_0}$, visto che ogni volta aggiungiamo un numero finito di costanti, si ha che $T_{i_0} = T_0 \cup \{\psi_1,\ldots,\psi_k\}$, quindi $T'' \subseteq T_0 \cup \{\psi_1,\ldots,\psi_k\}$, e quindi per Wk $T_0 \cup \{\psi_1,\ldots,\psi_k\} \vdash \bot$.\\
     Sia ora $n$ il minimo tale che $T \cup \{\psi_1,\ldots,\psi_n\} \vdash\bot$, allora:
     \[ T \cup \{\psi_1,\ldots,\psi_{n-1}\} \nvdash \bot \qquad T \cup \{\psi_1,\ldots,\psi_n\} \vdash \bot \]
-    ma questo contraddice il lemma precedente. Osserviamo infine che $T'$ è una teoria di Henkin, per ogni $L'$-formula $\varphi(x_k)$, esiste $i \in \NN$ tale che $\varphi(x_k)$ è una $L_i$-formula, e quindi per definizione di $T_{i+1}$ vale $T_{i+1} \vdash \exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k]$.
+    ma questo contraddice il lemma precedente. Osserviamo infine che $T'$ è una teoria di Henkin, per ogni $L'$-formula $\varphi(x_k)$, esiste $i \in \NN$ tale che $\varphi(x_k)$ è una $L_i$-formula, e quindi per definizione di $T_{i+1}$ vale $T_{i+1} \vdash \exists x_k \varphi \to \varphi[c_{\varphi,x_k}/x_k]$.
 \end{proof}
 
 \begin{lemma}[di Lindenbaum]
@@ -476,7 +481,8 @@ partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teo
         anche questa definizione è ben posta, se $[t_i] = [t_i']$ e $[t] = [t']$, allora, di nuovo iterando El$_=$, ottengo $T'' \vdash f(t_1',\ldots,t_{\ar(f)}') = t'$ - e viceversa.\\
         Definiamo infine la valutazione $v$ che ci serve come $v(x_i) := [c_i]$.
         \item Resta da verificare che $M \models \{v\}T''$, ovvero $\forall \varphi \in T'' \; M \models \{v\}\varphi$.\\
-        Per fare questo dimostriamo una cosa più forte, ovvero $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \implies M \models \{v\}\varphi$, anzi ancora più forte, dimostriamo $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \iff M \models \{v\}\varphi$, in pratica dimostriamo che $M$ soddisfa tutte e sole le $L''$-formule dimostrabili da $T''$, anziché solo quelle di $T''$.\\
+        Per fare questo dimostriamo una cosa più forte ovvero che $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \implies M \models \{v\}\varphi$, anzi ancora più forte, dimostriamo che:
+        \[\purple{\forall \varphi \; \text{$L''$-formula } T'' \vdash \varphi \iff M \models \{v\}\varphi}\]
         Procediamo ``per induzione strutturale'', o meglio sul numero di simboli logici di $\varphi$, poiché ad ogni passaggio modificheremo la formula, e quindi non avrà senso fare induzione sulla struttura sintattica, nella pratica tuttavia i passaggi che faremo saranno sempre i soliti.
         Ci serve un lemma sugli $L''$-termini chiusi.
         \begin{lemma}[$M$ interpreta correttamente i termini chiusi]
@@ -485,14 +491,15 @@ partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teo
         \begin{proof}
             È ovvio per definizione nel caso di costanti, nel caso in cui $t = f(t_1,\ldots,t_{\ar(f)})$, allora $\{v\}_M t = f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)})$, per ipotesi induttiva $\{v\}_M t_i = [t_i]$, per cui $f_M(\{v\}_M t_1,\ldots,\{v\}_M t_{\ar(f)}) = f_M([t_1],\ldots,[t_{\ar(f)}])$, che per la definizione data è $[f(t_1,\ldots,t_{\ar(f)})]$.
         \end{proof}
-        Dimostriamo ora che $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \iff M \models \{v\}\varphi$ per induzione sul numero di simboli logici di $\varphi$ (in tal modo, usiamo solo formule del sistema ridotto, e per induzione avremmo verificato che, indipendentemente dal numero di simboli logici, l'equivalenza tiene), useremo solo i simboli logici $\to$, $\bot$, $\exists$ e $=$, serve anche il caso base $r(t_1,\ldots,t_{\ar(r)})$, perché rientrano nel caso $n = 0$ con $n$ numero di simboli logici (assieme a $\bot$).\\
+        Dimostriamo quindi che $\forall \varphi$ $L''$-formula $T'' \vdash \varphi \iff M \models \{v\}\varphi$ per induzione sul numero di simboli logici di $\varphi$ - per comodità usiamo solo formule del sistema ridotto $\mathsf{ND}_{\bot,\to,\exists,=}$ - e per induzione avremmo che, indipendentemente dal numero di simboli logici, l'equivalenza tiene. Oltre ai 
+        simboli logici di $\mathsf{ND}_{\bot,\to,\exists,=}$, ci serve anche $r(t_1,\ldots,t_{\ar(r)})$, perché rientra nel caso base di una formula con $n = 0$ simboli logici, ed è quindi necessaria.\\
         \textcolor{MidnightBlue}{$T'' \vdash \bot \iff M \models \{v\}\bot$}\\
         Questo è immediato, infatti $M \models \{v\}\bot$ è sempre falso nella metateoria, e, analogamente, $T'' \vdash \bot$ è sempre falso perché $T''$ è deduttivamente coerente, per costruzione.\\
         \textcolor{MidnightBlue}{$T'' \vdash \exists x_k \varphi \iff M \models \{v\}\exists x_k \varphi$}\\
         Procediamo distinguendo le due implicazioni.
         \begin{itemize}
             \item[$\boxed{\impliedby}$] Assumo $M \models \{v\}\exists x_k \varphi$, e verifico che $T'' \vdash \exists x_k \varphi$. Ora l'ipotesi per la semantica di Tarski ed un lemma noto equivale a $\exists [t] \in M$ tale che $M \models \{v\}\varphi[[t]/x_k]$,
-            dunque per ipotesi induttiva $T'' \vdash \varphi[t/x_k]$, e quindi per In$_\exists$ $T'' \vdash \exists x_k \varphi$.
+            dunque, per ipotesi induttiva \textcolor{MidnightBlue}{- solo l'ultima cosa è equivalante, non ``l'$\exists [t] \in M$'', questo passaggio non si inverte immediatamente -} $T'' \vdash \varphi[t/x_k]$, e quindi per In$_\exists$ $T'' \vdash \exists x_k \varphi$.
             \item[$\boxed{\implies}$] Assumo $T'' \vdash \exists x_k \varphi$, e verifico che $M \models \{v\}\exists x_k \varphi$. Essendo $T''$ una teoria di Henkin, esiste una costante $c_{\varphi,k}$ tale che $T'' \vdash \exists x_k \varphi \to \varphi[c_{\varphi,k}/x_k]$,
             allora, per modus ponens, $T'' \vdash \varphi[c_{\varphi,k}/x_k]$, e quindi per ipotesi induttiva $M \models \{v\}\varphi[[c_{\varphi,k}]/x_k]$, usando di nuovo lemma noto + semantica di Tarski si arriva a $M \models \{v\}\exists x_k \varphi$.
         \end{itemize}
@@ -501,24 +508,32 @@ partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teo
         Tuttavia $t_1$ e $t_2$ potrebbero non essere chiusi, in questo caso, definisco $\overline t := t[c_1/x_1,\ldots,c_n/x_n]$, la chiusura di un termine (con WLOG quelle variabili libere), ora, per la definizione data di $v$ si ha $\{v\}_M t = \{v\}_M \overline t$, e quindi $M \models \{v\}t_1 = t_2 \iff M \models \{v\}\overline{t_1} = \overline{t_2}$;
         analogamente, iterando El$_=$, $T'' \vdash t_1 = t_2 \iff T'' \vdash \overline{t_1} = \overline{t_2}$, e quindi per il caso precedente $T'' \vdash t_1 = t_2 \iff M \models \{v\}t_1 = t_2$.\\
         \textcolor{MidnightBlue}{$T'' \vdash \varphi \to \psi \iff M \models \{v\}\varphi \to \psi$}\\
-        Si può dimostrare in modo sintetico assumendo (per completezza deduttiva di $T''$) che $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \neg\varphi$ oppure a $T'' \vdash \psi$, e quindi usare l'ipotesi induttiva:
+        Si può dimostrare, usando completezza deduttiva di $T''$, che $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \neg\varphi$ oppure $T'' \vdash \psi$, e quindi usare immediatamente l'ipotesi induttiva:
         \begin{align*}
             T'' \vdash \varphi \to \psi &\iff T'' \vdash \neg\varphi \text{ o } T'' \vdash \psi\\
                                         &\iff M \models \{v\}\neg\varphi \text{ o } M \models \{v\}\psi &&\text{(hp induttiva)}\\
                                         &\iff M \models \{v\}\varphi \to \psi
         \end{align*}
-        In alternativa, si può dimostrare direttamente per casi, assumiamo $M \models \{v\}\varphi \to \psi$, ci sono 3 casi possibili e in tutti e 3 vogliamo arrivare alla stessa implicazione sintattica, ad esempio se $M \models \{v\}\varphi$ e $M \models \{v\}\psi$, allora per ipotesi induttiva $T'' \vdash \varphi$ e $T'' \vdash \psi$, da cui per In$_\to$ $T'' \vdash \varphi \to \psi$, e analogamente negli altri 2 casi (nel caso $M \not\models\{v\}\varphi$ si deve usare la deduttiva completezza di $T''$).\\
+        dove il $\neg$ è quello definito come $\varphi \to \bot$.\\
+        In alternativa, si può dimostrare direttamente per casi, assumiamo $M \models \{v\}\varphi \to \psi$, ci sono 3 casi possibili in cui è vera, e in tutti e 3 vogliamo arrivare alla stessa implicazione sintattica.
+        Ad esempio se $M \models \{v\}\varphi$ e $M \models \{v\}\psi$, allora per ipotesi induttiva $T'' \vdash \varphi$ e $T'' \vdash \psi$, da cui per In$_\to$ $T'' \vdash \varphi \to \psi$, e analogamente negli altri 2 casi (nel caso $M \not\models\{v\}\varphi$ si deve usare la deduttiva completezza di $T''$).\\
         E poi per il viceversa basta un solo caso, se $T'' \vdash \varphi \to \psi$, voglio $M \models \{v\}\varphi \to \psi$, assumo $M \models \{v\}\varphi$, per ipotesi induttiva $T'' \vdash \varphi$, e quindi per El$_\to$ $T'' \vdash \psi$, e quindi per ipotesi induttiva $M \models \{v\}\psi$, da cui $M \models \{v\}\varphi \to \psi$.\\
-        In entrambi i casi abbiamo tuttavia usato che $\varphi$ e $\psi$ sono chiuse, in generale potrebbero non esserlo, in questo caso, come fatto per i termini, definisco $\overline\varphi := \varphi[c_1/x_1,\ldots,c_n/x_n]$ e $\overline\psi := \psi[c_1/x_1,\ldots,c_n/x_n]$, ora, lato sintattico, come prima, per El$_=$, $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \overline\varphi \to \overline\psi$,
-        mentre semanticamente $M \models \{v\}\varphi \to \psi$ è equivalente a $M \models \{v\}\overline\varphi \to \overline\psi$, per la nostra valutazione (bisogna verificarlo induttivamente).\\
+        In entrambi i casi abbiamo tuttavia usato che $\varphi$ e $\psi$ sono chiuse, in generale potrebbero non esserlo, in questo caso, come fatto per i termini, si definisce $\overline\varphi := \varphi[c_1/x_1,\ldots,c_n/x_n]$ e $\overline\psi := \psi[c_1/x_1,\ldots,c_n/x_n]$.
+        Usando El$_=$, si ha $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \overline\varphi \to \overline\psi$;
+        analogamente semanticamente $M \models \{v\}\varphi \to \psi$ è equivalente a $M \models \{v\}\overline\varphi \to \overline\psi$, per la nostra valutazione $v$ - andrebbe verificato per induzione strutturale.\\
         \textcolor{MidnightBlue}{$T'' \vdash r(t_1,\ldots,t_{\ar(r)}) \iff M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$}\\
-        Se $t_1,\ldots,t_{\ar(r)}$ sono chiusi, allora $M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $([t_1],\ldots,[t_{\ar(r)}]) \in r_M$, che per definizione di $M$ è equivalente a $T'' \vdash r(t_1,\ldots,t_{\ar(r)})$.\\
-        Nel caso in cui $t_1,\ldots,t_{\ar(r)}$ non sono chiusi, come prima, definisco $\overline{t_i} := t_i[c_1/x_1,\ldots,c_n/x_n]$, e quindi $M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $M \models \{v\}r(\overline{t_1},\ldots,\overline{t_{\ar(r)}})$ per via della valutazione $v$, d'altra parte iterando El$_=$, $T'' \vdash r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $T'' \vdash r(\overline{t_1},\ldots,\overline{t_{\ar(r)}})$, e quindi per il caso precedente si conclude.
+        Se $t_1,\ldots,t_{\ar(r)}$ sono chiusi, allora:
+        \begin{align*}
+            M \models \{v\}r(t_1,\ldots,t_{\ar(r)}) &\iff ([t_1],\ldots,[t_{\ar(r)}]) \in r_M (\star)\\
+                                                    &\iff T'' \vdash r(t_1,\ldots,t_{\ar(r)})
+        \end{align*}
+        dove $(\star)$ è il lemma, che vale usando \purple{solo termini chiusi}. Per il caso generale, basta osservare come prima che $M \models \{v\}r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $M \models \{v\}r(\overline{t_1},\ldots,\overline{t_{\ar(r)}})$,
+        e che, iterando El$_=$, $T'' \vdash r(t_1,\ldots,t_{\ar(r)})$ è equivalente a $T'' \vdash r(\overline{t_1},\ldots,\overline{t_{\ar(r)}})$, e quindi si conclude per il caso precedente.
     \end{enumerate}
-    Pertanto abbiamo costruito una $L''$-struttura $M$ e una valutazione $v$ tali che $M$ soddisfa $T''$, a questo punto considerando $M|_L$ (dove restringo il dominio della funzione di interpretazione) ottengo una $L$-struttura che soddisfa $T$, infatti, se $M$ come $L''$-struttura soddisfa, con la valutazione $v$, tutte le formule di $T''$,
-    allora in particolare soddisfa tutte le formule di $T$, e quindi $M|_L$ soddisfa $T$ con la stessa valutazione $v$.
+    Pertanto abbiamo costruito una $L''$-struttura $M$ e una valutazione $v$ tali che $M$ soddisfa $T''$, a questo punto considerando la struttura ridotta $M|_L$, si ottiene una $L$-struttura che soddisfa $T$, usando la medesima valutazione $v$. 
 \end{proof}
 
+\pagebreak
 \begin{remark}[Verifica che $\sim$ sia di equivalenza]
     Vediamo che la relazione $t_1 \sim t_2 \overset{\text{def}}{\iff} T'' \vdash t_1 = t_2$ è di equivalenza:
     \begin{itemize}
