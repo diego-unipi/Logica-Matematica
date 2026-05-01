@@ -1322,7 +1322,7 @@ Vediamo un insieme non decidibile.
     viceversa, se la funzione associata ad $\alpha$ con un certo input termina, allora $g_{\alpha,x}$ non è totale perché, facendo il controllo col test della forma normale, la si pone $\bot$ apposta quando converge}.\\
     Per dimostrare che $TOT^\complement$ non è semidecidibile usiamo la stessa identica strategia, definendo $f : \NN^2 \to \NN_\bot$ come segue:
     \[ f(\alpha,x) := \ulcorner g_{\alpha,x} \urcorner \qquad g_{\alpha,x}(n) := u_1(\alpha,x) \]
-    che è ricorsiva totale - per il teorema s-m-n - e se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $g_{\alpha,x} \equiv \bot$, e quindi il suo codice sta in $TOT^\complement$;
+    che è ricorsiva totale - per il teorema $s-m-n$ per passare al codice si compone con $s_0^1$ che è PR - e se $(\alpha,x) \in H_1^\complement$, allora $u_1(\alpha,x) = \bot$, per cui $g_{\alpha,x} \equiv \bot$, e quindi il suo codice sta in $TOT^\complement$;
     viceversa, se $(\alpha,x) \in f^{-1}[TOT^\complement]$, allora $g_{\alpha,x} \equiv u_1(\alpha,x)$ non è totale, che essendo costante significa che $u_1(\alpha,x) = \bot$, e quindi $(\alpha,x) \in H_1^\complement$.
 \end{soln}
 
@@ -1433,8 +1433,8 @@ Vediamo un insieme non decidibile.
         e possiamo farlo perché le variabili sono legate, e.g. le $y_i$ sono legate nel secondo blocco, ma possono essere libere nel primo, nel cui caso le rinominiamo con $x_j$ per qualche $j$ che non compare già, e viceversa; tale procedimento non cambia nulla
         in quanto $\exists z \; \psi \leftrightarrow \exists z' \; \psi[z'/z]$ se $z'$ è una variabile che non compare in $\psi$, e ugualmente per i quantificatori universali.
         \item[$\boxed{\exists}$] È banale.
-        \item[$\boxed{\forall y \le x}$] Scriviamo $\varphi(x,y)$ in forma premessa $\exists z_1\ldots\exists z_r\,\theta(x,y,\mathbf z)$ con $\theta\in\Pi_{n-1}^0$. Allora:
-        \[ \forall y\le x\,\varphi(x,y) \leftrightarrow \exists b\,\underbrace{\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b}_{\text{quantificatori limitati}}\,\theta(x,y,\mathbf z) \]
+        \item[$\boxed{\forall y \le x}$] Scriviamo $\varphi$ in forma premessa $\exists z_1\ldots\exists z_r\,\theta$ con $\theta\in\Pi_{n-1}^0$. Allora:
+        \[ \forall y\le x\,\varphi \leftrightarrow \exists b\,\underbrace{\forall y\le x\,\exists z_1\le b\ldots\exists z_r\le b}_{\text{quantificatori limitati}}\,\theta \]
         e l'equivalenza è facile dimostrare, ad esempio semanticamente, in particolare per $\rightarrow$ c'è bisogno che gli $z_i$ siano in numero finito.
     \end{itemize}
 \end{proof}
@@ -1598,6 +1598,7 @@ Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implic
         elementi, sotto un certo valore di un altro predicato:
         \[ \{ \#\{i \leq z : T(\mathbf x,i) \ne 0\} = 0 \} = R \]
     \end{itemize}
+    Il caso di $\exists y \leq z$ è duale a quello di $\forall y \leq z$, in quanto $\exists y \leq z \; \psi(\mathbf x,y)$ è equivalente a $\neg \, \forall y \leq z \; \neg \, \psi(\mathbf x,y)$, e quindi segue dai casi precedenti.
 \end{proof}
 
 E quindi possiamo dimostrare la freccia $\impliedby$ del teorema.
@@ -1738,7 +1739,7 @@ Operativamente, nonostante (3) $\implies$ (2) $\iff$ (1), la dimostrazione proce
     \begin{itemize}
         \item \textcolor{MidnightBlue}{$n_1 = 0$} In questo caso $0 < n_2$ per ipotesi e vogliamo dimostrare che $\mathsf{Q} \vdash \neg \, \ol 0 = \ol{n_2}$. Dalle ipotesi segue che $\ol n_2$ è successore di qualche altro termine, e quindi
         il fatto che $\mathsf{Q} \vdash \neg \, \ol 0 = \ol{n_2}$ segue da $\mathsf{Q}1$ e $\mathsf{Q}7$.
-        \item \textcolor{MidnightBlue}{$n_1 \implies n_1 + 1$} Assumiamo che $n_1 + 1 < n_2$, come ipotesi induttiva abbiamo che $\forall m \in \NN \; n_1 < m \implies \mathsf{Q} \vdash \neg \, \ol{n_1} = \ol m$, e vogliamo dimostrare che $\mathsf{Q} \vdash \neg \, \ol{n_1 + 1} = \ol{n_2}$.
+        \item \textcolor{MidnightBlue}{$n_1 \implies n_1 + 1$} Assumiamo che $n_1 + 1 < n_2$, come ipotesi induttiva abbiamo che $\forall m < n_2 \; n_1 < m \implies \mathsf{Q} \vdash \neg \, \ol{n_1} = \ol m$, e vogliamo dimostrare che $\mathsf{Q} \vdash \neg \, \ol{n_1 + 1} = \ol{n_2}$.
         Poiché $n_1 + 1 < n_2$, allora $n_2 = s(l)$ con $n_1 < l$ per $\mathsf{Q}2$, quindi per ipotesi induttiva $\mathsf{Q} \vdash \neg \, \ol{n_1} = \ol l$, da cui:
         \[ \mathsf{Q} \vdash \neg \, s(\ol{n_1}) = s(\ol l) \implies \mathsf{Q} \vdash \neg \, \ol{n_1 + 1} = \ol{n_2} \]
     \end{itemize}
@@ -1771,7 +1772,7 @@ Indaghiamo ora come funziona questa buffa nozione di $\leq$ per $\mathsf{Q}$, e 
 
 \begin{lemma}[Ogni elemento non standard è maggiore di ogni elemento standard]
     Sia $M \models \mathsf{Q}$, sia $\alpha \in M$ non standard, allora:
-    \[ \forall n \in \NN \; M \models \alpha \leq \ol n \]
+    \[ \forall n \in \NN \; M \models \ol n \leq \alpha \]
 \end{lemma}
 
 Dimostriamo in primis il secondo lemma, che è più semplice.
@@ -1781,12 +1782,10 @@ Dimostriamo in primis il secondo lemma, che è più semplice.
     \begin{itemize}
         \item[$\boxed{n = 0}$] Vogliamo dimostrare che $M \models \ol 0 \leq \alpha$, ovvero che $M \models \exists x \; x + \ol 0 = \alpha$, e questo, per la semantica di Tarski equivale a:
         \[ \exists x \in M \; x + 0 = \alpha \]
-        prendendo $x = \alpha$, e poiché vale $\mathsf{Q}4$, otteniamo la tesi.
-        \item[$\boxed{n \implies n+1}$] Vogliamo dimostrare che $M \models \alpha \leq \ol{n+1}$, come sopra, questo equivale a $M \models \exists x \; x + \ol{n+1} = \alpha$, e usando la semantica di Tarski diventa:
-        \[ \exists x \in M \; x + \{\ldots\}_M \ol{n+1} = \alpha \]
-        dove, essendo per definizione $\ol{n+1} = s(\ol n)$, vale che $\{\ldots\}_M \ol{n+1} = s(\{\ldots\}_M \ol n)$, e quindi, per $\mathsf{Q}4$, $x + \{\ldots\}_M \ol{n+1} = s(x + \{\ldots\}_M \ol n)$.
-        Per $\mathsf{Q}7$ vale che $\alpha = s(\beta)$ - con $\beta$ non standard altrimenti si ha un assurdo, e banalmente, per $\mathsf{Q}2$, da $\ol{n+1} \leq \alpha$ segue che $\ol n \leq \beta$; usano infine l'ipotesi induttiva troviamo $y \in M$ tale che $y + \{\ldots\}_M \ol n = \beta$, e quindi $s(y + \{\ldots\}_M \ol n) = s(\beta)$,
-        pertanto è sufficiente prendere $x = y$ per ottenere la tesi.
+        prendendo $x = \alpha$, e poiché vale $\mathsf{Q}3$, otteniamo la tesi.
+        \item[$\boxed{n \implies n+1}$] Vogliamo dimostrare che $M \models \ol{n+1} \leq \alpha$, ovvero $M \models \exists y \; y + \ol{n+1} = \alpha$. Poiché $\alpha$ è non standard, per $\mathsf{Q}7$ vale $\alpha = s_M(\beta)$ con $\beta \in M$, e $\beta \leq \alpha$.
+        Per ipotesi induttiva esiste $y$ tale che $y + \ol n = \beta$, e quindi per $\mathsf{Q}4$ si ottiene la tesi:
+        \[ y + \ol{n+1} = s_M(y + \ol n) = s_M(\beta) = \alpha \]
     \end{itemize}
 \end{proof}
 
@@ -1882,35 +1881,49 @@ Vediamo un risultato più forte, visto che il precedente è una condizione puntu
 e ottenendo di conseguenza che la $\mathsf{Q}$ capisca che $f$ è una funzione, ovvero che per ogni $x_1,\ldots,x_k$ esiste un unico $y$ tale che $\varphi(x_1,\ldots,x_k,y)$ è vera, e che questo $y$ è proprio $f(x_1,\ldots,x_k)$.
 
 \begin{lemma}[Rappresentazione di funzioni ricorsive totali in $\mathsf{Q}$]
-    Sia $f : \NN^k \to \NN$ ricorsiva \purple{totale}, allora c'è $\varphi(x_1,\ldots,x_k,y)$ di classe $\Sigma_1^0$ tale che:
+    Sia $f : \NN^k \to \NN$ ricorsiva \purple{totale}, allora c'è $\varphi$ di classe $\Sigma_1^0$ tale che:
     \[ \forall x_1,\ldots,x_k\in\NN\; \mathsf{Q} \vdash \forall y \; (\varphi(\ol{x_1},\ldots,\ol{x_k},y) \leftrightarrow y = \ol{f(x_1,\ldots,x_k)}) \]
 \end{lemma}
 
 \begin{proof}
     Sia $\psi$ una formula di classe $\Delta_0^0$ tale che per ogni $x_1, \dots, x_k, y \in \NN$:
-    \[ y = f(x_1, \dots, x_k) \iff \mathsf{Q} \vdash \exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, z_1, \dots, z_l) \]
-    Consideriamo la formula $\varphi(x_1, \dots, x_k, y)$ definita come:
+    \[ y = f(x_1, \dots, x_k) \iff \mathsf{Q} \vdash \underbrace{\exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, z_1, \dots, z_l)}_{\in \Sigma_1^0} \]
+    tale formula $\psi$ esiste per il lemma precedente. Consideriamo la formula $\varphi(x_1, \dots, x_k, y)$ definita come:
     \begin{align*}
-        \exists N ( & \exists z_1 \le N \dots \exists z_l \le N \, (y \le N \land \psi(x_1, \dots, x_k, y, z_1, \dots, z_l)) \\
-        \land & \forall t \le N \, \forall w_1 \le N \dots \forall w_l \le N \, (\psi(x_1, \dots, x_k, t, w_1, \dots, w_l) \to t = y) )
+        \exists N( & \exists z_1 \le N \dots \exists z_l \le N \, (y \le N \land \psi(x_1, \dots, x_k, y, z_1, \dots, z_l)) \\
+                   & \land \forall z_1 \le N \dots \forall z_l \le N \, \forall t \le N \, (\psi(x_1, \dots, x_k, t, z_1, \dots, z_l) \to t = y) )
     \end{align*}
-    Chiamiamo $\theta_1$ la prima riga tra parentesi e $\theta_2$ la seconda. Dimostriamo separatamente le due implicazioni:
+    che dice che esiste un limite $N$ tale che $y$ è minore o uguale a $N$, che ci sono testimoni $z_1, \dots, z_l$ minori o uguali a $N$ che soddisfano $\psi$; e che ogni testimone $t$ di $\psi$ minore o uguale a $N$ deve corrispondere a $y$.
+    Notare che $\varphi$ è di classe $\Sigma_1^0$. Dimostriamo ora le due implicazioni della tesi, riscriviamo per comodità la formula $\varphi(x,y)$ come $\exists N \, \theta_1 \land \theta_2$.
     \begin{itemize}
-        \item[$\boxed{\implies}$] Vogliamo mostrare che $\mathsf{Q} \vdash \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$.
-        Supponiamo, per assurdo, che non sia così e fissiamo $x_1, \dots, x_k$ e un modello $M \models \mathsf{Q}$ in cui esiste $y \ne f(x_1, \dots, x_k)$ tale che $M \models \varphi(\ol{x_1}, \dots, \ol{x_k}, y)$.
-        Siccome $M \models \varphi$, possiamo fissare $N \in M$ tale che $N$ e $y$ soddisfino, in $M$, le formule $\theta_1$ e $\theta_2$. Si presentano due casi:
+        \item[$\boxed{\to}$] Fissiamo $x_1, \dots, x_k$ e mostriamo $\mathsf{Q} \vdash \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$.\\
+        Essendo la formula chiusa allora possiamo mostrare equivalentemente che vale $\mathsf{Q} \models \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$. Procediamo per assurdo,
+        allora esiste $M \models \mathsf{Q}$ tale che per ogni $y \in M$ vale $M \models \varphi(\ol{x_1}, \dots, \ol{x_k}, y)$ e $y \ne \{\ldots\}_M \ol{f(x_1, \dots, x_k)}$.\\
+        Siccome $\varphi$ è $\purple{\exists N} \, \theta_1 \land \theta_2$, possiamo fissare $N \in M$ per cui valgano $\theta_1$ e $\theta_2$. Distinguiamo due casi a seconda che $N$ sia standard o non standard.
         \begin{itemize}
-            \item \textit{Caso 1: $N$ è standard.} Per $\theta_1$, anche $y$ deve essere standard, ed esistono $z_1, \dots, z_l \in M$ standard tali che $M \models \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, \ol{z_1}, \dots, \ol{z_l})$. Siccome $\psi$ è $\Delta_0^0$, essa è decidibile, quindi $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, \ol{z_1}, \dots, \ol{z_l})$, il che implica $y = f(x_1, \dots, x_k)$, contro l'ipotesi.
-            \item \textit{Caso 2: $N$ non è standard.} La formula $\theta_2$ asserisce che ogni testimone di $\psi$ minore di $N$ deve corrispondere a $y$. Per costruzione, esistono $z_1, \dots, z_l$ standard tali che $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l})$. Poiché ogni numerale standard è minore di un elemento non standard $N$, ponendo $t = \ol{f(x_1, \dots, x_k)}$, i testimoni standard soddisfano la premessa di $\theta_2$, da cui $M \models \ol{f(x_1, \dots, x_k)} = y$, assurdo.
+            \item \textit{Caso 1: $N$ è standard.} In questo caso, per la validità di $\theta_1$, ovvero:
+            \[ M \models \exists z_1 \le N \dots \exists z_l \le N \, (y \le N \land \psi(\ol{x_1}, \dots, \ol{x_k}, y, z_1, \dots, z_l)) \]
+            si ha che $y \in M$ è standard e che possiamo prendere $z_1, \dots, z_l$ standard, per cui, sostituendo i numerali otteniamo che:
+            \[ M \models \psi(\ol{x_1}, \dots, \ol{x_k}, y, z_1, \dots, z_l) \]
+            ma, per il lemma usato all'inizio, equivale al fatto che $y = f(x_1, \dots, x_k)$, ovvero $M \models y = \ol{f(x_1, \dots, x_k)}$, assurdo.
+            \item \textit{Caso 2: $N$ non è standard.} In questo caso, consideriamo la formula $\theta_2$:
+            \[ M \models \forall z_1 \le N \dots \forall z_l \le N \, \forall t \le N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = y) \]
+            ponendo $t = \{\ldots\}_M \ol{f(x_1, \dots, x_k)}$ che è standard, e fissando dal lemma iniziale che $z_1, \dots, z_l$ standard per i quali $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l)$, qualsiasi sia $t$ standard,
+            allora si ottiene vero l'antecedente di $\theta_2$, e quindi $M \models y = \ol{f(x_1, \dots, x_k)}$, assurdo.
         \end{itemize}
-        \item[$\boxed{\impliedby}$] Vogliamo mostrare che $\mathsf{Q} \vdash \forall y \, (y = \ol{f(x_1, \dots, x_k)} \to \varphi(\ol{x_1}, \dots, \ol{x_k}, y))$.
-        È sufficiente provare che $\mathsf{Q} \vdash \varphi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$.\\
-        Siano $z_1, \dots, z_l$ tali che $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l})$.
-        Scegliamo $N := \max\{f(x_1, \dots, x_k), z_1, \dots, z_l\}$, in ogni modello $M \models \mathsf{Q}$, il numerale $\ol{N}$ funge da limitazione corretta:
-        \begin{enumerate}
-            \item $\theta_1$ è soddisfatta in $M$ dai testimoni $\ol{z_1}, \dots, \ol{z_l}$ e $\ol{f(x_1, \dots, x_k)}$, che sono tutti minori o uguali a $\ol{N}$.
-            \item Per $\theta_2$, se $M \models t \le \ol{N} \land \psi(\dots, t, \dots)$, allora $t$ deve essere standard (perché minore di un numerale standard). Per la costruzione di $\psi$, l'unico valore standard che soddisfa la relazione è proprio $f(x_1, \dots, x_k)$, quindi $M \models t = \ol{f(x_1, \dots, x_k)}$.
-        \end{enumerate}
+        \item[$\boxed{\leftarrow}$] Vogliamo mostrare che $\mathsf{Q} \vdash \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \leftarrow y = \ol{f(x_1, \dots, x_k)})$.\\
+        Ossia, per El$_\forall$, $\mathsf{Q} \vdash \varphi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$. Dall'ipotesi iniziale $f(x_1, \dots, x_k) = y$ equivale a $\mathsf{Q} \vdash \exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, z_1, \dots, z_l)$,
+        fissando $z_1, \dots, z_l$ tali che $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l})$, scegliamo:
+        \[ N := \max\{f(x_1, \dots, x_k), z_1, \dots, z_l\}\]
+        in ogni modello $M \models \mathsf{Q}$. Fissato quindi $M \models \mathsf{Q}$, i numeri $N$ e $f(x_1, \dots, x_k)$ soddisfano $\theta_1$ e $\theta_2$ per costruzione, infatti: per quanto riguarda $\theta_1$ i quantificatori esistenziali:
+        \[ M \models \exists z_1 \le \ol N \ldots \exists z_l \le \ol N \, (y \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, y, z_1, \dots, z_l) \]
+        sono semplicemente testimoniati dai numeri $z_1,\ldots,z_n$ fissati in precedenza. Per quanto riguarda $\theta_2$ dobbiamo verificare che:
+        \[ M \models \forall z_1 \le N \dots \forall z_l \le N \, \forall t \le N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = \ol{f(x_1, \dots, x_k)}) \]
+        ossia, fissati $z_1, \dots, z_l,t \in M$ tali che:
+        \[ M \models z_1 \le\ol N \land \ldots \land z_l \le \ol N \land t \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \]
+        dobbiamo avere necessariamente $M \models t = \ol{f(x_1, \dots, x_k)}$. Però, per un lemma, le disuguaglianze appena scritte implicano che $z_1, \dots, z_l$ e $t$ sono standard, per cui dalla premessa si arriva, sostituendo, a:
+        \[ M \models \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \]
+        e per l'ipotesi iniziale sulla rappresentazione di $f$ in $\mathsf{Q}$, si ottiene $t = f(x_1, \dots, x_k)$.
     \end{itemize}
 \end{proof}
 
