@@ -30,3 +30,4 @@
 # Keep only source files in Git; the compiled main PDF is generated in CI.
 Appunti di Logica Matematica.pdf
 Typo.pdf
+build/Appunti di Logica Matematica.pdf
