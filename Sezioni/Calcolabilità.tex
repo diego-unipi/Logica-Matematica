@@ -72,7 +72,7 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
     \end{cases} \]
 \end{example}
 
-\enlargethispage{2\baselineskip}
+\enlargethispage{5\baselineskip}
 \begin{example}[Funzione predecessore]
     Definiamo la funzione \vocab{predecessore} $\pred$ come:
     \[ \pred(x) := \begin{cases}
@@ -1643,17 +1643,13 @@ Riepiloghiamo gli assiomi della teoria $\mathsf{Q}$ di Robinson nel linguaggio $
 \end{itemize}
 
 Il nostro obiettivo è dimostrare il teorema di Rosser, che sarà una versione più forte del teorema di Gödel, e soprattutto è un risultato che estende il teorema di incompletezza di Church che abbiamo già visto.
-Diamo per buona l'idea intuitiva di numerazione di Gödel come una codifica di formule, dimostrazioni, eccetera in numeri naturali, e che sia compatibile con le operazioni semantiche e diamo la seguente definizione.
-
-\begin{definition}[Teoria ricorsivamente assiomatizzabile]
-    Sia $T$ una $L$-teoria, diciamo che $T$ è \vocab{ricorsivamente assiomatizzabile} se esiste una numerazione di Gödel $\varphi \mapsto \ulcorner \varphi \urcorner$ tale che l'insieme $\{\ulcorner \varphi \urcorner : \varphi \in T\}$ sia ricorsivamente enumerabile. 
-\end{definition}
+Diamo per buona l'idea intuitiva di numerazione di Gödel come una codifica di formule, dimostrazioni, eccetera in numeri naturali, e che sia compatibile con le operazioni semantiche.
 
 \begin{theorem}[Rosser]
     Sia $T$ una $L$-teoria tale che:
     \begin{enumerate}[(i)]
         \item $T \vdash \mathsf{Q}$, ovvero $T$ estende $\mathsf{Q}$,
-        \item $T$ è ricorsivamente assiomatizzabile,
+        \item $T$ è ricorsivamente assiomatizzabile - qualsiasi cosa significhi per ora,
         \item $T$ è coerente,
     \end{enumerate}
     allora $T$ è incompleta.\footnote{Si può rimpiazzare l'ipotesi di $T \vdash \mathsf{Q}$ con $T$ \vocab{interpreta} $\mathsf{Q}$, ovvero, informalmente,
@@ -1885,6 +1881,15 @@ e ottenendo di conseguenza che la $\mathsf{Q}$ capisca che $f$ è una funzione, 
     \[ \forall x_1,\ldots,x_k\in\NN\; \mathsf{Q} \vdash \forall y \; (\varphi(\ol{x_1},\ldots,\ol{x_k},y) \leftrightarrow y = \ol{f(x_1,\ldots,x_k)}) \]
 \end{lemma}
 
+Serve un lemma, che non dimostriamo, ma si procede sempre per induzione strutturale sulle formule di classe $\Delta_0^0$.
+
+\begin{lemma}[Sostituzione di numerali in formule di classe $\Delta_0^0$]
+    Sia $\psi \in \Delta_0^0$ e siano $a_1,\ldots,a_k \in \NN$, allora, per ogni modello $M \models \mathsf{Q}$ vale:
+    \[ M \models \psi(\ol{a_1},\ldots,\ol{a_k}) \iff \NN \models \psi(a_1,\ldots,a_k) \]
+\end{lemma}
+
+Dal lemma segue in particolare che se $M \models \mathsf{Q}$ e $a_1,\ldots,a_k \in \NN$, allora $M \models \psi(\ol{a_1},\ldots,\ol{a_k})$ se e solo se $\mathsf{Q} \vdash \psi(\ol{a_1},\ldots,\ol{a_k})$.
+
 \begin{proof}
     Sia $\psi$ una formula di classe $\Delta_0^0$ tale che per ogni $x_1, \dots, x_k, y \in \NN$:
     \[ y = f(x_1, \dots, x_k) \iff \mathsf{Q} \vdash \underbrace{\exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{y}, z_1, \dots, z_l)}_{\in \Sigma_1^0} \]
@@ -1949,11 +1954,10 @@ La scelta concreta dei numeri è irrilevante: ciò che conta è che le operazion
     Fissata una numerazione dei simboli di $L_{\text{arit}}$, possiamo definire ricorsivamente la \vocab{codifica di Gödel} (o \vocab{numerazione di Gödel}) $\ulcorner\cdot\urcorner$ come segue.
     \begin{itemize}
         \item $L_{\text{arit}}$-termini:
-        \[ \ulcorner 0\urcorner := \langle\#0\rangle \qquad \ulcorner x_i\urcorner := \langle\#x_i\rangle \]
-        \[ \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle\qquad \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
-        \[ \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
+        \[ \ulcorner 0\urcorner := \langle\#0\rangle \qquad \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle \]
+        \[ \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \qquad \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
         \item $L_{\text{arit}}$-formule:
-        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle\qquad \ulcorner\neg \,\varphi\urcorner := \langle\#\neg \,,\ulcorner\varphi\urcorner\rangle \]
+        \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle\qquad \]
         \[ \ulcorner\varphi\to\psi\urcorner := \langle\#\to,\ulcorner\varphi\urcorner,\ulcorner\psi\urcorner\rangle\qquad \ulcorner\forall x_i\,\varphi\urcorner := \langle\#\forall,\#x_i,\ulcorner\varphi\urcorner\rangle \]
     \end{itemize}
 \end{definition}
@@ -1962,14 +1966,14 @@ Abbiamo così ottenuto una numerazione iniettiva di ogni $L_{\text{arit}}$-termi
 Il nostro obiettivo sarà dimostrare il seguente lemma.
 
 \begin{lemma}[Lemma di diagonalizzazione di Gödel]
-    Sia $\varphi$ una formula aritmetica, esiste una formula aritmetica $\textcolor{purple}{\psi}$ tale che:
-    \[ \mathsf{Q} \vdash \textcolor{purple}{\psi} \leftrightarrow \varphi[\overline{\ulcorner\textcolor{purple}{\psi}\urcorner}/x_1] \]
-    cioè per ogni formula con una variabile libere né esiste un'altra che è vera se e solo se è vera ``$\varphi(\psi)$".
+    Sia $\varphi(x)$, con $x \in \vl(\varphi)$, una $L_{\text{arit}}$-formula, allora esiste una $L_{\text{arit}}$-formula $\textcolor{purple}{\psi}$ tale che:
+    \[ \mathsf{Q} \vdash \textcolor{purple}{\psi} \leftrightarrow \varphi[\overline{\ulcorner\textcolor{purple}{\psi}\urcorner}/x] \]
 \end{lemma}
 
-Di fatto il lemma ci dà una specie di teorema di punto fisso per le formule, cioè per ogni formula ne esiste un'altra 
+\textcolor{MidnightBlue}{Cioè per ogni formula con una variabile libera ce n'è un'altra che è vera se e solo se è vera ``$\varphi(\psi)$".}
+Di fatto il lemma ci dà una specie di teorema di punto fisso per le formule non chiuse - sennò la tesi è banale; cioè per ogni formula ne esiste un'altra 
 la cui validità è equivalente alla validità della proprietà che la prima formula esprime valida per la seconda. In altre parole, c'è sempre una formula che dice di sé stessa che è vera se e solo se è vera una certa proprietà per lei.
-La proprietà che ci interesserà sarà ``io sono dimostrabile''.\\
+La proprietà che per cui ci interesserà usare il lemma è ``io sono dimostrabile''.\\
 Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra codifica, da cui la necessità di poter decidere se un numero è codice di una formula o meno.
 
 \begin{remark}[$n$ è il codice di una formula]
@@ -1977,26 +1981,22 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
 \end{remark}
 
 \begin{proof}
-    Per decidere se $n$ è codice di una formula, basta verificare che il primo simbolo della lista sia un connettivo o che la formula sia atomica, per cui il
-    predicato $\textsf{For}(n)$ si può definire per casi come segue:
+    Per decidere se $n$ è codice di una formula, basta verificare che il primo simbolo della lista codificata dal numero corrisponda ad un simbolo di formula e controllare che i restanti simboli siano codici di sottoformule o di termini, a seconda del simbolo iniziale.
+    Iniziamo definendo un predicato PR $\textsf{Term}(n)$ che dice se $n$ è codice di un termine, e poi usiamo questo predicato per definire $\textsf{For}(n)$. La definizione di $\textsf{Term}(n)$ la si dà
+    per ricorsione sulla lunghezza della lista codificata da $n$ e la diamo usando i predicati PR in riferimento agli insiemi di confronto che definiscono:
     \begin{align*}
-        \textsf{For}(n) &= (\nth(n,0) = \#\bot \land \length(n) = 1) \\
-                        &\land (\nth(n,0) = \#= \land \length(n) = 3 \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
-                        &\land (\nth(n,0) = \#\neg \, \land \length(n) = 2 \land \textsf{For}(\nth(n,1))) \\
-                        &\land (\nth(n,0) = \#\to \land \length(n) = 3 \land \textsf{For}(\nth(n,1)) \land \textsf{For}(\nth(n,2))) \\
-                        &\land (\nth(n,0) = \#\forall \land \length(n) = 3 \land \nth(n,1) \geq 8 \land \textsf{For}(\nth(n,2)))
+        \textsf{Term}(n) :=& (\length(n) = 1 \land \nth(n,0) = \#0) \\
+                           &\lor (\length(n) = 2 \land \nth(n,0) = \#s \land \textsf{Term}(\nth(n,1))) \\
+                           &\lor (\length(n) = 3 \land \nth(n,0) = \#+ \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
+                           &\lor (\length(n) = 3 \land \nth(n,0) = \#\cdot \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2)))
     \end{align*}
-    dove aggiungiamo gli altri $\textsf{For}$ ricorsivamente, per la precisione per ricorsione sul corso dei valori, perché la formula codificata da $n$ è una formula se e solo se le sottoformule codificate dai sotto-codici sono formule,
-    ovviamente, essendo la definizione fatta da un'intersezione finita di predicati PR, $\textsf{For}$ è PR. Osserviamo infine che c'è necessità anche di introdurre il predicato $\textsf{Term}$, che dice se un numero è codice di un termine, ma anche questo è PR, e si definisce in modo seguente:
+    A questo punto, usando $\textsf{Term}(n)$, possiamo definire $\textsf{For}(n)$ sempre per ricorsione sulla lunghezza:
     \begin{align*}
-        \textsf{Term}(n) &= (\nth(n,0) = \#0 \land \length(n) = 1) \\
-                        &\land (\nth(n,0) = \#x_i \land \length(n) = 1) \\
-                        &\land (\nth(n,0) = \#f_i \land \length(n) = 1) \\
-                        &\land (\nth(n,0) = \#s \land \length(n) = 2 \land \textsf{Term}(\nth(n,1))) \\
-                        &\land (\nth(n,0) = \#+ \land \length(n) = 3 \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
-                        &\land (\nth(n,0) = \#\cdot \land \length(n) = 3 \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2)))
+        \textsf{For}(n) :=& (\length(n) = 1 \land \nth(n,0) = \#\bot) \\
+                          &\lor (\length(n) = 3 \land \nth(n,0) = \#= \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
+                          &\lor (\length(n) = 3 \land \nth(n,0) = \#\to \land \textsf{For}(\nth(n,1)) \land \textsf{For}(\nth(n,2))) \\
+                          &\lor (\length(n) = 3 \land \nth(n,0) = \#\forall \land \nth(n,1) = \#x_i \land \textsf{For}(\nth(n,2)))
     \end{align*}
-    anche in questo caso la definizione è fatta per ricorsione sul corso dei valori intersecando cose PR.
 \end{proof}
 
 \begin{remark}[$n$ è il codice di un numerale]
@@ -2005,7 +2005,7 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
 \end{remark}
 
 \begin{proof}
-    Come prima si può definire a partire da altre funzioni PR come segue:
+    Si può definire $\textsf{Num}(n)$ per ricorsione su $n$ in modo PR:
     \[ \textsf{Num}(n) := \begin{cases}
         \textsf{Num}(0) = \ulcorner 0\urcorner = \langle\#0\rangle \\
         \textsf{Num}(n+1) = \ulcorner s(\ol n)\urcorner = \langle\#s, \textsf{Num}(n)\rangle
@@ -2017,91 +2017,71 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
     Sia $\textsf{Sub}(\ulcorner\varphi\urcorner, i, \ulcorner t\urcorner) := \ulcorner\varphi[t/x_i]\urcorner$ la funzione che associa il codice di una formula,
     di una variabile e di un termine al codice ottenuto facendo la sostituzione del termine al posto della variabile, tale funzione è PR.
 \end{remark}
-
+\enlargethispage{2\baselineskip}
 \begin{proof}
     Anche questa può essere definita a partire da funzioni PR:
     \[ \textsf{Sub}(n,i,x) := \begin{cases}
         0 & \text{se $\neg \,\textsf{For}(n)$} \\
-        \langle \#\bot \rangle & \text{se $n = \langle\#\bot\rangle$} \\
-        \langle \#=, \textsf{Sub}(a,i,x), \textsf{Sub}(b,i,x) \rangle & \text{se $n = \langle\#=,\ulcorner a\urcorner,\ulcorner b\urcorner\rangle$} \\
-        \langle \#\neg \,, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\neg \,,\ulcorner a\urcorner\rangle$} \\
-        \langle \#\to, \textsf{Sub}(a,i,x), \textsf{Sub}(b,i,x) \rangle & \text{se $n = \langle\#\to,\ulcorner a\urcorner,\ulcorner b\urcorner\rangle$} \\
-        \langle \#\forall, j, \textsf{Sub}(a,i,x) \rangle & \text{se $n = \langle\#\forall,j,\ulcorner a\urcorner\rangle$ e $j \ne i$} \\
-        \langle \#\forall, j, a \rangle & \text{se $n = \langle\#\forall,j,\ulcorner a\urcorner\rangle$ e $j = i$}
+        \langle \#\bot \rangle & \text{se $\nth(n,0) = \#\bot$} \\
+        \langle \#=, \textsf{Sub}(\nth(n,1),i,x), \textsf{Sub}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#=$} \\
+        \langle \#\to, \textsf{Sub}(\nth(n,1),i,x), \textsf{Sub}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#\to$} \\
+        n & \text{se $\nth(n,0) = \#\forall$ e $\nth(n,1) = i + 8$} \\
+        \langle \#\forall, \nth(n,1), \textsf{Sub}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#\forall$ e $\nth(n,1) \ne i + 8$}
     \end{cases} \]
 \end{proof}
 
-Possiamo quindi dimostrare il lemma di diagonalizzazione di Gödel.
+Vediamo ora la dimostrazione del lemma di diagonalizzazione di Gödel.\\
+\textcolor{MidnightBlue}{Come nel caso di teorema di punto fisso per le funzioni ricorsive, vediamo informalmente cosa vorremmo fare, e poi lo formalizziamo. 
+Supponiamo che tutto sia applicabile a tutto allora considero la funzione $f(x) := x(x)$, ovvero la funzione che prende una 
+formula e la applica a se stessa, il nostro scopo è trovare $\psi = \varphi(\psi)$ - dove con l'$=$ intendiamo l'equivalenza, allora se potessimo definire $f$ potremmo definire
+la formula $\theta := \varphi(f(x))$ e quindi applicando $\theta$ a se stessa otteniamo $\theta(\theta) = \varphi(f(\theta)) = \varphi(\theta(\theta))$ e chiamando $\theta(\theta) := \psi$ avremmo finito.}
 
 \begin{proof}
-    \textcolor{MidnightBlue}{Come nel caso di teorema di punto fisso per le funzioni ricorsive, vediamo informalmente cosa vorremmo fare, e poi lo formalizziamo. 
-    Supponiamo che tutto sia applicabile a tutto allora considero la funzione $f(x) := x(x)$, ovvero la funzione che prende una 
-    formula e la applica a se stessa, il nostro scopo è trovare $\psi = \varphi(\psi)$ - dove con l'$=$ intendiamo l'equivalenza, allora se potessimo definire $f$ potremmo definire
-    la formula $\theta := \varphi(f(x))$ e quindi applicando $\theta$ a se stessa otteniamo $\theta(\theta) = \varphi(f(\theta)) = \varphi(\theta(\theta))$ e chiamando $\theta(\theta) := \psi$ avremmo finito.}\\
-    La vera funzione $f$ che vogliamo definire fa praticamente la stessa cosa, ma usa i codici invece che le formule:
-    \[ f : \NN \to \NN : \ulcorner \alpha\urcorner \mapsto \ulcorner \alpha[\overline{\ulcorner\alpha\urcorner}/x_k]\urcorner \quad \text{con $x_k \in \vl(\alpha)$} \]
-    tale funzione è PR, perché si può definire come:
-    \[ f(n) = \textsf{Sub}(n,k,\textsf{Num}(n)) \]
-    dove la cosa sostituita è appunto il numerale corrispondente al numero di Gödel della formula. Ora vorremmo definire la nostra ``$\theta := \varphi(f(x))$'',
-    tecnicamente, in primis applichiamo il lemma di rappresentazione di funzioni ricorsive in $\mathsf{Q}$ alla funzione ricorsiva totale $f$, per quel lemma esiste una formula $\pi$,
-    per la quale possiamo assumere (WLOG a meno di rinominare) che $\vl(\pi) \subseteq \{x_1,\ldots,x_k\}$, con $k > 1$,e vale:
-    \[ \forall n \in \mathbb N \; \mathsf{Q} \vdash \forall x_1 (\pi[\overline{n}/x_k] \leftrightarrow x_1 = \overline{f(n)}) \]
-    dove $\pi[\overline{n}/x_k]$ è in vece della usuale $\pi(\ol n,x_1)$ del lemma, e scelgo proprio $x_k$ perché è quella della definizione di $f$.
-    Ora definiamo $\theta := \forall x_1 \pi \to \varphi$ e $\psi := \theta[\ol{\ulcorner\theta\urcorner}/x_k]$ e verifichiamo la tesi.
-    Per la costruzione di $\pi$, usando $\ulcorner\theta\urcorner \in \NN$ abbiamo:
-    \[ \mathsf{Q} \vdash \forall x_1 (\pi[\overline{\ulcorner\theta\urcorner}/x_k] \leftrightarrow x_1 = \overline{f(\ulcorner\theta\urcorner)}) \]
-    e per la definizione di $f(\ulcorner\theta\urcorner) = \ulcorner\theta[\overline{\ulcorner\theta\urcorner}/x_k]\urcorner$, che unita alla definizione di $\psi$ è
-    $f(\ulcorner\theta\urcorner) = \ulcorner\psi\urcorner$, dà:
-    \[ \mathsf{Q} \vdash \forall x_1 (\pi[\overline{\ulcorner\theta\urcorner}/x_k] \leftrightarrow x_1 = \overline{\ulcorner\psi\urcorner}) \]
-    Ora la formula $\psi = \theta[\ol{\ulcorner\theta\urcorner}/x_k] = (\forall x_1 \pi \to \varphi)[\ol{\ulcorner\theta\urcorner}/x_k]$, sfruttando il fatto che $x_k$ non compare in $\varphi$, per ipotesi la sua variabile libera è $x_1$, è equivalente a:
-    \[ \psi \equiv \forall x_1 \pi[\ulcorner\theta\urcorner/x_k] \to \varphi \]
-    e quindi, usando la formula precedente, posso rimpiazzare $\pi[\ulcorner\theta\urcorner/x_k]$ con $x_1 = \overline{\ulcorner\psi\urcorner}$, ottenendo:
-    \[ \mathsf{Q} \vdash \psi \leftrightarrow \forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi) \]
-    infine, osservo che $\forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi)$ è equivalente a $\varphi[\overline{\ulcorner\psi\urcorner}/x_1]$.
-    Per $\to$:
-    \[
-    \text{El}_{\to}\frac
-    {\text{El}_{\forall}\frac{\text{Ax}\frac{}{\forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi) \vdash \forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi)}}{\forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi) \vdash \overline{\ulcorner\psi\urcorner} = \overline{\ulcorner\psi\urcorner} \to \varphi[\overline{\ulcorner\psi\urcorner}/x_1]}
-    \qquad
-    \text{Wk}\frac{\text{In}_{=}\frac{}{\vdash \overline{\ulcorner\psi\urcorner} = \overline{\ulcorner\psi\urcorner}}}{\forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi) \vdash \overline{\ulcorner\psi\urcorner} = \overline{\ulcorner\psi\urcorner}}}
-    {\forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi) \vdash \varphi[\overline{\ulcorner\psi\urcorner}/x_1]}
-    \]
-    Per il viceversa:
-    \[
-    \text{In}_{\forall}\frac
-    {\text{In}_{\to}\frac
-    {\text{El}_{=}\frac
-    {\text{El}_{=}\frac
-    {\text{Ax}\frac{}{x_1 = \overline{\ulcorner\psi\urcorner} \vdash x_1 = \overline{\ulcorner\psi\urcorner}}
-    \qquad
-    \text{Wk}\frac{\text{In}_{=}\frac{}{\vdash x_1 = x_1}}{x_1 = \overline{\ulcorner\psi\urcorner} \vdash x_1 = x_1}}
-    {x_1 = \overline{\ulcorner\psi\urcorner} \vdash \overline{\ulcorner\psi\urcorner} = x_1}
-    \qquad
-    \text{Wk}\frac{\text{Ax}\frac{}{\varphi[\overline{\ulcorner\psi\urcorner}/x_1] \vdash \varphi[\overline{\ulcorner\psi\urcorner}/x_1]}}{x_1 = \overline{\ulcorner\psi\urcorner},\varphi[\overline{\ulcorner\psi\urcorner}/x_1] \vdash \varphi[\overline{\ulcorner\psi\urcorner}/x_1]}}
-    {x_1 = \overline{\ulcorner\psi\urcorner},\varphi[\overline{\ulcorner\psi\urcorner}/x_1] \vdash \varphi}
-    }{\varphi[\overline{\ulcorner\psi\urcorner}/x_1] \vdash x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi}
-    }{\varphi[\overline{\ulcorner\psi\urcorner}/x_1] \vdash \forall x_1 (x_1 = \overline{\ulcorner\psi\urcorner} \to \varphi)}
-    \]
-    dove nell'ultimo passaggio ho usato In$_\forall$, e posso farlo perché $x_1 \notin \vl(\varphi[\overline{\ulcorner\psi\urcorner}/x_1])$.
-    Quindi:
-    \[ \mathsf{Q} \vdash \psi \leftrightarrow \varphi[\overline{\ulcorner\psi\urcorner}/x_1] \]
-    che è la tesi.
+    Vogliamo dimostrare che data $\varphi(x_1)$, con $x_1 \in \vl(\varphi)$, esiste $\psi$ tale che $\mathsf{Q} \vdash \psi \leftrightarrow \varphi[\overline{\ulcorner\psi\urcorner}/x_1]$.
+    Sia $x_k \not\in \vl(\varphi)$ e definiamo la funzione $f$ PR come:
+    \[ f : \NN \to \NN : x \mapsto \mathsf{Sub}(x,k,\textsf{Num}(x)) \]
+    ovvero la funzione che sostituisce, alla variabile non libera $x_k$, il numerale corrispondente al numero di Gödel della formula codificata da $x$, ovvero
+    $\ulcorner \alpha \urcorner \mapsto \ulcorner \alpha[\ol{\ulcorner\alpha\urcorner}/x_k]\urcorner$ - possiamo pensare a questa cosa come $\alpha(\alpha)$.
+    Sia $\pi$ una formula con (WLOG a meno di cambiare $x_k$) $\vl(\pi) = \{x_1,x_k\}$ tale che:
+    \[ \forall x \in \NN \quad \mathsf{Q} \vdash \forall x_1 \, \pi(x_1,\ol x/x_k) \leftrightarrow x_1 = \ol{f(x)} \]
+    tale formula esiste per il lemma di rappresentazione di funzioni ricorsive totali e metto il valore in input di $f$ al posto della variabile $x_k$.
+    Definiamo $\theta := \purple{\forall x_1 \,\pi \to \varphi}$ e $\psi := \purple{\theta[\ulcorner\theta\urcorner/x_k]}$ - cioè $\ulcorner \psi \urcorner = f(\ulcorner\theta\urcorner)$, e quindi $\psi$ è proprio $\theta$ applicata a se stessa.\\
+    Ora verifichiamo la tesi, usando $x = \ulcorner\theta\urcorner$, per il lemma abbiamo:
+    \[ \mathsf{Q} \vdash \forall x_1 \, \pi(x_1,\ol{\ulcorner\theta\urcorner}/x_k) \leftrightarrow x_1 = \ol{f(\ulcorner\theta\urcorner)} \]
+    e per definizione $f(\ulcorner\theta\urcorner) = \ulcorner\psi\urcorner$, quindi possiamo riscrivere l'equivalenza come:
+    \[ \mathsf{Q} \vdash \forall x_1 \, \pi(x_1,\ol{\ulcorner\theta\urcorner}/x_k) \leftrightarrow x_1 = \ol{\ulcorner\psi\urcorner} \]
+    Riscrivendo $\psi$ esplicitamente:
+    \begin{align*}
+        \psi &= \theta[\ulcorner\theta\urcorner/x_k] \\
+             &= (\forall x_1 \, \pi \to \varphi)[\ulcorner\theta\urcorner/x_k] \\
+             &= \forall x_1 \, \pi[\ulcorner\theta\urcorner/x_k] \to \varphi \\
+             &= \forall x_1 \, \pi(x_1,\ol{\ulcorner\theta\urcorner}/x_k) \to \varphi \\
+             &\overset{\mathsf{Q}}{\leftrightarrow} x_1 = \ol{\ulcorner\psi\urcorner} \to \varphi \\
+             &\leftrightarrow \varphi[\ol{\ulcorner\psi\urcorner}/x_1]
+    \end{align*}
+    che è proprio la tesi.
 \end{proof}
 
 \subsection{Predicato di dimostrazione}
 Il nostro scopo in questa sezione sarà dimostrare che esiste una $L_{\text{arit}}$-formula che dice di sé stessa che è dimostrabile, per poi combinarla col lemma di diagonalizzazione di Gödel
 ed ottenere il primo teorema di incompletezza di Gödel. Richiamiamo una definizione già data, ma senza formalizzare bene le enumerazioni di Gödel.
 
-\begin{definition}[Teoria ricorsivamente (o semidecidibilmente) assiomatizzabile]
+\begin{definition}[Teoria ricorsivamente - o semidecidibilmente - assiomatizzabile]
     Una teoria $T$ è \vocab{ricorsivamente assiomatizzabile}, o \vocab{semidecidibilmente assiomatizzabile}, se:
-    \[ T = \{\sigma : P(\ulcorner\sigma\urcorner) \ne \bot \} \]
-    con $P$ una funzione ricorsiva parziale, ovvero esiste un algoritmo che stabilisce se una formula è un assioma di $T$ o no.
+    \[ \{\ulcorner \sigma \urcorner : \sigma \in T\} = \{\ulcorner\sigma\urcorner : P(\ulcorner\sigma\urcorner) \ne \bot \} \]
+    con $P$ una funzione ricorsiva parziale, ovvero \purple{esiste un algoritmo che si ferma se e solo se la formula in input è un assioma di $T$}.
 \end{definition}
 
 In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assiomi sia addirittura decidibile.
 
+\begin{definition}[Teoria decidibilmente assiomatizzabile]
+    Una teoria $T$ è \vocab{decidibilmente assiomatizzabile} se l'insieme dei codici degli assiomi di $T$ è decidibile, ovvero esiste $P$ funzione ricorsiva totale tale che:
+    \[ \{\ulcorner \sigma \urcorner : \sigma \in T\} = \{\ulcorner\sigma\urcorner : P(\ulcorner\sigma\urcorner) = 0 \} \]
+    in altre parole, \textcolor{purple}{esiste un algoritmo che si ferma sempre, e dice 0 se e solo se la formula in input è un assioma di $T$}.
+\end{definition}
+
 \begin{exercise}[Teorema di Craig]
-    Sia $T := \{\varphi : P(\ulcorner\varphi\urcorner) = 0 \}$ ricorsivamente assiomatizzabile, allora esiste una teoria \vocab{decidibilmente assiomatizzabile}, i.e. l'insieme dei codici degli assiomi è decidibile, tale che $T$ e $T'$ sono equivalenti.
+    Sia $T := \{\varphi : P(\ulcorner\varphi\urcorner) \ne \bot\}$ ricorsivamente assiomatizzabile, allora esiste una teoria decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti.
 \end{exercise}
 
 \begin{soln}
@@ -2115,41 +2095,57 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
         &\vdots
     \end{align*}
     si verifica banalmente, al livello sintattico, che $T$ è equivalente a $T'$.
-    Inoltre, se poniamo $h(n) := \ulcorner\varphi_n'\urcorner$, la funzione $h : \NN \to \NN$ è ricorsiva totale (si ottiene da $f$ componendo con operazioni sintattiche ricorsive, cioè codifica e congiunzione iterata).
-    Quindi posso definire il test totale ricorsivo degli assiomi di $T'$ come:
+    Inoltre, se poniamo $h(n) := \ulcorner\varphi_n'\urcorner$, la funzione $h : \NN \to \NN$ è ricorsiva totale (si ottiene da $f$ componendo con operazioni sintattiche ricorsive, cioè codifica e congiunzione iterata\footnote{Se avessimo voglia di scrivere
+    la funzione PR $\textsf{Conj}(a,b) := \ulcorner\varphi_a \land \varphi_b\urcorner$, di definire $H(1,k) := k, H(n+1,k) := \textsf{Conj}(H(n,k),k)$ e di definire $h(n) := H(n,f(n))$, allora otterremo addirittura che $h$ è PR.}).
+    Quindi possiamo definire una funzione ricorsiva totale $g$ che controlla se un elemento è nell'immagine di $h$:
     \[ g(z) := \begin{cases}
-        0 & \text{se $\exists n \le z\; h(n) = z$} \\
+        0 & \text{se $\exists m \leq z \; h(m) = z$} \\
         1 & \text{altrimenti}
     \end{cases} \]
-    infatti $g(z)=0$ se e solo se $z$ è codice di un assioma di $T'$ - la ricerca è limitata ai primi $z$ numeri perché altrimenti potrebbe non fermarsi e venire $\bot$\footnote{Andrebbe controllato inoltre che il predicato per la definizione per casi sia ricorsivo totale.}; inoltre $g$ è ricorsiva totale, in quanto è definita per casi su una funzione ricorsiva totale.
+    che è totale (definizione per casi su insieme totale - motivo per cui limitiamo la ricerca ai primi $z$) e vale che $T' = \{z : g(z) = 0\}$.
 \end{soln}
 
+\begin{notation}
+    D'ora in poi, intenderemo equivalentemente le espressioni ricorsivamente assiomatizzabile e decidibilmente assiomatizzabile.
+\end{notation}
+
 \begin{lemma}[Predicato di dimostrazione]
-    Sia $T$ una teoria aritmetica ricorsivamente assiomatizzabile, allora esiste un predicato PR $\mathsf{Dim}_T(x,y)$ tale che:
+    Sia $T$ una $L_{\text{arit}}$-teoria ricorsivamente assiomatizzabile, allora esiste un predicato PR $\mathsf{Dim}_T(x,y)$ tale che:
     \[ T \vdash \varphi \iff \NN \models \exists d\,\mathsf{Dim}_T(d,\ulcorner\varphi\urcorner) \]
     ovvero $T$ dimostra $\varphi$ se e solo se esiste un codice $d$ di una dimostrazione di $\varphi$ in $T$.
 \end{lemma}
 
 \begin{proof}
-    In primis diciamo come è codificata una dimostrazione, sappiamo che $T \vdash \varphi$ se esiste una sequenza finita di formule - anche se tecnicamente per noi è sempre una sequenza finita di sequenti\footnote{Per essere precisi la codifica vera nel nostro sistema $\textsf{ND}$ è la codifica di un sequente $\sigma_i = \ulcorner \varphi_1, \varphi_2, \ldots, \varphi_n \vdash \psi \urcorner$,
-    che possiamo codificare come $\langle \langle \ulcorner \varphi_1\urcorner, \ulcorner\varphi_2\urcorner, \ldots, \ulcorner\varphi_n\urcorner\rangle, \ulcorner\psi\urcorner\rangle$, codificato un sequente in questo modo, codifichiamo la dimostrazione come lista di sequenti $\ulcorner \sigma_1, \sigma_2, \ldots, \sigma_m\urcorner$ come $\langle \ulcorner\sigma_1\urcorner, \ulcorner\sigma_2\urcorner, \ldots, \ulcorner\sigma_m\urcorner\rangle$ così abbiamo codificato esattamente la nostra definizione di dimostrazione.} -
-    con l'ultima che è $\varphi$ e quelle precedenti che sono o assiomi o si ottengono da quelle prima usando le regole di inferenza del sistema di deduzione naturale $\textsf{ND}$, quindi una dimostrazione $\delta$ la si può codificare come la lista delle formule che la compongono:
-    \[ \ulcorner \delta\urcorner := \langle \ulcorner\delta_1\urcorner, \ulcorner\delta_2\urcorner, \ldots, \ulcorner\delta_n\urcorner \rangle \]
-    dove $\delta_n$ è la formula finale, ovvero $\varphi$.\\
-    Ora possiamo definire $\mathsf{Dim}_T(d,x)$ traducendo il significato della definizione di dimostrazione in una definizione PR:
+    In primis diciamo come è codificata una dimostrazione: dire che $T \vdash \varphi$ significa che esiste una sequenza finita di sequenti $\sigma_1, \sigma_2, \ldots, \sigma_n$, con $\sigma_n = T \vdash \varphi$, e per ogni $i < n$, $\sigma_i$ si ottiene dai precedenti usando le regole di inferenza del sistema di deduzione naturale $\textsf{ND}$, in questo caso
+    usiamo $\textsf{ND}_{\to,\bot,\forall,=}$, per comodità (è equivalente a quello usato in precedenza). Inoltre ogni sequente $S \vdash \psi$ indica per definizione che esiste un sottoinsieme finito di formule di $S$ dalle quali si arriva a $\psi$ iterando, per un numero finito di passaggi le regole di inferenza.\\
+    A questo punto ha senso codificare un sequente $S \vdash \psi$ come la lista dell'insieme delle formule $\varphi_1, \ldots, \varphi_n$ usate per ottenere $\psi$:
+    \[ \ulcorner S \vdash \psi\urcorner := \langle \langle \ulcorner \varphi_1\urcorner, \ulcorner\varphi_2\urcorner, \ldots, \ulcorner\varphi_n\urcorner\rangle, \ulcorner\psi\urcorner\rangle \]
+    e quindi naturalmente possiamo codificare una dimostrazione come la lista dei codici dei sequenti:
+    \[ \ulcorner \sigma_1, \sigma_2, \ldots, \sigma_n\urcorner := \langle \ulcorner\sigma_1\urcorner, \ulcorner\sigma_2\urcorner, \ldots, \ulcorner\sigma_n\urcorner\rangle \]
+    Ora possiamo definire il predicato PR $\mathsf{Dim}_T(d,x)$, che dice ``$d$ è un codice di una dimostrazione di $x$ in $T$'' traducendo il significato della definizione di dimostrazione in una definizione PR:
     \begin{align*}
-        \textsf{Dim}_T(d,x) &:= \nth(d,\length(d) \dotminus 1) = x \\
+        \textsf{Dim}_T(d,x) &:= \nth(d,\length(d)) = x \\
                             &\land \forall i < \length(d) \; \text{``$\nth(d,i)$ è o un assioma di $T$ o segue da quelli prima...''}
     \end{align*}
-    ora ``$\nth(d,i)$ è un assioma'' è esprimibile come predicato PR, perché per ipotesi $T$ è ricorsivamente assiomatizzabile, quindi esiste una funzione ricorsiva totale da mettere in quel posto;
-    per ``$\nth(d,i)$ segue dalle formule prima usando le regole di inferenza'' basta scrivere un lungo OR che esprima tutti le possibili applicazioni delle regole di inferenza, ad esempio:
+    cioè la dimostrazione finisce con la formula codificata da $x$, e ogni passo della dimostrazione è o un assioma o segue da quelli prima usando le regole di inferenza.\\
+    ``$\nth(d,i)$ è un assioma'' è esprimibile come predicato PR, perché per ipotesi $T$ è ricorsivamente assiomatizzabile, quindi esiste una funzione ricorsiva totale da mettere in quel posto.\footnote{In verità questo ci dà una funzione ricorsiva totale, non necessariamente PR, ma per l'osservazione sulla notazione sotto, non serve davvero che sia PR, basta che sia ricorsiva totale.
+    Tuttavia si può aggiustare rendendolo PR in vari modi, ma non lo farò.}
+    ``$\nth(d,i)$ segue dalle formule prima usando le regole di inferenza'' basta scrivere un lungo OR che esprima, per tutte le possibili regole di inferenza, che $\nth(d,i)$ si ottiene da quella regola applicata a formule che appaiono prima, ad esempio:
     \[ \text{In}_{\to} \frac{T \vdash \varphi \quad T \vdash \varphi \to \psi}{T \vdash \psi} \]
     equivale a:
-    \[ \exists j < i \; \exists t < i \; \nth(d,t) = \textsf{implica}(\nth(d,j), \nth(d,i)) \]
-    dove $\textsf{implica}$ è la funzione PR che prende i codici di due formule e restituisce il codice della formula che è l'implicazione tra le due - cioè $\langle \#\to, \nth(d,j), \nth(d,i)\rangle$ - e tutti i casi 
-    si fanno così (l'unico caso più complicato è quello di In$_\forall$ dove bisogna controllare che la variabile libera sia effettivamente libera nelle premesse e quindi introdurre $\textsf{free}(y,i) := ``\text{$x_i$ è libera in $y$}''$).
-    Abbiamo quindi definito $\textsf{Dim}_T(d,x)$ come predicato PR via ricorsione e casi.
+    \[ \exists j < i \; \exists t < i \; \underbrace{\nth(d,t)}_{= \varphi \to \psi} = \textsf{implica}(\underbrace{\nth(d,j)}_{= \varphi}, \underbrace{\nth(d,i)}_{= \psi}) \]
+    dove $\textsf{implica}$ è la funzione PR che prende i codici di due formule e restituisce il codice della formula che è l'implicazione tra le due - cioè $\langle \#\to, \nth(d,j), \nth(d,i)\rangle$ - e questo è il modo giusto di dire che $\nth(d,i)$ si ottiene da El$_\to$.
+    Analogamente gli altri casi, facendo attenzione al caso di In$_\forall$ dove bisogna controllare che la variabile libera sia effettivamente libera nelle premesse, e quindi introdurre $\textsf{free}(y,i) :=$ ``$x_i$ è libera in $y$''.
 \end{proof}
+
+\begin{notation}
+    Abbiamo definito $\mathsf{Dim}_T(d,x)$ come predicato PR, ma lo useremo equivalentemente anche per esprimere la formula associata al predicato, che esprime ``$d$ è un codice di una dimostrazione di $x$ in $T$'',
+    che è di classe $\Sigma_1^0$.
+\end{notation}
+
+\begin{remark}
+    La formula $\textsf{free}(y,i)$, che dice che $x_i$ è libera in $y$, 
+\end{remark}
 
 \subsection{Primo teorema di incompletezza}
 
@@ -2162,19 +2158,27 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
     allora $T$ è incompleta.
 \end{theorem}
 
+\textcolor{MidnightBlue}{Lo scopo è costruire una formula $\gamma$ che dica ``io non sono dimostrabile in $T$'', ovvero una formula che per $T$ è proprio equivalente al fatto che non esiste una dimostrazione per lei.}
+
 \begin{proof}
-    Lo scopo è costruire una formula $\gamma$ che dica ``io non sono dimostrabile in $T$'', ovvero una formula che per $T$ è proprio equivalente al fatto che non esiste una dimostrazione per lei:
-    \[ T \vdash \gamma \leftrightarrow \neg \,\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) \]
-    Per costruire $\gamma$ basta applicare il lemma di diagonalizzazione alla formula $\varphi(x) := \neg \,\exists d\,\mathsf{Dim}_T(d,x)$, e otteniamo $\gamma$, che per il lemma di diagonalizzazione
-    soddisfa esattamente la condizione di cui sopra. Vediamo ora che $T$ non dimostra né $\gamma$ né $\neg \,\gamma$.
+    Sia $\varphi(x) := \neg \,\exists d \, \mathsf{Dim}_T(d,x)$, ovvero ``$x$ non è dimostrabile per $T$'', usando il lemma di diagonalizzazione di Gödel troviamo $\gamma$ tale che:
+    \[ \mathsf{Q} \vdash \gamma \leftrightarrow \neg \,\exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) \]
+    distinguiamo due casi.
     \begin{itemize}
-        \item Supponiamo $T \vdash \gamma$, allora esiste il codice di una dimostrazione di $\gamma$ in $T$, chiamiamolo $\delta$,
-        quindi $\textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ è un predicato PR vero, che per il lemma di rappresentazione di funzioni ricorsive totali in $\mathsf{Q}$,
-        significa che $\mathsf{Q} \vdash \textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$, e quindi $T \vdash \textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ e per In$_\exists$ si ha $T \vdash \exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$;
-        ma $T$ dimostra anche $\gamma$, che per $T$ equivale a $\neg \,\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$, quindi $T$ dimostra sia $\textsf{Dim}_T(\ulcorner\delta\urcorner, \ulcorner\gamma\urcorner)$ che $\neg \,\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$ $\lightning$, perché $T$ è coerente per ipotesi (ii).
-        \item Supponiamo $T \vdash \neg \,\gamma$, allora, doppia negazione, $T$ dimostra $\exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$, ma allora per (ii) $\NN \models \exists d\,\mathsf{Dim}_T(d,\ulcorner\gamma\urcorner)$,
-        che per la semantica di Tarski equivale a dire che $\exists d \in \NN \; \NN \models \mathsf{Dim}_T(\ol d, \ulcorner\gamma\urcorner)$; segue che $d$ codifica una dimostrazione di $\gamma$ in $T$, per cui $T \vdash \gamma$, assurdo.
-    \end{itemize} 
+        \item Assumiamo $T \vdash \gamma$, allora:
+        \begin{align*}
+            T \vdash \gamma &\iff \NN \models \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) &&(\text{lemma}) \\
+                            &\iff \mathsf{Q} \vdash \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) &&(\Sigma_1^0) \\
+                            &\iff \mathsf{Q} \vdash \neg \,\gamma && (\text{equivalenza di $\gamma$}) \\
+                            &\implies T \vdash \neg \,\gamma \; \lightning && (T \vdash \mathsf{Q})
+        \end{align*} 
+        \item Assumiamo $T \vdash \neg \,\gamma$, allora:
+        \begin{align*}
+            T \vdash \neg \,\gamma &\iff T \vdash \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) && (\text{equivalenza di $\gamma$}) \\
+                                   &\implies \NN \models \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) && (\NN \models T) \\
+                                   &\iff T \vdash \gamma \; \lightning && (\text{lemma})
+        \end{align*}
+    \end{itemize}
 \end{proof}
 
 Ora questo teorema è un po' più forte del necessario e si possono indebolire le ipotesi per ottenere il teorema di Rosser.
@@ -2200,39 +2204,70 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \begin{definition}[Teoria decidibile]
     Una teoria $T$ è \vocab{decidibile} se l'insieme dei codici delle formule dimostrate da $T$ è decidibile, ovvero esiste una funzione ricorsiva totale $P$ tale che:
     \[ \{\ulcorner\sigma\urcorner : T \vdash \sigma\} = \{ i \in \NN : P(i) = 0 \} \]
-    analogamente si può definire una teoria \vocab{semidecidibile}.
+    analogamente si può definire una teoria \vocab{semidecidibile} usando una funzione ricorsiva parziale.
 \end{definition}
 
+Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo che o termina se e solo se la formula in input è dimostrata da $T$, oppure termina sempre e dice 0 se e solo se la formula in input è dimostrata da $T$.
+
+\begin{remark}[Ricorsivamente assiomatizzabile $\implies$ semidecidibile]
+    Se $T$ è semidecidibile, allora il predicato di dimostrabilità $\mathsf{Dim}_T$ è ricorsivo totale per il lemma. Per cui posso definire i codici delle conseguenze di $T$ come:
+    \[ \{\ulcorner\sigma\urcorner : T \vdash \sigma\} = \{\ulcorner\sigma\urcorner : \exists d \, \mathsf{Dim}_T(d,\ulcorner\sigma\urcorner)\} \]
+    dove sto considerando la formula, di classe $\Sigma_1^0$, associata al predicato di dimostrazione, e quindi $T$ è decidibilmente assiomatizzabile.
+    Ovviamente varrà anche che se $T$ è decidibilmente assiomatizzabile, allora $T$ è semidecidibile.
+\end{remark}
+
 \begin{proposition}[Completamento decidibile]
-    Sia $T$ una teoria coerente e decidibile, allora esiste un'estensione coerente $T'$ di $T$ che è completa e decidibile.
+    Sia $T$ una $L_{\text{arit}}$-teoria coerente e decidibile, allora esiste un'estensione coerente $T'$ di $T$ che è completa e decidibile.
 \end{proposition}
 
 \begin{proof}
-    Per ipotesi possiamo fissare un'enumerazione delle formule chiuse $\{\varphi_i\}_{i\in\NN}$ e definiamo per ricorsione:
-    \[ T_0:=T \]
-    \[ T_{i+1}:=\begin{cases}
-        T_i\cup\{\varphi_i\} & \text{se $T_i\nvdash\neg \,\varphi_i$}\\
-        T_i & \text{altrimenti}
+    Definiamo la seguente successione di $L_{\text{arit}}$-teorie:
+    \[ T_0 := T \]
+    \[ T_{i+1} := \begin{cases}
+        T_i \cup \{\varphi\} & \text{se $i = \ulcorner\varphi\urcorner$ e $T_i \nvdash \neg \,\varphi$} \\
+        T_i \cup \{\top\} & \text{altrimenti}
     \end{cases} \]
-    cioè in ogni step se la $i$-esima teoria non dimostra la negazione dell'$i$-esima formula, allora la aggiungo, altrimenti lascio tutto com'è.\\
-    Ora, ponendo $T' := \bigcup_{i\in\NN} T_i$, si verifica che $T'$ è un'estensione di $T$ coerente, infatti se $T'$ fosse incoerente, allora $T' \vdash \bot$,
-    quindi per compattezza esisterebbe un sottoinsieme finito $T'' \subseteq T'$ tale che $T'' \vdash \bot$, per cui esiste un $i_0$ tale che $T'' \subseteq T_{i_0}$, ma allora $T_{i_0} \vdash \bot$,
-    che è assurdo perché si verifica per induzione che ogni $T_i$ è coerente.\\
-    $T'$ è decidibile, presa $\{\sigma_j\}_{j \in \NN}$ un'enumerazione di tutte le $L_{\text{arit}}$-formule, e fissato un algoritmo che decide se una formula è dimostrata da $T$ o no,
-    basta testare, per $\sigma = \sigma_k$, per qualche $k > 0$, se $T_k \vdash \neg \,\sigma$ o no, e questo posso farlo perché $T_k = T \cup \{\varphi_0, \ldots, \varphi_{k-1}\}$ e:
-    \[ T_k \vdash \neg \,\sigma \iff T \vdash (\varphi_0 \land \ldots \land \varphi_{k-1}) \to \neg \,\sigma\]
-    e questo è decidibile per ipotesi, se il risultato dell'algoritmo è falso, allora $T_{k+1} = T_k \cup \{\sigma\}$ e $T' \vdash \sigma$, altrimenti $T_{k+1} = T_k$ e $T' \vdash \neg \,\sigma$. Nel caso $k = 0$ la tesi è banale perché $T_0 = T$ è decidibile per ipotesi.\\
-    Infine, $T'$ è completa, fissata una enumerazione $\{\varphi_i\}_{i\in\NN}$ di tutte le $L_{\text{arit}}$-formule, allora, per ogni $\varphi_i$, si ha che 
-    o $T_i \nvdash \neg \,\varphi_i$, e allora $T_{i+1} \vdash \varphi_i$, oppure $T_i \vdash \neg \,\varphi_i$, nel primo caso ottengo $T' \vdash \varphi_i$, nel secondo caso $T' \vdash \neg \,\varphi_i$, quindi $T'$ è completa.
+    definiamo $T' := \bigcup_{i \in \NN} T_i$ e vediamo che è coerente, completa e decidibile.
+    \begin{itemize}
+        \item $T'$ è \emph{coerente}: se $T'$ fosse incoerente, allora per compattezza potremmo ridurci a $T_{i_0} \vdash \bot$ per qualche $i_0$; osserviamo tuttavia che 
+        $T_i$ è coerente per ogni $i$: $T_0$ è coerente per ipotesi, e se $T_i$ è coerente, allora se $T_{i+1} = T_i \cup \{\top\}$ questa è in automatico coerente,
+        altrimenti $T_{i+1} = T_i \cup \{\varphi\} \vdash \bot$, quindi per In$_\neg$ $T_i \vdash \neg \,\varphi$, assurdo per la definizione di $T_{i+1}$.
+        \item $T'$ è \emph{completa}: ogni formula chiusa $\varphi$ è codificata da un numero $i$, a questo punto si danno due casi: o $T_i \nvdash \neg \,\varphi$, e allora $T_{i+1} = T_i \cup \{\varphi\}$, quindi $T' \vdash \varphi$;
+        oppure $T_i \vdash \neg \,\varphi$, e allora $T' \vdash \neg \,\varphi$.
+        \item $T'$ è \emph{decidibile}: per ipotesi $T$ è decidibile, quindi esiste $P$ ricorsiva totale tale che $P(i) = 0$ se e solo se $T$ dimostra la formula codificata da $i$. A questo punto, per ogni formula $\varphi$, preso $k = \ulcorner\varphi\urcorner$,
+        per stabilire se $T' \vdash \varphi$ basta controllare se $T_k \nvdash \neg \,\varphi$, che equivale a $T \cup \{\psi_1, \ldots, \psi_n\} \nvdash \neg \,\varphi$, ovvero, per In$_\to$:
+        \[ T \nvdash (\psi_1 \land \ldots \land \psi_n) \to \neg \,\varphi \]
+        preso il codice della cosa destra di $\vdash$ è sufficiente controllare che $P$ di quel codice sia diverso da 0, in tal modo $T' \vdash \varphi$. Controllare che $P(m) \ne 0$ è decidibile in quanto è il complementare di $\{P(i) = 0\}$, quindi esisterà una funzione decidibile di cui è luogo di zero ($1 \dotminus P(i)$). 
+    \end{itemize}
 \end{proof}
+
+\begin{remark}[Completamento decidibile in un qualsiasi linguaggio finito]
+    Notare che nella proposizione precedente non abbiamo usato nulla di $L_{\text{arit}}$, se non il fatto che sia un linguaggio finito, per cui posso fissare una numerazione di Gödel.
+    Quindi la proposizione è vera per qualsiasi $L$ finito, adattando le definizioni di decidibilità e assiomatizzabilità al linguaggio $L$.
+\end{remark}
+
+\begin{remark}[Semidecidibile $\implies$ ricorsivamente assiomatizzabile]
+    Se $T$ è semidecidibile, allora imitando la dimostrazione del teorema di Craig, possiamo costruire una teoria $T'$ decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti, e quindi $T$ è ricorsivamente assiomatizzabile.
+    Ricapitolando abbiamo che:
+    $$\begin{tikzcd}
+        & {\text{ricorsivamente assiomatizzabile}} \\
+        {\text{semidecidibile}} & {} \\
+        & {\text{decidibilmente assiomatizzabile}}
+        \arrow[Leftrightarrow, from=1-2, to=3-2]
+        \arrow[Rightarrow, from=2-1, to=1-2]
+        \arrow[Rightarrow, from=3-2, to=2-1]
+\end{tikzcd}$$
+\end{remark}
+
+Vediamo tre facili applicazioni dell'ultima cosa.
 
 \begin{corollary}[$\mathsf Q$ e $\mathsf{PA}$ non sono decidibili]
     $\mathsf Q$ e $\mathsf{PA}$ non sono decidibili.
 \end{corollary}
 
 \begin{proof}
-    Se $\mathsf Q$ fosse decidibile, allora per la proposizione precedente esisterebbe un'estensione coerente, completa e decidibile (in particolare ricorsivamente enumerabile e quindi ricorsivamente assiomatizzabile) di $\mathsf Q$,
-    che è impossibile per il teorema di Rosser. Idem per $\mathsf{PA}$, che estende $\mathsf Q$.
+    Se $\mathsf Q$ fosse decidibile, allora, per la proposizione precedente, esisterebbe un'estensione coerente, completa e decidibile di $\mathsf Q$.
+    In particolare, tale estensione sarebbe ricorsivamente assiomatizzabile, e questo è impossibile per il teorema di Rosser. Stesso identico discorso per $\mathsf{PA}$, che estende $\mathsf Q$.
 \end{proof}
 
 \begin{corollary}[Indecidibilità della teoria vuota]
@@ -2240,10 +2275,11 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \end{corollary}
 
 \begin{proof}
-    Supponiamo per assurdo che $T = \varnothing$ sia decidibile, poiché $\mathsf{Q}$ è finitamente assiomatizzabile vale che:
-    \[ \mathsf{Q} \vdash \varphi \iff T = \varnothing \vdash \mathsf{Q}1 \land \ldots \land \mathsf{Q}7 \to \varphi \]
-    ovvero una formula è conseguenza di $\mathsf{Q}$ se e solo se l'implicazione con premessi gli assiomi di $\mathsf{Q}$ è conseguenza della teoria vuota;
-    ma allora la decidibilità di $T$ implica la decidibilità di $\mathsf{Q}$ (e di ogni altra $L_{\text{arit}}$-teoria finitamente assiomatizzabile), assurdo per il corollario precedente.
+    Supponiamo per assurdo che sia decidibile l'insieme:
+    \[ \{\ulcorner\sigma\urcorner : \;\vdash \sigma\} \]
+    osserviamo che l'insieme, che abbiamo visto essere non decidibile, dei codici delle formule vere in $\mathsf{Q}$ si scrive come:
+    \[ \{\ulcorner\varphi\urcorner : \mathsf{Q} \vdash \varphi\} = \{\ulcorner\varphi\urcorner : \vdash (\mathsf{Q}1 \land \ldots \land \mathsf{Q}7) \to \varphi\} \]
+    Per cui se ci fosse un algoritmo che decide se una formula è dimostrabile senza assiomi, allora potremmo usarlo per decidere se una formula è dimostrata da $\mathsf{Q}$, assurdo.
 \end{proof}
 
 \begin{corollary}[Insieme delle verità aritmetiche]
@@ -2253,7 +2289,7 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \end{corollary}
 
 \begin{proof}
-    È la teoria completa e coerente $\mathrm{Th}(\NN)$, che estende $\mathsf Q$, se fosse ricorsivamente enumerabile, sarebbe un controesempio al teorema di Rosser.
+    Tale insieme è proprio l'insieme dei codici delle formule in $\Th(\NN;L_{\text{arit}})$, se fosse decidibile sarebbe un'estensione coerente, completa e ricorsivamente assiomatizzabile di $\mathsf{Q}$, assurdo per il primo teorema di incompletezza.
 \end{proof}
 
 \subsection{Secondo teorema di incompletezza}
