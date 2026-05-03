@@ -1071,7 +1071,7 @@ Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evalua
     \[ u_0(s_0^1(\ulcorner f \urcorner, n)) = u_1(\ulcorner f \urcorner, n) = f(n) \]
     essendo $s_0^1$ PR, è sufficiente definire:
     \[ \texttt k f(n) := s_0^1(\ulcorner f \urcorner, n) \]
-    che è ricorsiva totale.\footnote{Notare che provare a scegliere $\kappa f(n) := \kappa \circ f(n)$ non funziona perché la funzione ottenuta non è necessariamente totale.}
+    che è ricorsiva totale.\footnote{Notare che provare a scegliere $\texttt{k}\circ f(n) := \texttt{k} \circ f(n)$ non funziona perché la funzione ottenuta non è necessariamente totale.}
 \end{soln}
 
 \begin{remark}[Eager evaluation vs lazy evaluation]
@@ -1620,7 +1620,7 @@ sia enumerabile - vedremo più avanti una numerazione di Gödel che ci permetter
 esista - e che sia compatibile con l'operazione di sostituire un numero al posto di una variabile -, quindi l'insieme $\{\ulcorner \varphi \urcorner : \NN \models \varphi\}$ non è semidecidibile.
 
 \begin{corollary}[Teorema di indecidibilità di Church]
-    L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi, \text{$\varphi$ chiusa}\}$ non è semidecidibile.
+    L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi\}$ non è semidecidibile.
 \end{corollary}
 
 \textcolor{MidnightBlue}{L'idea è, essendo $H_1$ semidecidibile, allora, per quanto visto, è di classe $\Sigma_1^0$, e quindi esiste una formula $\varphi(x,y) \in \Sigma_1^0$
@@ -1955,6 +1955,7 @@ La scelta concreta dei numeri è irrilevante: ciò che conta è che le operazion
     \begin{itemize}
         \item $L_{\text{arit}}$-termini:
         \[ \ulcorner 0\urcorner := \langle\#0\rangle \qquad \ulcorner s(t)\urcorner := \langle\#s,\ulcorner t\urcorner\rangle \]
+        \[ \ulcorner x_i\urcorner := \langle\#x_i\rangle \]
         \[ \ulcorner t_1+t_2\urcorner := \langle\#+,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \qquad \ulcorner t_1\cdot t_2\urcorner := \langle\#\cdot,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle \]
         \item $L_{\text{arit}}$-formule:
         \[ \ulcorner t_1=t_2\urcorner := \langle\#=,\ulcorner t_1\urcorner,\ulcorner t_2\urcorner\rangle\qquad \]
@@ -1962,7 +1963,7 @@ La scelta concreta dei numeri è irrilevante: ciò che conta è che le operazion
     \end{itemize}
 \end{definition}
 
-Abbiamo così ottenuto una numerazione iniettiva di ogni $L_{\text{arit}}$-termine e di ogni $L_{\text{arit}}$-formula.
+Abbiamo così ottenuto una numerazione iniettiva di ogni $L_{\text{arit}}$-termine e di ogni $L_{\text{arit}}$-formula. In particolare le mappe $\cdot \mapsto \ulcorner\cdot\urcorner$ sono iniettive e PR sia per i termini che per le formule.
 Il nostro obiettivo sarà dimostrare il seguente lemma.
 
 \begin{lemma}[Lemma di diagonalizzazione di Gödel]
@@ -1973,7 +1974,7 @@ Il nostro obiettivo sarà dimostrare il seguente lemma.
 \textcolor{MidnightBlue}{Cioè per ogni formula con una variabile libera ce n'è un'altra che è vera se e solo se è vera ``$\varphi(\psi)$".}
 Di fatto il lemma ci dà una specie di teorema di punto fisso per le formule non chiuse - sennò la tesi è banale; cioè per ogni formula ne esiste un'altra 
 la cui validità è equivalente alla validità della proprietà che la prima formula esprime valida per la seconda. In altre parole, c'è sempre una formula che dice di sé stessa che è vera se e solo se è vera una certa proprietà per lei.
-La proprietà che per cui ci interesserà usare il lemma è ``io sono dimostrabile''.\\
+La proprietà che per cui ci interesserà usare il lemma è ``io sono dimostrabile''.
 Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra codifica, da cui la necessità di poter decidere se un numero è codice di una formula o meno.
 
 \begin{remark}[$n$ è il codice di una formula]
@@ -2081,7 +2082,7 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
 \end{definition}
 
 \begin{exercise}[Teorema di Craig]
-    Sia $T := \{\varphi : P(\ulcorner\varphi\urcorner) \ne \bot\}$ ricorsivamente assiomatizzabile, allora esiste una teoria decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti.
+    Sia $T$ ricorsivamente assiomatizzabile, allora esiste una teoria decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti.
 \end{exercise}
 
 \begin{soln}
@@ -2097,16 +2098,20 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
     si verifica banalmente, al livello sintattico, che $T$ è equivalente a $T'$.
     Inoltre, se poniamo $h(n) := \ulcorner\varphi_n'\urcorner$, la funzione $h : \NN \to \NN$ è ricorsiva totale (si ottiene da $f$ componendo con operazioni sintattiche ricorsive, cioè codifica e congiunzione iterata\footnote{Se avessimo voglia di scrivere
     la funzione PR $\textsf{Conj}(a,b) := \ulcorner\varphi_a \land \varphi_b\urcorner$, di definire $H(1,k) := k, H(n+1,k) := \textsf{Conj}(H(n,k),k)$ e di definire $h(n) := H(n,f(n))$, allora otterremo addirittura che $h$ è PR.}).
-    Quindi possiamo definire una funzione ricorsiva totale $g$ che controlla se un elemento è nell'immagine di $h$:
+    Quindi possiamo definire una funzione ricorsiva totale $g$ che controlla se un elemento è nell'immagine di $h$,
+    moralmente facendone una ``ricerca limitata'':
     \[ g(z) := \begin{cases}
         0 & \text{se $\exists m \leq z \; h(m) = z$} \\
         1 & \text{altrimenti}
     \end{cases} \]
-    che è totale (definizione per casi su insieme totale - motivo per cui limitiamo la ricerca ai primi $z$) e vale che $T' = \{z : g(z) = 0\}$.
+    che è totale, anzi PR (definizione per casi su insieme totale - motivo per cui limitiamo la ricerca ai primi $z$) e vale che $T' = \{z : g(z) = 0\}$.\\
+    \textcolor{MidnightBlue}{Moralmente abbiamo codificato nell'assioma stesso l'$x$ che codice quell'assioma, ripetendolo l'AND $x$ volte.}
 \end{soln}
 
 \begin{notation}
-    D'ora in poi, intenderemo equivalentemente le espressioni ricorsivamente assiomatizzabile e decidibilmente assiomatizzabile.
+    D'ora in poi, intenderemo equivalentemente le espressioni ricorsivamente assiomatizzabile e decidibilmente assiomatizzabile. E di fatto 
+    col teorema di Craig abbiamo addirittura che ogni teoria ricorsivamente assiomatizzabile è equivalente ad una teoria con insieme di assiomi PR,
+    cosa che servirà più avanti.
 \end{notation}
 
 \begin{lemma}[Predicato di dimostrazione]
@@ -2128,8 +2133,7 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
                             &\land \forall i < \length(d) \; \text{``$\nth(d,i)$ è o un assioma di $T$ o segue da quelli prima...''}
     \end{align*}
     cioè la dimostrazione finisce con la formula codificata da $x$, e ogni passo della dimostrazione è o un assioma o segue da quelli prima usando le regole di inferenza.\\
-    ``$\nth(d,i)$ è un assioma'' è esprimibile come predicato PR, perché per ipotesi $T$ è ricorsivamente assiomatizzabile, quindi esiste una funzione ricorsiva totale da mettere in quel posto.\footnote{In verità questo ci dà una funzione ricorsiva totale, non necessariamente PR, ma per l'osservazione sulla notazione sotto, non serve davvero che sia PR, basta che sia ricorsiva totale.
-    Tuttavia si può aggiustare rendendolo PR in vari modi, ma non lo farò.}
+    ``$\nth(d,i)$ è un assioma'' è esprimibile come predicato PR, perché per ipotesi $T$ è ricorsivamente assiomatizzabile, quindi esiste una funzione ricorsiva totale - anzi PR - da mettere in quel posto.
     ``$\nth(d,i)$ segue dalle formule prima usando le regole di inferenza'' basta scrivere un lungo OR che esprima, per tutte le possibili regole di inferenza, che $\nth(d,i)$ si ottiene da quella regola applicata a formule che appaiono prima, ad esempio:
     \[ \text{In}_{\to} \frac{T \vdash \varphi \quad T \vdash \varphi \to \psi}{T \vdash \psi} \]
     equivale a:
@@ -2138,13 +2142,31 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
     Analogamente gli altri casi, facendo attenzione al caso di In$_\forall$ dove bisogna controllare che la variabile libera sia effettivamente libera nelle premesse, e quindi introdurre $\textsf{free}(y,i) :=$ ``$x_i$ è libera in $y$''.
 \end{proof}
 
+\begin{remark}
+    Notare: abbiamo usato un solo $\nth$ come se una dimostrazione fosse una lista di formule, ma in realtà è una lista di sequenti, quindi per essere precisissimi,
+    dovremmo aggiungere un secondo layer di $\nth$ per accedere alla formula finale del sequente.
+\end{remark}
+
 \begin{notation}
     Abbiamo definito $\mathsf{Dim}_T(d,x)$ come predicato PR, ma lo useremo equivalentemente anche per esprimere la formula associata al predicato, che esprime ``$d$ è un codice di una dimostrazione di $x$ in $T$'',
     che è di classe $\Sigma_1^0$.
 \end{notation}
 
 \begin{remark}
-    La formula $\textsf{free}(y,i)$, che dice che $x_i$ è libera in $y$, 
+    La formula $\textsf{free}(n,i)$, che dice che $x_i$ è libera in $n$, è un predicato PR che può essere definito per ricorsione - sulla lunghezza della formula codificata - tuttavia ci serve prima una formula 
+    apposta per controllare se la variabile è libera o meno in un $L_{\text{arit}}$-termine, e possiamo definirla come segue:
+    \begin{align*}
+        \textsf{free\_term}(n,i) :=& (\length(n) = 1 \land \nth(n,0) = \#x_i) \\
+                             &\lor (\length(n) = 2 \land \nth(n,0) = \#s \land \textsf{free}(\nth(n,1),i)) \\
+                             &\lor (\length(n) = 3 \land \nth(n,0) = \#+ \land (\textsf{free}(\nth(n,1),i) \lor \textsf{free}(\nth(n,2),i))) \\
+                             &\lor (\length(n) = 3 \land \nth(n,0) = \#\cdot \land (\textsf{free}(\nth(n,1),i) \lor \textsf{free}(\nth(n,2),i)))
+    \end{align*}
+    a questo punto, usando $\textsf{free\_term}$, possiamo definire $\textsf{free}(n,i)$:
+    \begin{align*}
+        \textsf{free}(n,i) :=& (\length(n) = 3 \land \nth(n,0) = \#= \land (\textsf{free\_term}(\nth(n,1),i) \lor \textsf{free\_term}(\nth(n,2),i))) \\
+                             &\lor (\length(n) = 3 \land \nth(n,0) = \#\to \land (\textsf{free}(\nth(n,1),i) \lor \textsf{free}(\nth(n,2),i))) \\
+                             &\lor (\length(n) = 3 \land \nth(n,0) = \#\forall \land (\textsf{free}(\nth(n,2),i) \land \nth(n,1) \ne i + 8))
+    \end{align*}
 \end{remark}
 
 \subsection{Primo teorema di incompletezza}
@@ -2162,19 +2184,19 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
 
 \begin{proof}
     Sia $\varphi(x) := \neg \,\exists d \, \mathsf{Dim}_T(d,x)$, ovvero ``$x$ non è dimostrabile per $T$'', usando il lemma di diagonalizzazione di Gödel troviamo $\gamma$ tale che:
-    \[ \mathsf{Q} \vdash \gamma \leftrightarrow \neg \,\exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) \]
+    \[ \mathsf{Q} \vdash \gamma \leftrightarrow \neg \,\exists d \, \mathsf{Dim}_T(d,\overline{\ulcorner\gamma\urcorner}) \]
     distinguiamo due casi.
     \begin{itemize}
         \item Assumiamo $T \vdash \gamma$, allora:
         \begin{align*}
             T \vdash \gamma &\iff \NN \models \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) &&(\text{lemma}) \\
-                            &\iff \mathsf{Q} \vdash \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) &&(\Sigma_1^0) \\
+                            &\iff \mathsf{Q} \vdash \exists d \, \mathsf{Dim}_T(d,\overline{\ulcorner\gamma\urcorner}) &&(\Sigma_1^0) \\
                             &\iff \mathsf{Q} \vdash \neg \,\gamma && (\text{equivalenza di $\gamma$}) \\
                             &\implies T \vdash \neg \,\gamma \; \lightning && (T \vdash \mathsf{Q})
         \end{align*} 
         \item Assumiamo $T \vdash \neg \,\gamma$, allora:
         \begin{align*}
-            T \vdash \neg \,\gamma &\iff T \vdash \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) && (\text{equivalenza di $\gamma$}) \\
+            T \vdash \neg \,\gamma &\iff T \vdash \exists d \, \mathsf{Dim}_T(d,\overline{\ulcorner\gamma\urcorner}) && (\text{equivalenza di $\gamma$}) \\
                                    &\implies \NN \models \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) && (\NN \models T) \\
                                    &\iff T \vdash \gamma \; \lightning && (\text{lemma})
         \end{align*}
@@ -2210,9 +2232,9 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo che o termina se e solo se la formula in input è dimostrata da $T$, oppure termina sempre e dice 0 se e solo se la formula in input è dimostrata da $T$.
 
 \begin{remark}[Ricorsivamente assiomatizzabile $\implies$ semidecidibile]
-    Se $T$ è semidecidibile, allora il predicato di dimostrabilità $\mathsf{Dim}_T$ è ricorsivo totale per il lemma. Per cui posso definire i codici delle conseguenze di $T$ come:
+    Se $T$ è ricorsivamente assiomatizzabile, allora abbiamo il predicato PR $\mathsf{Dim}_T$, che è quindi ricorsivo totale. Per cui posso definire i codici delle conseguenze di $T$ come:
     \[ \{\ulcorner\sigma\urcorner : T \vdash \sigma\} = \{\ulcorner\sigma\urcorner : \exists d \, \mathsf{Dim}_T(d,\ulcorner\sigma\urcorner)\} \]
-    dove sto considerando la formula, di classe $\Sigma_1^0$, associata al predicato di dimostrazione, e quindi $T$ è decidibilmente assiomatizzabile.
+    dove sto considerando la formula, di classe $\Sigma_1^0$, associata a esistenziale + predicato di dimostrazione, e quindi $T$ è decidibilmente assiomatizzabile.
     Ovviamente varrà anche che se $T$ è decidibilmente assiomatizzabile, allora $T$ è semidecidibile.
 \end{remark}
 
@@ -2247,7 +2269,7 @@ Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo
 \end{remark}
 
 \begin{remark}[Semidecidibile $\implies$ ricorsivamente assiomatizzabile]
-    Se $T$ è semidecidibile, allora imitando la dimostrazione del teorema di Craig, possiamo costruire una teoria $T'$ decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti, e quindi $T$ è ricorsivamente assiomatizzabile.
+    Se $T$ è semidecidibile, allora imitando esattamente la dimostrazione del teorema di Craig, possiamo costruire una teoria $T'$ decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti, e quindi $T$ è ricorsivamente assiomatizzabile.
     Ricapitolando abbiamo che:
     $$\begin{tikzcd}
         & {\text{ricorsivamente assiomatizzabile}} \\
@@ -2299,7 +2321,7 @@ D'altronde una teoria incoerente dimostra tutto, quindi anche la propria coerenz
 
 \begin{notation}[Formula di dimostrabilità]
     Introduciamo l'abbreviazione $\square$ per indicare la formula che esprime la dimostrabilità di una proposizione nella teoria di Peano, $\mathsf{PA}$, ovvero:
-    \[ \square \varphi := \exists d\, \mathsf{Dim}_{\mathsf{PA}}(d,\ulcorner\varphi\urcorner) \]
+    \[ \square \varphi := \exists d\, \mathsf{Dim}_{\mathsf{PA}}(d,\overline{\ulcorner\varphi\urcorner}) \]
     tale abbreviazione è da intendersi per formule chiuse, e per la chiusura universale di formule aperte.
 \end{notation}
 
