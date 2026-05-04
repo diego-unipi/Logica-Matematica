@@ -136,8 +136,9 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
     Gli insiemi $\{x \leq y\}$, $\{x < y\}$, $\{x = y\}$, $\{x \neq y\}$\footnote{Nel senso di $\{(x,y) \in \NN^2 |\ldots\}$.} sono predicati PR.
     Per $\{x = y\}$ è sufficiente usare:
     \[ f(x,y) := 1 \dotminus (1 \dotminus (y \dotminus x + x \dotminus y)) \]
-    da cui si ha subito anche che $\{x \ne y\}$ è un predicato PR, infatti $\{x \ne y\} = \{x = y\}^\complement$. Per $\{x \leq y\}$ si usa:
-    \[ g(x,y) := x \dotminus y \]
+    da cui si ha subito anche che $\{x \ne y\}$ è un predicato PR, infatti $\{x \ne y\} = \{x = y\}^\complement$.
+    Per $\{x \leq y\}$ si usa:
+    \[ g(x,y) := 1 \dotminus (1 \dotminus (x \dotminus y)) \]
     Mettendo assieme queste due cose si ottiene:
     \[ \{x < y\} = \{x \leq y\} \cap \{x \neq y\} \]
     simmetricamente per $\geq$ e $>$. Osservare, infine, che se al posto di $x$ e $y$ ci fossero $f(\mathbf x)$ e $g(\mathbf y)$ allora tutto funzionerebbe allo stesso modo, per le proprietà delle funzioni PR;
@@ -155,7 +156,7 @@ Vediamo alcuni esempi di funzioni primitive ricorsive.
 \end{remark}
 
 \begin{example}[Funzione modulo]
-    La funzione $x \bmod y = z \overset{\text{def}}{\iff} z < y \land y \mid x - z$, cioè il rappresentante di $x$ modulo $y$, è una funzione PR poiché è definita per ricorsione e per casi:
+    La funzione $x \bmod y = z \overset{\text{def}}{\iff} z < y \land y \mid x - z \land y \ne 0$, cioè il rappresentante di $x$ modulo $y$, è una funzione PR poiché è definita per ricorsione e per casi:
     \[ x \bmod y := \begin{cases}
         0 \bmod y = 0 \\
         (x+1) \bmod y := \begin{cases}
@@ -427,7 +428,7 @@ Vogliamo caratterizzare le funzioni ricorsive come esattamente quelle che sono i
     ripetere finché non si sostituisce tutta la stringa con dei 2, oppure finché non si trova un simbolo diverso da quello sostituito con 2, per cui se la stringa è lunga $l$, allora si fanno $l$ passi per sostituire ciascun simbolo,
     e quindi $l^2$ passi in totale. Bisogna dimostrare che non si può fare meglio di così, l'idea è che se la stringa è palindroma, la taglio alla metà esatta e posso ricostruire la metà sinistra usando come 
     informazione tutta la successione di stati che ho ottenuto attraversando il confine. La TM deve attraversare il confine almeno $l/2$ volte, quindi decido di aggiungere un blocco di 0 tra la stringa e la metà riflessa,
-    in modo che la TM non possa usare come informazione il numero di passi fatti, e quindi deve attraversare il confine almeno $l/2$ volte, e ogni volta deve fare almeno $l/2$ passi, per cui ottengo $O(l^2)$.}
+    in modo che la TM non possa usare come informazione il numero di passi fatti, e quindi deve attraversare il confine almeno $l/2$ volte, e ogni volta deve fare almeno $l/2$ passi, per cui ottengo $\Omega(l^2)$.}
 \end{exercise}
 
 \subsection{Funzioni Turing-computabili}
@@ -692,6 +693,7 @@ Rimane ora da costruire le macchine elementari, e le macchine che implementano l
         $2$ & $0$ $\blacktriangleright$ $\downarrow$ & $2$ $0$ $\leftarrow$ & $2$ $1$ $\leftarrow$
     \end{tabular}
     \end{table}
+    \textcolor{MidnightBlue}{Per essere precisi, dopo la simulazione di $F$ bisognerebbe tornare a sinistra fino al $\blacktriangleright$ interno e riscriverlo come $0$, così da ripristinare il separatore e mantenere il formato unario dell'input.}
 \end{soln}
 
 Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ricorsiva, vedremo una cosa più forte, ovvero che \textcolor{MidnightBlue}{esiste una funzione ricorsiva che simula ogni funzione Turing-computabile}.
@@ -807,7 +809,7 @@ A questo punto possiamo anche verificare che $\head$ è PR.
     \[ g(l,s):=\begin{cases}
         0 & \text{se }\length(s)=0\\
         \car(s) & \text{se }\length(s)>\length(l)\\
-        \cat(\underbrace{\car(s)}_{\mathclap{\langle a_0,\ldots, a_{\length(s)\dotminus 1} \rangle}},\cons(\nth(l,\length(s)\dotminus 1),0)) & \text{altrimenti}
+        \cat(\underbrace{\car(s)}_{\mathclap{\langle a_0,\ldots, a_{\length(s)\dotminus 2} \rangle}},\cons(\nth(l,\length(s)\dotminus 1),0)) & \text{altrimenti}
     \end{cases} \]
     infatti, se $s=\langle \head(l,y-1),\ldots,\head(l,0)\rangle$, allora $\car(s)=\head(l,y-1)$. Quando $\length(s)=0$ siamo nel caso base $y=0$, e quindi il valore corretto è $0$.
     Quando $\length(s)>\length(l)$ - ovvero se la lunghezza della lista dei valori supera la lunghezza della nostra lista - abbiamo già superato la lunghezza di $l$, perciò abbiamo già il prefisso richiesto e resta uguale all'ultimo valore calcolato nella lista $s$, cioè $\car(s)$.\\
@@ -888,12 +890,12 @@ Passiamo alla dimostrazione del teorema.
             \item \textcolor{purple}{nastro} $= \nth(c,2)$
         \end{itemize}
         ora il nastro è a sua volta la codifica di una lista:
-        \[ \text{nastro} = \langle \underbrace{a_1,\ldots,a_{p-1}}_{=:\textcolor{MidnightBlue}{\alpha}}, \underbrace{a_p}_{=:\textcolor{MidnightBlue}{\sigma}}, \underbrace{a_{p+1},\ldots}_{=:\textcolor{MidnightBlue}{\beta}} \rangle \]
+        \[ \text{nastro} = \langle \underbrace{a_0,\ldots,a_{p-1}}_{=:\textcolor{MidnightBlue}{\alpha}}, \underbrace{a_p}_{=:\textcolor{MidnightBlue}{\sigma}}, \underbrace{a_{p+1},\ldots}_{=:\textcolor{MidnightBlue}{\beta}} \rangle \]
         dove:
         \begin{itemize}
-            \item $\textcolor{MidnightBlue}{\alpha} := \head(\text{nastro},\text{posizione} \dotminus 1) = \langle a_1,\ldots,a_{p-1}\rangle = \head(\nth(c,2),\nth(c,1) \dotminus 1)$,
+            \item $\textcolor{MidnightBlue}{\alpha} := \head(\text{nastro},\text{posizione}) = \langle a_0,\ldots,a_{p-1}\rangle = \head(\nth(c,2),\nth(c,1))$,
             \item $\textcolor{MidnightBlue}{\sigma} := \nth(\text{nastro},\text{posizione}) = a_p = \nth(\nth(c,2),\nth(c,1))$,
-            \item $\textcolor{MidnightBlue}{\beta} := \cdr^{\text{posizione}}(\text{nastro}) = \langle a_{p+1},\ldots\rangle = \cdr^{\nth(c,1)}(\nth(c,2))$.
+            \item $\textcolor{MidnightBlue}{\beta} := \cdr^{\text{posizione}+1}(\text{nastro}) = \langle a_{p+1},\ldots\rangle = \cdr^{\nth(c,1)+1}(\nth(c,2))$.
         \end{itemize}
         Quello che vogliamo fare è calcolare $\delta(\text{stato},\text{simbolo})$, ovvero $\nth(\ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \nth(\ulcorner \delta \urcorner, \langle \nth(c,0), \sigma \rangle)$,
         che dà la tripla codificata da $\langle \textcolor{MidnightBlue}{\text{stato}'}, \textcolor{MidnightBlue}{\text{simbolo}'}, \textcolor{MidnightBlue}{\text{direzione}} \rangle :=$\textcolor{purple}{\texttt{update}}. Da questo posso
@@ -916,7 +918,7 @@ Passiamo alla dimostrazione del teorema.
     ovvero $\texttt{n}$ rappresenta il numero di passi in cui la TM arriva allo stato 0 - termina - a partire da input codificato da $c$; tale funzione non è PR in quanto, per un certo input, la macchina potrebbe non terminare, per cui $\texttt n$ è \textbf{ricorsiva parziale}. E siamo alla fine perché ora per 
     ottenere l'output basta prendere il nastro della configurazione finale, ovvero, indicando con $\langle\mathbf{x}\rangle = \langle x_1, \ldots, x_k \rangle$:
     \[ \nth(\texttt{step}^{\texttt{n}(\texttt{codifica\_input}(\langle\mathbf{x}\rangle),\ulcorner \delta \urcorner)}(\ulcorner \delta \urcorner, \texttt{codifica\_input}(\langle\mathbf{x}\rangle))), 2) \]
-    a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$ - a meno di sottrarre 2 perché abbiamo detto all'inizio che $\blacktriangleright$ corrisponde a 2, posso definire:
+    a questo punto prendo il nastro della configurazione finale e ci applico una funzione che conta gli 1, che darà proprio l'output di $f$ - a meno di sottrarre 1 perché abbiamo detto all'inizio che $\blacktriangleright$ corrisponde a 2, posso definire:
     \[ \texttt{conta\_uni}(l) := \begin{cases}
         0 & \text{se } \car(l) = 0 \\
         1 + \texttt{conta\_uni}(\cdr(l)) & \text{altrimenti}
@@ -924,7 +926,7 @@ Passiamo alla dimostrazione del teorema.
     e quindi $u$ si definisce componendo $\texttt{conta\_uni}$ con la funzione scritta sopra, tale composizione, eccetto per la $\texttt n$, che fa uso di minimizzazione, è PR, per cui la composizione è ricorsiva parziale.
 \end{proof}
 
-\begin{corollary}[Forma normale per le funzioni ricorsive]
+\begin{corollary}[Forma normale - di Kleene - per le funzioni ricorsive]
     $\forall k \in \NN$ esiste $T_k : \NN^{k+2} \to \NN$ predicato PR, e una funzione $U : \NN \to \NN$ PR, tali che
     $\forall f : \NN_\bot^k \to \NN_\bot$ ricorsiva (parziale) vale:
     \[ \forall x_1, \ldots, x_k \; f(x_1, \ldots, x_k) \ne \bot \iff \exists n \; T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n) = 0 \]
@@ -955,11 +957,11 @@ Quindi esistono un predicato PR, per ogni arietà, che verifica se una funzione 
     Mettiamoci nel caso in cui $f(x_1, \ldots, x_k) \ne \bot$, allora esiste un tempo di arresto minimo, che posso recuperare con la minimizzazione:
     \[ n_0 := \mu_n(T_k(\ulcorner f \urcorner, x_1, \ldots, x_k, n)) \]
     per cui il nastro della configurazione raggiunta dopo $n_0$ passi è data da $\nth(\nth(n_0,1),2)$, quindi non bisogna far altro che convertire il nastro di tale configurazione in output, e questo è esattamente quello che fa $U$:
-    \[ U(n) := \texttt{conta\_uni}(\nth(\nth(n,1),2)) \]
-    ed $U$ è PR per composizione di funzioni PR.
+    \[ U(n) := \texttt{conta\_uni}(\nth(\nth(n,1),2)) \dotminus 1\]
+    dove il $\dotminus 1$ serve perché $\blacktriangleright$ è codificato da 2, e $U$ è PR per composizione di funzioni PR.
 \end{proof}
 
-Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferiremo al test $T_k$ che verifica se la funzione è PR, ed alla $U$ che ne estrae il testimone.
+Per cui, d'ora in avanti, con forma normale per le funzioni ricorsive, ci riferiremo al test $T_k$ che verifica se la funzione ricorsiva termina su un dato input, ed alla $U$ che ne estrae il testimone.
 
 \subsection{Teoremi di punto fisso e \texorpdfstring{$s$-$m$-$n$}{s-m-n}}
 
@@ -1033,7 +1035,7 @@ Dimostriamo il teorema $s-m-n$\footnote{Si tratterà di una sorta di half-evalua
     Fisso quindi $\alpha$, $x_1$ e $\mathbf{y}$, e considero la TM $M$ che implementa la funzione codificata da $\alpha$, l'idea è quella di costruire una macchina che riceve in input $1 \blacktriangleright y_1 \ldots y_n$ e restituisce $1_\alpha \blacktriangleright x_1 y_1 \ldots y_n$,
     ovvero una macchina che aggiunge $x_1$ davanti all'input, e poi simula la macchina che implementa la funzione codificata da $\alpha$. Unendo tale macchina e quella che implementa la funzione codificata da $\alpha$ ottengo la macchina che implementa la funzione codificata da $s_n^1(\alpha,x_1)$, e quindi ho questa funzione ricorsiva.\\
     Consideriamo $1 \blacktriangleright y_1 \ldots y_n$, WLOG possiamo supporre di avere già uno 0 in fondo - altrimenti si fa $\push$ di uno dei valori, e si applica la macchina che implementa la funzione costante 0, quindi $1 \blacktriangleright y_1 \ldots y_n 0$, a questo punto trasformo lo 0 alla fine in $x_1$:
-    \[ 1 \to \underbrace{\exec_{n+1,n+1} s \to \exec_{n+1,n+1} s \to \ldots \to \exec_{n+1,n+1} s}_{\text{$x_1$ volte}} \to 2 \]
+    \[ 1 \to \underbrace{\exec_{n+1,1} s \to \exec_{n+1,1} s \to \ldots \to \exec_{n+1,1} s}_{\text{$x_1$ volte}} \to 2 \]
     con $2 \blacktriangleright y_1 \ldots y_n x_1$, tutto ciò che rimane da fare è riscrivere l'input nell'ordine corretto e cancellare quello che rimane all'inizio:
     \[ 2 \to \push_{n+1,1} \to \push_{n+2,2} \to \ldots \to \push_{2n, n} \to 3 \]
     con $3 \blacktriangleright y_1 \ldots y_n x_1 y_1 \ldots y_n$, e infine:
@@ -1130,7 +1132,7 @@ Vediamo infine la dimostrazione del (secondo) teorema di punto fisso.
 Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiva sono tutte la stessa cosa.
 
 \begin{proof}
-    Vediamo le implicazioni in ordine circolare, fare attenzione al caso in cui $R = \varnothing$.
+    Vediamo le implicazioni in ordine circolare.
     \begin{itemize}
         \item[$\boxed{1. \Rightarrow 2.}$] se $R = \{\mathbf x \in \NN^k | f(\mathbf x) = 0\}$, \textcolor{MidnightBlue}{$R$ non è già il dominio di $f$, perché $f$ potrebbe assumere altri valori oltre a 0, ma poco manca}, basta definire $h : \NN \to \NN_\bot$ come:
         \[ h(y) := \begin{cases}
@@ -1138,16 +1140,16 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
             \bot & \text{altrimenti}
         \end{cases} \]
         che è ricorsiva parziale e considerare $g(\mathbf x) := h \circ f(\mathbf x)$. Ora  $R = \{\mathbf x \in \NN^k | g(\mathbf x) \ne \bot\}$, infatti $g (\mathbf x) \ne \bot$ se e solo se $h \circ f(\mathbf x) \ne \bot$, che equivale a $f(\mathbf x) = 0$, che è esattamente la definizione di $R$, per cui i due insiemi coincidono.
-        \item[$\boxed{2. \Rightarrow 3.}$] Sia $R = \{\mathbf x \in \NN^k | f(\mathbf x) \ne \bot\}$, per qualche funzione ricorsiva parziale $f : \NN^k \to \NN_\bot$, per il teorema della forma normale esistono $T_{k+2}$ predicato PR e $U$ funzione PR tali che:
-        \[ f(\mathbf x) \ne \bot \iff \exists n \;T_{k+2}(\ulcorner f \urcorner, \mathbf x, n) = 0 \]
-        e, in tal caso, $f(\mathbf x) = U(\mu_n(T_{k+2}(\ulcorner f \urcorner, \mathbf x, n))))$. Non possiamo usare direttamente $\mathbf x \mapsto U(\mu_n(T_{k+2}(\ulcorner f \urcorner, \mathbf x, n)))$, in quanto $U$ prende in input il valore della minimizzazione che dipende da $\mathbf x$, e può essere $\bot$, quindi $U$ potrebbe non essere definita per alcuni valori di $\mathbf x$.\\
-        Possiamo aggirare questo problema considerando la lista $\langle \mathbf x, n \rangle$, e definendo una funzione che controlla se la minimizzazione di $T_{k+2}$ è ben definita per questi valori, nel cui caso restituisce $\mathbf x$, altrimenti restituisce un elemento qualsiasi $\mathbf c \in R$:
+        \item[$\boxed{2. \Rightarrow 3.}$] Sia $R = \{\mathbf x \in \NN^k | f(\mathbf x) \ne \bot\}$, per qualche funzione ricorsiva parziale $f : \NN^k \to \NN_\bot$, per il teorema della forma normale esistono $T_k$ predicato PR e $U$ funzione PR tali che:
+        \[ f(\mathbf x) \ne \bot \iff \exists n \;T_k(\ulcorner f \urcorner, \mathbf x, n) = 0 \]
+        e, in tal caso, $f(\mathbf x) = U(\mu_n(T_k(\ulcorner f \urcorner, \mathbf x, n))))$. Non possiamo usare direttamente $\mathbf x \mapsto U(\mu_n(T_k(\ulcorner f \urcorner, \mathbf x, n)))$, in quanto $U$ prende in input il valore della minimizzazione che dipende da $\mathbf x$, e può essere $\bot$, quindi $U$ potrebbe non essere definita per alcuni valori di $\mathbf x$.\\
+        Possiamo aggirare questo problema considerando la lista $\langle \mathbf x, n \rangle$, e definendo una funzione che controlla se la minimizzazione di $T_k$ è ben definita per questi valori, nel cui caso restituisce $\mathbf x$, altrimenti restituisce un elemento qualsiasi $\mathbf c \in R$:
         \[ g(n) := \begin{cases}
-           ``\mathbf x\text{"} &\text{se $T_{k+2}(\ulcorner f \urcorner, \nth(n,0), \ldots, \nth(n,k),\purple{\nth(n,k)}) = 0$} \\
+           ``\mathbf x\text{"} &\text{se $T_k(\ulcorner f \urcorner, \nth(n,0), \ldots, \nth(n,k-1),\purple{\nth(n,k)}) = 0$} \\
             \mathbf c & \text{altrimenti}
         \end{cases} \]
         dove ``$\mathbf x$'' è in realtà $(\nth(n,0), \ldots, \nth(n,k-1))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti $\mathbf x \in R$ se e solo se $f(\mathbf x) \ne \bot$,
-        se e solo se $\exists n \; T_{k+2}(\ulcorner f \urcorner, \mathbf x, n) = 0$, se e solo se $\exists n \; g(n) = \mathbf x$.
+        se e solo se $\exists n \; T_k(\ulcorner f \urcorner, \mathbf x, n) = 0$, se e solo se $\exists n \; g(n) = \mathbf x$. Se $R = \varnothing$, allora è ricorsivamente enumerabile per definizione.
         \item[$\boxed{3. \Rightarrow 1.}$] Sia $R = \{f(n) | n \in \NN\}$, per qualche funzione ricorsiva totale $f : \NN \to \NN^k$, allora basta definire $g : \NN^{k+1} \to \NN_\bot$:
         \[ g(\mathbf y,n) := \begin{cases}
             0 & \text{se $f(n) = \mathbf y$} \\
@@ -1229,7 +1231,7 @@ Vediamo un insieme non decidibile.
         g(\mathbf x) & \text{se $\mathbf x \in R$} \\
         h(\mathbf x) & \text{altrimenti}
     \end{cases} \]
-    con $g$ e $h$ funzioni ricorsive parziali, è ricorsiva parziale in quanto:
+    con $g$ e $h$ funzioni ricorsive totali, è ricorsiva parziale in quanto:
     \[ f(\mathbf x) = g(\mathbf x)(1 \dotminus R(\mathbf x)) + h(\mathbf x)(1 \dotminus (1 \dotminus R(\mathbf x)))\]
     dove con $R(\mathbf x)$ indichiamo la funzione che restituisce 0 se $\mathbf x \in R$ e un numero naturale $\geq 1$ altrimenti, che è ricorsiva totale, e quindi $f$ è ricorsiva parziale. Se $g,h$ sono ricorsive \purple{totali}, allora $f$ è ricorsiva \purple{totale}.\\
     Osserviamo infine che se $R$ è semidecidibile allora lo stesso discorso non funzione, perché se $R(\mathbf x) = \bot$ otteniamo solo che $f(\mathbf x)$ è uguale ad un'espressione aritmetica indefinita, perché c'è un $\bot$ in mezzo, e quindi $f$ non fa $\bot$ perché è mal definita.
@@ -1261,7 +1263,7 @@ Vediamo un insieme non decidibile.
 \begin{soln}
     Supponiamo per assurdo che $H_n := \{(\alpha, \mathbf x) \in \NN^{n+1} | u_n(\alpha, \mathbf x) \ne \bot\}$ sia decidibile, allora si procede allo stesso identico modo, definendo:
     \[ f(x_1,\ldots, x_n) := \begin{cases}
-        u_n(x_1, x_1, \ldots, x_1) + 1 & \text{se $(\alpha, \alpha, \ldots, \alpha) \in H_n$} \\
+        u_n(x_1, x_1, \ldots, x_1) + 1 & \text{se $(x_1, x_1, \ldots, x_1) \in H_n$} \\
         0 & \text{altrimenti}
     \end{cases} \]
     che è ricorsiva totale, e poi si applica $f$ al suo stesso codice, ottenendo una contraddizione esattamente come prima:
@@ -1311,12 +1313,12 @@ Vediamo un insieme non decidibile.
     per cui si avrebbe $H_1^\complement = f^{-1}[TOT]$, allora $TOT$ non è semidecidibile.
     Ora definiamo $f : \NN^2 \to \NN$ come:
     \[ f(\alpha,x) := \ulcorner g_{\alpha,x} \urcorner, \qquad g_{\alpha,x}(n) := \begin{cases}
-        0 & \text{se $\forall m \le n \; T_3(\alpha,x,m) \ne 0$} \\
+        0 & \text{se $\forall m \le n \; T_1(\alpha,x,m) \ne 0$} \\
         \bot & \text{altrimenti}
     \end{cases} \]
     ovvero associo ad ogni coppia codice-input il codice della funzione che manda $n$ in 0 se per tutti i valori minori o uguali di $n$ la funzione codificata da $\alpha$ non si ferma, e manda $n$ in $\bot$ se si ferma per qualche valore più piccolo.\\
     La mappa definita è PR, per la dimostrazione del fatto che Turing computabile implica ricorsivo. Verifichiamo infine che: $(\alpha,x) \in H_1^\complement$,
-    allora $u_1(\alpha,x) = \bot$, per cui $T_3(\alpha,x,m) \ne 0$ per ogni $m \in \mathbb N$, per cui $g_{\alpha,x} \equiv 0$, e quindi il suo codice sta in $TOT$.
+    allora $u_1(\alpha,x) = \bot$, per cui $T_1(\alpha,x,m) \ne 0$ per ogni $m \in \mathbb N$, per cui $g_{\alpha,x} \equiv 0$, e quindi il suo codice sta in $TOT$.
     Viceversa, se $(\alpha,x) \in f^{-1}[TOT]$, allora $g_{\alpha,x}$ è totale, per cui è costantemente 0, e quindi $u_1(\alpha,x) = \bot \implies (\alpha,x) \in H_1^\complement$.
     \textcolor{MidnightBlue}{L'idea è quindi che quando la funzione associata ad $\alpha$, con un certo input, non termina, allora la funzione $g_{\alpha,x}$ è 0;
     viceversa, se la funzione associata ad $\alpha$ con un certo input termina, allora $g_{\alpha,x}$ non è totale perché, facendo il controllo col test della forma normale, la si pone $\bot$ apposta quando converge}.\\
@@ -1554,7 +1556,7 @@ Dimostriamo ora il lemma.
         \end{proof}
         \begin{remark}[Complessità di $\beta(a,b,k)$]
             La relazione $\beta(a,b,k) = z$ è equivalente a:
-            \[ z < b(k+1)+1 \land \exists t (z + t(b(k+1) = a)) \]
+            \[ z < b(k+1)+1 \land \exists t (z + t(b(k+1)+1) = a) \]
             che è di classe $\Sigma_1^0$, ma in realtà $t$ è limitato da $a$, quindi potremmo rimpiazzare $\exists t$ con $\exists t \leq a$, e quindi la relazione è addirittura di classe $\Delta_0^0$.
         \end{remark}
         Quindi possiamo tornare alla formula che rappresenta $f(\mathbf x,y) = z$ e riscriverla come:
@@ -1596,7 +1598,7 @@ Abbiamo dimostrato che semidecidibile implica $\Sigma_1^0$, vediamo ora l'implic
         \[ \{\NN \models \forall y \leq z \; \psi(\mathbf x,y)\} = \{(\mathbf x,z) \in \NN^{k+1} : \forall y \leq z \; (\mathbf x,y) \in R\} \]
         ovvero è sufficiente controllare che per tutti gli $i \leq z$ vale $T(\mathbf x,i) = 0$, e questo è precisamente il luogo di zero del predicato PR che conta gli 
         elementi, sotto un certo valore di un altro predicato:
-        \[ \{ \#\{i \leq z : T(\mathbf x,i) \ne 0\} = 0 \} = R \]
+        \[ \{ \#\{i \leq z : T(\mathbf x,i) \ne 0\} = 0 \} = \{(\mathbf x,z) \in \NN^{k+1} : \forall i \leq z \; T(\mathbf x,i) = 0\} \]
     \end{itemize}
     Il caso di $\exists y \leq z$ è duale a quello di $\forall y \leq z$, in quanto $\exists y \leq z \; \psi(\mathbf x,y)$ è equivalente a $\neg \, \forall y \leq z \; \neg \, \psi(\mathbf x,y)$, e quindi segue dai casi precedenti.
 \end{proof}
@@ -1622,10 +1624,6 @@ esista - e che sia compatibile con l'operazione di sostituire un numero al posto
 \begin{corollary}[Teorema di indecidibilità di Church]
     L'insieme $\{ \ulcorner \varphi \urcorner : \NN \models \varphi\}$ non è semidecidibile.
 \end{corollary}
-
-\textcolor{MidnightBlue}{L'idea è, essendo $H_1$ semidecidibile, allora, per quanto visto, è di classe $\Sigma_1^0$, e quindi esiste una formula $\varphi(x,y) \in \Sigma_1^0$
-tale che $H_1 = \{N \models \varphi(x,y)\}$. A questo punto considerando la codifica della formula ottenuta sostituendo $(\alpha,x)$ alle due variabili libere di $\varphi$, otteniamo
-un numero naturale, e se l'insieme sopra fosse decidibile, allora stabilire se $\NN$ dimostra o meno quest'affermazione, e di conseguenza potremmo decidere l'halting set$\lightning$.}
 
 Morale l'insieme delle verità aritmetiche non è semidecidibile, e quindi non esiste un'assiomatizzazione ricorsiva dell'aritmetica.
 
@@ -1888,7 +1886,8 @@ Serve un lemma, che non dimostriamo, ma si procede sempre per induzione struttur
     \[ M \models \psi(\ol{a_1},\ldots,\ol{a_k}) \iff \NN \models \psi(a_1,\ldots,a_k) \]
 \end{lemma}
 
-Dal lemma, la cui dimostrazione è conseguenza del fatto generale visto sulle formule $\Delta_0^0$ e $\Sigma_1^0$ in precedenza, segue in particolare che se $M \models \mathsf{Q}$ e $a_1,\ldots,a_k \in \NN$, allora $M \models \psi(\ol{a_1},\ldots,\ol{a_k})$ se e solo se $\mathsf{Q} \vdash \psi(\ol{a_1},\ldots,\ol{a_k})$.
+Dal lemma, la cui dimostrazione è conseguenza del fatto generale visto sulle formule $\Delta_0^0$ e $\Sigma_1^0$ in precedenza + il fatto che $\vdash$ e $\models$ sono equivalenti per le formule chiuse,
+segue in particolare che se $M \models \mathsf{Q}$ e $a_1,\ldots,a_k \in \NN$, allora $M \models \psi(\ol{a_1},\ldots,\ol{a_k})$ se e solo se $\mathsf{Q} \vdash \psi(\ol{a_1},\ldots,\ol{a_k})$.
 
 \begin{proof}
     Sia $\psi$ una formula di classe $\Delta_0^0$ tale che per ogni $x_1, \dots, x_k, y \in \NN$:
@@ -1912,7 +1911,7 @@ Dal lemma, la cui dimostrazione è conseguenza del fatto generale visto sulle fo
             \[ \NN \models \psi(\ol{x_1}, \dots, \ol{x_k}, \ol y, \ol z_1, \dots, \ol z_l) \]
             o meglio:
             \[ \mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol y, \ol z_1, \dots, \ol z_l) \]
-            questo per l'equivalenza data dal lemma iniziale dice però che $f(x_1, \dots, x_k) = y$, e quindi non può esistere un tale modello con un tale $y$.
+            questo per l'equivalenza data dal lemma iniziale dice però che $\ol{f(x_1, \dots, x_k)} = y \in M$, e quindi non può esistere un tale modello con un tale $y$.
             \item \textit{Caso 2: $N$ non è standard.} In questo caso, consideriamo la formula $\theta_2$:
             \[ M \models \forall z_1 \le N \dots \forall z_l \le N \, \forall t \le N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = y) \]
             dal lemma iniziale sappiamo che $y = f(x_1, \dots, x_k)$ è equivalente a $\mathsf{Q} \vdash \exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, z_1, \dots, z_l)$,
@@ -1933,10 +1932,11 @@ Dal lemma, la cui dimostrazione è conseguenza del fatto generale visto sulle fo
         \[ M \models \forall z_1 \le \ol N \dots \forall z_l \le \ol N \, \forall t \le \ol N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = \ol{f(x_1, \dots, x_k)}) \]
         ossia, dati $z_1, \dots, z_l, t \in M$ tali che:
         \[ M \models z_1 \le \ol N \land \ldots \land z_l \le \ol N \land t \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \]
-        deve valere necessariamente che $M \models t = \ol{f(x_1, \dots, x_k)}$. Però, le disuguaglianze all'inizio, essendo $\ol N$ numerale, implicano per un lemma,
-        che $z_1, \dots, z_l, t$ sono standard. Quindi, eliminando gli AND si ha:
+        deve valere necessariamente che $\purple{M \models t = \ol{f(x_1, \dots, x_k)}}$. Però, le disuguaglianze all'inizio, essendo $\ol N$ numerale, implicano per un lemma,
+        che $z_1, \dots, z_l, t$ sono standard. Quindi l'ipotesi diventa:
         \[ M \models \psi(\ol{x_1}, \dots, \ol{x_k}, \ol t, \ol{z_1}, \dots, \ol{z_l}) \]
-        formula $\Delta_0^0$, per cui, per assolutezza si ottiene $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$.
+        che, per assolutezza, è equivalente a $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol t, \ol{z_1}, \dots, \ol{z_l})$, ovvero,
+        per il lemma iniziale $f(x_1, \dots, x_k) = t$, quindi il numerale di $f(...)$ è proprio $\ol t$, e quindi (volendo si passa per il lemma per cui $\mathsf{Q}$ sa fare i conti) $M \models t = \ol{f(x_1, \dots, x_k)}$.
     \end{itemize}
 \end{proof}
 
@@ -1995,6 +1995,7 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
     per ricorsione sulla lunghezza della lista codificata da $n$ e la diamo usando i predicati PR in riferimento agli insiemi di confronto che definiscono:
     \begin{align*}
         \textsf{Term}(n) :=& (\length(n) = 1 \land \nth(n,0) = \#0) \\
+                           & \lor (\length(n) = 1 \land \nth(n,0) = \#x_i) \\
                            &\lor (\length(n) = 2 \land \nth(n,0) = \#s \land \textsf{Term}(\nth(n,1))) \\
                            &\lor (\length(n) = 3 \land \nth(n,0) = \#+ \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
                            &\lor (\length(n) = 3 \land \nth(n,0) = \#\cdot \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2)))
@@ -2032,10 +2033,20 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
     \[ \textsf{Sub}(n,i,x) := \begin{cases}
         0 & \text{se $\neg \,\textsf{For}(n)$} \\
         \langle \#\bot \rangle & \text{se $\nth(n,0) = \#\bot$} \\
-        \langle \#=, \textsf{Sub}(\nth(n,1),i,x), \textsf{Sub}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#=$} \\
+        \langle \#=, \textsf{Subterm}(\nth(n,1),i,x), \textsf{Subterm}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#=$} \\
         \langle \#\to, \textsf{Sub}(\nth(n,1),i,x), \textsf{Sub}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#\to$} \\
         n & \text{se $\nth(n,0) = \#\forall$ e $\nth(n,1) = i + 8$} \\
         \langle \#\forall, \nth(n,1), \textsf{Sub}(\nth(n,2),i,x) \rangle & \text{se $\nth(n,0) = \#\forall$ e $\nth(n,1) \ne i + 8$}
+    \end{cases} \]
+    dove $\textsf{Subterm}$ è la funzione che fa la sostituzione nei termini, definita come:
+    \[ \textsf{Subterm}(n,i,x) := \begin{cases}
+        0 & \text{se $\neg \,\textsf{Term}(n)$} \\
+        \langle\#0\rangle & \text{se $\nth(n,0) = \#0$} \\
+        \langle\#s, \textsf{Subterm}(\nth(n,1),i,x)\rangle & \text{se $\nth(n,0) = \#s$} \\
+        \langle\#+, \textsf{Subterm}(\nth(n,1),i,x), \textsf{Subterm}(\nth(n,2),i,x)\rangle & \text{se $\nth(n,0) = \#+$} \\
+        \langle\#\cdot, \textsf{Subterm}(\nth(n,1),i,x), \textsf{Subterm}(\nth(n,2),i,x)\rangle & \text{se $\nth(n,0) = \#\cdot$} \\
+        x & \text{se $\nth(n,0) = i + 8$} \\
+        n & \text{se $\nth(n,0) = j + 8 \ne i + 8$}
     \end{cases} \]
 \end{proof}
 
@@ -2115,7 +2126,7 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
     che è totale, anzi PR (definizione per casi su insieme totale - motivo per cui limitiamo la ricerca ai primi $z$) e vale che $T' = \{z : g(z) = 0\}$.\\
     \textcolor{MidnightBlue}{Moralmente abbiamo codificato nell'assioma stesso l'$x$ che codice quell'assioma, ripetendolo l'AND $x$ volte.}
 \end{soln}
-
+\pagebreak
 \begin{notation}
     D'ora in poi, intenderemo equivalentemente le espressioni ricorsivamente assiomatizzabile e decidibilmente assiomatizzabile. E di fatto 
     col teorema di Craig abbiamo addirittura che ogni teoria ricorsivamente assiomatizzabile è equivalente ad una teoria con insieme di assiomi PR,
@@ -2137,7 +2148,7 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
     \[ \ulcorner \sigma_1, \sigma_2, \ldots, \sigma_n\urcorner := \langle \ulcorner\sigma_1\urcorner, \ulcorner\sigma_2\urcorner, \ldots, \ulcorner\sigma_n\urcorner\rangle \]
     Ora possiamo definire il predicato PR $\mathsf{Dim}_T(d,x)$, che dice ``$d$ è un codice di una dimostrazione di $x$ in $T$'' traducendo il significato della definizione di dimostrazione in una definizione PR:
     \begin{align*}
-        \textsf{Dim}_T(d,x) &:= \nth(d,\length(d)) = x \\
+        \textsf{Dim}_T(d,x) &:= \nth(d,\length(d) \dotminus 1) = x \\
                             &\land \forall i < \length(d) \; \text{``$\nth(d,i)$ è o un assioma di $T$ o segue da quelli prima...''}
     \end{align*}
     cioè la dimostrazione finisce con la formula codificata da $x$, e ogni passo della dimostrazione è o un assioma o segue da quelli prima usando le regole di inferenza.\\
@@ -2228,7 +2239,7 @@ Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto u
 \begin{proof}
     L'idea della dimostrazione, è quella di usare una formula che dice ``se ci fosse una mia dimostrazione, allora ci sarebbe anche una dimostrazione di una mia negazione più corta'', ovvero:
     \[ \varphi(x) := \forall d \, (\mathsf{Dim}_T(d,x) \to \exists d' \leq d \, \mathsf{Dim}_T(d',\textsf{Neg}(x))) \]
-    con $\textsf{Neg}(x) = \langle \#\neg, x\rangle$ la funzione PR che associa ad una formula il codice della sua negazione. Usiamo il lemma di diagonalizzazione di Gödel su questa formula e troviamo $\gamma$ tale che:
+    con $\textsf{Neg}(x) = \langle \#\neg, x\rangle$\footnote{In realtà andrebbe codificata come $x \to \bot$, e quindi $\langle \#\to, x, \ulcorner \bot \urcorner \rangle$.} la funzione PR che associa ad una formula il codice della sua negazione. Usiamo il lemma di diagonalizzazione di Gödel su questa formula e troviamo $\gamma$ tale che:
     \[ \mathsf{Q} \vdash \gamma \leftrightarrow \forall d \, (\mathsf{Dim}_T(d,\overline{\ulcorner\gamma\urcorner}) \to \exists d' \leq d \, \mathsf{Dim}_T(d',\textsf{Neg}(\overline{\ulcorner\gamma\urcorner}))) \]
     Distinguiamo due casi.
     \begin{itemize}
@@ -2309,7 +2320,7 @@ Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo
         preso il codice della cosa destra di $\vdash$ è sufficiente controllare che $P$ di quel codice sia diverso da 0, in tal modo $T' \vdash \varphi$. Controllare che $P(m) \ne 0$ è decidibile in quanto è il complementare di $\{P(i) = 0\}$, quindi esisterà una funzione decidibile di cui è luogo di zero ($1 \dotminus P(i)$). 
     \end{itemize}
 \end{proof}
-\pagebreak
+
 \begin{remark}[Completamento decidibile in un qualsiasi linguaggio finito]
     Notare che nella proposizione precedente non abbiamo usato nulla di $L_{\text{arit}}$, se non il fatto che sia un linguaggio finito, per cui posso fissare una numerazione di Gödel.
     Quindi la proposizione è vera per qualsiasi $L$ finito, adattando le definizioni di decidibilità e assiomatizzabilità al linguaggio $L$.
@@ -2317,15 +2328,6 @@ Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo
 
 \begin{remark}[Semidecidibile $\implies$ ricorsivamente assiomatizzabile]
     Se $T$ è semidecidibile, allora imitando esattamente la dimostrazione del teorema di Craig, possiamo costruire una teoria $T'$ decidibilmente assiomatizzabile, tale che $T$ e $T'$ sono equivalenti, e quindi $T$ è ricorsivamente assiomatizzabile.
-    Ricapitolando abbiamo che:
-    $$\begin{tikzcd}
-        & {\text{ricorsivamente assiomatizzabile}} \\
-        {\text{semidecidibile}} & {} \\
-        & {\text{decidibilmente assiomatizzabile}}
-        \arrow[Leftrightarrow, from=1-2, to=3-2]
-        \arrow[Rightarrow, from=2-1, to=1-2]
-        \arrow[Rightarrow, from=3-2, to=2-1]
-\end{tikzcd}$$
 \end{remark}
 
 Vediamo tre facili applicazioni dell'ultima cosa.
@@ -2380,7 +2382,7 @@ Vediamo tre facili applicazioni dell'ultima cosa.
     Ci serve infine verificare che la funzione $\mathsf{Cl}$, che associa ad ogni codice il numero della sua chiusura universale, è PR, infatti basta definirla come:
     $$ g(n, 0) := \begin{cases} \langle \#\forall, 8, n \rangle & \text{se } \mathrm{free}(n, 0) = 0 \\ n & \text{altrimenti} \end{cases} $$
     $$ g(n, k+1) := \begin{cases} \langle \#\forall, (k+1)+8, g(n, k) \rangle & \text{se } \mathrm{free}(n, k+1) = 0 \\ g(n, k) & \text{altrimenti} \end{cases} $$
-    e $\mathsf{Cl}(n) := g(n, \length(n))$ (poiché $\cons(x,y) \geq \max{\{x,y\}}$ non posso avere codici in cui la codifica di una variabile superi $n$). Fatto questo $B$ è semidecidibile in quanto la formula che lo definisce è $\Sigma_1^0$.
+    e $\mathsf{Cl}(n) := g(n, n)$ (poiché $\cons(x,y) \geq \max{\{x,y\}}$ non posso avere codici in cui la codifica di una variabile superi $n$). Fatto questo $B$ è semidecidibile in quanto la formula che lo definisce è $\Sigma_1^0$.
 \end{proof}
 
 \subsection{Secondo teorema di incompletezza}

@@ -31,3 +31,6 @@
 Appunti di Logica Matematica.pdf
 Typo.pdf
 build/Appunti di Logica Matematica.pdf
+
+# Exclude Teoremi.md from synchronization.
+Teoremi.md
