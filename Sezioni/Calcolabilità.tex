@@ -1888,7 +1888,7 @@ Serve un lemma, che non dimostriamo, ma si procede sempre per induzione struttur
     \[ M \models \psi(\ol{a_1},\ldots,\ol{a_k}) \iff \NN \models \psi(a_1,\ldots,a_k) \]
 \end{lemma}
 
-Dal lemma segue in particolare che se $M \models \mathsf{Q}$ e $a_1,\ldots,a_k \in \NN$, allora $M \models \psi(\ol{a_1},\ldots,\ol{a_k})$ se e solo se $\mathsf{Q} \vdash \psi(\ol{a_1},\ldots,\ol{a_k})$.
+Dal lemma, la cui dimostrazione è conseguenza del fatto generale visto sulle formule $\Delta_0^0$ e $\Sigma_1^0$ in precedenza, segue in particolare che se $M \models \mathsf{Q}$ e $a_1,\ldots,a_k \in \NN$, allora $M \models \psi(\ol{a_1},\ldots,\ol{a_k})$ se e solo se $\mathsf{Q} \vdash \psi(\ol{a_1},\ldots,\ol{a_k})$.
 
 \begin{proof}
     Sia $\psi$ una formula di classe $\Delta_0^0$ tale che per ogni $x_1, \dots, x_k, y \in \NN$:
@@ -1902,33 +1902,41 @@ Dal lemma segue in particolare che se $M \models \mathsf{Q}$ e $a_1,\ldots,a_k \
     Notare che $\varphi$ è di classe $\Sigma_1^0$. Dimostriamo ora le due implicazioni della tesi, riscriviamo per comodità la formula $\varphi(x,y)$ come $\exists N \, \theta_1 \land \theta_2$.
     \begin{itemize}
         \item[$\boxed{\to}$] Fissiamo $x_1, \dots, x_k$ e mostriamo $\mathsf{Q} \vdash \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$.\\
-        Essendo la formula chiusa allora possiamo mostrare equivalentemente che vale $\mathsf{Q} \models \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$. Procediamo per assurdo,
-        allora esiste $M \models \mathsf{Q}$ tale che per ogni $y \in M$ vale $M \models \varphi(\ol{x_1}, \dots, \ol{x_k}, y)$ e $y \ne \{\ldots\}_M \ol{f(x_1, \dots, x_k)}$.\\
+        Essendo la formula chiusa allora possiamo mostrare equivalentemente che vale $\mathsf{Q} \models \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \to y = \ol{f(x_1, \dots, x_k)})$.
+        Procediamo per assurdo, allora esiste $M \models \mathsf{Q}$ e $y \in M$ tali che $M \models \varphi(\ol{x_1}, \dots, \ol{x_k}, y)$ e $M \models \neg (y = \ol{f(x_1, \dots, x_k)})$.\\
         Siccome $\varphi$ è $\purple{\exists N} \, \theta_1 \land \theta_2$, possiamo fissare $N \in M$ per cui valgano $\theta_1$ e $\theta_2$. Distinguiamo due casi a seconda che $N$ sia standard o non standard.
         \begin{itemize}
             \item \textit{Caso 1: $N$ è standard.} In questo caso, per la validità di $\theta_1$, ovvero:
             \[ M \models \exists z_1 \le N \dots \exists z_l \le N \, (y \le N \land \psi(\ol{x_1}, \dots, \ol{x_k}, y, z_1, \dots, z_l)) \]
-            si ha che $y \in M$ è standard e che possiamo prendere $z_1, \dots, z_l$ standard, per cui, sostituendo i numerali otteniamo che:
-            \[ M \models \psi(\ol{x_1}, \dots, \ol{x_k}, y, z_1, \dots, z_l) \]
-            ma, per il lemma usato all'inizio, equivale al fatto che $y = f(x_1, \dots, x_k)$, ovvero $M \models y = \ol{f(x_1, \dots, x_k)}$, assurdo.
+            si ha che $y \in M$ è standard e che possiamo prendere $z_1, \dots, z_l \in M$ standard, per i quali quindi \purple{ci sono numerali associati}, e quindi, per il lemma si ottiene:
+            \[ \NN \models \psi(\ol{x_1}, \dots, \ol{x_k}, \ol y, \ol z_1, \dots, \ol z_l) \]
+            o meglio:
+            \[ \mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol y, \ol z_1, \dots, \ol z_l) \]
+            questo per l'equivalenza data dal lemma iniziale dice però che $f(x_1, \dots, x_k) = y$, e quindi non può esistere un tale modello con un tale $y$.
             \item \textit{Caso 2: $N$ non è standard.} In questo caso, consideriamo la formula $\theta_2$:
             \[ M \models \forall z_1 \le N \dots \forall z_l \le N \, \forall t \le N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = y) \]
-            ponendo $t = \{\ldots\}_M \ol{f(x_1, \dots, x_k)}$ che è standard, e fissando dal lemma iniziale che $z_1, \dots, z_l$ standard per i quali $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l)$, qualsiasi sia $t$ standard,
-            allora si ottiene vero l'antecedente di $\theta_2$, e quindi $M \models y = \ol{f(x_1, \dots, x_k)}$, assurdo.
+            dal lemma iniziale sappiamo che $y = f(x_1, \dots, x_k)$ è equivalente a $\mathsf{Q} \vdash \exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, z_1, \dots, z_l)$,
+            a meno di passare in $\NN$ per assolutezza, sappiamo che esistono dei numerali $\ol{z_1}, \dots, \ol{z_l}$ tali che:
+            \[ \mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l}) \]
+            Per un lemma visto tutti gli elementi non standard sono maggiori di ogni numerale, per cui $N$ è maggiore di $\{\ldots\}_M f(x_1, \dots, x_k)$ e di $\{\ldots\}_M z_1, \dots, \{\ldots\}_M z_l$.
+            Quindi i numerali che abbiamo scelto rispettano le disuguaglianze e soddisfano $\psi$, per cui, dovendo $M$ soddisfare $\theta_2$, si ottiene che $M \models y = \ol{f(x_1, \dots, x_k)}$, assurdo.
         \end{itemize}
         \item[$\boxed{\leftarrow}$] Vogliamo mostrare che $\mathsf{Q} \vdash \forall y \, (\varphi(\ol{x_1}, \dots, \ol{x_k}, y) \leftarrow y = \ol{f(x_1, \dots, x_k)})$.\\
-        Ossia, per El$_\forall$, $\mathsf{Q} \vdash \varphi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$. Dall'ipotesi iniziale $f(x_1, \dots, x_k) = y$ equivale a $\mathsf{Q} \vdash \exists z_1 \dots \exists z_l \, \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, z_1, \dots, z_l)$,
-        fissando $z_1, \dots, z_l$ tali che $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l})$, scegliamo:
-        \[ N := \max\{f(x_1, \dots, x_k), z_1, \dots, z_l\}\]
-        in ogni modello $M \models \mathsf{Q}$. Fissato quindi $M \models \mathsf{Q}$, i numeri $N$ e $f(x_1, \dots, x_k)$ soddisfano $\theta_1$ e $\theta_2$ per costruzione, infatti: per quanto riguarda $\theta_1$ i quantificatori esistenziali:
-        \[ M \models \exists z_1 \le \ol N \ldots \exists z_l \le \ol N \, (y \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, y, z_1, \dots, z_l) \]
-        sono semplicemente testimoniati dai numeri $z_1,\ldots,z_n$ fissati in precedenza. Per quanto riguarda $\theta_2$ dobbiamo verificare che:
-        \[ M \models \forall z_1 \le N \dots \forall z_l \le N \, \forall t \le N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = \ol{f(x_1, \dots, x_k)}) \]
-        ossia, fissati $z_1, \dots, z_l,t \in M$ tali che:
-        \[ M \models z_1 \le\ol N \land \ldots \land z_l \le \ol N \land t \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \]
-        dobbiamo avere necessariamente $M \models t = \ol{f(x_1, \dots, x_k)}$. Però, per un lemma, le disuguaglianze appena scritte implicano che $z_1, \dots, z_l$ e $t$ sono standard, per cui dalla premessa si arriva, sostituendo, a:
-        \[ M \models \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \]
-        e per l'ipotesi iniziale sulla rappresentazione di $f$ in $\mathsf{Q}$, si ottiene $t = f(x_1, \dots, x_k)$.
+        Ossia, per El$_\forall$, $\mathsf{Q} \vdash \varphi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$. Dall'equivalenza iniziale, come fatto poco fa, possiamo fissare dei numerali tali che:
+        \[ \mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, \ol{z_1}, \dots, \ol{z_l}) \]
+        e chiamiamo $N := \max\{f(x_1, \dots, x_k), z_1, \dots, z_l\}$, nei naturali. Verifichiamo semanticamente la tesi, ossia fissato $M \models \mathsf{Q}$, 
+        dobbiamo vedere che in $M$ vale: $M \models \varphi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$ con il numerale di $\ol N$ interpretato in $M$.\\
+        A questo punto, per quanto riguarda $\theta_1$:
+        \[ M \models \exists z_1 \le \ol N \dots \exists z_l \le \ol N \, (\ol{f(x_1, \dots, x_k)} \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)}, z_1, \dots, z_l)) \]
+        è sufficiente prendere come $z_i$ proprio l'interpretazione dei numerali fissati all'inizio, che rispettano le disuguaglianze, e con questa scelta $M$ soddisfa $\psi$, perché si deduce da $\mathsf{Q}$ con quei parametri.
+        Per quanto riguarda $\theta_2$ vogliamo:
+        \[ M \models \forall z_1 \le \ol N \dots \forall z_l \le \ol N \, \forall t \le \ol N \, (\psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \to t = \ol{f(x_1, \dots, x_k)}) \]
+        ossia, dati $z_1, \dots, z_l, t \in M$ tali che:
+        \[ M \models z_1 \le \ol N \land \ldots \land z_l \le \ol N \land t \le \ol N \land \psi(\ol{x_1}, \dots, \ol{x_k}, t, z_1, \dots, z_l) \]
+        deve valere necessariamente che $M \models t = \ol{f(x_1, \dots, x_k)}$. Però, le disuguaglianze all'inizio, essendo $\ol N$ numerale, implicano per un lemma,
+        che $z_1, \dots, z_l, t$ sono standard. Quindi, eliminando gli AND si ha:
+        \[ M \models \psi(\ol{x_1}, \dots, \ol{x_k}, \ol t, \ol{z_1}, \dots, \ol{z_l}) \]
+        formula $\Delta_0^0$, per cui, per assolutezza si ottiene $\mathsf{Q} \vdash \psi(\ol{x_1}, \dots, \ol{x_k}, \ol{f(x_1, \dots, x_k)})$.
     \end{itemize}
 \end{proof}
 
@@ -2217,11 +2225,50 @@ Ora questo teorema è un po' più forte del necessario e si possono indebolire l
 
 Nella dimostrazione del primo teorema di incompletezza di Gödel abbiamo fatto uso del fatto che $\NN$ fosse modello di $T$, oltre alla coerenza di $T$, quindi quella dimostrazione non può essere riciclata.
 
-\begin{proof}[Dimostrazione \textup{(IDEA)}]
-    L'idea della dimostrazione, che non vediamo, è quella di usare una formula che dice ``se ci fosse una mia dimostrazione, allora ci sarebbe anche una dimostrazione di una mia negazione più corta'', ovvero:
-    \[ \mathsf{Q} \vdash\varphi \leftrightarrow \forall d \, \textsf{Dim}_T(d,\ulcorner\varphi\urcorner) \to \exists d' \leq d \, \textsf{Dim}_T(d',\ulcorner\neg \,\varphi\urcorner) \]
-    e questo è un modo per ottenere comunque una formula che dice di sé stessa che è non dimostrabile - basta pensare alla negazione.
+\begin{proof}
+    L'idea della dimostrazione, è quella di usare una formula che dice ``se ci fosse una mia dimostrazione, allora ci sarebbe anche una dimostrazione di una mia negazione più corta'', ovvero:
+    \[ \varphi(x) := \forall d \, (\mathsf{Dim}_T(d,x) \to \exists d' \leq d \, \mathsf{Dim}_T(d',\textsf{Neg}(x))) \]
+    con $\textsf{Neg}(x) = \langle \#\neg, x\rangle$ la funzione PR che associa ad una formula il codice della sua negazione. Usiamo il lemma di diagonalizzazione di Gödel su questa formula e troviamo $\gamma$ tale che:
+    \[ \mathsf{Q} \vdash \gamma \leftrightarrow \forall d \, (\mathsf{Dim}_T(d,\overline{\ulcorner\gamma\urcorner}) \to \exists d' \leq d \, \mathsf{Dim}_T(d',\textsf{Neg}(\overline{\ulcorner\gamma\urcorner}))) \]
+    Distinguiamo due casi.
+    \begin{itemize}
+        \item Assumiamo $T \vdash \gamma$, per coerenza si ha $T \nvdash \neg \gamma$, da cui per il lemma valgono:
+        \[ \NN \models \exists d \, \mathsf{Dim}_T(d,\ulcorner\gamma\urcorner) \quad \text{e} \quad \NN \models \neg \,\exists d' \, \mathsf{Dim}_T(d',\textsf{Neg}(\ulcorner\gamma\urcorner)) \]
+        in particolare:
+        \[ \exists k \in \NN \; \NN \models \mathsf{Dim}_T(k,\ulcorner\gamma\urcorner) \quad \text{e} \quad \forall k' \in \NN \; \NN \models \neg \,\mathsf{Dim}_T(k',\textsf{Neg}(\ulcorner\gamma\urcorner)) \]
+        e la seconda cosa si può indebolire a $\forall k' \leq k \; \NN \models \ldots$, che equivale a $\NN \models \forall d' \leq \ol k \, \neg \,\mathsf{Dim}_T(d',\textsf{Neg}(\ulcorner\gamma\urcorner))$, quindi:
+        \[ \exists k \in \NN \; \NN \models (\mathsf{Dim}_T(\ol k,\ulcorner\gamma\urcorner) \land \forall d' \leq \ol k \, \neg \,\mathsf{Dim}_T(d',\textsf{Neg}(\ulcorner\gamma\urcorner))) \]
+        la formula a destra è chiusa e di classe $\Sigma_1^0$, quindi equivale:
+        \[ \exists k \in \NN \; \mathsf{Q} \vdash (\mathsf{Dim}_T(\ol k,\ol{\ulcorner\gamma\urcorner}) \land \forall d' \leq \ol k \, \neg \,\mathsf{Dim}_T(d',\textsf{Neg}(\ol{\ulcorner\gamma\urcorner}))) \]
+        usando In$_\exists$ troviamo:
+        \[ \mathsf{Q} \vdash \exists d \, (\mathsf{Dim}_T(d,\ol{\ulcorner\gamma\urcorner}) \land \forall d' \leq d \, \neg \,\mathsf{Dim}_T(d',\textsf{Neg}(\ol{\ulcorner\gamma\urcorner}))) \]
+        che equivale a $\neg \,\gamma$ per il lemma, per cui si ottiene $T \vdash \neg \,\gamma$, assurdo.
+        \item Assumiamo $T \vdash \neg \,\gamma$, come prima, per la coerenza si arriva a:
+        \[\exists k \in \NN \; \mathsf{Q} \vdash \mathsf{Dim}_T(\ol k,\ol{\mathsf{Neg}(\ulcorner\gamma\urcorner)}) \land \forall d' \leq \ol k \, \neg \,\mathsf{Dim}_T(d',\ol{\ulcorner\gamma\urcorner}) \]
+        usando El$_{\cdot \land}$ e El$_{\land \cdot}$ troviamo:
+        \[ \exists k \in \NN \quad \begin{cases}
+            \mathsf{Q} \vdash \mathsf{Dim}_T(\ol k,\ol{\mathsf{Neg}(\ulcorner\gamma\urcorner)}) \\
+            \forall d' \leq \ol k \, \mathsf{Q} \vdash \neg \,\mathsf{Dim}_T(d',\ol{\ulcorner\gamma\urcorner})
+        \end{cases}\]
+        Vale la dicotomia dell'ordinamento di $\mathsf{Q}$, per cui $\mathsf{Q}\vdash \forall d (d \leq \ol k \lor \ol k \leq d)$, e quindi distinguiamo due casi.
+        \begin{itemize}
+            \item Se $d \leq \ol k$ allora per la seconda condizione sopra vale $\mathsf{Q} \vdash \neg \,\mathsf{Dim}_T(d,\ol{\ulcorner\gamma\urcorner})$;
+            \item se $\ol k \leq d$ allora, la prima condizione sopra dice $\mathsf{Q} \vdash \mathsf{Dim}_T(\ol k,\ol{\mathsf{Neg}(\ulcorner\gamma\urcorner)})$, essendo $\ol k \leq d$,
+            possiamo introdurre la quantificazione esistenziale limitata (usando In$_\exists$ e In$_\land$) e ottenere $\mathsf{Q} \vdash \exists d' \leq d \, \mathsf{Dim}_T(d',\ol{\mathsf{Neg}(\ulcorner\gamma\urcorner)})$.
+        \end{itemize}
+        Pertanto, per El$_{\lor}$ siamo arrivati a:
+        \[ \mathsf{Q} \vdash \forall d \, (\neg \,\mathsf{Dim}_T(d,\ol{\ulcorner\gamma\urcorner}) \lor \exists d' \leq d \, \mathsf{Dim}_T(d',\ol{\mathsf{Neg}(\ulcorner\gamma\urcorner)})) \]
+        che equivale a:
+        \[\mathsf{Q} \vdash \forall d \, (\mathsf{Dim}_T(d,\ol{\ulcorner\gamma\urcorner}) \to \exists d' \leq d \, \mathsf{Dim}_T(d',\ol{\mathsf{Neg}(\ulcorner\gamma\urcorner)})) \]
+        che equivale a $\gamma$ per l'equivalenza iniziale, e segue l'assurdo $T \vdash \gamma$.
+    \end{itemize}
 \end{proof}
+
+Dove si è usato il seguente lemma, che si dimostra per induzione metateorica.
+
+\begin{lemma}[Dicotomia dell'ordinamento di $\mathsf{Q}$]
+    $\forall n \in \NN$ vale che $\mathsf{Q} \vdash \forall x (x \leq \ol n \lor \ol n \leq x)$.
+\end{lemma}
 
 \begin{definition}[Teoria decidibile]
     Una teoria $T$ è \vocab{decidibile} se l'insieme dei codici delle formule dimostrate da $T$ è decidibile, ovvero esiste una funzione ricorsiva totale $P$ tale che:
@@ -2233,7 +2280,7 @@ Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo
 
 \begin{remark}[Ricorsivamente assiomatizzabile $\implies$ semidecidibile]
     Se $T$ è ricorsivamente assiomatizzabile, allora abbiamo il predicato PR $\mathsf{Dim}_T$, che è quindi ricorsivo totale. Per cui posso definire i codici delle conseguenze di $T$ come:
-    \[ \{\ulcorner\sigma\urcorner : T \vdash \sigma\} = \{\ulcorner\sigma\urcorner : \exists d \, \mathsf{Dim}_T(d,\ulcorner\sigma\urcorner)\} \]
+    \[ \{\ulcorner\sigma\urcorner : T \vdash \sigma\} = \{\ulcorner\sigma\urcorner : \exists d \, \mathsf{Dim}_T(d,\ol{\ulcorner\sigma\urcorner})\} \]
     dove sto considerando la formula, di classe $\Sigma_1^0$, associata a esistenziale + predicato di dimostrazione, e quindi $T$ è decidibilmente assiomatizzabile.
     Ovviamente varrà anche che se $T$ è decidibilmente assiomatizzabile, allora $T$ è semidecidibile.
 \end{remark}
@@ -2262,7 +2309,7 @@ Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo
         preso il codice della cosa destra di $\vdash$ è sufficiente controllare che $P$ di quel codice sia diverso da 0, in tal modo $T' \vdash \varphi$. Controllare che $P(m) \ne 0$ è decidibile in quanto è il complementare di $\{P(i) = 0\}$, quindi esisterà una funzione decidibile di cui è luogo di zero ($1 \dotminus P(i)$). 
     \end{itemize}
 \end{proof}
-
+\pagebreak
 \begin{remark}[Completamento decidibile in un qualsiasi linguaggio finito]
     Notare che nella proposizione precedente non abbiamo usato nulla di $L_{\text{arit}}$, se non il fatto che sia un linguaggio finito, per cui posso fissare una numerazione di Gödel.
     Quindi la proposizione è vera per qualsiasi $L$ finito, adattando le definizioni di decidibilità e assiomatizzabilità al linguaggio $L$.
@@ -2300,7 +2347,7 @@ Vediamo tre facili applicazioni dell'ultima cosa.
     Supponiamo per assurdo che sia decidibile l'insieme:
     \[ \{\ulcorner\sigma\urcorner : \;\vdash \sigma\} \]
     osserviamo che l'insieme, che abbiamo visto essere non decidibile, dei codici delle formule vere in $\mathsf{Q}$ si scrive come:
-    \[ \{\ulcorner\varphi\urcorner : \mathsf{Q} \vdash \varphi\} = \{\ulcorner\varphi\urcorner : \vdash (\mathsf{Q}1 \land \ldots \land \mathsf{Q}7) \to \varphi\} \]
+    \[ \{\ulcorner\varphi\urcorner : \mathsf{Q} \vdash \varphi\} = \{\ulcorner\varphi\urcorner : \;\vdash (\mathsf{Q}1 \land \ldots \land \mathsf{Q}7) \to \varphi\} \]
     Per cui se ci fosse un algoritmo che decide se una formula è dimostrabile senza assiomi, allora potremmo usarlo per decidere se una formula è dimostrata da $\mathsf{Q}$, assurdo.
 \end{proof}
 
@@ -2312,6 +2359,28 @@ Vediamo tre facili applicazioni dell'ultima cosa.
 
 \begin{proof}
     Tale insieme è proprio l'insieme dei codici delle formule in $\Th(\NN;L_{\text{arit}})$, se fosse decidibile sarebbe un'estensione coerente, completa e ricorsivamente assiomatizzabile di $\mathsf{Q}$, assurdo per il primo teorema di incompletezza.
+\end{proof}
+
+\begin{proposition}[Completezza + semidecidibilità $\implies$ decidibilità]
+    Una teoria $T$ completa e semidecidibile è decidibile.
+\end{proposition}
+
+\begin{proof}
+    Per ipotesi $T$ è semidecidibile, quindi esiste una funzione ricorsiva parziale $P$ tale che $P(i) = 0$ se e solo se $T \vdash \sigma$, dove $i = \ulcorner\sigma\urcorner$.
+    Definiamo questi tre insiemi:
+    \[ A := \{n \in \NN : ``T \vdash n\text{''} \land \mathsf{Form}(n) = 0\} \]
+    \[ B := \{n \in \NN : ``T \vdash \neg \mathsf{Cl}(n)\text{''} \land \mathsf{Form}(n) = 0\} \]
+    \[ C := \{n \in \NN : \mathsf{Form}(n) = 1\} \]
+    la suddivisione viene fatta dividendo prima i codici di formule da quelli di non-formule, e poi dividendo i codici di formule in quelli dimostrati da $T$ e quelli le cui negazioni sono dimostrate da $T$,
+    in particolare, se non vale che $T \vdash \varphi$, visto che è equivalente a dimostrare la chiusura universale di $\varphi$, allora deve avvenire che $T$ dimostri la sua negazione,
+    tuttavia se $\varphi$ è aperta, la negazione da dimostrare è quella della chiusura universale, perché $\neg \forall \ldots \ne \forall \neg \ldots$, cioè $T \nvdash \varphi$ è equivalente a $T \vdash \neg \,\mathsf{Cl}(\varphi)$,
+    che è chiusa e quindi è $T \vdash \neg \,\mathsf{Cl}(\varphi)$. Per tale ragione, grazie alla completezza di $T$ quella sopra è una partizione di $\NN$.\\
+    Naturalmente $C$ è primitivo ricorsivo, inoltre, scrivendo al posto di ``$T \vdash n$'' il predicato PR di dimostrabilità - che è PR perché $T$ è semidecidibile e quindi ricorsivamente assiomatizzabile - che con l'esistenziale è una formula $\Sigma_1^0$,
+    otteniamo che $A$ è semidecidibile, e analogamente verificato che $B$ è semidecidibile, abbiamo che $A$ e $B$ sono decidibili, e quindi $T$ è decidibile.\\
+    Ci serve infine verificare che la funzione $\mathsf{Cl}$, che associa ad ogni codice il numero della sua chiusura universale, è PR, infatti basta definirla come:
+    $$ g(n, 0) := \begin{cases} \langle \#\forall, 8, n \rangle & \text{se } \mathrm{free}(n, 0) = 0 \\ n & \text{altrimenti} \end{cases} $$
+    $$ g(n, k+1) := \begin{cases} \langle \#\forall, (k+1)+8, g(n, k) \rangle & \text{se } \mathrm{free}(n, k+1) = 0 \\ g(n, k) & \text{altrimenti} \end{cases} $$
+    e $\mathsf{Cl}(n) := g(n, \length(n))$ (poiché $\cons(x,y) \geq \max{\{x,y\}}$ non posso avere codici in cui la codifica di una variabile superi $n$). Fatto questo $B$ è semidecidibile in quanto la formula che lo definisce è $\Sigma_1^0$.
 \end{proof}
 
 \subsection{Secondo teorema di incompletezza}
