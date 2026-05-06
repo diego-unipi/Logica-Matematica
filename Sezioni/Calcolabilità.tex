@@ -535,7 +535,7 @@ macchine di Turing che hanno come alfabeto $\Sigma = \{0,1,\blacktriangleright\}
 Dobbiamo anche definire macchine di Turing che implementino le funzioni: successore, sottrazione troncata per 1, costante 0 e proiezione. Infine vediamo come implementare le macchine elementari e con questo abbiamo dimostrato che ogni funzione ricorsiva è Turing-computabile.
 
 \begin{proof}
-    Vediamo che la classe delle funzioni Turing-computabili è chiusa per composizione, ricorsione primitiva e minimizzazione. In tutti i casi faremo la seguente cosa: assumiamo di avere le macchine elementari che implementano le operazioni di \texttt{push}, \texttt{rem}, \texttt{exec}, \texttt{ttif} e vediamo come usarle per costruire macchine che implementano le funzioni ottenute per composizione, ricorsione primitiva e minimizzazione.
+    Vediamo che la classe delle funzioni Turing-computabili è chiusa per composizione, ricorsione primitiva e minimizzazione. In tutti i casi faremo la seguente cosa: assumiamo di avere le macchine elementari che implementano le operazioni di \texttt{push}, \texttt{rem}, \texttt{exec}, \texttt{if} e vediamo come usarle per costruire macchine che implementano le funzioni ottenute per composizione, ricorsione primitiva e minimizzazione.
     In particolare le nuove macchine saranno ottenute unendo gli stati - in maniera disgiunta per evitare problemi - e incollando le funzioni di transizione (come nell'esempio precedente), ci limiteremo pertanto a descrivere soltanto come sono fatte queste ultime, componendo quelle delle macchine elementari, e non descrivendo per intero le funzioni implementate da queste macchine.
     \begin{itemize}
         \item[$\boxed{\text{composizione}}$] Se $f : \NN^k \to \NN_\bot$ e $g_1, \dots, g_k : \NN^h \to \NN_\bot$, vogliamo costruire una macchina che parta da $\blacktriangleright x_1 \ldots x_h$ e arrivi a $\blacktriangleright f(g_1(x_1, \dots, x_h), \dots, g_k(x_1, \dots, x_h))$.\\
@@ -751,9 +751,9 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
     ora $g(l,k)$ coincide con $\cdr^k$, infatti il passo ricorsivo fatto $k$ volte corrisponde a $\cdr^k$; 
     inoltre $\boxed{\nth(l,k) = \car \circ g(l,k)}$, infatti, se $l = \langle a_0, \ldots, a_n \rangle$, allora $g(l,k) = \langle a_k, \ldots, a_n \rangle$, e prendendo $\car$ si ottiene $a_k$ se $k \leq n$;
     mentre se $k>n$, allora $g(l,k)=0$, in quanto arriviamo con $\cdr$ a 0 e $\car(0)=0$.\\
-    Per $\length$ basterà osservare che $\boxed{\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}}$, cioè quante volte si può fare $\cdr$ prima di arrivare a 0;
+    Per $\length$ basterà osservare che $\boxed{\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}}$, cioè quante volte si può fare $\cdr$ prima di arrivare ad avere seconda componente 0 in $\cons$ - $\cons$ non può fare 0;
     tale funzione è PR, perché per ogni $i \in \NN$ $\{\cdr^i(l) \ne 0\}$ è un predicato PR, e $l \mapsto \#\{i < l| \cdr^i(l) \ne 0\}$ è una funzione che conta gli elementi di un predicato PR fino a $l$, che è quindi PR per un esempio precedente.
-    Infine è facile osservare che $n+1 = \length(l)$ se e solo se $\cdr^{n+1}(l) = 0$ - sto indicizzando da $a_0$, quindi il numero di applicazioni di $\cdr$ necessarie per arrivare a 0 coincide con la lunghezza della lista - da cui la definizione di $\length$ data sopra funziona.\\
+    Infine si osserva che $l$ è il bound giusto sotto cui controllare perché $\cons(x,y) \geq \max\{x,y\}$, quindi ha senso contare fino a $l$ per verificare se si trova 0 come seconda componente di $\cons$.\\
     Per $\cat$ è sufficiente mettere la seconda codifica più interna e poi aggiungere in testa gli elementi della prima lista partendo dall'ultimo, così da preservarne l'ordine finale; questo può essere fatto definendo la seguente funzione PR:
     \[ f(a,b,k) := \begin{cases}
         f(a,b,0) := b \\
@@ -816,6 +816,14 @@ A questo punto possiamo anche verificare che $\head$ è PR.
     Nel caso rimanente, aggiungiamo a $\head(l,y-1)=\car(s)$ l'elemento successivo di $l$, cioè $\nth(l,\length(s)-1)$, e otteniamo esattamente $\head(l,y)$. 
     Quindi siamo esattamente nel caso del lemma, e $\head$ è PR.
 \end{soln}
+\pagebreak
+\begin{remark}[Non serve davvero la ricorsione sul decorso dei valori per $\head$]
+    In realtà, si può dimostrare che $\head$ è PR anche senza usare il lemma di ricorsione sul decorso dei valori, infatti basta dare la definizione ricorsiva:
+    \[ \head(l,0) := 0, \head(l,k+1) := \begin{cases}
+        \cat(\head(l,k), \cons(\nth(l,k),0)) & \text{se $k < \length(l)$} \\
+        \head(l,k) & \text{se $k \geq \length(l)$}
+    \end{cases} \]
+\end{remark}
 
 \begin{theorem}[Funzione ricorsiva universale]
     Esiste una funzione ricorsiva parziale $u : \NN_\bot^2 \to \NN_\bot$ tale che per ogni $f : \NN^k \to \NN_\bot$ Turing-computabile,
@@ -846,7 +854,7 @@ A questo punto possiamo anche verificare che $\head$ è PR.
     \[ u_n(\ulcorner f \urcorner, x_1, \ldots, x_n) := u(\ulcorner f \urcorner, \langle x_1, \ldots, x_n \rangle) \]
     essendo la codifica una composizione di $n$ (con $n$ fisso) funzioni $\cons$, che è PR, $u_n$ è ricorsiva per composizione di funzioni ricorsive.
 \end{proof}
-
+\pagebreak
 \begin{remark}[Tesi di Church]
     ``La classe delle funzioni ricorsive coincide con la classe delle funzioni effettivamente calcolabili''. Tale tesi non è un'affermazione matematica,
     ma è l'idea che esprime la filosofia dietro alle varie nozioni di calcolabilità che abbiamo dato - e anche non dato, e.g. il $\lambda$-calcolo, che è quella di descrivere tutte le funzioni che 
@@ -1148,8 +1156,10 @@ Morale: essere dominio, luogo di zero o immagine totale di una funzione ricorsiv
            ``\mathbf x\text{"} &\text{se $T_k(\ulcorner f \urcorner, \nth(n,0), \ldots, \nth(n,k-1),\purple{\nth(n,k)}) = 0$} \\
             \mathbf c & \text{altrimenti}
         \end{cases} \]
-        dove ``$\mathbf x$'' è in realtà $(\nth(n,0), \ldots, \nth(n,k-1))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti $\mathbf x \in R$ se e solo se $f(\mathbf x) \ne \bot$,
-        se e solo se $\exists n \; T_k(\ulcorner f \urcorner, \mathbf x, n) = 0$, se e solo se $\exists n \; g(n) = \mathbf x$. Se $R = \varnothing$, allora è ricorsivamente enumerabile per definizione.
+        dove ``$\mathbf x$'' è in realtà $(\nth(n,0), \ldots, \nth(n,k-1))$, per cui $g$ è PR. Inoltre $R = \Img g$, infatti: se $\mathbf x \in \Img g$,
+        allora esiste $n$ tale che $g(n) = \mathbf x$, per cui $T_k(\ulcorner f \urcorner, \mathbf x, \nth(n,k)) = 0$, e quindi $f(\mathbf x) \ne \bot$;
+        viceversa, se $\mathbf x \in R$, allora $f(\mathbf x) \ne \bot$, per cui esiste $n$ tale che $T_k(\ulcorner f \urcorner, \mathbf x, n) = 0$, e quindi prendendo $m := \langle \mathbf x, n \rangle$ si ha $g(m) = \mathbf x$.\\
+         Se $R = \varnothing$, allora è ricorsivamente enumerabile per definizione.
         \item[$\boxed{3. \Rightarrow 1.}$] Sia $R = \{f(n) | n \in \NN\}$, per qualche funzione ricorsiva totale $f : \NN \to \NN^k$, allora basta definire $g : \NN^{k+1} \to \NN_\bot$:
         \[ g(\mathbf y,n) := \begin{cases}
             0 & \text{se $f(n) = \mathbf y$} \\
