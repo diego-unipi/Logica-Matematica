@@ -1209,11 +1209,11 @@ Vorremo ora rimpiazzare $\geq \kappa$ con $= \kappa$. Ci servirà il lemma segue
         Il caso interessante che rimane è $\varphi = \exists y \; \psi(y,x_1,\ldots,x_k)$, allora:
         \begin{align*}
             M \models \exists y \; \psi(y,a_1,\ldots,a_k) &\iff \exists a \in M \; M \models \psi(a,a_1,\ldots,a_k) &&(\text{Tarski}) \\
-                                                          &\iff \exists a \in M \; N \models \psi(a,a_1,\ldots,a_k) &&(\star) \\
-                                                          &\iff \exists c \in N \; N \models \psi(c,a_1,\ldots,a_k) &&(\text{Tarski}) \\
-                                                          &\iff N \models \exists y \; \psi(y,a_1,\ldots,a_k)
+                                                          &\iff \exists a \in M \; N \models \psi(a,a_1,\ldots,a_k) &&(\text{hp induttiva}) \\
+                                                          &\iff \exists c \in N \; N \models \psi(c,a_1,\ldots,a_k) &&(\star) \\
+                                                          &\iff N \models \exists y \; \psi(y,a_1,\ldots,a_k) &&(\text{Tarski})
         \end{align*}
-        dove in $(\star)$: la freccia dall'alto verso il basso è l'ipotesi induttiva, mentre la freccia dal basso verso l'alto è la condizione del criterio di Tarski-Vaught.
+        dove in $(\star)$: la freccia dall'alto verso il basso è il fatto che le formule esistenziali si preservano per estensioni, mentre la freccia dal basso verso l'alto è la condizione di Tarski-Vaught.
     \end{itemize}
 \end{proof}
 
