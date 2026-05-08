@@ -753,7 +753,7 @@ Occupiamoci ora di dimostrare che se $f$ è Turing-computabile, allora $f$ è ri
     mentre se $k>n$, allora $g(l,k)=0$, in quanto arriviamo con $\cdr$ a 0 e $\car(0)=0$.\\
     Per $\length$ basterà osservare che $\boxed{\length(l) = \#\{i < l| \cdr^i(l) \ne 0\}}$, cioè quante volte si può fare $\cdr$ prima di arrivare ad avere seconda componente 0 in $\cons$ - $\cons$ non può fare 0;
     tale funzione è PR, perché per ogni $i \in \NN$ $\{\cdr^i(l) \ne 0\}$ è un predicato PR, e $l \mapsto \#\{i < l| \cdr^i(l) \ne 0\}$ è una funzione che conta gli elementi di un predicato PR fino a $l$, che è quindi PR per un esempio precedente.
-    Infine si osserva che $l$ è il bound giusto sotto cui controllare perché $\cons(x,y) \geq \max\{x,y\}$, quindi ha senso contare fino a $l$ per verificare se si trova 0 come seconda componente di $\cons$.\\
+    Infine si osserva che $l$ è un bound sufficiente sotto cui controllare perché una lista codificata con $l$ non può avere più di $l$ elementi (per le proprietà di $\cons$).\\
     Per $\cat$ è sufficiente mettere la seconda codifica più interna e poi aggiungere in testa gli elementi della prima lista partendo dall'ultimo, così da preservarne l'ordine finale; questo può essere fatto definendo la seguente funzione PR:
     \[ f(a,b,k) := \begin{cases}
         f(a,b,0) := b \\
@@ -1711,7 +1711,7 @@ Operativamente, nonostante (3) $\implies$ (2) $\iff$ (1), la dimostrazione proce
     Induzione strutturale sugli $L_{\text{arit}}$-termini chiusi. Un $L_{\text{arit}}$-termine chiuso è o un successore di qualche altro termine, o il simbolo di costante $0$,
     o una somma o un prodotto di termini chiusi - non possono esserci variabili, essendo libere.
     \begin{itemize}
-        \item \textcolor{MidnightBlue}{$t = 0$} In questo caso $n = 0$, indipendentemente dalla valutazione essendo chiuso, e $\ol 0 = 0$ per definizione, quindi $Q \vdash t = \ol n$, per Wk + In$_{=}$.
+        \item \textcolor{MidnightBlue}{$t = 0$} In questo caso $n = 0$, indipendentemente dalla valutazione essendo chiuso, e $\ol 0 = 0$ per definizione di numerale, quindi $Q \vdash t = \ol n$, per Wk + In$_{=}$.
         \item \textcolor{MidnightBlue}{$t = s(t')$} Per ipotesi induttiva, detto $m := \{\ldots\}_\NN t'$, vale che $Q \vdash t' = \ol m$, e quindi - modus ponens - $Q \vdash s(t') = s(\ol m)$, inoltre per definizione di numerale $s(\ol m) = \ol{m+1}$, e per definizione di interpretazione $\{\ldots\}_\NN s(t') = m + 1$.
         \item \textcolor{MidnightBlue}{$t = t_1 + t_2$} Detti $a := \{\ldots\}_\NN t_1$, $b := \{\ldots\}_\NN t_2$ e $c := \{\ldots\}_\NN t$, vale per ipotesi induttiva che $Q \vdash t_1 = \ol a$ e $Q \vdash t_2 = \ol b$, inoltre, poiché $\NN \models (t = t_1+t_2)$ vale $c = a + b$. Vogliamo dimostrare che $Q \vdash t = \ol c$,
         ovvero, per El$_{=}$, che $Q \vdash t_1 + t_2 = \ol c$, che si riduce, sempre per El$_{=}$, a dimostrare che $Q \vdash \ol a + \ol b = \ol c$. Ci siamo quindi ridotti a voler verificare:
