@@ -412,7 +412,8 @@ A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo os
     Sia $L = \{c\}$ e $T := \{\forall x_k (x_k = c)\}$. Tale teoria forza ogni suo modello ad avere un solo elemento che coincide con l'interpretazione di $c$.
     Data una qualsiasi formula $\varphi(x_k)$, vogliamo verificare la validità del sequente:
     \[ T \vdash \exists x_k \varphi \to \varphi[c/x_k] \]
-    assumendo $\exists x_k \varphi$, per El$_\exists$ si ha $\varphi[t/x_k]$ e la teoria ci garantisce che $t = c$, per cui, via El$_=$, vale che $T \vdash \varphi[c/x_k]$, quindi la condizione è obbligatoriamente soddisfatta.
+    questo segue perché $T \vdash x_k = c$, e per El$_=$:
+    \[ \mathrm{El}_=\frac{T \vdash t = c \quad T,\exists x_k \varphi \vdash \varphi[t/x_k]}{T, \exists x_k \varphi \vdash \varphi[c/x_k]} \]
 \end{example}
 
 \begin{lemma}[Aggiunta di un assioma di Henkin]
@@ -448,7 +449,8 @@ A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo os
     tale che $T'' \subseteq T_{i_0}$, si ha che $T_{i_0} = T_0 \cup \{\psi_1,\ldots,\psi_k\}$, quindi $T'' \subseteq T_0 \cup \{\psi_1,\ldots,\psi_k\}$, e quindi per Wk $T_0 \cup \{\psi_1,\ldots,\psi_k\} \vdash \bot$.\\
     Sia ora $n$ il minimo tale che $T \cup \{\psi_1,\ldots,\psi_n\} \vdash\bot$, allora:
     \[ T \cup \{\psi_1,\ldots,\psi_{n-1}\} \nvdash \bot \qquad T \cup \{\psi_1,\ldots,\psi_n\} \vdash \bot \]
-    ma questo contraddice il lemma precedente. Osserviamo infine che $T'$ è una teoria di Henkin, per ogni $L'$-formula $\varphi(x_k)$, esiste $i \in \NN$ tale che $\varphi(x_k)$ è una $L_i$-formula, e quindi per definizione di $T_{i+1}$ vale $T_{i+1} \vdash \exists x_k \varphi \to \varphi[c_{\varphi,x_k}/x_k]$.
+    ma questo contraddice il lemma precedente. Osserviamo infine che $T'$ è una teoria di Henkin, per ogni $L'$-formula $\varphi(x_k)$, esiste $i \in \NN$ tale che $\varphi(x_k)$ è una $L_i$-formula,
+    e quindi per definizione di $T_{i+1}$ vale $T_{i+1} \vdash \exists x_k \varphi \to \varphi[c_{\varphi,x_k}/x_k]$, con $c_{\varphi,x_k} \in L_{i+1}$.
 \end{proof}
 
 \begin{lemma}[di Lindenbaum]
@@ -525,7 +527,7 @@ partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teo
         \begin{itemize}
             \item[$\boxed{\implies}$] Assumo $T'' \vdash \varphi \to \psi$. Se $M \models \{v\}\varphi$, per ipotesi induttiva $T'' \vdash \varphi$, quindi per El$_\to$ $T'' \vdash \psi$ e di nuovo per ipotesi induttiva $M \models \{v\}\psi$. Dunque $M \models \{v\}\varphi \to \psi$.
             \item[$\boxed{\impliedby}$] Assumo $M \models \{v\}\varphi \to \psi$. Se $M \models \{v\}\varphi$, per ipotesi induttiva $T'' \vdash \varphi$ e $T'' \vdash \psi$ - vero e vero nell'implicazione, e quindi per In$_\to$ $T'' \vdash \varphi \to \psi$. Se invece $M \not\models \{v\}\varphi$, allora $T'' \nvdash \varphi$,
-            quindi per completezza deduttiva $T'' \vdash \neg \,\varphi$; poiché $\neg \,\varphi$ è $\varphi \to \bot$, da $\varphi$ si ottiene $\bot$ e quindi (usando El$_\bot$) $T'' \vdash \varphi \to \psi$.
+            quindi per completezza deduttiva $T'' \vdash \neg \,\varphi$; poiché $\neg \,\varphi$ è $\varphi \to \bot$, da $\varphi$ si ottiene $\bot$ e quindi (usando $\varphi \vdash \varphi$ + El$_\to$ + El$_\bot$) $T'' \vdash \varphi \to \psi$.
         \end{itemize}
         In entrambi i casi abbiamo tuttavia usato che $\varphi$ e $\psi$ sono chiuse, per poter usare la completezza, in generale potrebbero non esserlo, in questo caso, come fatto per i termini, si definisce $\overline\varphi := \varphi[c_1/x_1,\ldots,c_n/x_n]$ e $\overline\psi := \psi[c_1/x_1,\ldots,c_n/x_n]$.
         Usando El$_=$, si ha $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \overline\varphi \to \overline\psi$;
