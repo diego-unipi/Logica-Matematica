@@ -1304,12 +1304,13 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     Espandiamo il linguaggio aggiungendo una costante $\purple{c}$, e consideriamo la teoria $T_S := \mathrm{Th}(\NN; 0, 1, +, \cdot, s) \cup p_S(c)$, tale teoria è finitamente coerente,
     infatti preso un sottoinsieme finito di formule $T_S' \subseteq T_S$, che posso supporre contenga solo un numero finito di formule $\mathsf{div}(p, c)$ e $\neg\, \mathsf{div}(q, c)$, è sufficiente interpretare $c$ come il prodotto dei primi $p$ per cui $\mathsf{div}(p, c) \in T_S'$,
     in questo modo $\NN$ è un modello di $T_S'$ e $T_S$ è coerente.\\
-    Quindi per ogni $S \subseteq P$, la teoria $T_S$ è coerente e ammette un modello; usando Löwenheim-Skolem verso il basso - con $A = \varnothing$ - otteniamo che esiste un modello numerabile $N_S$ di $T_S$, per ogni $S \subseteq P$,
-    inoltre possiamo considerare i modelli ristretti $M_S := N_S|_L$, che sono modelli numerabili di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ che realizzano le formule $p_S(x)$.\\
+    Quindi per ogni $S \subseteq P$, la teoria $T_S$ è coerente e ammette un $L'$-modello infinito; usando Löwenheim-Skolem verso il basso - con $A = \varnothing$ - otteniamo che esiste un modello numerabile $N_S$ di $T_S$, per ogni $S \subseteq P$,
+    inoltre possiamo considerare i modelli ristretti $M_S := N_S|_L$, che sono modelli numerabili di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ che realizzano le formule $p_S(x)$.
     Usiamo ora questi $2^{\aleph_0}$ modelli $M_S$ per dimostrare che $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ ha almeno $2^{\aleph_0}$ modelli numerabili non isomorfi.\\
     Se $S,S' \subseteq P$ sono due sottoinsiemi distinti di primi, allora gli insiemi $p_S(x)$ e $p_{S'}(x)$ sono diversi ed in particolare in contraddizione tra di loro perché da un lato ci sarà una formula che dice che un certo primo $p$ divide $x$ e dall'altro ci sarà la formula che dice che $p$ non divide $x$.
-    In particolare ogni elemento di un modello realizza esattamente solo l'insieme di formule $p_S(x)$ con $S$ proprio l'insieme dei primi nella sua fattorizzazione. Poiché ogni modello numerabile di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ possiede $\aleph_0$ elementi, esso può realizzare al massimo $\aleph_0$ insiemi di formule $p_S(x)$ distinti.
-    Se per assurdo esistessero al massimo $\kappa < 2^{\aleph_0}$ modelli numerabili non isomorfi di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$, allora l'unione di tutti gli elementi di tutti i tali modelli
+    In particolare ogni elemento di un modello realizza esattamente un insieme di formule $p_S(x)$, con $S$ l'insieme dei primi che lo dividono; viceversa, lo stesso $p_S(x)$ può essere realizzato da più elementi (per esempio variando le potenze dei primi in $S$). Poiché ogni modello numerabile di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$ possiede $\aleph_0$ elementi,
+    esso può realizzare al massimo $\aleph_0$ insiemi di formule $p_S(x)$ distinti.
+    Se per assurdo esistessero al più $\kappa < 2^{\aleph_0}$ modelli numerabili non isomorfi di $\mathrm{Th}(\NN; 0, 1, +, \cdot, s)$, allora l'unione di tutti gli elementi di tutti i tali modelli
     sarebbe $\max\{\aleph_0, \kappa\} < 2^{\aleph_0}$, quindi realizzerebbe al massimo $\kappa < 2^{\aleph_0}$ insiemi di formule $p_S(x)$, ma questo è assurdo perché abbiamo costruito $2^{\aleph_0}$ modelli che realizzano $2^{\aleph_0}$ insiemi di formule $p_S(x)$.
 \end{soln}
 
