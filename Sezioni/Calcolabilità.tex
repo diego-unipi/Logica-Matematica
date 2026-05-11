@@ -2015,7 +2015,7 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
         \textsf{For}(n) :=& (\length(n) = 1 \land \nth(n,0) = \#\bot) \\
                           &\lor (\length(n) = 3 \land \nth(n,0) = \#= \land \textsf{Term}(\nth(n,1)) \land \textsf{Term}(\nth(n,2))) \\
                           &\lor (\length(n) = 3 \land \nth(n,0) = \#\to \land \textsf{For}(\nth(n,1)) \land \textsf{For}(\nth(n,2))) \\
-                          &\lor (\length(n) = 3 \land \nth(n,0) = \#\forall \land \nth(n,1) = \#x_i \land \textsf{For}(\nth(n,2)))
+                          &\lor (\length(n) = 3 \land \nth(n,0) = \#\forall \land \nth(n,1) \geq 8 \land \textsf{For}(\nth(n,2)))
     \end{align*}
 \end{proof}
 
@@ -2055,8 +2055,8 @@ Osserviamo che non tutti i numeri naturali sono codici di formule, per la nostra
         \langle\#s, \textsf{Subterm}(\nth(n,1),i,x)\rangle & \text{se $\nth(n,0) = \#s$} \\
         \langle\#+, \textsf{Subterm}(\nth(n,1),i,x), \textsf{Subterm}(\nth(n,2),i,x)\rangle & \text{se $\nth(n,0) = \#+$} \\
         \langle\#\cdot, \textsf{Subterm}(\nth(n,1),i,x), \textsf{Subterm}(\nth(n,2),i,x)\rangle & \text{se $\nth(n,0) = \#\cdot$} \\
-        x & \text{se $\nth(n,0) = i + 8$} \\
-        n & \text{se $\nth(n,0) = j + 8 \ne i + 8$}
+        x & \text{se $\nth(n,1) = i + 8$} \\
+        n & \text{se $\nth(n,1) \ne i + 8$}
     \end{cases} \]
 \end{proof}
 
@@ -2126,7 +2126,7 @@ In realtà, per via di un trucco, possiamo sempre supporre che l'insieme di assi
     \end{align*}
     si verifica banalmente, al livello sintattico, che $T$ è equivalente a $T'$.
     Inoltre, se poniamo $h(n) := \ulcorner\varphi_n'\urcorner$, la funzione $h : \NN \to \NN$ è ricorsiva totale (si ottiene da $f$ componendo con operazioni sintattiche ricorsive, cioè codifica e congiunzione iterata\footnote{Se avessimo voglia di scrivere
-    la funzione PR $\textsf{Conj}(a,b) := \ulcorner\varphi_a \land \varphi_b\urcorner$, di definire $H(1,k) := k, H(n+1,k) := \textsf{Conj}(H(n,k),k)$ e di definire $h(n) := H(n,f(n))$, e quindi $h$ ricorsiva totale.}).
+    la funzione PR $\textsf{Conj}(a,b) := \ulcorner\varphi_a \land \varphi_b\urcorner$, di definire $H(1,k) := k, H(n+1,k) := \textsf{Conj}(H(n,k),k)$ e di definire $h(n) := H(n,f(n))$, e quindi $h$ ricorsiva totale. Si potrebbe fare meglio ed ottenere PR, ma non ho voglia.}).
     Quindi possiamo definire una funzione ricorsiva totale $g$ che controlla se un elemento è nell'immagine di $h$,
     moralmente facendone una ``ricerca limitata'':
     \[ g(z) := \begin{cases}
