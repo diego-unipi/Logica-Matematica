@@ -717,7 +717,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \]
         con $U$ ultrafiltro non principale. Ora se $F$ è un campo di caratteristica finita se e solo se $F \models T$, per il teorema di Łoś si ha che $\CC \models T$, ma questo è assurdo perché $\CC$ ha caratteristica 0.
         \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi abeliani non divisibili nel linguaggio dei gruppi $L_\text{gr}$, allora un gruppo $G$ è abeliano e non divisibile se e solo se $G \models T$.
-        Poiché $\ol{F_p}$ è un gruppo abeliano non divisibile, prendendo $x$ qualsiasi diverso da 0 e $n = p$, segue che:
+        Poiché $\ol{\FF_p}$ è un gruppo abeliano non divisibile, prendendo $x$ qualsiasi diverso da 0 e $n = p$, segue che:
         \[ \faktor{\prod_{p \text{ primo}} \overline{\mathbb{F}_p}}{U} \models T
         \]
         ma questo è assurdo perché l'ultraprodotto è $\CC$, che è un gruppo abeliano divisibile.
@@ -727,7 +727,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \]
         che è un gruppo abeliano e libero in quanto $\ZZ \models T$ per ipotesi (dunque $G \models T$ per il teorema di Łoś).
         Osserviamo ora che l'elemento $g := [(n!)_{n \in \NN}]$ di $G$ è divisibile, infatti per ogni $m \in \NN$ si ha che:
-        \[ \{m \in \NN : m \not \mid n!\} \subseteq \{1,2,\ldots,m\} \]
+        \[ \{m \in \NN : m \nmid n!\} \subseteq \{1,2,\ldots,m\} \]
         che è finito, quindi il complementare sta nell'ultrafiltro per ogni $m \in \NN$. Per cui si conclude osservando che un gruppo abeliano libero non può avere
         elementi divisibili, altrimenti sarebbe falsa l'unicità della scrittura in base degli elementi.
         \item Supponiamo per assurdo che esista una teoria $T$ che assiomatizza la classe dei gruppi semplici nel linguaggio dei gruppi $L_\text{gr} = \{\purple{\cdot}, \purple{^{-1}}, \purple{e}\}$.
@@ -740,7 +740,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         \[ f : [0,1) \to G : x \mapsto [(\overline{\floor{x \cdot p}})_{p \text{ primo}}] \]
         dove escludiamo $1$ perché verrebbe $\ol p = \ol 0$ in ciascuna componente. Come per la mappa standard si osserva che se $x < y$ in $[0,1)$, allora $\frac{1}{y-x} \leq p$ definitivamente, e da questo
         segue che $\floor{x \cdot p} < \floor{y \cdot p}$, per cui:
-        \[ \{p \text{ primo} | \overline{\floor{x \cdot p}} \neq \overline{\floor{y \cdot p}}\} \supseteq \left\{p \text{ primo} \middle| p \geq \frac{1}{y-x}\right\} \in U
+        \[ \{p \text{ primo } : \overline{\floor{x \cdot p}} \neq \overline{\floor{y \cdot p}}\} \supseteq \left\{p \text{ primo} \middle| p \geq \frac{1}{y-x}\right\} \in U
         \]
         dove l'ultima appartenenza vale perché $U$ è un ultrafiltro non principale e quell'insieme è cofinito. In particolare abbiamo dimostrato che $|G| = 2^{\aleph_0}$,
         dunque $G$ non può essere nemmeno ciclico.
@@ -815,10 +815,10 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
         ma $S^{-1}\ZZ$ non è divisibile per $q$ con $q$ primo e $q > n$ - per cui non ho $1/q$ in $S^{-1}\ZZ$, quindi $S^{-1}\ZZ \not\models T$ $\lightning$.
         \item Nel linguaggio dei grafi $L = \{e(\cdot,\cdot)\}$, per il teorema di de Bruijn-Erdős [REF], un grafo è 3-colorabile se e solo se ogni suo sottografo finito lo è. Sia $F$ un insieme di rappresentanti, a meno di isomorfismo, di tutti i grafi finiti \emph{non} 3-colorabili, $F$ è definibile in $\mathsf{ZFC}$ come quoziente di un opportuno insieme definito per separazione.
         Per ogni $H \in F$ con vertici $v_1, \dots, v_n$, definiamo la formula $\phi_H$:
-        \[ \phi_H := \forall x_1 \dots \forall x_n \, \neg\, \left(\bigwedge_{1 \leq i < j \leq n} \neg\,(x_i = x_j) \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
+        \[ \phi_H := \forall x_1 \dots \forall x_n \, \left(\bigwedge_{1 \leq i < j \leq n} \neg\,(x_i = x_j) \land \bigwedge_{(v_i, v_j) \in e_H} e(x_i, x_j) \right) \]
         che esprime il fatto che $H$ non è un sottografo della struttura che la soddisfa, e che quindi non ci sono sottografi finiti non 3-colorabili - nella stessa classe di equivalenza di $H$.
         Possiamo quindi assiomatizzare la classe dei grafi 3-colorabili con la teoria:
-        \[ T_{\text{3-col}} := T_{\text{grafi}} \cup \{ \phi_H \mid H \in F \} \]
+        \[ T_{\text{3-col}} := T_{\text{grafi}} \cup \{\neg\,\phi_H \mid H \in F \} \]
         È chiaro che un modello $G$ è un grafo 3-colorabile se e solo se $G \models T_{\text{3-col}}$, infatti soddisfare tutte le $\phi_H$ equivale a non avere sottografi finiti non 3-colorabili, che è appunto la condizione per essere 3-colorabile, notiamo infinite che $|F|$ è infinito perché ci sono infiniti grafi finiti non 3-colorabili (ad esempio i grafi a ruota dispari [REF] $W_{2k+1}$).
         \begin{center}
             \begin{tikzpicture}[every node/.style={circle, draw, minimum size=4.55mm, inner sep=0pt}]
@@ -864,7 +864,7 @@ teoria dei campi algebricamente chiusi di caratteristica 0 è completa. Comincia
             \end{tikzpicture}
         \end{center}
         Supponiamo ora per assurdo che esista $T'$ finita che assiomatizza la classe dei grafi 3-colorabili, allora $T_{\text{3-col}} \models T'$, e per il teorema di compattezza esiste $T'' \subseteq T_{\text{3-col}}$ finita tale che $T'' \models T'$, e ovviamente anche $T' \models T_{\text{3-col}}$, per cui $T'' \models T'$.
-        Possiamo assumere (WLOG) che $T'' = T_{\text{grafi}} \cup \{\phi_{H_1}, \ldots, \phi_{H_m}\}$, ovvero che escluda solo la presenza di $m$ grafi finiti non 3-colorabili, $H_1, \ldots, H_m$.\\
+        Possiamo assumere (WLOG) che $T'' = T_{\text{grafi}} \cup \{\neg\,\phi_{H_1}, \ldots, \neg\,\phi_{H_m}\}$, ovvero che escluda solo la presenza di $m$ grafi finiti non 3-colorabili, $H_1, \ldots, H_m$.\\
         Sia $N$ il massimo numero di vertici tra tutti i grafi proibiti $H_1, \ldots, H_m$. Scegliamo $k$ tale che $2k+2 > N$, e consideriamo il grafo a ruota dispari $W_{2k+1}$, essa è un modello di $T''$, in quanto:
         \begin{itemize}
             \item $W_{2k+1}$ è un grafo, dunque soddisfa $T_{\text{grafi}}$;
@@ -1302,7 +1302,7 @@ Quindi ogni struttura infinita ha una sottostruttura elementare di cardinalità 
     Sia $P \subseteq \NN$ l'insieme dei numeri primi. Per ogni sottoinsieme $S \subseteq P$, definiamo un insieme di formule $p_S(x)$ nella variabile libera $x$, che specifica insieme di divisori primi di $x$:
     \[ p_S(x) = \{ \mathsf{div}(p, x) : p \in S \} \cup \{ \neg\, \mathsf{div}(q, x) : q \in P \setminus S \} \]
     cioè $p_S(x)$ è l'unione di due insiemi di formule, il primo che elenca i primi che dividono $x$ in $S$, e il secondo che elenca i primi che non dividono $x$ in $P \setminus S$.\\
-    Espandiamo il linguaggio aggiungendo una costante $\purple{c}$, e consideriamo la teoria $T_S := \mathrm{Th}(\NN; 0, 1, +, \cdot, s) \cup p_S(c)$, tale teoria è finitamente coerente,
+    Espandiamo il linguaggio aggiungendo una costante $\purple{c}$, e consideriamo la teoria $T_S := \mathrm{Th}(\NN; 0, 1, +, \cdot, s) \cup p_S(c) \cup \{\textsf{AtLeast}_i : i \geq 2\}$, tale teoria è finitamente coerente,
     infatti preso un sottoinsieme finito di formule $T_S' \subseteq T_S$, che posso supporre contenga solo un numero finito di formule $\mathsf{div}(p, c)$ e $\neg\, \mathsf{div}(q, c)$, è sufficiente interpretare $c$ come il prodotto dei primi $p$ per cui $\mathsf{div}(p, c) \in T_S'$,
     in questo modo $\NN$ è un modello di $T_S'$ e $T_S$ è coerente.\\
     Quindi per ogni $S \subseteq P$, la teoria $T_S$ è coerente e ammette un $L'$-modello infinito; usando Löwenheim-Skolem verso il basso - con $A = \varnothing$ - otteniamo che esiste un modello numerabile $N_S$ di $T_S$, per ogni $S \subseteq P$,

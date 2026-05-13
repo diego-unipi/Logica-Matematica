@@ -526,8 +526,9 @@ partire da $T$, $L$-teoria deduttivamente coerente, considerare $T'$ la $L'$-teo
         Usiamo l'ipotesi induttiva solo su $\varphi$ e $\psi$, che hanno meno simboli logici di $\varphi \to \psi$.
         \begin{itemize}
             \item[$\boxed{\implies}$] Assumo $T'' \vdash \varphi \to \psi$. Se $M \models \{v\}\varphi$, per ipotesi induttiva $T'' \vdash \varphi$, quindi per El$_\to$ $T'' \vdash \psi$ e di nuovo per ipotesi induttiva $M \models \{v\}\psi$. Dunque $M \models \{v\}\varphi \to \psi$.
-            \item[$\boxed{\impliedby}$] Assumo $M \models \{v\}\varphi \to \psi$. Se $M \models \{v\}\varphi$, per ipotesi induttiva $T'' \vdash \varphi$ e $T'' \vdash \psi$ - vero e vero nell'implicazione, e quindi per In$_\to$ $T'' \vdash \varphi \to \psi$. Se invece $M \not\models \{v\}\varphi$, allora $T'' \nvdash \varphi$,
-            quindi per completezza deduttiva $T'' \vdash \neg \,\varphi$; poiché $\neg \,\varphi$ è $\varphi \to \bot$, da $\varphi$ si ottiene $\bot$ e quindi (usando $\varphi \vdash \varphi$ + El$_\to$ + El$_\bot$) $T'' \vdash \varphi \to \psi$.
+            Se $M \not\models \{v\}\varphi$, allora per ipotesi induttiva $T'' \nvdash \varphi$, e quindi per completezza deduttiva $T'' \vdash \neg \,\varphi$, e quindi $M \models \{v\}\neg \,\varphi$, da cui $M \models \{v\}\varphi \to \psi$.
+            \item[$\boxed{\impliedby}$] Assumo $M \models \{v\}\varphi \to \psi$. Se $M\not\models \{v\}\varphi$, allora $T'' \nvdash \varphi$, e quindi per completezza deduttiva $T'' \vdash \neg \,\varphi$, e quindi $T'' \vdash \varphi \to \psi$. 
+            Se $M \models \{v\}\psi$, allora $T'' \vdash \psi$, e quindi $T'' \vdash \varphi \to \psi$.\footnote{C'è un abuso di abbreviazioni, si può riscrivere tutto per bene.}
         \end{itemize}
         In entrambi i casi abbiamo tuttavia usato che $\varphi$ e $\psi$ sono chiuse, per poter usare la completezza, in generale potrebbero non esserlo, in questo caso, come fatto per i termini, si definisce $\overline\varphi := \varphi[c_1/x_1,\ldots,c_n/x_n]$ e $\overline\psi := \psi[c_1/x_1,\ldots,c_n/x_n]$.
         Usando El$_=$, si ha $T'' \vdash \varphi \to \psi$ è equivalente a $T'' \vdash \overline\varphi \to \overline\psi$;

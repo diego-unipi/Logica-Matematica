@@ -2325,7 +2325,8 @@ Come per l'assiomatizzabilità, l'idea che vogliamo catturare è di un algoritmo
         \item $T'$ è \emph{decidibile}: per ipotesi $T$ è decidibile, quindi esiste $P$ ricorsiva totale tale che $P(i) = 0$ se e solo se $T$ dimostra la formula codificata da $i$. A questo punto, per ogni formula $\varphi$, preso $k = \ulcorner\varphi\urcorner$,
         per stabilire se $T' \vdash \varphi$ basta controllare se $T_k \nvdash \neg\,\varphi$, che equivale a $T \cup \{\psi_1, \ldots, \psi_n\} \nvdash \neg\,\varphi$, ovvero, per In$_\to$:
         \[ T \nvdash (\psi_1 \land \ldots \land \psi_n) \to \neg\,\varphi \]
-        preso il codice della cosa destra di $\vdash$ è sufficiente controllare che $P$ di quel codice sia diverso da 0, in tal modo $T' \vdash \varphi$. Controllare che $P(m) \ne 0$ è decidibile in quanto è il complementare di $\{P(i) = 0\}$, quindi esisterà una funzione decidibile di cui è luogo di zero ($1 \dotminus P(i)$). 
+        preso il codice della cosa destra di $\vdash$ è sufficiente controllare che $P$ di quel codice sia diverso da 0, in tal modo $T' \vdash \varphi$. Controllare che $P(m) \ne 0$ è decidibile in quanto è il complementare di $\{P(i) = 0\}$,
+        quindi esisterà una funzione decidibile di cui è luogo di zero. 
     \end{itemize}
 \end{proof}
 \pagebreak
@@ -2368,7 +2369,7 @@ Vediamo tre facili applicazioni dell'ultima cosa.
 \end{corollary}
 
 \begin{proof}
-    Tale insieme è proprio l'insieme dei codici delle formule in $\Th(\NN;L_{\text{arit}})$, se fosse decidibile sarebbe un'estensione coerente, completa e ricorsivamente assiomatizzabile di $\mathsf{Q}$, assurdo per il primo teorema di incompletezza.
+    Tale insieme è proprio l'insieme dei codici delle formule in $\Th(\NN;L_{\text{arit}})$, se fosse ricorsivamente assiomatizzabile contraddirebbe il primo teorema di incompletezza.
 \end{proof}
 
 \begin{proposition}[Completezza + semidecidibilità $\implies$ decidibilità]
