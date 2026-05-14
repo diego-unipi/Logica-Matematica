@@ -876,7 +876,7 @@ Passiamo alla dimostrazione del teorema.
         stessa configurazione di $\langle a_0, a_1, \ldots, a_n, 0 \rangle$ e così via, tuttavia questo non è un problema, in quanto non si perde alcuna informazione rispetto a quale sia la configurazione considerata.
     \end{remark}
     Per codificare la funzione di transizione $\delta$, associamo a tale funzione il numero $\ulcorner \delta \urcorner$ tale che:
-    \[ \nth(\ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \langle \text{stato'}, \text{simbolo'}, \text{direzione} \rangle \]
+    \[ \nth(\ulcorner \delta \urcorner, \langle \text{stato}, \text{simbolo} \rangle) = \langle \text{stato}', \text{simbolo}', \text{direzione} \rangle \]
     ovvero se penso $\ulcorner \delta \urcorner$ non come un numero, ma come la funzione da $\NN^2$ a $\NN^3$ dico che in ogni casella del suo dominio c'è la tripla immagina, questo però lo vedo in termini puramente di codifiche.
     Il fatto che $\ulcorner \delta \urcorner$ esista è garantito dal fatto che la funzione, insiemisticamente, è contenuta in un sottoinsieme finito di $\NN^5$ e quindi posso letteralmente considerare $m := \max\{\langle \text{stato}, \text{simbolo} \rangle\}$, chiamare
     $a_i := \langle \text{stato}', \text{simbolo}', \text{direzione} \rangle$ con $i = \langle \text{stato}, \text{simbolo} \rangle$, questo se $\delta$ manda effettivamente la configurazione corrispondente all'indice in quella corrispondente alla tripla, altrimenti $a_i := 0$,

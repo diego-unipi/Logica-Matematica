@@ -128,7 +128,7 @@
     Definiamo i seguenti simboli logici nel sistema ridotto a partire da quelli di base:
     \begin{alignat*}{4}
         \purple{\neg \,}\,\varphi &\overset{\text{def}}{=} \varphi \,\purple{\to}\, \purple{\bot} \qquad & \purple{\top} &\overset{\text{def}}{=} \purple{\neg \,\bot} \qquad\quad & \varphi \,\purple{\land}\, \psi &\overset{\text{def}}{=} \neg \,(\varphi \,\purple{\to}\, \neg \,\psi) \\
-        \varphi \,\purple{\lor}\, \psi &\overset{\text{def}}{=} \neg \,\varphi \,\purple{\to}\, \psi \qquad & \purple{\forall x_k}\,\varphi &\overset{\text{def}}{=} \purple{\neg \,\,\exists x_k\,\neg \,}\,\varphi
+        \varphi \,\purple{\lor}\, \psi &\overset{\text{def}}{=} \neg \,\varphi \,\purple{\to}\, \psi \qquad & \purple{\forall x_k}\,\varphi &\overset{\text{def}}{=} \purple{\neg \,\exists x_k\,\neg \,}\,\varphi
     \end{alignat*}
 \end{definition}
 
@@ -403,8 +403,8 @@ A questo punto possiamo tornare al teorema di completezza. Nonostante abbiamo os
 \end{definition}
 
 \begin{example}[Teoria non di Henkin]
-    Sia $L = \{c\}$ e $T := \varnothing$, e la formula $\varphi(x_k) := \neg \,\,(x_k = c)$. Affinché $T$ sia di Henkin deve valere il linguaggio dovrebbe contenere una costante tale che:
-    \[ T \vdash \exists x_k \neg \,\,(x_k = c) \to \neg \,\,(c = c) \]
+    Sia $L = \{c\}$ e $T := \varnothing$, e la formula $\varphi(x_k) := \neg \,(x_k = c)$. Affinché $T$ sia di Henkin deve valere il linguaggio dovrebbe contenere una costante tale che:
+    \[ T \vdash \exists x_k \neg \,(x_k = c) \to \neg \,(c = c) \]
     la seconda formula è $\bot$, per cui la teoria vuota unita alla formula che dice che esiste un elemento diverso da $c$ è incoerente, cosa chiaramente assurda.
 \end{example}
 
